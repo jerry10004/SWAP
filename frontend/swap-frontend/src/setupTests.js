@@ -3,3 +3,15 @@
 // expect(element).toHaveTextContent(/react/i)
 // learn more: https://github.com/testing-library/jest-dom
 import '@testing-library/jest-dom';
+
+// To fix below error need to add this code.
+// https://github.com/akiran/react-slick/issues/742
+window.matchMedia =
+	window.matchMedia ||
+	function () {
+		return {
+			matches: false,
+			addListener: function () {},
+			removeListener: function () {}
+		};
+	};
