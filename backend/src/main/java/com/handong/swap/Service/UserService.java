@@ -1,5 +1,9 @@
 package com.handong.swap.Service;
 
-public class UserService {
+import org.springframework.stereotype.Service;
+import com.handong.swap.DTO.UserDTO;
 
+@Service
+public interface UserService {
+	public int insertUser(UserDTO dto);
 }

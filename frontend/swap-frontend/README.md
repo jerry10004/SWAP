@@ -1,59 +1,70 @@
-# Geeks REACT
+# Getting Started with Create React App
 
-Geeks UI Kit is built with the most popular front-end framework [React Bootstrap](https://react-bootstrap.github.io/) v2.1.0 with react-scripts.
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Getting Started
+## Available Scripts
 
-### Running in Local environment
-**1. Requirements Node.js**
+In the project directory, you can run:
 
-Before proceeding you'll need to have the latest stable nodejs. Install [Node.js](https://nodejs.org/en/download/) or already have it installed on your machine move to next step.
+### `npm start`
 
-**2. Install Geeks React**
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-Open the "geeks-react” directory with your cmd or terminal. Open the project folder and install its dependencies.
+The page will reload when you make changes.\
+You may also see any lint errors in the console.
 
-```
-cd geeks-react 
-```
-```
-npm install 
-```
-This command will download all the necessary dependencies for geeks in the node_modules directory.
+### `npm test`
 
-**3. Start**
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-Run npm start. A local web server will start at [http://localhost:3000](http://localhost:3000) Once the installation is done, you can now start your app by running.
+### `npm run build`
 
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-### Creating a Production Build.
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
 
-Production build of your app.
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-1. Run `npm run build` command in your project directory to make the Production build app.
-```
-npm run build
-```
-2. Open Static Server for the production build
-```
-node server.js
-```
+### `npm run eject`
 
-## Deploy on Netlify
+**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-The way to deploy your React.js app is to use the [Netlify Platform](https://app.netlify.com/signup?_ga=2.83170390.1970152770.1642748530-286123562.1640778167) from the creators of React.js.
+If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-For more details [React.js deployment documentation](https://docs.netlify.com/site-deploys/overview/) for more details.
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-## Support
+You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-Codescandy is happy to provide support for issues. Contact us an email at hello@codescandy.com
+## Learn More
 
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
+To learn React, check out the [React documentation](https://reactjs.org/).
 
+### Code Splitting
 
+This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
 
+### Analyzing the Bundle Size
 
+This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
 
+### Making a Progressive Web App
 
+This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
 
+### Advanced Configuration
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+
+### Deployment
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+
+### `npm run build` fails to minify
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
