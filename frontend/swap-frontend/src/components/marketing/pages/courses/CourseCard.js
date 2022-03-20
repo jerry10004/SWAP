@@ -20,13 +20,13 @@ const CourseCard = ({ item, free, viewby, showprogressbar, extraclass }) => {
   const GridView = () => {
     return (
       <Card className={`mb-4 card-hover ${extraclass}`}>
-        <Link to="#">
+        <Link to="/course">
           <Image src={item.image} alt="" className="card-img-top rounded-top-md" />
         </Link>
         {/* Card body  */}
         <Card.Body>
           <h3 className="h4 mb-2 text-truncate-line-2 ">
-            <Link to="#" className="text-inherit">
+            <Link to="/course" className="text-inherit">
               {item.title}
             </Link>
           </h3>
@@ -49,7 +49,8 @@ const CourseCard = ({ item, free, viewby, showprogressbar, extraclass }) => {
             <span className="fs-6 text-muted"> ({numberWithCommas(item.ratingby)})</span>
           </div>
           <div className={`lh-1 mt-3 ${free || item.price === undefined || item.price <= 0 || item.discount === undefined ? "d-none" : ""}`}>
-            <span className="text-dark fw-bold">${item.price - item.discount}</span> <del className="fs-6 text-muted">${item.price}</del>
+            {/* <span className="text-dark fw-bold">${item.price - item.discount}</span> <del className="fs-6 text-muted">${item.price}</del> */}
+            <span className="text-dark fw-bold">D-5</span>
           </div>
         </Card.Body>
         {/* Card Footer */}

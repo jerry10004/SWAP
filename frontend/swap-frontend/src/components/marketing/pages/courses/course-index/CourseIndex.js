@@ -7,13 +7,11 @@ import { Col, Row, Container, Nav, Tab } from "react-bootstrap";
 import CourseSlider from "components/marketing/pages/courses/CourseSlider";
 
 // import sub components
-import FeaturesList from "components/marketing/pages/courses/course-index/FeaturesList";
 import HeroHeader from "components/marketing/pages/courses/course-index/HeroHeader";
 import CourseCard from "components/marketing/pages/courses/CourseCard";
 
 // import data files
 import { AllCoursesData } from "data/slider/AllCoursesData";
-import { InstructorData } from "data/users/InstructorData";
 
 const CourseIndex = () => {
   return (
@@ -76,11 +74,11 @@ const CourseIndex = () => {
 
                     <Tab.Content>
                       <Tab.Pane eventKey="total" className="pb-4 p-4 ps-0 pe-0">
-                        <div className="pt-lg-12 pb-lg-3 pt-8 pb-6">
+                        <div className="pt-lg-3 pb-lg-3 pt-8 pb-6">
                           <Container>
                             <Row className="mb-4">
                               <Col>
-                                <h2 className="mb-0 mx-2">Recommended to you</h2>
+                                <h2 className="mb-0 mx-2">대회</h2>
                               </Col>
                             </Row>
                             <div className="position-relative">
@@ -93,7 +91,7 @@ const CourseIndex = () => {
                           <Container>
                             <Row className="mb-4">
                               <Col>
-                                <h2 className="mb-0 mx-2">Most Popular</h2>
+                                <h2 className="mb-0 mx-2">캠프</h2>
                               </Col>
                             </Row>
                             <div className="position-relative">
@@ -106,7 +104,7 @@ const CourseIndex = () => {
                           <Container>
                             <Row className="mb-4">
                               <Col>
-                                <h2 className="mb-0 mx-2">Trending</h2>
+                                <h2 className="mb-0 mx-2">봉사</h2>
                               </Col>
                             </Row>
                             <div className="position-relative">
