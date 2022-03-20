@@ -14,10 +14,10 @@ import GKAccordionProgress from "components/marketing/common/accordions/GKAccord
 import LevelIcon from "components/marketing/common/miscellaneous/LevelIcon";
 
 // import sub components tabs
-import ReviewsTab from "components/marketing/pages/courses/course-single/ReviewsTab";
-import DescriptionTab from "components/marketing/pages/courses/course-single/DescriptionTab";
-import TranscriptTab from "components/marketing/pages/courses/course-single/TranscriptTab";
-import FAQTab from "components/marketing/pages/courses/course-single/FAQTab";
+import ReviewsTab from "components/marketing/pages/courses/course-single2/ReviewsTab";
+import DescriptionTab from "components/marketing/pages/courses/course-single2/DescriptionTab";
+import TranscriptTab from "components/marketing/pages/courses/course-single2/TranscriptTab";
+import FAQTab from "components/marketing/pages/courses/course-single2/FAQTab";
 
 // import data files
 import { CourseIndex } from "data/marketing/CourseIndexData";
