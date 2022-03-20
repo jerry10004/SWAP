@@ -20,13 +20,13 @@ const CourseCard = ({ item, free, viewby, showprogressbar, extraclass }) => {
   const GridView = () => {
     return (
       <Card className={`mb-4 card-hover ${extraclass}`}>
-        <Link to="/course">
+        <Link to="/program">
           <Image src={item.image} alt="" className="card-img-top rounded-top-md" />
         </Link>
         {/* Card body  */}
         <Card.Body>
           <h3 className="h4 mb-2 text-truncate-line-2 ">
-            <Link to="/course" className="text-inherit">
+            <Link to="/program" className="text-inherit">
               {item.title}
             </Link>
           </h3>
