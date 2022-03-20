@@ -5,6 +5,7 @@ import "assets/scss/theme.scss";
 
 import Main from "./pages/Main";
 import Application from "./pages/Application";
+import Program from "./pages/Program";
 
 function Router() {
   return (
@@ -12,6 +13,8 @@ function Router() {
       <Routes>
         <Route path="/main" element={<Main />} />
         <Route path="/application" element={<Application />} />
+        <Route path="/" element={<Main />} />
+        <Route path="/program" element={<Program />} />
       </Routes>
     </BrowserRouter>
   );

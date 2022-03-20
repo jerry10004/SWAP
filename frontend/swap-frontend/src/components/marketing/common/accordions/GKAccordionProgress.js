@@ -60,7 +60,7 @@ const GKAccordionProgress = ({ accordionItems }) => {
                   <ListGroup variant="flush">
                     <ListGroup.Item className="border-top-0">
                       <ProgressBar variant="success" className="mb-2 progress" now={item.completed} style={{ height: "6px" }} />
-                      <small>{item.completed}% Completed</small>
+                      <small>{item.completed} students Registered</small>
                     </ListGroup.Item>
                     {item.topics.map((subitem, index) => (
                       <ListGroup.Item key={index} active={subitem.status === "continue"} disabled={subitem.locked}>
