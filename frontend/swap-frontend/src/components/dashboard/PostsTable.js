@@ -2,76 +2,21 @@
 import React, { Fragment, useMemo } from "react";
 import { useTable, useFilters, useGlobalFilter, usePagination, useRowSelect } from "react-table";
 import { Link } from "react-router-dom";
-import { Col, Row, Dropdown, Image, Table } from "react-bootstrap";
-import { Trash, MoreVertical, Edit, Move, Copy, ToggleLeft, ToggleRight, Video } from "react-feather";
-import LinkIcon from "react-feather/dist/icons/link";
-import ImageIcon from "react-feather/dist/icons/image";
+import { Col, Row, Table, Button } from "react-bootstrap";
 
 // Import required custom components
 import GlobalFilter from "components/elements/advance-table/GlobalFilter";
 import Pagination from "components/elements/advance-table/Pagination";
-import Checkbox from "components/elements/advance-table/Checkbox";
+// import Checkbox from "components/elements/advance-table/Checkbox";
 import DotBadge from "components/elements/bootstrap/DotBadge";
 
 const PostsTable = ({ table_data }) => {
-  // The forwardRef is important!!
-  // Dropdown needs access to the DOM node in order to position the Menu
-  const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
-    <Link
-      to=""
-      ref={ref}
-      onClick={(e) => {
-        e.preventDefault();
-        onClick(e);
-      }}
-    >
-      {children}
-    </Link>
-  ));
-
-  const ActionMenu = () => {
-    return (
-      <Dropdown>
-        <Dropdown.Toggle as={CustomToggle}>
-          <MoreVertical size="15px" className="text-secondary" />
-        </Dropdown.Toggle>
-        <Dropdown.Menu align="end">
-          <Dropdown.Header>SETTINGS</Dropdown.Header>
-          <Dropdown.Item eventKey="1">
-            {" "}
-            <Edit size="18px" className="dropdown-item-icon" /> Edit
-          </Dropdown.Item>
-          <Dropdown.Item eventKey="2">
-            {" "}
-            <Move size="18px" className="dropdown-item-icon" /> Move
-          </Dropdown.Item>
-          <Dropdown.Item eventKey="3">
-            {" "}
-            <Copy size="18px" className="dropdown-item-icon" /> Copy
-          </Dropdown.Item>
-          <Dropdown.Item eventKey="4">
-            {" "}
-            <ToggleLeft size="18px" className="dropdown-item-icon" /> Publish
-          </Dropdown.Item>
-          <Dropdown.Item eventKey="5">
-            {" "}
-            <ToggleRight size="18px" className="dropdown-item-icon" /> Unpublish
-          </Dropdown.Item>
-          <Dropdown.Item eventKey="6">
-            {" "}
-            <Trash size="18px" className="dropdown-item-icon" /> Delete
-          </Dropdown.Item>
-        </Dropdown.Menu>
-      </Dropdown>
-    );
-  };
-
   const columns = useMemo(
     () => [
-      { accessor: "id", Header: "ID", show: false },
+      { accessor: "_id", Header: "ID", show: false },
       {
-        accessor: "title",
-        Header: "POST",
+        accessor: "id",
+        Header: "번호",
         Cell: ({ value }) => {
           return (
             <h5 className="mb-0">
@@ -84,24 +29,22 @@ const PostsTable = ({ table_data }) => {
       },
 
       {
-        accessor: "type",
-        Header: "TYPE",
+        accessor: "title",
+        Header: "프로그램명",
         Cell: ({ value }) => {
-          if (value === "image") {
-            return <ImageIcon size="18px" className="dropdown-item-icon text-primary" />;
-          }
-          if (value === "video") {
-            return <Video size="18px" className="dropdown-item-icon text-primary" />;
-          }
-          if (value === "link") {
-            return <LinkIcon size="18px" className="dropdown-item-icon text-primary" />;
-          }
+          return (
+            <h5 className="mb-0">
+              <Link to="#" className="text-inherit">
+                {value}
+              </Link>
+            </h5>
+          );
         },
       },
 
       {
-        accessor: "category",
-        Header: "CATEGORY",
+        accessor: "date",
+        Header: "일시 및 장소",
         Cell: ({ value }) => {
           return (
             <Link to="#" className="text-inherit">
@@ -110,40 +53,46 @@ const PostsTable = ({ table_data }) => {
           );
         },
       },
-      { accessor: "date", Header: "Date" },
-      {
-        accessor: "instructor_name",
-        Header: "AUTHOR",
-        Cell: ({ value, row }) => {
-          return (
-            <div className="d-flex align-items-center">
-              <Image src={row.original.instructor_image} alt="" className="rounded-circle avatar-xs me-2" />
-              <h5 className="mb-0">{value}</h5>
-            </div>
-          );
-        },
-      },
+      // { accessor: "date", Header: "Date" },
 
       {
         accessor: "status",
-        Header: "STATUS",
+        Header: "상태",
         Cell: ({ value }) => {
           value = value.toLowerCase();
           return (
             <Fragment>
-              <DotBadge bg={value === "draft" ? "warning" : value === "published" ? "success" : value === "scheduled" ? "info" : value === "deleted" ? "danger" : ""}></DotBadge>
+              <DotBadge
+                bg={value === "참여대기" ? "warning" : value === "참여승인" ? "success" : value === "수료" ? "info" : value === "미수료" ? "danger" : value === "참여불가" ? "danger" : ""}
+              ></DotBadge>
               {value.charAt(0).toUpperCase() + value.slice(1)}
             </Fragment>
           );
         },
       },
       {
-        accessor: "shortcutmenu",
-        Header: "",
+        accessor: "instructor_name",
+        Header: "비고",
         Cell: ({ value, row }) => {
-          return <ActionMenu />;
+          return (
+            <div className="d-grid gap-2 d-md-block">
+              <Button variant="outline-secondary" className="me-1">
+                신청서수정
+              </Button>
+              <Button variant="outline-danger" className="me-1">
+                신청취소
+              </Button>
+            </div>
+          );
         },
       },
+      // {
+      //   accessor: "shortcutmenu",
+      //   Header: "",
+      //   Cell: ({ value, row }) => {
+      //     return <ActionMenu />;
+      //   },
+      // },
     ],
     []
   );
@@ -165,17 +114,17 @@ const PostsTable = ({ table_data }) => {
     useFilters,
     useGlobalFilter,
     usePagination,
-    useRowSelect,
-    (hooks) => {
-      hooks.visibleColumns.push((columns) => [
-        {
-          id: "selection",
-          Header: ({ getToggleAllRowsSelectedProps }) => <Checkbox {...getToggleAllRowsSelectedProps()} />,
-          Cell: ({ row }) => <Checkbox {...row.getToggleRowSelectedProps()} />,
-        },
-        ...columns,
-      ]);
-    }
+    useRowSelect
+    // (hooks) => {
+    //   hooks.visibleColumns.push((columns) => [
+    //     {
+    //       id: "selection",
+    //       Header: ({ getToggleAllRowsSelectedProps }) => <Checkbox {...getToggleAllRowsSelectedProps()} />,
+    //       Cell: ({ row }) => <Checkbox {...row.getToggleRowSelectedProps()} />,
+    //     },
+    //     ...columns,
+    //   ]);
+    // }
   );
 
   const { pageIndex, globalFilter } = state;
