@@ -24,6 +24,7 @@ import { CourseIndex } from "data/marketing/CourseIndexData";
 
 // import media files.
 import Avatar1 from "assets/images/avatar/avatar-1.jpg";
+import Poster from "assets/images/Poster.png";
 
 const Program = () => {
   return (
@@ -34,7 +35,8 @@ const Program = () => {
           <Row>
             <Col lg={12} md={12} sm={12} className="mb-5">
               <div className="rounded-3 position-relative w-100 d-block overflow-hidden p-0" style={{ height: "600px" }}>
-                <GKYouTube videoId="PkZNo7MFNFg" />
+                {/* <GKYouTube videoId="PkZNo7MFNFg" /> */}
+                <img src={Poster} width="100%" object-fit="contain" />
               </div>
             </Col>
           </Row>
@@ -79,7 +81,7 @@ const Program = () => {
                         </div>
                       </div>
                       <div>
-                        <Link to="#" className="btn btn-outline-white btn-sm">
+                        <Link to="application" className="btn btn-outline-white btn-sm">
                           신청하기
                         </Link>
                       </div>

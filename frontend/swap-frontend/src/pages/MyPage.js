@@ -37,7 +37,7 @@ const MyPage = () => {
             <Tab.Container defaultActiveKey="all">
               <Card>
                 <Card.Header className="border-bottom-0 p-0 bg-white">
-                  <Nav className="nav-lb-tab">
+                  <Nav className="nav-lb-tab  fs-4">
                     <Nav.Item>
                       <Nav.Link eventKey="all" className="mb-sm-3 mb-md-0">
                         대기

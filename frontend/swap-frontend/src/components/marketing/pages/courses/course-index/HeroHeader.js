@@ -6,7 +6,7 @@ import { Col, Row, Container, Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 // import media files
-import HeroImage from "assets/images/hero/hero-img.png";
+import HeroImage from "assets/images/Main.png";
 
 const HeroHeader = () => {
   return (
@@ -16,14 +16,14 @@ const HeroHeader = () => {
         <Row className="align-items-center g-0">
           <Col xl={5} lg={6} md={12}>
             <div className="py-5 py-lg-0">
-              <h1 className="text-white display-4 fw-bold">Welcome to Geeks UI Learning Application</h1>
-              <p className="text-white-50 mb-4 lead">Hand-picked Instructor and expertly crafted courses, designed for the modern students and entrepreneur.</p>
+              <h1 className="text-white display-4 fw-bold">Software Activities and Programs</h1>
+              <p className="text-white-50 mb-4 lead">소프트웨어 전공자를 위한 비교과 통합 관리 시스템</p>
               <Link to="/marketing/courses/course-filter-page/" className="btn btn-success">
-                Browse Courses
+                프로그램 보러 가기
               </Link>{" "}
-              <Link to="/authentication/sign-in/" className="btn btn-white">
-                Are You Instructor?
-              </Link>
+              {/* <Link to="/authentication/sign-in/" className="btn btn-white">
+                프로그램 보러 가기
+              </Link> */}
             </div>
           </Col>
           <Col xl={7} lg={6} md={12} className="text-lg-end text-center">
