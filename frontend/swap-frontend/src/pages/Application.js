@@ -7,6 +7,10 @@ import imgA from "assets/images/application/application-01.png";
 
 import "assets/scss/application.scss";
 
+// import layouts
+import NavbarDefault from "layouts/marketing/navbars/NavbarDefault";
+import Footer from "layouts/marketing/Footer";
+
 const Application = () => {
   const statelist = [
     { value: "1", label: "Gujarat" },
@@ -122,6 +126,7 @@ const Application = () => {
   };
   return (
     <Fragment>
+      <NavbarDefault />
       {/* Page header */}
       <div className="pt-lg-8 pb-lg-16 pt-8 pb-12 bg-primary ">
         <Container>
@@ -228,6 +233,7 @@ const Application = () => {
           </Row>
         </Container>
       </div>
+      <Footer />
     </Fragment>
   );
 };
