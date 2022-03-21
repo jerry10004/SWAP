@@ -20,7 +20,7 @@ import Footer from "layouts/marketing/Footer";
 const Main = () => {
   return (
     <Fragment>
-      <NavbarDefault login />
+      <NavbarDefault />
       {/*  Page Content  */}
       <HeroHeader />
 
