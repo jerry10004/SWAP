@@ -76,12 +76,16 @@ const PostsTable = ({ table_data }) => {
         Cell: ({ value, row }) => {
           return (
             <div className="d-grid gap-2 d-md-block">
-              <Button variant="outline-secondary" className="me-1">
-                신청서수정
-              </Button>
-              <Button variant="outline-danger" className="me-1">
-                신청취소
-              </Button>
+              <Link to="../program/application">
+                <Button variant="outline-secondary" className="me-1">
+                  신청서수정
+                </Button>
+              </Link>
+              <Link to="#">
+                <Button variant="outline-danger" className="me-1">
+                  신청취소
+                </Button>
+              </Link>
             </div>
           );
         },

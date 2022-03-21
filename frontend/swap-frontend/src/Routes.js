@@ -16,7 +16,7 @@ function Router() {
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/main" element={<Main />} />
-        <Route path="/application" element={<Application />} />
+        <Route path="/program/application" element={<Application />} />
         <Route path="/program" element={<Program />} />
         <Route path="/survey" element={<Survey />} />
         <Route path="/mypage" element={<MyPage />} />

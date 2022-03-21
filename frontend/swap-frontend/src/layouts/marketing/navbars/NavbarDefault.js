@@ -13,7 +13,7 @@ import { useMediaQuery } from "react-responsive";
 import DotBadge from "components/elements/bootstrap/DotBadge";
 
 // import media files
-import Logo from "assets/images/brand/logo/logo.svg";
+import Logo from "assets/images/SWAPLogo.png";
 import Avatar1 from "assets/images/avatar/avatar-1.jpg";
 
 // import data files
@@ -81,7 +81,7 @@ const NavbarDefault = ({ headerstyle, login }) => {
       >
         <Container fluid className="px-0 ps-2">
           <Navbar.Brand as={Link} to="/">
-            <Image src={Logo} alt="" />
+            <Image src={Logo} alt="" width="120px" />
           </Navbar.Brand>
           <div className={`navbar-nav navbar-right-wrap ms-auto d-lg-none nav-top-wrap ${login ? (isDesktop || isLaptop ? "d-none" : "d-flex") : "d-none"}`}>
             <QuickMenu />

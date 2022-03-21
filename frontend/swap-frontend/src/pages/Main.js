@@ -34,7 +34,7 @@ const Main = () => {
               <Row className="mb-6">
                 <Col md={12}>
                   <Tab.Container defaultActiveKey="total">
-                    <Nav className="nav-lb-tab">
+                    <Nav className="nav-lb-tab  fs-4">
                       <Nav.Item className="ms-0">
                         <Nav.Link eventKey="total" className="mb-sm-3 mb-md-0">
                           전체보기

@@ -114,10 +114,14 @@ const Application = () => {
           <Col md={12} sm={12}>
             {/*  Button */}
             <div className="d-flex justify-content-end">
-              <Button className="cancel-btn" variant="secondary">
-                신청취소
-              </Button>
-              <Button variant="primary">신청하기</Button>
+              <Link to="../../program">
+                <Button className="cancel-btn" variant="secondary">
+                  신청취소
+                </Button>
+              </Link>
+              <Link to="../../mypage">
+                <Button variant="primary">신청하기</Button>
+              </Link>
             </div>
           </Col>
         </Form>
