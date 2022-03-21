@@ -13,6 +13,7 @@ import CourseCard from "components/marketing/pages/courses/CourseCard";
 // import data files
 import { AllCoursesData } from "data/slider/AllCoursesData";
 
+<<<<<<< HEAD
 // import layouts
 import NavbarDefault from "layouts/marketing/navbars/NavbarDefault";
 import Footer from "layouts/marketing/Footer";
@@ -21,6 +22,11 @@ const Main = () => {
   return (
     <Fragment>
       <NavbarDefault />
+=======
+const Main = () => {
+  return (
+    <Fragment>
+>>>>>>> e86c23bc755aba24783f620aa0e6cac8e7b64dbd
       {/*  Page Content  */}
       <HeroHeader />
 
@@ -149,7 +155,10 @@ const Main = () => {
           </div>
         </Container>
       </div>
+<<<<<<< HEAD
       <Footer />
+=======
+>>>>>>> e86c23bc755aba24783f620aa0e6cac8e7b64dbd
     </Fragment>
   );
 };

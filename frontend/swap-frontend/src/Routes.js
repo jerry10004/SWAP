@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "assets/scss/theme.scss";
 
 import Main from "./pages/Main";
+
 import Application from "./pages/Application";
 import Program from "./pages/Program";
 import Survey from "./pages/Survey";
