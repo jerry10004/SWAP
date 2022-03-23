@@ -3,7 +3,7 @@ import React, { useState } from "react";
 
 // import sub components
 import NavbarVertical from "layouts/dashboard/NavbarVertical";
-// import NavbarTop from "./NavbarTop";
+import NavbarTop from "layouts/dashboard/NavbarTop";
 
 const DashboardIndex = (props) => {
   const [showMenu, setShowMenu] = useState(true);
@@ -17,14 +17,14 @@ const DashboardIndex = (props) => {
         <NavbarVertical showMenu={showMenu} onClick={(value) => setShowMenu(value)} />
       </div>
       <div id="page-content">
-        {/* <div className="header">
+        <div className="header">
           <NavbarTop
             data={{
               showMenu: showMenu,
               SidebarToggleMenu: ToggleMenu,
             }}
           />
-        </div> */}
+        </div>
         <div className="container-fluid p-4">{props.children}</div>
       </div>
     </div>
