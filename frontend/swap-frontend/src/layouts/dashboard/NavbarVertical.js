@@ -30,7 +30,7 @@ export const DashboardMenu = [
     id: uuid(),
     title: "Program",
     icon: "clipboard",
-    link: "/admin/program",
+    link: "/admin/manageprogram",
   },
 ];
 
