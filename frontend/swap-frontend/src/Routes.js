@@ -9,6 +9,7 @@ import Application from "./pages/Application";
 import Program from "./pages/Program";
 import Survey from "./pages/Survey";
 import MyPage from "./pages/MyPage";
+import AddProgram from "./pages/AddProgram";
 
 function Router() {
   return (
@@ -20,6 +21,7 @@ function Router() {
         <Route path="/program" element={<Program />} />
         <Route path="/survey" element={<Survey />} />
         <Route path="/mypage" element={<MyPage />} />
+        <Route path="/admin/addprogram" element={<AddProgram />} />
       </Routes>
     </BrowserRouter>
   );
