@@ -10,7 +10,8 @@ import Program from "./pages/Program";
 import Survey from "./pages/Survey";
 import MyPage from "./pages/MyPage";
 import ManageStudent from "./pages/ManageStudent";
-import ManageInstructor from "./pages/ManageInstructor";
+import ManageInstructor from "pages/ManageInstructor";
+import AddInstructor from "pages/AddInstructor";
 
 function Router() {
   return (
@@ -24,6 +25,7 @@ function Router() {
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/admin/managestudent" element={<ManageStudent />} />
         <Route path="/admin/manageinstructor" element={<ManageInstructor />} />
+        <Route path="/admin/addinstructor" element={<AddInstructor />} />
       </Routes>
     </BrowserRouter>
   );
