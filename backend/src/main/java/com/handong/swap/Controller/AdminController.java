@@ -71,7 +71,7 @@ public class AdminController{
 	
 	@RequestMapping(value = "", method = RequestMethod.POST, produces = "application/json; charset=utf8")
 	@ResponseBody
-	public String addAdministrator(HttpServletRequest httpServletRequest) {
+	public void addAdministrator(HttpServletRequest httpServletRequest) {
 		System.out.println("============");
 		System.out.println(httpServletRequest.getParameter("email"));
 		AdminDTO admin = new AdminDTO();
@@ -80,10 +80,17 @@ public class AdminController{
 		admin.setPhone(httpServletRequest.getParameter("phone"));
 		System.out.println("dto success");
 //		admin.setEmailYN(Integer.parseInt(httpServletRequest.getParameter("email_yn")));
-		String result = adminService.add(admin);
+		int result = adminService.add(admin);
+		if(result ==0 ) {
+			System.out.println("데이터 추가 실패");
+		}
+		else {
+			System.out.println("데이터 추가 성");
+		}
 		System.out.println("yaho");
 		System.out.println(result);
-		return result;
+//		String r="dd";
+//		return r;
 	}
 	
 }

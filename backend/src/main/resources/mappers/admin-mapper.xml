@@ -3,8 +3,8 @@
 
 <mapper namespace="Admin">
    
-   	<insert id = "insertAdministrator" parameterType="com.handong.swap.DTO.AdminDTO">
-   		INSERT INTO `Admin` (`user_id`, `email`, `phone`)
+   	<insert id = "insertAdministrator" parameterType="Admin">
+   		INSERT INTO Admin (user_id, email, phone)
    		VALUES (#{user_id},#{email},  #{phone})
    	</insert>
 

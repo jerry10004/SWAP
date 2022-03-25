@@ -15,11 +15,11 @@ public class AdminServiceImpl  implements AdminService{
 	AdminDAO adminDAO;
 	
 	@Override
-	public String add(AdminDTO admin) {
+	public int add(AdminDTO admin) {
 		System.out.println("admin is "+admin);
-		adminDAO.add(admin);
+//		adminDAO.add(admin);
 		System.out.println("service success!");
-		return("관리자가 추가되었습니다.");
+		return adminDAO.add(admin);
 	}
 
 }

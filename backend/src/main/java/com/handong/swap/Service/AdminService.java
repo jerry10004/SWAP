@@ -7,7 +7,7 @@ import com.handong.swap.DTO.AdminDTO;
 
 public interface AdminService {
 	
-	public String add(AdminDTO admin);
+	public int add(AdminDTO admin);
 
 
 }
