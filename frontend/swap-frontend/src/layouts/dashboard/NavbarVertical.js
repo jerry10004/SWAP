@@ -22,8 +22,8 @@ export const DashboardMenu = [
     title: "User",
     icon: "home",
     children: [
-      { id: uuid(), link: "/admin/manageinstructor", name: "관리자" },
-      { id: uuid(), link: "/admin/managestudent", name: "사용자" },
+      { id: uuid(), link: "/admin/instructor", name: "관리자" },
+      { id: uuid(), link: "/admin/student", name: "사용자" },
     ],
   },
   {

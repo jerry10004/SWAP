@@ -1,16 +1,8 @@
 // import node module libraries
 import { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
-import LinkIcon from "react-feather/dist/icons/link";
-import ImageIcon from "react-feather/dist/icons/image";
-import { Trash, XCircle, Copy, Video } from "react-feather";
-import { Col, Row, Breadcrumb, Card, Button, Form, InputGroup, FormControl, ListGroup, Image, Badge } from "react-bootstrap";
-
-// import custom components
-import { FormSelect } from "components/elements/form-select/FormSelect";
-
-// import media files
-import Avatar1 from "assets/images/avatar/avatar-1.jpg";
+import { Col, Row, Breadcrumb, Card, Button, Form } from "react-bootstrap";
+import axios from "axios";
 
 // import sub components
 import NavbarVertical from "layouts/dashboard/NavbarVertical";
@@ -18,41 +10,29 @@ import NavbarTop from "layouts/dashboard/NavbarTop";
 
 const AddInstructor = () => {
   const [showMenu, setShowMenu] = useState(true);
+  const [addName, setAddName] = useState(null);
+  const [addEmail, setAddEmail] = useState(null);
+  const [addPhone, setAddPhone] = useState(null);
+
   const ToggleMenu = () => {
     return setShowMenu(!showMenu);
   };
 
-  const initialValue = `<h4>One Ring to Rule Them All</h4>
-  <br />
-  <p>
-  Three Rings for the
-  <i> Elven-kingsunder</i> the sky, <br />
-  Seven for the <u>Dwarf-lords</u> in halls of stone,
-  Nine for Mortal Men, <br />
-  doomed to die, One for the Dark Lord on his dark
-  throne. <br />
-  In the Land of Mordor where the Shadows lie.
-  <br />
-  <br />
-  </p>
-  <p>
-  One Ring to
-  <b>rule</b> them all, <br />
-  One Ring to find them, <br />
-  One Ring to bring them all and in the darkness bind
-  them. <br />
-  In the Land of Mordor where the Shadows lie.
-  </p>
-  <p>
-  <br />
-  </p>`;
+  const createAdministrator = async () => {
+    var params = new URLSearchParams();
+    params.append("name", addName);
+    params.append("email", addEmail);
+    params.append("phone", addPhone);
 
-  const categoryOptions = [
-    { value: "course", label: "Course" },
-    { value: "post-category", label: "Post Category" },
-    { value: "workshop", label: "Workshop" },
-    { value: "marketing", label: "Marketing" },
-  ];
+    if (window.confirm("관리자를 추가하시겠습니까?")) {
+      const response = await axios.post(
+        "http://localhost:8080/swap/admin/add", //[loginID]로그인 후 변경
+        params
+      );
+      alert("추가 되었습니다");
+      //   readAdministrator();
+    }
+  };
 
   return (
     <Fragment>
@@ -104,22 +84,49 @@ const AddInstructor = () => {
                           {/* Title  */}
                           <Form.Group className="mb-3">
                             <Form.Label htmlFor="postTitle">Name</Form.Label>
-                            <Form.Control type="text" placeholder="Name" id="Name" />
+                            <Form.Control
+                              type="text"
+                              placeholder="Name"
+                              id="Name"
+                              onChange={(e) => {
+                                setAddName(e.target.value);
+                              }}
+                            />
                           </Form.Group>
                           <Form.Group className="mb-3">
                             <Form.Label htmlFor="postTitle">Email</Form.Label>
-                            <Form.Control type="text" placeholder="Email" id="Email" />
+                            <Form.Control
+                              type="text"
+                              placeholder="Email"
+                              id="Email"
+                              onChange={(e) => {
+                                setAddEmail(e.target.value);
+                              }}
+                            />
                           </Form.Group>
                           <Form.Group className="mb-3">
                             <Form.Label htmlFor="postTitle">Phone</Form.Label>
-                            <Form.Control type="text" placeholder="Phone" id="Phone" />
+                            <Form.Control
+                              type="text"
+                              placeholder="Phone"
+                              id="Phone"
+                              onChange={(e) => {
+                                setAddPhone(e.target.value);
+                              }}
+                            />
                           </Form.Group>
                         </Col>
 
                         <Col lg={12} md={12} sm={12}>
                           {/* button */}
                           <Form.Group className="mb-3">
-                            <Button variant="primary" className="m-1">
+                            <Button
+                              variant="primary"
+                              className="m-1"
+                              onClick={() => {
+                                createAdministrator();
+                              }}
+                            >
                               Save
                             </Button>
                             {/* <Button variant="outline-white">Save to Draft</Button> */}
