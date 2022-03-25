@@ -1,5 +1,5 @@
 // import node module libraries
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
 import LinkIcon from "react-feather/dist/icons/link";
 import ImageIcon from "react-feather/dist/icons/image";
@@ -12,7 +12,16 @@ import { FormSelect } from "components/elements/form-select/FormSelect";
 // import media files
 import Avatar1 from "assets/images/avatar/avatar-1.jpg";
 
+// import sub components
+import NavbarVertical from "layouts/dashboard/NavbarVertical";
+import NavbarTop from "layouts/dashboard/NavbarTop";
+
 const AddInstructor = () => {
+  const [showMenu, setShowMenu] = useState(true);
+  const ToggleMenu = () => {
+    return setShowMenu(!showMenu);
+  };
+
   const initialValue = `<h4>One Ring to Rule Them All</h4>
   <br />
   <p>
@@ -47,71 +56,84 @@ const AddInstructor = () => {
 
   return (
     <Fragment>
-      <Row>
-        <Col lg={12} md={12} sm={12}>
-          <div className="border-bottom pb-4 mb-4 d-md-flex align-items-center justify-content-between">
-            <div className="mb-3 mb-md-0">
-              <h1 className="mb-1 h2 fw-bold">Add Instructor</h1>
-              <Breadcrumb>
-                <Breadcrumb.Item href="#">Dashboard</Breadcrumb.Item>
-                <Breadcrumb.Item href="#">CMS</Breadcrumb.Item>
-                <Breadcrumb.Item active>Add New Post</Breadcrumb.Item>
-              </Breadcrumb>
-            </div>
-            <div>
-              <Link to="/cms/all-posts" className="btn btn-outline-white">
-                Back
-              </Link>
-            </div>
+      <div id="db-wrapper" className={`${showMenu ? "" : "toggled"}`}>
+        <div className="navbar-vertical navbar">
+          <NavbarVertical showMenu={showMenu} onClick={(value) => setShowMenu(value)} />
+        </div>
+        <div id="page-content">
+          <div className="header">
+            <NavbarTop
+              data={{
+                showMenu: showMenu,
+                SidebarToggleMenu: ToggleMenu,
+              }}
+            />
           </div>
-        </Col>
-      </Row>
+          <div className="container-fluid p-4">
+            <Row>
+              <Col lg={12} md={12} sm={12}>
+                <div className="border-bottom pb-4 mb-4 d-md-flex align-items-center justify-content-between">
+                  <div className="mb-3 mb-md-0">
+                    <h1 className="mb-1 h2 fw-bold">관리자 추가</h1>
+                    <Breadcrumb>
+                      <Breadcrumb.Item href="#">Admin</Breadcrumb.Item>
+                      <Breadcrumb.Item href="#">Instructor</Breadcrumb.Item>
+                      <Breadcrumb.Item active>Add New Instructor</Breadcrumb.Item>
+                    </Breadcrumb>
+                  </div>
+                  <div>
+                    <Link to="/admin/instructor" className="btn btn-outline-white">
+                      Back
+                    </Link>
+                  </div>
+                </div>
+              </Col>
+            </Row>
 
-      <Row>
-        <Col xl={9} lg={8} md={12} sm={12}>
-          <Card>
-            <Card.Header>
-              <h4 className="mb-0">Add Instructor</h4>
-            </Card.Header>
-            <Card.Body>
-              {/*  Form  */}
-              <Form className="mt-4">
-                <Row>
-                  <Col md={9} sm={12}>
-                    {/* Title  */}
-                    <Form.Group className="mb-3">
-                      <Form.Label htmlFor="postTitle">Name</Form.Label>
-                      <Form.Control type="text" placeholder="Post Title" id="postTitle" />
-                    </Form.Group>
+            <Row>
+              <Col xl={9} lg={8} md={12} sm={12}>
+                <Card>
+                  <Card.Header>
+                    <h4 className="mb-0">관리자 정보</h4>
+                  </Card.Header>
+                  <Card.Body>
+                    {/*  Form  */}
+                    <Form className="mt-4">
+                      <Row>
+                        <Col md={9} sm={12}>
+                          {/* Title  */}
+                          <Form.Group className="mb-3">
+                            <Form.Label htmlFor="postTitle">Name</Form.Label>
+                            <Form.Control type="text" placeholder="Name" id="Name" />
+                          </Form.Group>
+                          <Form.Group className="mb-3">
+                            <Form.Label htmlFor="postTitle">Email</Form.Label>
+                            <Form.Control type="text" placeholder="Email" id="Email" />
+                          </Form.Group>
+                          <Form.Group className="mb-3">
+                            <Form.Label htmlFor="postTitle">Phone</Form.Label>
+                            <Form.Control type="text" placeholder="Phone" id="Phone" />
+                          </Form.Group>
+                        </Col>
 
-                    {/* Excerpt */}
-                    <Form.Group className="mb-3">
-                      <Form.Label htmlFor="Excerpt">Email</Form.Label>
-                      <Form.Control as="textarea" placeholder="Excerpt" id="Excerpt" style={{ height: "100px" }} />
-                    </Form.Group>
-
-                    {/* Category */}
-                    <Form.Group className="mb-3">
-                      <Form.Label>Category</Form.Label>
-                      <FormSelect options={categoryOptions} />
-                    </Form.Group>
-                  </Col>
-
-                  <Col lg={12} md={12} sm={12}>
-                    {/* button */}
-                    <Form.Group className="mb-3">
-                      <Button variant="primary" className="m-1">
-                        Publish
-                      </Button>
-                      <Button variant="outline-white">Save to Draft</Button>
-                    </Form.Group>
-                  </Col>
-                </Row>
-              </Form>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
+                        <Col lg={12} md={12} sm={12}>
+                          {/* button */}
+                          <Form.Group className="mb-3">
+                            <Button variant="primary" className="m-1">
+                              Save
+                            </Button>
+                            {/* <Button variant="outline-white">Save to Draft</Button> */}
+                          </Form.Group>
+                        </Col>
+                      </Row>
+                    </Form>
+                  </Card.Body>
+                </Card>
+              </Col>
+            </Row>
+          </div>
+        </div>
+      </div>
     </Fragment>
   );
 };

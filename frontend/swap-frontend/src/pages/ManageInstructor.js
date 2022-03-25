@@ -1,5 +1,6 @@
 // import node module libraries
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 // import node module libraries
 import { Fragment } from "react";
@@ -9,7 +10,6 @@ import { Col, Row, Card, Tab, Breadcrumb, Button } from "react-bootstrap";
 import GridListViewButton from "components/elements/miscellaneous/GridListViewButton";
 
 // import sub components
-import InstructorsGridView from "components/dashboard/user/InstructorsGridCard";
 import InstructorsListItems from "components/dashboard/user/InstructorsListItems";
 
 // import sub components
@@ -52,7 +52,9 @@ const ManageInstructor = () => {
                       </Breadcrumb>
                     </div>
                     <div>
-                      <Button>관리자 추가</Button>
+                      <Link to="add">
+                        <Button>관리자 추가</Button>
+                      </Link>
                       {/* <GridListViewButton keyGrid="grid" keyList="list" /> */}
                     </div>
                   </div>
@@ -60,16 +62,11 @@ const ManageInstructor = () => {
               </Row>
 
               <Tab.Content>
-                <Tab.Pane eventKey="grid" className="pb-4">
-                  <InstructorsGridView />
-                </Tab.Pane>
-                <Tab.Pane eventKey="list" className="pb-4">
-                  <Card className="mb-5 ">
-                    <Card.Body className="p-0">
-                      <InstructorsListItems />
-                    </Card.Body>
-                  </Card>
-                </Tab.Pane>
+                <Card className="mb-5 ">
+                  <Card.Body className="p-0">
+                    <InstructorsListItems />
+                  </Card.Body>
+                </Card>
               </Tab.Content>
             </Tab.Container>
           </div>

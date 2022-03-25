@@ -29,9 +29,9 @@ function Router() {
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/admin/addprogram" element={<AddProgram />} />
         <Route path="/admin" element={<Admin />} />
-        <Route path="/admin/managestudent" element={<ManageStudent />} />
-        <Route path="/admin/manageinstructor" element={<ManageInstructor />} />
-        <Route path="/admin/addinstructor" element={<AddInstructor />} />
+        <Route path="/admin/student" element={<ManageStudent />} />
+        <Route path="/admin/instructor" element={<ManageInstructor />} />
+        <Route path="/admin/instructor/add" element={<AddInstructor />} />
         <Route path="/admin/manageprogram" element={<ManageProgram />} />
         <Route path="/admin/test" element={<Test />} />
       </Routes>
