@@ -11,6 +11,7 @@
 	
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<annotation-driven />
+	<context:annotation-config/>
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<resources mapping="/resources/**" location="/resources/" />
@@ -22,6 +23,32 @@
 	</beans:bean>
 	
 	<context:component-scan base-package="com.handong.swap" />
+	
+	
+<!-- 	<beans:bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <beans:property name="location" value="/WEB-INF/config/config.properties"/>
+        <beans:property name="fileEncoding" value="UTF-8" />
+    </beans:bean>
+ -->
+	<beans:bean id = "dataSource"  class="org.apache.commons.dbcp.BasicDataSource">
+		<beans:property name = "driverClassName" value="com.mysql.jdbc.Driver"/>
+		<beans:property name="url" value="${spring.datasource.url}"/>
+		<beans:property name = "username" value="${spring.datasource.username}"/>
+		<beans:property name = "password" value="${spring.datasource.password}"/>
+	</beans:bean>
+	
+	<beans:bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"> 
+		<beans:property name="mapperLocations" value="classpath*:mapper/**/*.xml"/>   
+		<beans:property name="dataSource" ref="dataSource"/>  
+	</beans:bean>    
+	
+	<beans:bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+		<beans:constructor-arg index="0" ref="sqlSessionFactory"/>
+	</beans:bean>
+	
+	
+	
+	
 	
 	
 	

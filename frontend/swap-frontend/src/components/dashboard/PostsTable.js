@@ -90,6 +90,7 @@ const PostsTable = ({ table_data }) => {
           );
         },
       },
+
       // {
       //   accessor: "shortcutmenu",
       //   Header: "",
