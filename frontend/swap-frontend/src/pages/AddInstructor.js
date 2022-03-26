@@ -1,5 +1,5 @@
 // import node module libraries
-import { Fragment, useState } from "react";
+import { Fragment, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Col, Row, Breadcrumb, Card, Button, Form } from "react-bootstrap";
 import axios from "axios";
@@ -13,6 +13,11 @@ const AddInstructor = () => {
   const [addName, setAddName] = useState(null);
   const [addEmail, setAddEmail] = useState(null);
   const [addPhone, setAddPhone] = useState(null);
+
+  // useEffect(() => {
+  //   console.log("???????");
+  //   readAdmin();
+  // }, []);
 
   const ToggleMenu = () => {
     return setShowMenu(!showMenu);
@@ -30,9 +35,22 @@ const AddInstructor = () => {
         params
       );
       alert("추가 되었습니다");
-      //   readAdministrator();
+      // readAdmin();
     }
   };
+
+  // const [adminInfo, setAdminInfo] = useState(null);
+
+  // const readAdmin = async () => {
+  //   console.log("???===========================");
+
+  //   const response = await axios.get("http://localhost:8080/swap/admin");
+  //   setAdminInfo(response.data);
+  //   console.log(response);
+  //   console.log(response.data);
+  //   console.log("===========================");
+  //   console.log(adminInfo);
+  // };
 
   return (
     <Fragment>

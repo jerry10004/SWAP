@@ -6,9 +6,6 @@ import { Link } from "react-router-dom";
 import { Fragment } from "react";
 import { Col, Row, Card, Tab, Breadcrumb, Button } from "react-bootstrap";
 
-// import custom components
-import GridListViewButton from "components/elements/miscellaneous/GridListViewButton";
-
 // import sub components
 import InstructorsListItems from "components/dashboard/user/InstructorsListItems";
 
@@ -46,7 +43,7 @@ const ManageInstructor = () => {
                         Instructor <span className="fs-5 text-muted">(12,105)</span>
                       </h1>
                       <Breadcrumb>
-                        <Breadcrumb.Item href="#">Dashboard</Breadcrumb.Item>
+                        <Breadcrumb.Item href="#">Admin</Breadcrumb.Item>
                         <Breadcrumb.Item href="#">User</Breadcrumb.Item>
                         <Breadcrumb.Item active>Instructor</Breadcrumb.Item>
                       </Breadcrumb>
