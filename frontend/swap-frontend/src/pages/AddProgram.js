@@ -2,24 +2,26 @@
 import React, { useState, Fragment } from "react";
 import { Col, Row, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 // import custom components
 import GKStepper from "components/elements/stepper/GKStepper";
 
 // import sub components ( Steps )
 import BasicInformation from "components/marketing/pages/courses/add-new-course/steps/BasicInformation";
-import CoursesMedia from "components/marketing/pages/courses/add-new-course/steps/ApplicationForm";
+import ApplicationForm from "components/marketing/pages/courses/add-new-course/steps/ApplicationForm";
 import Curriculum from "components/marketing/pages/courses/add-new-course/steps/SurveyForm";
 import Settings from "components/marketing/pages/courses/add-new-course/steps/Settings";
 
 const AddNewCourse = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState({
-    course_title: "Course Title",
-    category_category: "React",
-    courses_level: "Intermediate",
-    course_description: "Ahmedabad",
+    program_title: "Title",
+    program_category: "camp",
+    program_description: "Hello, world!",
+    program_img: "img",
   });
+
   const handleChange = (event) => {
     setFormData({
       ...formData,
@@ -28,9 +30,26 @@ const AddNewCourse = () => {
   };
   const next = () => {
     setCurrentStep(currentStep === 4 ? 1 : currentStep + 1);
+    console.log(formData);
   };
   const previous = () => {
     setCurrentStep(currentStep === 1 ? 1 : currentStep - 1);
+  };
+
+  const addProgram = async () => {
+    var params = new URLSearchParams();
+    params.append("category_id", "1");
+    params.append("program_name", "SW캠프");
+    params.append("information", "안녕하세요 이 프로그램은 TEST 입니다.");
+    params.append("start_date", "20 08:03");
+    params.append("end_date", "20 08:03");
+
+    if (window.confirm("프로그램을 추가하시겠습니까?")) {
+      console.log("----------------------");
+      const response = await axios.post("http://localhost:8080/swap/program/add", params);
+      console.log("++++++++++++++++++++++");
+      alert(response.data);
+    }
   };
 
   const steps = [
@@ -42,13 +61,13 @@ const AddNewCourse = () => {
     {
       id: 2,
       title: "프로그램 신청서 Form 제작",
-      content: <CoursesMedia data={formData} handleChange={handleChange} next={next} previous={previous} />,
+      content: <ApplicationForm data={formData} handleChange={handleChange} addProgram={addProgram} previous={previous} />,
     },
-    {
-      id: 3,
-      title: "프로그램 설문지 Form 제작",
-      content: <Curriculum data={formData} handleChange={handleChange} next={next} previous={previous} />,
-    },
+    // {
+    //   id: 3,
+    //   title: "프로그램 설문지 Form 제작",
+    //   content: <Curriculum data={formData} handleChange={handleChange} next={next} previous={previous} />,
+    // },
     // {
     //   id: 4,
     //   title: "Settings",
@@ -68,7 +87,7 @@ const AddNewCourse = () => {
                   {/* <p className="mb-0 text-white lead">Just fill the form and create your courses.</p> */}
                 </div>
                 <div>
-                  <Link to="#" className="btn btn-white ">
+                  <Link to="/admin/manageprogram" className="btn btn-white ">
                     프로그램 목록 보기
                   </Link>{" "}
                   <Link to="#" className="btn btn-success ">

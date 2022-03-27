@@ -5,6 +5,7 @@
 	<configuration>
 		<typeAliases>
 			<typeAlias alias="Admin" type="com.handong.swap.DTO.AdminDTO"/>
-	</typeAliases>
+			<typeAlias alias="Program" type="com.handong.swap.DTO.ProgramDTO"/>
+		</typeAliases>
 		
 	</configuration>

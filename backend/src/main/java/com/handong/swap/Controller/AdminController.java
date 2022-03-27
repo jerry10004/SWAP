@@ -16,7 +16,7 @@ public class AdminController{
 	@Autowired
 	AdminService adminService;
 	
-	@RequestMapping(value = "add", method = RequestMethod.POST, produces = "application/json; charset=utf8")
+	@RequestMapping(value = "", method = RequestMethod.POST, produces = "application/json; charset=utf8")
 	@ResponseBody
 	public void addAdministrator(HttpServletRequest httpServletRequest) {
 		AdminDTO admin = new AdminDTO();
@@ -24,6 +24,7 @@ public class AdminController{
 		admin.setName(httpServletRequest.getParameter("name"));
 		admin.setEmail(httpServletRequest.getParameter("email"));
 		admin.setPhone(httpServletRequest.getParameter("phone"));
+		System.out.println(httpServletRequest.getParameter("name"));
 		int result = adminService.add(admin);
 		if(result ==0 ) {
 			System.out.println("관리자 추가 실패");
