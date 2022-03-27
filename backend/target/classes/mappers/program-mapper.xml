@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mapper namespace="Program">   
+
+   	
+   	<select id="readProgram" resultType="Program">
+	   	select P.id, P.user_id, P.name, P.phone, P.email
+		from Program AS P
+		JOIN User AS U
+		ON U.id = P.user_id AND P.deldate is null
+		ORDER BY P.regdate desc;
+   	</select>
+   	
+</mapper>
