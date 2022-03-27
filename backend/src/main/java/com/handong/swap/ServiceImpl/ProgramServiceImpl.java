@@ -11,7 +11,6 @@ import com.handong.swap.DAO.ProgramDAO;
 import com.handong.swap.DTO.ProgramDTO;
 import com.handong.swap.Service.ProgramService;
 
-
 @Service
 public class ProgramServiceImpl implements ProgramService{
 	
@@ -24,5 +23,6 @@ public class ProgramServiceImpl implements ProgramService{
 		ObjectMapper mapper = new ObjectMapper();
 		String jsonString = mapper.writeValueAsString(programDATA);
 		return jsonString;
+
 	}
 }
