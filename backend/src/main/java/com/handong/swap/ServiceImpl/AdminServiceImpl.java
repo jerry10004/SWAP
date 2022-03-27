@@ -30,4 +30,10 @@ public class AdminServiceImpl implements AdminService{
 		String jsonString = mapper.writeValueAsString(adminDATA);
 		return jsonString;
 	}
+	
+//	@Override
+//	public void delete(int id, String email) {
+//		userDAO.updateDelDate(email);
+//		adminDAO.delete(id);
+//	}
 }

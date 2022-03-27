@@ -13,34 +13,45 @@ import Pagination from "components/elements/advance-table/Pagination";
 // import data files
 import { InstructorData } from "data/users/InstructorData";
 
-const InstructorsListItems = () => {
-  const [adminInfo, setAdminInfo] = useState();
+const InstructorsListItems = (props) => {
+  const [adminInfo, setAdminInfo] = useState([]);
+  const [count, setCount] = useState(0);
 
-  useEffect(() => {
-    console.log("*********");
-    readAdmin();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // useEffect(() => {
+  //   console.log("*********");
+  //   console.log("data is", props.param1);
+  //   setAdminInfo(props.param1);
+  //   console.log("result is", adminInfo);
+  //   setData(props.param1);
+  //   console.log("data is", data);
 
-  const readAdmin = async () => {
-    console.log("???===========================");
+  // }, []);
 
-    // const response = await axios.get("http://localhost:8080/swap/admin");
-    const response = await axios.get("http://localhost:8080/swap/admin");
-    setAdminInfo(response.data[0]);
-    console.log("======response is =======");
-    console.log(response);
-    console.log("======response.data is =======");
-    console.log(response.data);
-    console.log("======instructor data is =======");
-    console.log(InstructorData);
-    console.log("========adminInfo is========");
-    console.log(adminInfo);
-    console.log("========0.adminInfo is========");
-    console.log(adminInfo[0]);
-    console.log("========1.adminInfo is========");
-    console.log(adminInfo[1]);
-    // const datas = useMemo(() => InstructorData, []);
+  //   setCount(1);
+  // }, []);
+
+  // const readAdmin = async () => {
+  //   console.log("???===========================");
+  //   const response = await axios.get("http://localhost:8080/swap/admin");
+  //   // assignAdmin(reponse.data);
+  //   setAdminInfo(response.data);
+  //   console.log("======response is =======");
+  //   console.log(response);
+  //   console.log("======response.data is =======");
+  //   console.log(response.data);
+  //   console.log("======instructor data is =======");
+  //   console.log(InstructorData);
+  //   console.log("========adminInfo is========");
+  //   console.log(adminInfo);
+  //   console.log("========0.adminInfo is========");
+  //   console.log(adminInfo[0]);
+  //   console.log("========1.adminInfo is========");
+  //   console.log(adminInfo[1]);
+  // };
+
+  const assignAdmin = () => {
+    setAdminInfo(props.param1);
+    console.log("result is", adminInfo);
   };
 
   // The forwardRef is important!!
@@ -121,7 +132,9 @@ const InstructorsListItems = () => {
     []
   );
 
-  const data = useMemo(() => InstructorData, []);
+  // if(adminInfo !== ''){
+  const data = useMemo(() => adminInfo, []);
+  // }
 
   const { getTableProps, getTableBodyProps, headerGroups, page, nextPage, previousPage, state, gotoPage, pageCount, prepareRow, setGlobalFilter } = useTable(
     {
