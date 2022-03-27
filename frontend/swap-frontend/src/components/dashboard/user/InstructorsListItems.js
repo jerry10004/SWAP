@@ -1,25 +1,59 @@
 // import node module libraries
-import React, { Fragment, useMemo } from "react";
+import React, { Fragment, useMemo, useEffect, useState } from "react";
 import { useTable, useFilters, useGlobalFilter, usePagination } from "react-table";
 import { Link } from "react-router-dom";
-import { Dropdown, Image, OverlayTrigger, Tooltip, Row, Col, Table } from "react-bootstrap";
-import { MoreVertical, Trash, Edit, Mail } from "react-feather";
-
-// import MDI icons
-import Icon from "@mdi/react";
-import { mdiStar } from "@mdi/js";
+import { Dropdown, OverlayTrigger, Tooltip, Row, Col, Table } from "react-bootstrap";
+import { MoreVertical, Trash, Edit } from "react-feather";
+import axios from "axios";
 
 // import custom components
 import GlobalFilter from "components/elements/advance-table/GlobalFilter";
 import Pagination from "components/elements/advance-table/Pagination";
 
-// import utility file
-import { numberWithCommas } from "helper/utils";
-
 // import data files
 import { InstructorData } from "data/users/InstructorData";
 
-const InstructorsListItems = () => {
+const InstructorsListItems = (props) => {
+  const [adminInfo, setAdminInfo] = useState([]);
+  const [count, setCount] = useState(0);
+
+  // useEffect(() => {
+  //   console.log("*********");
+  //   console.log("data is", props.param1);
+  //   setAdminInfo(props.param1);
+  //   console.log("result is", adminInfo);
+  //   setData(props.param1);
+  //   console.log("data is", data);
+
+  // }, []);
+
+  //   setCount(1);
+  // }, []);
+
+  // const readAdmin = async () => {
+  //   console.log("???===========================");
+  //   const response = await axios.get("http://localhost:8080/swap/admin");
+  //   // assignAdmin(reponse.data);
+  //   setAdminInfo(response.data);
+  //   console.log("======response is =======");
+  //   console.log(response);
+  //   console.log("======response.data is =======");
+  //   console.log(response.data);
+  //   console.log("======instructor data is =======");
+  //   console.log(InstructorData);
+  //   console.log("========adminInfo is========");
+  //   console.log(adminInfo);
+  //   console.log("========0.adminInfo is========");
+  //   console.log(adminInfo[0]);
+  //   console.log("========1.adminInfo is========");
+  //   console.log(adminInfo[1]);
+  // };
+
+  const assignAdmin = () => {
+    setAdminInfo(props.param1);
+    console.log("result is", adminInfo);
+  };
+
   // The forwardRef is important!!
   // Dropdown needs access to the DOM node in order to position the Menu
   const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
@@ -65,50 +99,13 @@ const InstructorsListItems = () => {
         Cell: ({ value, row }) => {
           return (
             <div className="d-flex align-items-center">
-              <Image src={row.original.image} alt="" className="rounded-circle avatar-md me-2" />
               <h5 className="mb-0">{value}</h5>
             </div>
           );
         },
       },
-      { accessor: "image", Header: "", show: false },
-      { accessor: "topic", Header: "연락처" },
       { accessor: "email", Header: "이메일" },
-      { accessor: "courses", Header: "소속" },
-      { accessor: "joined", Header: "메모" },
-      {
-        accessor: "students",
-        Header: "STUDENTS",
-        Cell: ({ value }) => {
-          return numberWithCommas(value);
-        },
-      },
-      {
-        accessor: "rating",
-        Header: "RATING",
-        Cell: ({ value }) => {
-          return (
-            <div className="align-middle text-warning border-top-0">
-              {value} <Icon path={mdiStar} size={0.6} />
-            </div>
-          );
-        },
-      },
-      {
-        accessor: "message",
-        Header: "",
-        Cell: () => {
-          return (
-            <div className="align-middle border-top-0">
-              <OverlayTrigger key="top" placement="top" overlay={<Tooltip id={`tooltip-top`}>Message</Tooltip>}>
-                <Link to="#">
-                  <Mail size="15px" className="dropdown-item-icon" />
-                </Link>
-              </OverlayTrigger>
-            </div>
-          );
-        },
-      },
+      { accessor: "phone", Header: "연락처" },
       {
         accessor: "delete",
         Header: "",
@@ -135,7 +132,9 @@ const InstructorsListItems = () => {
     []
   );
 
-  const data = useMemo(() => InstructorData, []);
+  // if(adminInfo !== ''){
+  const data = useMemo(() => adminInfo, []);
+  // }
 
   const { getTableProps, getTableBodyProps, headerGroups, page, nextPage, previousPage, state, gotoPage, pageCount, prepareRow, setGlobalFilter } = useTable(
     {

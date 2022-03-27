@@ -1,3 +1,6 @@
+import axios from "axios";
+import React, { useState } from "react";
+
 // import media files
 import Avatar1 from "assets/images/avatar/avatar-1.jpg";
 import Avatar2 from "assets/images/avatar/avatar-2.jpg";
@@ -12,26 +15,41 @@ import Avatar14 from "assets/images/avatar/avatar-14.jpg";
 import Avatar17 from "assets/images/avatar/avatar-17.jpg";
 import Avatar15 from "assets/images/avatar/avatar-15.jpg";
 
+// function InstructorData() {
+//   const [adminInfo, setAdminInfo] = useState(null);
+
+//   const readAdmin = async () => {
+//     const response = await axios.get(
+//       "http://localhost:8080/swap/admin"
+//       // {
+//       //   params: {
+//       //     token: window.sessionStorage.getItem("token"),
+//       //     manageID: window.sessionStorage.getItem("id"),
+//       //   },
+//       // }
+//     );
+//     setAdminInfo(response.data);
+//     console.log("===========================");
+//     console.log(adminInfo);
+//   };
+// }
+
 export const InstructorData = [
   {
     id: 1,
     name: "Jenny Wilson",
-    image: Avatar1,
-    topic: "Front-end Developer, Designer",
-    courses: 6,
-    joined: "7 July, 2020",
-    students: 50274,
-    rating: 4.6,
+    email: "qazxcv0691@naver.com",
+    phone: "01075226038",
     reviews: 12230,
     status: "offline",
-    about: `I am an Innovation designer focussing on UX/UI based in Berlin. 
-        As a creative resident at Figma explored the city of the future and how new technologies like AI, 
+    about: `I am an Innovation designer focussing on UX/UI based in Berlin.
+        As a creative resident at Figma explored the city of the future and how new technologies like AI,
         voice control, and augmented reality will change our interfaces.`,
   },
   {
     id: 2,
     name: "Dianna Smiley",
-    image: Avatar2,
+    // image: Avatar2,
     topic: "Front End Developer",
     courses: 3,
     joined: "6 July, 2020",
@@ -39,8 +57,8 @@ export const InstructorData = [
     rating: 4.4,
     reviews: 11230,
     status: "online",
-    about: `I am an Innovation designer focussing on UX/UI based in Berlin. 
-        As a creative resident at Figma explored the city of the future and how new technologies like AI, 
+    about: `I am an Innovation designer focussing on UX/UI based in Berlin.
+        As a creative resident at Figma explored the city of the future and how new technologies like AI,
         voice control, and augmented reality will change our interfaces.`,
   },
   {
@@ -54,8 +72,8 @@ export const InstructorData = [
     rating: 4.6,
     reviews: 10230,
     status: "away",
-    about: `I am an Innovation designer focussing on UX/UI based in Berlin. 
-        As a creative resident at Figma explored the city of the future and how new technologies like AI, 
+    about: `I am an Innovation designer focussing on UX/UI based in Berlin.
+        As a creative resident at Figma explored the city of the future and how new technologies like AI,
         voice control, and augmented reality will change our interfaces.`,
   },
   {
@@ -69,8 +87,8 @@ export const InstructorData = [
     rating: 4.5,
     reviews: 2230,
     status: "info",
-    about: `I am an Innovation designer focussing on UX/UI based in Berlin. 
-        As a creative resident at Figma explored the city of the future and how new technologies like AI, 
+    about: `I am an Innovation designer focussing on UX/UI based in Berlin.
+        As a creative resident at Figma explored the city of the future and how new technologies like AI,
         voice control, and augmented reality will change our interfaces.`,
   },
   {
@@ -84,8 +102,8 @@ export const InstructorData = [
     rating: 4.5,
     reviews: 1230,
     status: "busy",
-    about: `I am an Innovation designer focussing on UX/UI based in Berlin. 
-        As a creative resident at Figma explored the city of the future and how new technologies like AI, 
+    about: `I am an Innovation designer focussing on UX/UI based in Berlin.
+        As a creative resident at Figma explored the city of the future and how new technologies like AI,
         voice control, and augmented reality will change our interfaces.`,
   },
   {
@@ -99,8 +117,8 @@ export const InstructorData = [
     rating: 4.5,
     reviews: 12230,
     status: "offline",
-    about: `I am an Innovation designer focussing on UX/UI based in Berlin. 
-        As a creative resident at Figma explored the city of the future and how new technologies like AI, 
+    about: `I am an Innovation designer focussing on UX/UI based in Berlin.
+        As a creative resident at Figma explored the city of the future and how new technologies like AI,
         voice control, and augmented reality will change our interfaces.`,
   },
   {
@@ -114,8 +132,8 @@ export const InstructorData = [
     rating: 4.5,
     reviews: 12530,
     status: "offline",
-    about: `I am an Innovation designer focussing on UX/UI based in Berlin. 
-        As a creative resident at Figma explored the city of the future and how new technologies like AI, 
+    about: `I am an Innovation designer focussing on UX/UI based in Berlin.
+        As a creative resident at Figma explored the city of the future and how new technologies like AI,
         voice control, and augmented reality will change our interfaces.`,
   },
   {
@@ -129,8 +147,8 @@ export const InstructorData = [
     rating: 4.5,
     reviews: 12230,
     status: "offline",
-    about: `I am an Innovation designer focussing on UX/UI based in Berlin. 
-        As a creative resident at Figma explored the city of the future and how new technologies like AI, 
+    about: `I am an Innovation designer focussing on UX/UI based in Berlin.
+        As a creative resident at Figma explored the city of the future and how new technologies like AI,
         voice control, and augmented reality will change our interfaces.`,
   },
   {
@@ -144,8 +162,8 @@ export const InstructorData = [
     rating: 4.4,
     reviews: 12230,
     status: "offline",
-    about: `I am an Innovation designer focussing on UX/UI based in Berlin. 
-        As a creative resident at Figma explored the city of the future and how new technologies like AI, 
+    about: `I am an Innovation designer focussing on UX/UI based in Berlin.
+        As a creative resident at Figma explored the city of the future and how new technologies like AI,
         voice control, and augmented reality will change our interfaces.`,
   },
   {
@@ -159,8 +177,8 @@ export const InstructorData = [
     rating: 4.5,
     reviews: 12230,
     status: "offline",
-    about: `I am an Innovation designer focussing on UX/UI based in Berlin. 
-        As a creative resident at Figma explored the city of the future and how new technologies like AI, 
+    about: `I am an Innovation designer focussing on UX/UI based in Berlin.
+        As a creative resident at Figma explored the city of the future and how new technologies like AI,
         voice control, and augmented reality will change our interfaces.`,
   },
   {
@@ -174,8 +192,8 @@ export const InstructorData = [
     rating: 4.5,
     reviews: 14230,
     status: "offline",
-    about: `I am an Innovation designer focussing on UX/UI based in Berlin. 
-        As a creative resident at Figma explored the city of the future and how new technologies like AI, 
+    about: `I am an Innovation designer focussing on UX/UI based in Berlin.
+        As a creative resident at Figma explored the city of the future and how new technologies like AI,
         voice control, and augmented reality will change our interfaces.`,
   },
   {
@@ -189,8 +207,8 @@ export const InstructorData = [
     rating: 4.5,
     reviews: 22230,
     status: "offline",
-    about: `I am an Innovation designer focussing on UX/UI based in Berlin. 
-        As a creative resident at Figma explored the city of the future and how new technologies like AI, 
+    about: `I am an Innovation designer focussing on UX/UI based in Berlin.
+        As a creative resident at Figma explored the city of the future and how new technologies like AI,
         voice control, and augmented reality will change our interfaces.`,
   },
   {
@@ -204,8 +222,8 @@ export const InstructorData = [
     rating: 4.5,
     reviews: 12530,
     status: "offline",
-    about: `I am an Innovation designer focussing on UX/UI based in Berlin. 
-        As a creative resident at Figma explored the city of the future and how new technologies like AI, 
+    about: `I am an Innovation designer focussing on UX/UI based in Berlin.
+        As a creative resident at Figma explored the city of the future and how new technologies like AI,
         voice control, and augmented reality will change our interfaces.`,
   },
   {
@@ -219,8 +237,8 @@ export const InstructorData = [
     rating: 4.1,
     reviews: 14230,
     status: "offline",
-    about: `I am an Innovation designer focussing on UX/UI based in Berlin. 
-        As a creative resident at Figma explored the city of the future and how new technologies like AI, 
+    about: `I am an Innovation designer focussing on UX/UI based in Berlin.
+        As a creative resident at Figma explored the city of the future and how new technologies like AI,
         voice control, and augmented reality will change our interfaces.`,
   },
   {
@@ -234,8 +252,8 @@ export const InstructorData = [
     rating: 4.5,
     reviews: 12230,
     status: "offline",
-    about: `I am an Innovation designer focussing on UX/UI based in Berlin. 
-        As a creative resident at Figma explored the city of the future and how new technologies like AI, 
+    about: `I am an Innovation designer focussing on UX/UI based in Berlin.
+        As a creative resident at Figma explored the city of the future and how new technologies like AI,
         voice control, and augmented reality will change our interfaces.`,
   },
   {
@@ -249,8 +267,8 @@ export const InstructorData = [
     rating: 4.4,
     reviews: 10230,
     status: "offline",
-    about: `I am an Innovation designer focussing on UX/UI based in Berlin. 
-        As a creative resident at Figma explored the city of the future and how new technologies like AI, 
+    about: `I am an Innovation designer focussing on UX/UI based in Berlin.
+        As a creative resident at Figma explored the city of the future and how new technologies like AI,
         voice control, and augmented reality will change our interfaces.`,
   },
   {
@@ -264,8 +282,8 @@ export const InstructorData = [
     rating: 4.5,
     reviews: 12230,
     status: "offline",
-    about: `I am an Innovation designer focussing on UX/UI based in Berlin. 
-        As a creative resident at Figma explored the city of the future and how new technologies like AI, 
+    about: `I am an Innovation designer focussing on UX/UI based in Berlin.
+        As a creative resident at Figma explored the city of the future and how new technologies like AI,
         voice control, and augmented reality will change our interfaces.`,
   },
   {
@@ -279,8 +297,8 @@ export const InstructorData = [
     rating: 4.5,
     reviews: 18230,
     status: "offline",
-    about: `I am an Innovation designer focussing on UX/UI based in Berlin. 
-        As a creative resident at Figma explored the city of the future and how new technologies like AI, 
+    about: `I am an Innovation designer focussing on UX/UI based in Berlin.
+        As a creative resident at Figma explored the city of the future and how new technologies like AI,
         voice control, and augmented reality will change our interfaces.`,
   },
   {
@@ -294,8 +312,8 @@ export const InstructorData = [
     rating: 4.5,
     reviews: 12000,
     status: "offline",
-    about: `I am an Innovation designer focussing on UX/UI based in Berlin. 
-        As a creative resident at Figma explored the city of the future and how new technologies like AI, 
+    about: `I am an Innovation designer focussing on UX/UI based in Berlin.
+        As a creative resident at Figma explored the city of the future and how new technologies like AI,
         voice control, and augmented reality will change our interfaces.`,
   },
   {
@@ -309,8 +327,8 @@ export const InstructorData = [
     rating: 4.5,
     reviews: 19230,
     status: "offline",
-    about: `I am an Innovation designer focussing on UX/UI based in Berlin. 
-        As a creative resident at Figma explored the city of the future and how new technologies like AI, 
+    about: `I am an Innovation designer focussing on UX/UI based in Berlin.
+        As a creative resident at Figma explored the city of the future and how new technologies like AI,
         voice control, and augmented reality will change our interfaces.`,
   },
 ];
