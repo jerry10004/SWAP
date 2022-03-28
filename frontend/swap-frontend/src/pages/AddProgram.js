@@ -15,17 +15,27 @@ import Settings from "components/marketing/pages/courses/add-new-course/steps/Se
 const AddNewCourse = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState({
-    course_title: "Course Title",
-    category_category: "React",
-    courses_level: "Intermediate",
-    course_description: "Ahmedabad",
+    program_title: "Title",
+    program_category: "1",
+    program_description: "Hello, world!",
+    program_img: "img",
+    start_date: "",
+    end_date: "",
   });
+
+  const [start_date, setStart_date] = useState(new Date());
+
   const handleChange = (event) => {
     setFormData({
       ...formData,
       [event.target.name]: event.target.value,
     });
+    // setStart_date(start_date);
+
+    // console.log(event.target.value);
+    // console.log(start_date);
   };
+
   const next = () => {
     setCurrentStep(currentStep === 4 ? 1 : currentStep + 1);
   };
@@ -33,11 +43,30 @@ const AddNewCourse = () => {
     setCurrentStep(currentStep === 1 ? 1 : currentStep - 1);
   };
 
+<<<<<<< HEAD
+  const addProgram = async () => {
+    var params = new URLSearchParams();
+    params.append("category_id", "1");
+    params.append("program_name", formData.program_title);
+    params.append("information", formData.program_description);
+    params.append("start_date", "20 08:03");
+    params.append("end_date", "20 08:03");
+
+    if (window.confirm("프로그램을 추가하시겠습니까?")) {
+      console.log("----------------------");
+      const response = await axios.post("http://localhost:8080/swap/program/add", params);
+      console.log("++++++++++++++++++++++");
+      alert(response.data);
+    }
+  };
+
+=======
+>>>>>>> 1edd3018ad62ede44081e723a0643f654cc37d86
   const steps = [
     {
       id: 1,
       title: "프로그램 기본 정보 작성",
-      content: <BasicInformation data={formData} handleChange={handleChange} next={next} />,
+      content: <BasicInformation data={formData} handleChange={handleChange} setStart_date={setStart_date} next={next} />,
     },
     {
       id: 2,
