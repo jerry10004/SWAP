@@ -1,8 +1,15 @@
 package com.handong.swap.Controller;
 
+
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.text.ParseException;
+
 import java.util.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+
 
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +22,21 @@ import com.handong.swap.DTO.ProgramDTO;
 
 @Controller
 @RequestMapping("/program")
-public class ProgramController{
+
+public class ProgramController {
+
 	
 	@Autowired
 	ProgramService programService;
+	
+	@RequestMapping(value = "", method = RequestMethod.GET, produces = "application/json; charset=utf8")
+	@ResponseBody
+	public String readprogram(HttpServletRequest httpServletRequest) throws IOException, ParseException {
+		System.out.println("읽기 시도");
+		String result = programService.read();
+		System.out.println(result);
+	    return result;
+	}
 	
 	@RequestMapping(value = "/add", method = RequestMethod.POST, produces = "application/json; charset=utf8")
 	@ResponseBody

@@ -46,7 +46,7 @@ const AllCourses = () => {
                     </Breadcrumb>
                   </div>
                   <div>
-                    <Link to="#" className="btn btn-primary">
+                    <Link to="/admin/addprogram" className="btn btn-primary">
                       프로그램 추가
                     </Link>
                   </div>

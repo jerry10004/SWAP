@@ -1,10 +1,11 @@
 // import node module libraries
 import { Col, Card, Form, Button } from "react-bootstrap";
 import { FormSelect } from "components/elements/form-select/FormSelect";
-import React, { Fragment, useState } from "react";
+import React, { Fragment } from "react";
+import { Link } from "react-router-dom";
 
-const ApplicationForm = (props) => {
-  const { previous, addProgram } = props;
+const CoursesMedia = (props) => {
+  const { next, previous } = props;
   const templateOptions = [
     { value: "대회", label: "대회" },
     { value: "봉사", label: "봉사" },
@@ -13,16 +14,6 @@ const ApplicationForm = (props) => {
     { value: "행사", label: "행사" },
     { value: "기타", label: "기타" },
   ];
-  const [validated, setValidated] = useState(false);
-
-  const handleSubmit = (event) => {
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
-    setValidated(true);
-  };
 
   const ApplicationForm = () => {
     return (
@@ -75,7 +66,7 @@ const ApplicationForm = (props) => {
           <Col md={12} sm={12} className="mb-5">
             {/*  Checkbox  */}
             <Form.Group controlId="customCheck1">
-              <Form.Check required type="checkbox" label="개인정보 활용에 동의합니다." />
+              <Form.Check type="checkbox" label="개인정보 활용에 동의합니다." />
             </Form.Group>
           </Col>
         </Form>
@@ -103,16 +94,15 @@ const ApplicationForm = (props) => {
       </Card>
 
       {/* Button */}
-      <div className="d-flex justify-content-between mb-22">
-        {/* Button */}
+      <div className="d-flex justify-content-between">
         <Button variant="secondary" onClick={previous}>
-          이전
+          Previous
         </Button>
-        <Button variant="danger" onClick={addProgram}>
-          제출
+        <Button variant="primary" onClick={next}>
+          Next
         </Button>
       </div>
     </Form>
   );
 };
-export default ApplicationForm;
+export default CoursesMedia;

@@ -6,6 +6,7 @@
 		<typeAliases>
 			<typeAlias alias="Admin" type="com.handong.swap.DTO.AdminDTO"/>
 			<typeAlias alias="Program" type="com.handong.swap.DTO.ProgramDTO"/>
-		</typeAliases>
+			<typeAlias alias="ProgramRead" type="com.handong.swap.DTO.ProgramReadDTO"/>
+	</typeAliases>
 		
 	</configuration>

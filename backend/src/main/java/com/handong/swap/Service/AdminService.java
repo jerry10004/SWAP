@@ -8,6 +8,4 @@ public interface AdminService {
 	public int add(AdminDTO admin);
 	
 	public String read() throws JsonProcessingException;
-	
-//	public void delete(int id, String email);
 }

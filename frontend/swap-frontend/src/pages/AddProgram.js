@@ -2,14 +2,13 @@
 import React, { useState, Fragment } from "react";
 import { Col, Row, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import axios from "axios";
 
 // import custom components
 import GKStepper from "components/elements/stepper/GKStepper";
 
 // import sub components ( Steps )
 import BasicInformation from "components/marketing/pages/courses/add-new-course/steps/BasicInformation";
-import ApplicationForm from "components/marketing/pages/courses/add-new-course/steps/ApplicationForm";
+import CoursesMedia from "components/marketing/pages/courses/add-new-course/steps/ApplicationForm";
 import Curriculum from "components/marketing/pages/courses/add-new-course/steps/SurveyForm";
 import Settings from "components/marketing/pages/courses/add-new-course/steps/Settings";
 
@@ -44,6 +43,7 @@ const AddNewCourse = () => {
     setCurrentStep(currentStep === 1 ? 1 : currentStep - 1);
   };
 
+<<<<<<< HEAD
   const addProgram = async () => {
     var params = new URLSearchParams();
     params.append("category_id", "1");
@@ -60,6 +60,8 @@ const AddNewCourse = () => {
     }
   };
 
+=======
+>>>>>>> 1edd3018ad62ede44081e723a0643f654cc37d86
   const steps = [
     {
       id: 1,
@@ -69,13 +71,13 @@ const AddNewCourse = () => {
     {
       id: 2,
       title: "프로그램 신청서 Form 제작",
-      content: <ApplicationForm data={formData} handleChange={handleChange} addProgram={addProgram} previous={previous} />,
+      content: <CoursesMedia data={formData} handleChange={handleChange} next={next} previous={previous} />,
     },
-    // {
-    //   id: 3,
-    //   title: "프로그램 설문지 Form 제작",
-    //   content: <Curriculum data={formData} handleChange={handleChange} next={next} previous={previous} />,
-    // },
+    {
+      id: 3,
+      title: "프로그램 설문지 Form 제작",
+      content: <Curriculum data={formData} handleChange={handleChange} next={next} previous={previous} />,
+    },
     // {
     //   id: 4,
     //   title: "Settings",
@@ -95,7 +97,7 @@ const AddNewCourse = () => {
                   {/* <p className="mb-0 text-white lead">Just fill the form and create your courses.</p> */}
                 </div>
                 <div>
-                  <Link to="/admin/manageprogram" className="btn btn-white ">
+                  <Link to="#" className="btn btn-white ">
                     프로그램 목록 보기
                   </Link>{" "}
                   <Link to="#" className="btn btn-success ">

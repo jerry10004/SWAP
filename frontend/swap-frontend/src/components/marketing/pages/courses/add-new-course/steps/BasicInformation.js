@@ -24,7 +24,7 @@ const BasicInformation = (props) => {
   return (
     <Form>
       {/* Card */}
-      <Card className="mb-3  border-0">
+      <Card className="mb-3 ">
         <Card.Header className="border-bottom px-4 py-3">
           <h4 className="mb-0">프로그램 기본 정보</h4>
         </Card.Header>
@@ -121,12 +121,10 @@ const BasicInformation = (props) => {
           </Form>
         </Card.Body>
       </Card>
-
       {/* Button */}
-
       <div className="d-flex justify-content-end">
         <Button variant="primary" onClick={next}>
-          다음
+          Next
         </Button>
       </div>
     </Form>

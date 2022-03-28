@@ -106,11 +106,10 @@ function Test() {
     var params = new URLSearchParams();
     params.append("email", addEmail);
     params.append("phone", addPhone);
-    params.append("name", addName);
 
     if (window.confirm("관리자를 추가하시겠습니까?")) {
       const response = await axios.post(
-        "http://localhost:8080/swap/admin", //[loginID]로그인 후 변경
+        "http://localhost:8080/swap/administrator", //[loginID]로그인 후 변경
         params
       );
       alert(response.data);
