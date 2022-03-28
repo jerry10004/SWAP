@@ -39,7 +39,7 @@ const CoursesTable = ({ courses_data }) => {
       },
 
       {
-        accessor: "category",
+        accessor: "category_name",
         Header: "카테고리",
         Cell: ({ value, row }) => {
           return (
@@ -76,11 +76,10 @@ const CoursesTable = ({ courses_data }) => {
         Header: "상태",
 
         Cell: ({ value, row }) => {
-          // value = value.toLowerCase();
           return (
             <Fragment>
-              {/* <DotBadge bg={value === "0" ? "warning" : value === "1" ? "success" : ""}></DotBadge>
-              {value.charAt(0).toUpperCase() + value.slice(1)} */}
+              <DotBadge bg={value === 0 ? "warning" : value === 1 ? "success" : ""}></DotBadge>
+              {/* {value.charAt(0).toUpperCase() + value.slice(1)} */}
             </Fragment>
           );
         },
