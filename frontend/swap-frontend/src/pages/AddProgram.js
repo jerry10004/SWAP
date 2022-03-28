@@ -2,6 +2,7 @@
 import React, { useState, Fragment } from "react";
 import { Col, Row, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 // import custom components
 import GKStepper from "components/elements/stepper/GKStepper";
@@ -43,7 +44,6 @@ const AddNewCourse = () => {
     setCurrentStep(currentStep === 1 ? 1 : currentStep - 1);
   };
 
-<<<<<<< HEAD
   const addProgram = async () => {
     var params = new URLSearchParams();
     params.append("category_id", "1");
@@ -60,8 +60,6 @@ const AddNewCourse = () => {
     }
   };
 
-=======
->>>>>>> 1edd3018ad62ede44081e723a0643f654cc37d86
   const steps = [
     {
       id: 1,
@@ -71,13 +69,13 @@ const AddNewCourse = () => {
     {
       id: 2,
       title: "프로그램 신청서 Form 제작",
-      content: <CoursesMedia data={formData} handleChange={handleChange} next={next} previous={previous} />,
+      content: <CoursesMedia data={formData} handleChange={handleChange} next={addProgram} previous={previous} />,
     },
-    {
-      id: 3,
-      title: "프로그램 설문지 Form 제작",
-      content: <Curriculum data={formData} handleChange={handleChange} next={next} previous={previous} />,
-    },
+    // {
+    //   id: 3,
+    //   title: "프로그램 설문지 Form 제작",
+    //   content: <Curriculum data={formData} handleChange={handleChange} next={next} previous={previous} />,
+    // },
     // {
     //   id: 4,
     //   title: "Settings",
