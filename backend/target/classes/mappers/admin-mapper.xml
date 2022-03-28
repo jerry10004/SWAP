@@ -16,4 +16,8 @@
 		ORDER BY A.regdate desc;
    	</select>
    	
+<!--    	<update id="deleteAdmin" resultType="Admin">
+   		
+   	</update>
+   	 -->
 </mapper>

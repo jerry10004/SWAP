@@ -37,7 +37,14 @@ const InstructorsListItems = (props) => {
             <div className="align-middle border-top-0">
               <OverlayTrigger key="top" placement="top" overlay={<Tooltip id={`tooltip-top`}>Delete</Tooltip>}>
                 <Link to="#">
-                  <Trash size="15px" className="dropdown-item-icon" />
+                  <Trash
+                    size="15px"
+                    className="dropdown-item-icon"
+                    onClick={() => {
+                      removeAdmin();
+                      // console.log("hello");
+                    }}
+                  />
                 </Link>
               </OverlayTrigger>
             </div>
@@ -83,6 +90,23 @@ const InstructorsListItems = (props) => {
   const readAdmin = async () => {
     const response = await axios.get("http://localhost:8080/swap/admin");
     setAdminInfo(response.data);
+  };
+
+  const removeAdmin = async () => {
+    if (window.confirm("삭제하시겠습니까?")) {
+      axios({
+        url: "http://localhost:8080/swap/admin/deldate/",
+        //  method: "put",
+        //  data: {
+        //    email: email,
+        //    token: window.sessionStorage.getItem("token"),
+        //    manageID: window.sessionStorage.getItem("id"),
+        //  },
+      }).then(function (res) {
+        alert("변경되었습니다.");
+        readAdmin();
+      });
+    }
   };
 
   // The forwardRef is important!!
@@ -174,12 +198,17 @@ const InstructorsListItems = (props) => {
             ))}
           </thead>
           <tbody {...getTableBodyProps()}>
-            {page.map((row) => {
+            {page.map((row, idxx) => {
+              //idxx는 각 줄
               prepareRow(row);
               return (
                 <tr {...row.getRowProps()}>
-                  {row.cells.map((cell) => {
-                    return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>;
+                  {row.cells.map((cell, idx) => {
+                    return (
+                      <td {...cell.getCellProps()}>
+                        {cell.render("Cell")} hihihihi {row.idxx}
+                      </td>
+                    );
                   })}
                 </tr>
               );
