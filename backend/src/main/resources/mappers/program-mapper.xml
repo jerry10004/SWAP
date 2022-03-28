@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="Program">   
 
    	
-   	<select id="readProgram" resultType="Program">
+   	<select id="readProgram" resultType="ProgramRead">
 	   select A.name as name, C.category_name as category, P.program_name, P.status, P.start_date, P.end_date 
 		FROM swap.Program as P
 		LEFT JOIN swap.Category as C  

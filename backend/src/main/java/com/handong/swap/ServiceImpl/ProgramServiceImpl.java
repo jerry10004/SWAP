@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.handong.swap.DAO.ProgramDAO;
 import com.handong.swap.DTO.ProgramDTO;
+import com.handong.swap.DTO.ProgramReadDTO;
 import com.handong.swap.Service.ProgramService;
 
 @Service
@@ -22,7 +23,7 @@ public class ProgramServiceImpl implements ProgramService{
 	@Override
 
 	public String read() throws JsonProcessingException{
-		List<ProgramDTO> programDATA = programDAO.read();
+		List<ProgramReadDTO> programDATA = programDAO.read();
 		ObjectMapper mapper = new ObjectMapper();
 		String jsonString = mapper.writeValueAsString(programDATA);
 		return jsonString;

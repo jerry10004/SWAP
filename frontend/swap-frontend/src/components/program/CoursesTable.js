@@ -15,72 +15,7 @@ import DotBadge from "components/elements/bootstrap/DotBadge";
 import { FormSelect } from "components/elements/form-select/FormSelect";
 
 const CoursesTable = ({ courses_data }) => {
-  const filterOptions = [
-    { value: "대회", label: "대회" },
-    { value: "봉사", label: "봉사" },
-    { value: "캠프", label: "캠프" },
-    { value: "동아리", label: "동아리" },
-    { value: "행사", label: "행사" },
-    { value: "기타", label: "기타" },
-  ];
-
-  const [programInfo, setProgramInfo] = useState();
-
-  useLayoutEffect(() => {
-    console.log("*********");
-    readProject();
-  }, []);
-
-  const readProject = async () => {
-    console.log("???===========================");
-
-    const response = await axios.get("http://localhost:8080/swap/program/read");
-    setProgramInfo(response.data);
-    console.log("======response is =======");
-    console.log(response);
-    console.log("======response.data is =======");
-    console.log(response.data);
-    console.log("========programInfo is========");
-    console.log(programInfo);
-    console.log("========0.programInfo is========");
-    console.log(programInfo[0]);
-    console.log("========1.programInfo is========");
-    console.log(programInfo[1]);
-    // const datas = useMemo(() => InstructorData, []);
-  };
-
-  // The forwardRef is important!!
-  // Dropdown needs access to the DOM node in order to position the Menu
-  const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
-    <Link
-      to="#"
-      ref={ref}
-      onClick={(e) => {
-        e.preventDefault();
-        onClick(e);
-      }}
-    >
-      {children}
-    </Link>
-  ));
-
-  const ActionMenu = () => {
-    return (
-      <Dropdown>
-        <Dropdown.Toggle as={CustomToggle}>
-          <MoreVertical size="15px" className="text-secondary" />
-        </Dropdown.Toggle>
-        <Dropdown.Menu align="end">
-          <Dropdown.Header>SETTINGS</Dropdown.Header>
-          <Dropdown.Item eventKey="1">
-            {" "}
-            <XCircle size="18px" /> Reject with Feedback
-          </Dropdown.Item>
-        </Dropdown.Menu>
-      </Dropdown>
-    );
-  };
-
+  const [programInfo, setProgramInfo] = useState([]);
   const columns = useMemo(
     () => [
       { accessor: "id", Header: "ID", show: false },
@@ -141,11 +76,11 @@ const CoursesTable = ({ courses_data }) => {
         Header: "상태",
 
         Cell: ({ value, row }) => {
-          value = value.toLowerCase();
+          // value = value.toLowerCase();
           return (
             <Fragment>
-              <DotBadge bg={value === "0" ? "warning" : value === "1" ? "success" : ""}></DotBadge>
-              {value.charAt(0).toUpperCase() + value.slice(1)}
+              {/* <DotBadge bg={value === "0" ? "warning" : value === "1" ? "success" : ""}></DotBadge>
+              {value.charAt(0).toUpperCase() + value.slice(1)} */}
             </Fragment>
           );
         },
@@ -206,6 +141,70 @@ const CoursesTable = ({ courses_data }) => {
   );
 
   const { pageIndex, globalFilter } = state;
+
+  const filterOptions = [
+    { value: "대회", label: "대회" },
+    { value: "봉사", label: "봉사" },
+    { value: "캠프", label: "캠프" },
+    { value: "동아리", label: "동아리" },
+    { value: "행사", label: "행사" },
+    { value: "기타", label: "기타" },
+  ];
+
+  useLayoutEffect(() => {
+    console.log("*********");
+    readProject();
+  }, []);
+
+  const readProject = async () => {
+    console.log("???===========================");
+
+    const response = await axios.get("http://localhost:8080/swap/program");
+    setProgramInfo(response.data);
+    console.log("======response is =======");
+    console.log(response);
+    console.log("======response.data is =======");
+    console.log(response.data);
+    console.log("========programInfo is========");
+    console.log(programInfo);
+    console.log("========0.programInfo is========");
+    console.log(programInfo[0]);
+    console.log("========1.programInfo is========");
+    console.log(programInfo[1]);
+    // const datas = useMemo(() => InstructorData, []);
+  };
+
+  // The forwardRef is important!!
+  // Dropdown needs access to the DOM node in order to position the Menu
+  const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
+    <Link
+      to="#"
+      ref={ref}
+      onClick={(e) => {
+        e.preventDefault();
+        onClick(e);
+      }}
+    >
+      {children}
+    </Link>
+  ));
+
+  const ActionMenu = () => {
+    return (
+      <Dropdown>
+        <Dropdown.Toggle as={CustomToggle}>
+          <MoreVertical size="15px" className="text-secondary" />
+        </Dropdown.Toggle>
+        <Dropdown.Menu align="end">
+          <Dropdown.Header>SETTINGS</Dropdown.Header>
+          <Dropdown.Item eventKey="1">
+            {" "}
+            <XCircle size="18px" /> Reject with Feedback
+          </Dropdown.Item>
+        </Dropdown.Menu>
+      </Dropdown>
+    );
+  };
 
   return (
     <Fragment>
