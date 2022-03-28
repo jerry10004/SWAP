@@ -43,25 +43,22 @@ const AddNewCourse = () => {
     setCurrentStep(currentStep === 1 ? 1 : currentStep - 1);
   };
 
-<<<<<<< HEAD
-  const addProgram = async () => {
-    var params = new URLSearchParams();
-    params.append("category_id", "1");
-    params.append("program_name", formData.program_title);
-    params.append("information", formData.program_description);
-    params.append("start_date", "20 08:03");
-    params.append("end_date", "20 08:03");
+  // const addProgram = async () => {
+  //   var params = new URLSearchParams();
+  //   params.append("category_id", "1");
+  //   params.append("program_name", formData.program_title);
+  //   params.append("information", formData.program_description);
+  //   params.append("start_date", "20 08:03");
+  //   params.append("end_date", "20 08:03");
 
-    if (window.confirm("프로그램을 추가하시겠습니까?")) {
-      console.log("----------------------");
-      const response = await axios.post("http://localhost:8080/swap/program/add", params);
-      console.log("++++++++++++++++++++++");
-      alert(response.data);
-    }
-  };
+  //   if (window.confirm("프로그램을 추가하시겠습니까?")) {
+  //     console.log("----------------------");
+  //     const response = await axios.post("http://localhost:8080/swap/program/add", params);
+  //     console.log("++++++++++++++++++++++");
+  //     alert(response.data);
+  //   }
+  // };
 
-=======
->>>>>>> 1edd3018ad62ede44081e723a0643f654cc37d86
   const steps = [
     {
       id: 1,

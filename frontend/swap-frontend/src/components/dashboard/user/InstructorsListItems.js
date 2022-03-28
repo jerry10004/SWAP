@@ -81,8 +81,6 @@ const InstructorsListItems = (props) => {
     usePagination
   );
 
-  // const [data, setData] = useState();
-
   useLayoutEffect(() => {
     readAdmin();
   }, []);
@@ -145,35 +143,6 @@ const InstructorsListItems = (props) => {
     );
   };
 
-  // const data = useMemo(() => adminInfo);
-
-  // console.log("!!!!!!!!");
-  // console.log("data is ", props.param1);
-  // const adminInfo2 = useMemo(() => props.param1, props.param1);
-
-  // console.log("info is", adminInfo2);
-
-  // const data = useMemo(() => props.parma1, adminInfo2);
-  // console.log("hi");
-
-  // const { getTableProps, getTableBodyProps, headerGroups, page, nextPage, previousPage, state, gotoPage, pageCount, prepareRow, setGlobalFilter } = useTable(
-  //   {
-  //     columns,
-  //     data,
-
-  //     initialState: {
-  //       pageSize: 10,
-  //       hiddenColumns: columns.map((column) => {
-  //         if (column.show === false) return column.accessor || column.id;
-  //         else return false;
-  //       }),
-  //     },
-  //   },
-  //   useFilters,
-  //   useGlobalFilter,
-  //   usePagination
-  // );
-
   const { pageIndex, globalFilter } = state;
 
   return (
@@ -206,7 +175,8 @@ const InstructorsListItems = (props) => {
                   {row.cells.map((cell, idx) => {
                     return (
                       <td {...cell.getCellProps()}>
-                        {cell.render("Cell")} hihihihi {row.idxx}
+                        {cell.render("Cell")}
+                        {/* hihihihi {row.idxx} */}
                       </td>
                     );
                   })}

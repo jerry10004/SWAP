@@ -2,11 +2,7 @@
 import { Fragment } from "react";
 import { Col, Row, Card, Tab, Breadcrumb } from "react-bootstrap";
 
-// import custom components
-import GridListViewButton from "components/elements/miscellaneous/GridListViewButton";
-
 // import sub components
-import StudentsGridCard from "components/dashboard/user/StudentsGridCard";
 import StudentsListItems from "components/dashboard/user/StudentsListItems";
 
 // import node module libraries
@@ -51,28 +47,17 @@ const ManageStudent = () => {
                         <Breadcrumb.Item active>Students</Breadcrumb.Item>
                       </Breadcrumb>
                     </div>
-                    <div>
-                      <GridListViewButton keyGrid="grid" keyList="list" />
-                    </div>
+                    <div>{/* <GridListViewButton keyGrid="grid" keyList="list" /> */}</div>
                   </div>
                 </Col>
               </Row>
 
               <Tab.Content>
-                <Tab.Pane eventKey="grid" className="pb-4">
-                  {/* students in list view */}
-                  <StudentsGridCard />
-                  {/* end of students in list view */}
-                </Tab.Pane>
-                <Tab.Pane eventKey="list" className="pb-4">
-                  <Card className="mb-5 ">
-                    <Card.Body className="p-0">
-                      {/* students in list view */}
-                      <StudentsListItems />
-                      {/* end of students in list view */}
-                    </Card.Body>
-                  </Card>
-                </Tab.Pane>
+                <Card className="mb-5 ">
+                  <Card.Body className="p-0">
+                    <StudentsListItems />
+                  </Card.Body>
+                </Card>
               </Tab.Content>
             </Tab.Container>
           </div>

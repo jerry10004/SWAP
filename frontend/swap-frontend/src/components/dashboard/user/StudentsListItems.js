@@ -1,9 +1,10 @@
 // import node module libraries
-import React, { Fragment, useMemo } from "react";
+import React, { Fragment, useMemo, useLayoutEffect, useState } from "react";
 import { useTable, useFilters, useGlobalFilter, usePagination } from "react-table";
 import { Link } from "react-router-dom";
-import { Dropdown, Image, OverlayTrigger, Tooltip, Row, Col, Table } from "react-bootstrap";
-import { MoreVertical, Trash, Edit, Mail } from "react-feather";
+import { Dropdown, Image, Row, Col, Table } from "react-bootstrap";
+import { MoreVertical, Trash, Edit } from "react-feather";
+import axios from "axios";
 
 // import custom components
 import GlobalFilter from "components/elements/advance-table/GlobalFilter";
@@ -16,8 +17,99 @@ import { numberWithCommas } from "helper/utils";
 import { StudentsList } from "data/users/StudentsData";
 
 const StudentsListItems = () => {
-  // The forwardRef is important!!
-  // Dropdown needs access to the DOM node in order to position the Menu
+  const [userInfo, setUserInfo] = useState([]);
+
+  const columns = useMemo(
+    () => [
+      { accessor: "id", Header: "ID", show: false },
+      {
+        accessor: "name",
+        Header: "이름",
+        Cell: ({ value, row }) => {
+          return (
+            <div className="d-flex align-items-center">
+              <Image src={row.original.image} alt="" className="rounded-circle avatar-md me-2" />
+              <h5 className="mb-0">{value}</h5>
+            </div>
+          );
+        },
+      },
+      { accessor: "joined", Header: "연락처" },
+      { accessor: "locations", Header: "이메일" },
+
+      // { accessor: "image", Header: "", show: false },
+      {
+        accessor: "enrolled",
+        Header: "학번",
+        Cell: ({ value }) => {
+          return value + " Courses";
+        },
+      },
+      { accessor: "grade", Header: "학년" },
+
+      {
+        accessor: "payment",
+        Header: "학부",
+        Cell: ({ value }) => {
+          return "$" + numberWithCommas(value);
+        },
+      },
+      // {
+      //   accessor: "delete",
+      //   Header: "",
+      //   Cell: () => {
+      //     return (
+      //       <div className="align-middle border-top-0">
+      //         <OverlayTrigger key="top" placement="top" overlay={<Tooltip id={`tooltip-top`}>Delete</Tooltip>}>
+      //           <Link to="#">
+      //             <Trash size="15px" className="dropdown-item-icon" />
+      //           </Link>
+      //         </OverlayTrigger>
+      //       </div>
+      //     );
+      //   },
+      // },
+      {
+        accessor: "shortcutmenu",
+        Header: "",
+        Cell: () => {
+          return <ActionMenu />;
+        },
+      },
+    ],
+    []
+  );
+
+  const data = useMemo(() => userInfo);
+
+  const { getTableProps, getTableBodyProps, headerGroups, page, nextPage, previousPage, state, gotoPage, pageCount, prepareRow, setGlobalFilter } = useTable(
+    {
+      columns,
+      data,
+      initialState: {
+        pageSize: 10,
+        hiddenColumns: columns.map((column) => {
+          if (column.show === false) return column.accessor || column.id;
+          else return false;
+        }),
+      },
+    },
+    useFilters,
+    useGlobalFilter,
+    usePagination
+  );
+
+  const { pageIndex, globalFilter } = state;
+
+  useLayoutEffect(() => {
+    readUser();
+  }, []);
+
+  const readUser = async () => {
+    const response = await axios.get("http://localhost:8080/swap/user");
+    setUserInfo(response.data);
+  };
+
   const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
     <Link
       to=""
@@ -41,111 +133,16 @@ const StudentsListItems = () => {
           <Dropdown.Header>SETTINGS</Dropdown.Header>
           <Dropdown.Item eventKey="1">
             {" "}
-            <Edit size="18px" className="dropdown-item-icon" /> Edit
+            <Edit size="18px" className="dropdown-item-icon" /> 관리자로 보내기
           </Dropdown.Item>
           <Dropdown.Item eventKey="2">
             {" "}
-            <Trash size="18px" className="dropdown-item-icon" /> Remove
+            <Trash size="18px" className="dropdown-item-icon" /> 탈퇴시키기
           </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
     );
   };
-
-  const columns = useMemo(
-    () => [
-      { accessor: "id", Header: "ID", show: false },
-      {
-        accessor: "name",
-        Header: "이름",
-        Cell: ({ value, row }) => {
-          return (
-            <div className="d-flex align-items-center">
-              <Image src={row.original.image} alt="" className="rounded-circle avatar-md me-2" />
-              <h5 className="mb-0">{value}</h5>
-            </div>
-          );
-        },
-      },
-      { accessor: "image", Header: "", show: false },
-      {
-        accessor: "enrolled",
-        Header: "학번",
-        Cell: ({ value }) => {
-          return value + " Courses";
-        },
-      },
-      { accessor: "joined", Header: "연락처" },
-      {
-        accessor: "payment",
-        Header: "학부",
-        Cell: ({ value }) => {
-          return "$" + numberWithCommas(value);
-        },
-      },
-      { accessor: "locations", Header: "이메일" },
-      { accessor: "grade", Header: "학년" },
-      {
-        accessor: "message",
-        Header: "상태",
-        Cell: () => {
-          return (
-            <div className="align-middle border-top-0">
-              <OverlayTrigger key="top" placement="top" overlay={<Tooltip id={`tooltip-top`}>Message</Tooltip>}>
-                <Link to="#">
-                  <Mail size="15px" className="dropdown-item-icon" />
-                </Link>
-              </OverlayTrigger>
-            </div>
-          );
-        },
-      },
-      {
-        accessor: "delete",
-        Header: "",
-        Cell: () => {
-          return (
-            <div className="align-middle border-top-0">
-              <OverlayTrigger key="top" placement="top" overlay={<Tooltip id={`tooltip-top`}>Delete</Tooltip>}>
-                <Link to="#">
-                  <Trash size="15px" className="dropdown-item-icon" />
-                </Link>
-              </OverlayTrigger>
-            </div>
-          );
-        },
-      },
-      {
-        accessor: "shortcutmenu",
-        Header: "",
-        Cell: () => {
-          return <ActionMenu />;
-        },
-      },
-    ],
-    []
-  );
-
-  const data = useMemo(() => StudentsList, []);
-
-  const { getTableProps, getTableBodyProps, headerGroups, page, nextPage, previousPage, state, gotoPage, pageCount, prepareRow, setGlobalFilter } = useTable(
-    {
-      columns,
-      data,
-      initialState: {
-        pageSize: 10,
-        hiddenColumns: columns.map((column) => {
-          if (column.show === false) return column.accessor || column.id;
-          else return false;
-        }),
-      },
-    },
-    useFilters,
-    useGlobalFilter,
-    usePagination
-  );
-
-  const { pageIndex, globalFilter } = state;
 
   return (
     <Fragment>
