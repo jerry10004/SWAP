@@ -17,20 +17,28 @@ const AddNewCourse = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState({
     program_title: "Title",
-    program_category: "camp",
+    program_category: "1",
     program_description: "Hello, world!",
     program_img: "img",
+    start_date: "",
+    end_date: "",
   });
+
+  const [start_date, setStart_date] = useState(new Date());
 
   const handleChange = (event) => {
     setFormData({
       ...formData,
       [event.target.name]: event.target.value,
     });
+    // setStart_date(start_date);
+
+    // console.log(event.target.value);
+    // console.log(start_date);
   };
+
   const next = () => {
     setCurrentStep(currentStep === 4 ? 1 : currentStep + 1);
-    console.log(formData);
   };
   const previous = () => {
     setCurrentStep(currentStep === 1 ? 1 : currentStep - 1);
@@ -39,8 +47,8 @@ const AddNewCourse = () => {
   const addProgram = async () => {
     var params = new URLSearchParams();
     params.append("category_id", "1");
-    params.append("program_name", "SW캠프");
-    params.append("information", "안녕하세요 이 프로그램은 TEST 입니다.");
+    params.append("program_name", formData.program_title);
+    params.append("information", formData.program_description);
     params.append("start_date", "20 08:03");
     params.append("end_date", "20 08:03");
 
@@ -56,7 +64,7 @@ const AddNewCourse = () => {
     {
       id: 1,
       title: "프로그램 기본 정보 작성",
-      content: <BasicInformation data={formData} handleChange={handleChange} next={next} />,
+      content: <BasicInformation data={formData} handleChange={handleChange} setStart_date={setStart_date} next={next} />,
     },
     {
       id: 2,
