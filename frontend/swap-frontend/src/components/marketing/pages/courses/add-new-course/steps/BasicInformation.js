@@ -1,12 +1,16 @@
 // import node module libraries
-import { Card, Form, Button } from "react-bootstrap";
-
-// import custom components
+import React, { useState } from "react";
+import { Card, Row, Form, Button, Col, InputGroup } from "react-bootstrap";
 import { FormSelect } from "components/elements/form-select/FormSelect";
-import ReactQuillEditor from "components/elements/editor/ReactQuillEditor";
+import { FlatPickr } from "components/elements/flat-pickr/FlatPickr";
+import { DropFiles } from "components/elements/dropfiles/DropFiles";
+import { Image } from "react-bootstrap-icons";
+import Flatpickr from "react-flatpickr";
 
 const BasicInformation = (props) => {
-  const { next } = props;
+  const { next, handleChange } = props;
+  const { value, placeholder } = props;
+  const [picker, setPicker] = useState(new Date());
 
   const categoryOptions = [
     { value: "대회", label: "대회" },
@@ -17,14 +21,6 @@ const BasicInformation = (props) => {
     { value: "기타", label: "기타" },
   ];
 
-  const CoursesLevel = [
-    { value: "Intermediate", label: "Intermediate" },
-    { value: "Beignners", label: "Beignners" },
-    { value: "Advance", label: "Advance" },
-  ];
-
-  const initialValue = `<p>프로그램에 대한 상세 설명을 작성해주세요.</p>`;
-
   return (
     <Form>
       {/* Card */}
@@ -34,41 +30,95 @@ const BasicInformation = (props) => {
         </Card.Header>
         {/* Card body */}
         <Card.Body>
-          {/* Title  */}
-          <Form.Group className="mb-3">
-            <Form.Label htmlFor="program_title">프로그램 제목</Form.Label>
-            <Form.Control type="text" placeholder="프로그램 제목" id="program_title" name="program_title" />
-            {/* <Form.Text className="text-muted">Write a 60 character course title.</Form.Text> */}
-          </Form.Group>
+          <Form>
+            <Row>
+              {/* Project's Name */}
+              <Col xs={12} className="mb-4">
+                <Form.Group controlId="program_title">
+                  <Form.Label>
+                    프로그램 제목 <span className="text-danger">*</span>
+                  </Form.Label>
+                  <Form.Control type="text" placeholder="프로그램 제목을 입력하세요." name="program_title" onChange={handleChange} required />
+                </Form.Group>
+              </Col>
 
-          {/* Category */}
-          <Form.Group className="mb-3">
-            <Form.Label>프로그램 카테고리</Form.Label>
-            <FormSelect options={categoryOptions} id="program_category" name="program_category" placeholder="카테고리를 선택하세요." />
-            {/* <Form.Text className="text-muted">Help people find your courses by choosing categories that represent your course.</Form.Text> */}
-          </Form.Group>
+              {/* Description */}
+              <Col xs={12} className="mb-4">
+                <Form.Group controlId="formProjectBrief">
+                  <Form.Label>프로그램 설명</Form.Label>
+                  <Form.Control as="textarea" rows={3} name="program_description" onChange={handleChange} placeholder="프로그램에 관한 정보를 입력하세요." />
+                </Form.Group>
+              </Col>
 
-          {/* Courses level */}
-          {/* <Form.Group className="mb-3">
-            <Form.Label>Courses level</Form.Label>
-            <FormSelect options={CoursesLevel} id="courses_level" name="courses_level" placeholder="Select level" />
-          </Form.Group> */}
+              {/* Start Date */}
+              <Col md={6} xs={12} className="mb-4">
+                <Form.Label>
+                  프로그램 시작 날짜 <span className="text-danger">*</span>
+                </Form.Label>
+                <InputGroup>
+                  <Flatpickr
+                    value={value === "" ? "" : value ? value : picker}
+                    className="form-control"
+                    placeholder={placeholder}
+                    onChange={(date) => {
+                      setPicker(date);
+                      props.setStart_date(date);
+                    }}
+                    options={{
+                      dateFormat: "Y-m-d",
+                      disable: [
+                        {
+                          from: "2020-02-01",
+                          to: "2020-02-10",
+                        },
+                      ],
+                    }}
+                  />
+                  <InputGroup.Text className="text-muted">
+                    <i className="fe fe-calendar"></i>
+                  </InputGroup.Text>
+                </InputGroup>
+              </Col>
 
-          {/* Course Description*/}
-          <Form.Group className="mb-3">
-            <Form.Label>프로그램 설명</Form.Label>
-            <ReactQuillEditor initialValue={initialValue} id="program_description" name="program_description" />
-            {/* <Form.Text className="text-muted">A brief summary of your courses.</Form.Text> */}
-          </Form.Group>
+              {/* End Date */}
+              <Col md={6} xs={12} className="mb-4">
+                <Form.Label>
+                  프로그램 종료 날짜 <span className="text-danger">*</span>
+                </Form.Label>
+                <InputGroup>
+                  <Form.Control as={FlatPickr} value="" name="end_date" dateValue />
 
-          {/* 프로그램 포스터 이미지 업로드 */}
-          <Form.Label>프로그램 포스터(이미지) 업로드</Form.Label>
-          <Form.Group className="mb-1 input-group">
-            <Form.Control id="inputfavicon" type="file" className="form-control" />
-            <Form.Label htmlFor="inputfavicon" className="input-group-text mb-0">
-              Upload
-            </Form.Label>
-          </Form.Group>
+                  <InputGroup.Text className="text-muted">
+                    <i className="fe fe-calendar"></i>
+                  </InputGroup.Text>
+                </InputGroup>
+              </Col>
+
+              {/* 프로그램 정원 */}
+              <Col md={6} xs={12} className="mb-4">
+                <Form.Group>
+                  <Form.Label>프로그램 정원</Form.Label>
+                  <Form.Control type="text" placeholder="숫자만 기입" id="program_quota" name="program_quota" onChange={handleChange} />
+                </Form.Group>
+              </Col>
+
+              {/* 카테고리 */}
+              <Col md={6} xs={12} className="mb-4">
+                <Form.Group controlId="formPrivacyOptions">
+                  <Form.Label>카테고리</Form.Label>
+                  <Form.Control as={FormSelect} placeholder="카테고리를 선택하세요." options={categoryOptions} />
+                </Form.Group>
+              </Col>
+
+              {/* Project Cover Image */}
+              <Col xs={12} className="mb-4">
+                <h5 className="mb-3">프로그램 이미지(포스터) </h5>
+                <div className="dropzone p-4 border-dashed text-center">
+                  <DropFiles />
+                </div>
+              </Col>
+            </Row>
+          </Form>
         </Card.Body>
       </Card>
       {/* Button */}
