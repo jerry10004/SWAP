@@ -28,31 +28,48 @@ const StudentsListItems = () => {
         Cell: ({ value, row }) => {
           return (
             <div className="d-flex align-items-center">
-              <Image src={row.original.image} alt="" className="rounded-circle avatar-md me-2" />
+              {/* <Image src={row.original.image} alt="" className="rounded-circle avatar-md me-2" /> */}
               <h5 className="mb-0">{value}</h5>
             </div>
           );
         },
       },
-      { accessor: "joined", Header: "연락처" },
-      { accessor: "locations", Header: "이메일" },
+      { accessor: "phone", Header: "연락처" },
+      { accessor: "email", Header: "이메일" },
 
       // { accessor: "image", Header: "", show: false },
       {
-        accessor: "enrolled",
+        accessor: "student_id",
         Header: "학번",
+        // Cell:({value}) =>{
+        //  if(value===0)? return("") : return({value});
+        // }
+      },
+      {
+        accessor: "student_class",
+        Header: "학년",
         Cell: ({ value }) => {
-          return value + " Courses";
+          return value + " 학년";
         },
       },
-      { accessor: "grade", Header: "학년" },
-
       {
-        accessor: "payment",
-        Header: "학부",
+        accessor: "semester",
+        Header: "학기",
         Cell: ({ value }) => {
-          return "$" + numberWithCommas(value);
+          return value + " 학기";
         },
+      },
+      {
+        accessor: "department",
+        Header: "학부",
+      },
+      {
+        accessor: "major1",
+        Header: "1전공",
+      },
+      {
+        accessor: "major2",
+        Header: "2전공",
       },
       // {
       //   accessor: "delete",
@@ -107,6 +124,7 @@ const StudentsListItems = () => {
 
   const readUser = async () => {
     const response = await axios.get("http://localhost:8080/swap/user");
+    console.log(response.data);
     setUserInfo(response.data);
   };
 

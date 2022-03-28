@@ -1,23 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="Admin">   
+<mapper namespace="User">   
 
-   	<insert id = "insertAdmin" parameterType="Admin">	
-   		INSERT INTO Admin (user_id, name, email, phone)
-		SELECT U.id, #{name}, #{email}, #{phone} FROM User AS U WHERE U.email=#{email}
-   	</insert>
-   	
-   	<select id="readAdmin" resultType="Admin">
-	   	select A.id, A.user_id, A.name, A.phone, A.email
-		from Admin AS A
-		JOIN User AS U
-		ON U.id = A.user_id AND A.deldate is null
-		ORDER BY A.regdate desc;
+   	<select id="readUser" resultType="User">
+	   	select id, name, phone, email, student_id, student_class, semester, department,major1, major2
+		from User 
+		where deldate is null
+		ORDER BY regdate desc;
    	</select>
    	
-<!--    	<update id="deleteAdmin" resultType="Admin">
-   		
-   	</update>
-   	 -->
+
 </mapper>

@@ -6,7 +6,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 public class UserDTO {
 	private int id;
-	private String user_name;
+	private String name;
 	private String email;
 	private int student_id;
 	private String phone;
@@ -27,11 +27,11 @@ public class UserDTO {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getUser_name() {
-		return user_name;
+	public String getName() {
+		return name;
 	}
-	public void setUser_name(String user_name) {
-		this.user_name = user_name;
+	public void setName(String name) {
+		this.name = name;
 	}
 	public String getEmail() {
 		return email;
