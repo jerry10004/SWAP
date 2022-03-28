@@ -1,7 +1,6 @@
 // import node module libraries
-import React, { useState, useEffect, useLayoutEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
 
 // import node module libraries
 import { Fragment } from "react";
@@ -10,27 +9,15 @@ import { Col, Row, Card, Tab, Breadcrumb, Button } from "react-bootstrap";
 // import sub components
 import InstructorsListItems from "components/dashboard/user/InstructorsListItems";
 
+// import sub components
 import NavbarVertical from "layouts/dashboard/NavbarVertical";
 import NavbarTop from "layouts/dashboard/NavbarTop";
 
 const ManageInstructor = () => {
   const [showMenu, setShowMenu] = useState(true);
-  const [adminInfo, setAdminInfo] = useState();
-
-  // useEffect(() => {
-  //   readAdmin();
-  // }, []);
-
-  // const readAdmin = async () => {
-  //   console.log("#################");
-  //   const response = await axios.get("http://localhost:8080/swap/admin");
-  //   setAdminInfo(response.data);
-  // };
-
   const ToggleMenu = () => {
     return setShowMenu(!showMenu);
   };
-
   return (
     <Fragment>
       <div id="db-wrapper" className={`${showMenu ? "" : "toggled"}`}>

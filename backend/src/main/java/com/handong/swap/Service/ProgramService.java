@@ -1,11 +1,15 @@
+
+
 package com.handong.swap.Service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.handong.swap.DTO.AdminDTO;
+import com.handong.swap.DTO.ProgramDTO;
 
-public interface AdminService {
+public interface ProgramService {
 	
-	public int add(AdminDTO admin);
-	
+
 	public String read() throws JsonProcessingException;
+
+	public int add(ProgramDTO program);
+
 }

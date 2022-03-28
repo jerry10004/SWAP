@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mapper namespace="Program">   
+
+   	
+   	<select id="readProgram" resultType="Program">
+	   select A.name as name, C.category_name as category, P.program_name, P.status, P.start_date, P.end_date 
+		FROM swap.Program as P
+		LEFT JOIN swap.Category as C  
+		ON P.category_id = C.id
+		LEFT JOIN swap.Admin as A
+		ON P.admin_id = A.id
+		order by P.regdate desc;
+   	</select>
+   	
+   		<insert id = "insertProgram" parameterType="Program">	
+   		INSERT INTO Program (category_id, program_name, information, start_date, end_date)
+		VALUES (#{category_id}, #{program_name}, #{information}, #{start_date}, #{end_date})
+   	</insert>
+   	
+   	
+</mapper>
+

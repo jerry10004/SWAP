@@ -1,9 +1,10 @@
 // import node module libraries
-import React, { Fragment, useMemo } from "react";
+import React, { Fragment, useMemo, useState, useEffect, useLayoutEffect } from "react";
 import { useTable, useFilters, useGlobalFilter, usePagination } from "react-table";
 import { Link } from "react-router-dom";
 import { Col, Row, Button, Image, Dropdown, Table, Form } from "react-bootstrap";
 import { XCircle, MoreVertical } from "react-feather";
+import axios from "axios";
 
 // import custom components
 import GlobalFilter from "components/elements/advance-table/GlobalFilter";
@@ -12,7 +13,6 @@ import DotBadge from "components/elements/bootstrap/DotBadge";
 
 // import custom components
 import { FormSelect } from "components/elements/form-select/FormSelect";
-import { AvatarGroup, Avatar } from "components/elements/bootstrap/Avatar";
 
 const CoursesTable = ({ courses_data }) => {
   const filterOptions = [
@@ -23,6 +23,32 @@ const CoursesTable = ({ courses_data }) => {
     { value: "행사", label: "행사" },
     { value: "기타", label: "기타" },
   ];
+
+  const [programInfo, setProgramInfo] = useState();
+
+  useLayoutEffect(() => {
+    console.log("*********");
+    readProject();
+  }, []);
+
+  const readProject = async () => {
+    console.log("???===========================");
+
+    const response = await axios.get("http://localhost:8080/swap/program/read");
+    setProgramInfo(response.data);
+    console.log("======response is =======");
+    console.log(response);
+    console.log("======response.data is =======");
+    console.log(response.data);
+    console.log("========programInfo is========");
+    console.log(programInfo);
+    console.log("========0.programInfo is========");
+    console.log(programInfo[0]);
+    console.log("========1.programInfo is========");
+    console.log(programInfo[1]);
+    // const datas = useMemo(() => InstructorData, []);
+  };
+
   // The forwardRef is important!!
   // Dropdown needs access to the DOM node in order to position the Menu
   const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
@@ -59,8 +85,8 @@ const CoursesTable = ({ courses_data }) => {
     () => [
       { accessor: "id", Header: "ID", show: false },
       {
-        accessor: "title",
-        Header: "COURSES",
+        accessor: "program_name",
+        Header: "제목",
         Cell: ({ value, row }) => {
           return (
             <Link className="text-inherit" to="#">
@@ -70,21 +96,41 @@ const CoursesTable = ({ courses_data }) => {
                 </div>
                 <div className="ms-lg-3 mt-2 mt-lg-0">
                   <h4 className="mb-1 text-primary-hover">{value}...</h4>
-                  <span className="text-inherit">{row.original.date_added}</span>
                 </div>
               </div>
             </Link>
           );
         },
       },
-      { accessor: "date_added", Header: "", show: false },
+
       {
-        accessor: "instructor_name",
-        Header: "INSTRUCTOR",
+        accessor: "category",
+        Header: "카테고리",
         Cell: ({ value, row }) => {
           return (
             <div className="d-flex align-items-center">
-              <Image src={row.original.instructor_image} alt="" className="rounded-circle avatar-xs me-2" />
+              <h5 className="mb-0">{value}</h5>
+            </div>
+          );
+        },
+      },
+      {
+        accessor: "start_date",
+        Header: "날짜",
+        Cell: ({ value, row }) => {
+          return (
+            <div className="d-flex align-items-center">
+              <h5 className="mb-0">{value}</h5>
+            </div>
+          );
+        },
+      },
+      {
+        accessor: "name",
+        Header: "작성자",
+        Cell: ({ value, row }) => {
+          return (
+            <div className="d-flex align-items-center">
               <h5 className="mb-0">{value}</h5>
             </div>
           );
@@ -92,43 +138,43 @@ const CoursesTable = ({ courses_data }) => {
       },
       {
         accessor: "status",
-        Header: "STATUS",
+        Header: "상태",
 
         Cell: ({ value, row }) => {
           value = value.toLowerCase();
           return (
             <Fragment>
-              <DotBadge bg={value === "pending" ? "warning" : value === "live" ? "success" : ""}></DotBadge>
+              <DotBadge bg={value === "0" ? "warning" : value === "1" ? "success" : ""}></DotBadge>
               {value.charAt(0).toUpperCase() + value.slice(1)}
             </Fragment>
           );
         },
       },
-      {
-        accessor: "action",
-        Header: "ACTION",
-        Cell: ({ value }) => {
-          if (value === 2) {
-            return (
-              <Fragment>
-                <Button href="#" variant="outline" className="btn-outline-white btn-sm">
-                  Reject
-                </Button>{" "}
-                <Button href="#" variant="success" className="btn-sm">
-                  Approved
-                </Button>
-              </Fragment>
-            );
-          }
-          if (value === 1) {
-            return (
-              <Button href="#" variant="secondary" className="btn-sm">
-                Change Status
-              </Button>
-            );
-          }
-        },
-      },
+      // {
+      //   accessor: "action",
+      //   Header: "설정",
+      //   Cell: ({ value }) => {
+      //     if (value === 2) {
+      //       return (
+      //         <Fragment>
+      //           <Button href="#" variant="outline" className="btn-outline-white btn-sm">
+      //             Reject
+      //           </Button>{" "}
+      //           <Button href="#" variant="success" className="btn-sm">
+      //             Approved
+      //           </Button>
+      //         </Fragment>
+      //       );
+      //     }
+      //     if (value === 1) {
+      //       return (
+      //         <Button href="#" variant="secondary" className="btn-sm">
+      //           Change Status
+      //         </Button>
+      //       );
+      //     }
+      //   },
+      // },
       {
         accessor: "shortcutmenu",
         Header: "",
@@ -140,7 +186,7 @@ const CoursesTable = ({ courses_data }) => {
     []
   );
 
-  const data = useMemo(() => courses_data, [courses_data]);
+  const data = useMemo(() => programInfo);
 
   const { getTableProps, getTableBodyProps, headerGroups, page, nextPage, previousPage, state, gotoPage, pageCount, prepareRow, setGlobalFilter } = useTable(
     {
