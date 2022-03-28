@@ -1,5 +1,5 @@
 // import node module libraries
-import React, { Fragment, useMemo, useEffect, useState } from "react";
+import React, { Fragment, useMemo, useEffect, useLayoutEffect, useState } from "react";
 import { useTable, useFilters, useGlobalFilter, usePagination } from "react-table";
 import { Link } from "react-router-dom";
 import { Dropdown, OverlayTrigger, Tooltip, Row, Col, Table } from "react-bootstrap";
@@ -10,85 +10,8 @@ import axios from "axios";
 import GlobalFilter from "components/elements/advance-table/GlobalFilter";
 import Pagination from "components/elements/advance-table/Pagination";
 
-// import data files
-import { InstructorData } from "data/users/InstructorData";
-
 const InstructorsListItems = (props) => {
   const [adminInfo, setAdminInfo] = useState([]);
-  const [count, setCount] = useState(0);
-
-  // useEffect(() => {
-  //   console.log("*********");
-  //   console.log("data is", props.param1);
-  //   setAdminInfo(props.param1);
-  //   console.log("result is", adminInfo);
-  //   setData(props.param1);
-  //   console.log("data is", data);
-
-  // }, []);
-
-  //   setCount(1);
-  // }, []);
-
-  // const readAdmin = async () => {
-  //   console.log("???===========================");
-  //   const response = await axios.get("http://localhost:8080/swap/admin");
-  //   // assignAdmin(reponse.data);
-  //   setAdminInfo(response.data);
-  //   console.log("======response is =======");
-  //   console.log(response);
-  //   console.log("======response.data is =======");
-  //   console.log(response.data);
-  //   console.log("======instructor data is =======");
-  //   console.log(InstructorData);
-  //   console.log("========adminInfo is========");
-  //   console.log(adminInfo);
-  //   console.log("========0.adminInfo is========");
-  //   console.log(adminInfo[0]);
-  //   console.log("========1.adminInfo is========");
-  //   console.log(adminInfo[1]);
-  // };
-
-  const assignAdmin = () => {
-    setAdminInfo(props.param1);
-    console.log("result is", adminInfo);
-  };
-
-  // The forwardRef is important!!
-  // Dropdown needs access to the DOM node in order to position the Menu
-  const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
-    <Link
-      to=""
-      ref={ref}
-      onClick={(e) => {
-        e.preventDefault();
-        onClick(e);
-      }}
-    >
-      {children}
-    </Link>
-  ));
-
-  const ActionMenu = () => {
-    return (
-      <Dropdown>
-        <Dropdown.Toggle as={CustomToggle}>
-          <MoreVertical size="15px" className="text-secondary" />
-        </Dropdown.Toggle>
-        <Dropdown.Menu align="end">
-          <Dropdown.Header>SETTINGS</Dropdown.Header>
-          <Dropdown.Item eventKey="1">
-            {" "}
-            <Edit size="18px" className="dropdown-item-icon" /> Edit
-          </Dropdown.Item>
-          <Dropdown.Item eventKey="2">
-            {" "}
-            <Trash size="18px" className="dropdown-item-icon" /> Remove
-          </Dropdown.Item>
-        </Dropdown.Menu>
-      </Dropdown>
-    );
-  };
 
   const columns = useMemo(
     () => [
@@ -131,15 +54,13 @@ const InstructorsListItems = (props) => {
     ],
     []
   );
-
-  // if(adminInfo !== ''){
-  const data = useMemo(() => adminInfo, []);
-  // }
+  const data = useMemo(() => adminInfo);
 
   const { getTableProps, getTableBodyProps, headerGroups, page, nextPage, previousPage, state, gotoPage, pageCount, prepareRow, setGlobalFilter } = useTable(
     {
       columns,
       data,
+
       initialState: {
         pageSize: 10,
         hiddenColumns: columns.map((column) => {
@@ -152,6 +73,82 @@ const InstructorsListItems = (props) => {
     useGlobalFilter,
     usePagination
   );
+
+  // const [data, setData] = useState();
+
+  useLayoutEffect(() => {
+    readAdmin();
+  }, []);
+
+  const readAdmin = async () => {
+    const response = await axios.get("http://localhost:8080/swap/admin");
+    setAdminInfo(response.data);
+  };
+
+  // The forwardRef is important!!
+  // Dropdown needs access to the DOM node in order to position the Menu
+  const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
+    <Link
+      to=""
+      ref={ref}
+      onClick={(e) => {
+        e.preventDefault();
+        onClick(e);
+      }}
+    >
+      {children}
+    </Link>
+  ));
+
+  const ActionMenu = () => {
+    return (
+      <Dropdown>
+        <Dropdown.Toggle as={CustomToggle}>
+          <MoreVertical size="15px" className="text-secondary" />
+        </Dropdown.Toggle>
+        <Dropdown.Menu align="end">
+          <Dropdown.Header>SETTINGS</Dropdown.Header>
+          <Dropdown.Item eventKey="1">
+            {" "}
+            <Edit size="18px" className="dropdown-item-icon" /> Edit
+          </Dropdown.Item>
+          <Dropdown.Item eventKey="2">
+            {" "}
+            <Trash size="18px" className="dropdown-item-icon" /> Remove
+          </Dropdown.Item>
+        </Dropdown.Menu>
+      </Dropdown>
+    );
+  };
+
+  // const data = useMemo(() => adminInfo);
+
+  // console.log("!!!!!!!!");
+  // console.log("data is ", props.param1);
+  // const adminInfo2 = useMemo(() => props.param1, props.param1);
+
+  // console.log("info is", adminInfo2);
+
+  // const data = useMemo(() => props.parma1, adminInfo2);
+  // console.log("hi");
+
+  // const { getTableProps, getTableBodyProps, headerGroups, page, nextPage, previousPage, state, gotoPage, pageCount, prepareRow, setGlobalFilter } = useTable(
+  //   {
+  //     columns,
+  //     data,
+
+  //     initialState: {
+  //       pageSize: 10,
+  //       hiddenColumns: columns.map((column) => {
+  //         if (column.show === false) return column.accessor || column.id;
+  //         else return false;
+  //       }),
+  //     },
+  //   },
+  //   useFilters,
+  //   useGlobalFilter,
+  //   usePagination
+  // );
 
   const { pageIndex, globalFilter } = state;
 
@@ -168,7 +165,7 @@ const InstructorsListItems = (props) => {
       <div className="table-responsive ">
         <Table {...getTableProps()} className="text-nowrap">
           <thead className="table-light">
-            {headerGroups.map((headerGroup) => (
+            {headerGroups?.map((headerGroup) => (
               <tr {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map((column) => (
                   <th {...column.getHeaderProps()}>{column.render("Header")}</th>
