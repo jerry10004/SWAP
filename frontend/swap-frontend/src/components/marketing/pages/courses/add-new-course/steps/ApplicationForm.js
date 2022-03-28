@@ -96,10 +96,10 @@ const CoursesMedia = (props) => {
       {/* Button */}
       <div className="d-flex justify-content-between">
         <Button variant="secondary" onClick={previous}>
-          Previous
+          이전
         </Button>
-        <Button variant="primary" onClick={next}>
-          Next
+        <Button variant="danger" onClick={next}>
+          제출
         </Button>
       </div>
     </Form>

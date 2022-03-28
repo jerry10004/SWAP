@@ -2,6 +2,7 @@
 import React, { useState, Fragment } from "react";
 import { Col, Row, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 // import custom components
 import GKStepper from "components/elements/stepper/GKStepper";
@@ -43,13 +44,14 @@ const AddNewCourse = () => {
     setCurrentStep(currentStep === 1 ? 1 : currentStep - 1);
   };
 
-  // const addProgram = async () => {
-  //   var params = new URLSearchParams();
-  //   params.append("category_id", "1");
-  //   params.append("program_name", formData.program_title);
-  //   params.append("information", formData.program_description);
-  //   params.append("start_date", "20 08:03");
-  //   params.append("end_date", "20 08:03");
+  const addProgram = async () => {
+    var params = new URLSearchParams();
+    params.append("category_id", "1");
+    params.append("program_name", formData.program_title);
+    params.append("information", formData.program_description);
+    params.append("start_date", "20 08:03");
+    params.append("end_date", "20 08:03");
+  };
 
   //   if (window.confirm("프로그램을 추가하시겠습니까?")) {
   //     console.log("----------------------");
@@ -68,13 +70,13 @@ const AddNewCourse = () => {
     {
       id: 2,
       title: "프로그램 신청서 Form 제작",
-      content: <CoursesMedia data={formData} handleChange={handleChange} next={next} previous={previous} />,
+      content: <CoursesMedia data={formData} handleChange={handleChange} next={addProgram} previous={previous} />,
     },
-    {
-      id: 3,
-      title: "프로그램 설문지 Form 제작",
-      content: <Curriculum data={formData} handleChange={handleChange} next={next} previous={previous} />,
-    },
+    // {
+    //   id: 3,
+    //   title: "프로그램 설문지 Form 제작",
+    //   content: <Curriculum data={formData} handleChange={handleChange} next={next} previous={previous} />,
+    // },
     // {
     //   id: 4,
     //   title: "Settings",
