@@ -1,15 +1,15 @@
 package com.handong.swap.Controller;
 
-<<<<<<< HEAD
+
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.text.ParseException;
-=======
+
 import java.util.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
->>>>>>> f33c1bb71eec54e175018cec3130ec49f50f4a5d
+
 
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,17 +22,13 @@ import com.handong.swap.DTO.ProgramDTO;
 
 @Controller
 @RequestMapping("/program")
-<<<<<<< HEAD
+
 public class ProgramController {
-	
-=======
-public class ProgramController{
->>>>>>> f33c1bb71eec54e175018cec3130ec49f50f4a5d
+
 	
 	@Autowired
 	ProgramService programService;
 	
-<<<<<<< HEAD
 	@RequestMapping(value = "", method = RequestMethod.GET, produces = "application/json; charset=utf8")
 	@ResponseBody
 	public String readprogram(HttpServletRequest httpServletRequest) throws IOException, ParseException {
@@ -41,9 +37,7 @@ public class ProgramController{
 		System.out.println(result);
 	    return result;
 	}
-}
 	
-=======
 	@RequestMapping(value = "/add", method = RequestMethod.POST, produces = "application/json; charset=utf8")
 	@ResponseBody
 	public void addAdministrator(HttpServletRequest httpServletRequest) throws ParseException {
@@ -70,4 +64,3 @@ public class ProgramController{
 		
 	}	
 }
->>>>>>> f33c1bb71eec54e175018cec3130ec49f50f4a5d

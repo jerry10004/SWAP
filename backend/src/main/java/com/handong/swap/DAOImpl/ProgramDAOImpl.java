@@ -22,4 +22,9 @@ public class ProgramDAOImpl implements ProgramDAO {
 		return sqlSession.selectList("Program.readProgram");
 	}
 
+	public int add(ProgramDTO program) {
+		int result = sqlSession.insert("Program.insertProgram", program);
+		return result;
+	}
+
 }
