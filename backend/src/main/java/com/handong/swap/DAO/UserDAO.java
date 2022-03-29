@@ -10,5 +10,6 @@ import com.handong.swap.DTO.UserDTO;
 public interface UserDAO {
 	List<UserDTO> read();
 	public void updateAdmin(int id);
+	public void updateUser(int id);
 	public void updateDelDate(int id);
 }

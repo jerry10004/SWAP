@@ -65,21 +65,6 @@ const StudentsListItems = () => {
         accessor: "major2",
         Header: "2전공",
       },
-      // {
-      //   accessor: "delete",
-      //   Header: "",
-      //   Cell: () => {
-      //     return (
-      //       <div className="align-middle border-top-0">
-      //         <OverlayTrigger key="top" placement="top" overlay={<Tooltip id={`tooltip-top`}>Delete</Tooltip>}>
-      //           <Link to="#">
-      //             <Trash size="15px" className="dropdown-item-icon" />
-      //           </Link>
-      //         </OverlayTrigger>
-      //       </div>
-      //     );
-      //   },
-      // },
       {
         accessor: "shortcutmenu",
         Header: "",
@@ -108,7 +93,6 @@ const StudentsListItems = () => {
     );
   });
 
-  // const { getTableProps, getTableBodyProps, headerGroups, page, nextPage, previousPage, state, gotoPage, pageCount, prepareRow, setGlobalFilter } = useTable(
   const {
     getTableProps,
     getTableBodyProps,
@@ -141,18 +125,13 @@ const StudentsListItems = () => {
     useRowSelect,
     (hooks) => {
       hooks.visibleColumns.push((columns) => [
-        // Let's make a column for selection
         {
           id: "selection",
-          // The header can use the table's getToggleAllRowsSelectedProps method
-          // to render a checkbox
           Header: ({ getToggleAllPageRowsSelectedProps }) => (
             <div>
               <IndeterminateCheckbox {...getToggleAllPageRowsSelectedProps()} />
             </div>
           ),
-          // The cell can use the individual row's getToggleRowSelectedProps method
-          // to the render a checkbox
           Cell: ({ row }) => (
             <div>
               <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
@@ -172,7 +151,6 @@ const StudentsListItems = () => {
 
   const readUser = async () => {
     const response = await axios.get("http://localhost:8080/swap/user");
-    console.log(response.data);
     setUserInfo(response.data);
   };
 

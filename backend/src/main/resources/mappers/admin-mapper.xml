@@ -15,9 +15,9 @@
 		ON U.id = A.user_id AND A.deldate is null
 		ORDER BY A.regdate desc;
    	</select>
-   	
-<!--    	<update id="deleteAdmin" resultType="Admin">
-   		
-   	</update>
-   	 -->
+   	<delete id="deleteAdmin" parameterType="Integer">
+	   	delete from Admin
+	   	where id = #{id}
+   	</delete>
+
 </mapper>

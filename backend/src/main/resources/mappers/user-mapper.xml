@@ -14,8 +14,13 @@
 		set status = 1
 		where id = #{id};
    	</update>
+   	<update id="updateUser" parameterType="Integer">
+   		update User
+		set status = 0
+		where id = #{id};
+   	</update>
    	<update id="updateDelDate" parameterType="hashmap">
-   		UPDATE User SET deldate=now()
+   		UPDATE User SET deldate=now(), status = -1
 		WHERE id = #{id}
    	</update>
    	

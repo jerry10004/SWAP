@@ -6,6 +6,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 
 @Service
 public interface UserService {
+	
 	public String read() throws JsonProcessingException;
 	public void delete(int id);
 }

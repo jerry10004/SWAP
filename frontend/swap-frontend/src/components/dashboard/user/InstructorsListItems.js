@@ -1,8 +1,8 @@
 // import node module libraries
 import React, { Fragment, useMemo, useEffect, useLayoutEffect, useState } from "react";
-import { useTable, useFilters, useGlobalFilter, usePagination } from "react-table";
+import { useTable, useFilters, useGlobalFilter, usePagination, useRowSelect } from "react-table";
 import { Link } from "react-router-dom";
-import { Dropdown, OverlayTrigger, Tooltip, Row, Col, Table } from "react-bootstrap";
+import { Dropdown, OverlayTrigger, Tooltip, Row, Col, Table, Button } from "react-bootstrap";
 import { MoreVertical, Trash, Edit } from "react-feather";
 import axios from "axios";
 
@@ -29,28 +29,27 @@ const InstructorsListItems = (props) => {
       },
       { accessor: "email", Header: "이메일" },
       { accessor: "phone", Header: "연락처" },
-      {
-        accessor: "delete",
-        Header: "",
-        Cell: () => {
-          return (
-            <div className="align-middle border-top-0">
-              <OverlayTrigger key="top" placement="top" overlay={<Tooltip id={`tooltip-top`}>Delete</Tooltip>}>
-                <Link to="#">
-                  <Trash
-                    size="15px"
-                    className="dropdown-item-icon"
-                    onClick={() => {
-                      removeAdmin();
-                      // console.log("hello");
-                    }}
-                  />
-                </Link>
-              </OverlayTrigger>
-            </div>
-          );
-        },
-      },
+      // {
+      //   accessor: "delete",
+      //   Header: "",
+      //   Cell: () => {
+      //     return (
+      //       <div className="align-middle border-top-0">
+      //         <OverlayTrigger key="top" placement="top" overlay={<Tooltip id={`tooltip-top`}>Delete</Tooltip>}>
+      //           <Link to="#">
+      //             <Trash
+      //               size="15px"
+      //               className="dropdown-item-icon"
+      //               onClick={() => {
+      //                 removeAdmin();
+      //               }}
+      //             />
+      //           </Link>
+      //         </OverlayTrigger>
+      //       </div>
+      //     );
+      //   },
+      // },
       {
         accessor: "shortcutmenu",
         Header: "",
@@ -61,13 +60,42 @@ const InstructorsListItems = (props) => {
     ],
     []
   );
+
   const data = useMemo(() => adminInfo);
 
-  const { getTableProps, getTableBodyProps, headerGroups, page, nextPage, previousPage, state, gotoPage, pageCount, prepareRow, setGlobalFilter } = useTable(
+  const IndeterminateCheckbox = React.forwardRef(({ indeterminate, ...rest }, ref) => {
+    const defaultRef = React.useRef();
+    const resolvedRef = ref || defaultRef;
+
+    React.useEffect(() => {
+      resolvedRef.current.indeterminate = indeterminate;
+    }, [resolvedRef, indeterminate]);
+
+    return (
+      <>
+        <input type="checkbox" ref={resolvedRef} {...rest} />
+      </>
+    );
+  });
+
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    page,
+    nextPage,
+    previousPage,
+    state,
+    gotoPage,
+    pageCount,
+    prepareRow,
+    setGlobalFilter,
+    selectedFlatRows,
+    state: { selectedRowIds },
+  } = useTable(
     {
       columns,
       data,
-
       initialState: {
         pageSize: 10,
         hiddenColumns: columns.map((column) => {
@@ -78,8 +106,29 @@ const InstructorsListItems = (props) => {
     },
     useFilters,
     useGlobalFilter,
-    usePagination
+    usePagination,
+    useRowSelect,
+    (hooks) => {
+      hooks.visibleColumns.push((columns) => [
+        {
+          id: "selection",
+          Header: ({ getToggleAllPageRowsSelectedProps }) => (
+            <div>
+              <IndeterminateCheckbox {...getToggleAllPageRowsSelectedProps()} />
+            </div>
+          ),
+          Cell: ({ row }) => (
+            <div>
+              <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
+            </div>
+          ),
+        },
+        ...columns,
+      ]);
+    }
   );
+
+  const { pageIndex, globalFilter } = state;
 
   useLayoutEffect(() => {
     readAdmin();
@@ -90,25 +139,21 @@ const InstructorsListItems = (props) => {
     setAdminInfo(response.data);
   };
 
-  const removeAdmin = async () => {
-    if (window.confirm("삭제하시겠습니까?")) {
-      axios({
-        url: "http://localhost:8080/swap/admin/deldate/",
-        //  method: "put",
-        //  data: {
-        //    email: email,
-        //    token: window.sessionStorage.getItem("token"),
-        //    manageID: window.sessionStorage.getItem("id"),
-        //  },
-      }).then(function (res) {
-        alert("변경되었습니다.");
-        readAdmin();
-      });
+  const removeAdmin = async (e) => {
+    var removeAdminId = [];
+
+    e.map((d) => removeAdminId.push(d.original.id));
+
+    var params = new URLSearchParams();
+    params.append("id", removeAdminId);
+
+    if (window.confirm("관리자에서 내보내시겠습니까?")) {
+      const response = await axios.post("http://localhost:8080/swap/admin/delete", params);
+      alert("내보내졌습니다.");
+      readAdmin();
     }
   };
 
-  // The forwardRef is important!!
-  // Dropdown needs access to the DOM node in order to position the Menu
   const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
     <Link
       to=""
@@ -143,8 +188,6 @@ const InstructorsListItems = (props) => {
     );
   };
 
-  const { pageIndex, globalFilter } = state;
-
   return (
     <Fragment>
       <div className=" overflow-hidden">
@@ -167,24 +210,34 @@ const InstructorsListItems = (props) => {
             ))}
           </thead>
           <tbody {...getTableBodyProps()}>
-            {page.map((row, idxx) => {
-              //idxx는 각 줄
+            {page.map((row) => {
               prepareRow(row);
               return (
                 <tr {...row.getRowProps()}>
-                  {row.cells.map((cell, idx) => {
-                    return (
-                      <td {...cell.getCellProps()}>
-                        {cell.render("Cell")}
-                        {/* hihihihi {row.idxx} */}
-                      </td>
-                    );
+                  {row.cells.map((cell) => {
+                    return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>;
                   })}
                 </tr>
               );
             })}
           </tbody>
         </Table>
+        <div>
+          <Button
+            onClick={() => {
+              removeAdmin(selectedFlatRows);
+            }}
+          >
+            관리자에서 내보내기
+          </Button>
+          {/* <Button
+            onClick={() => {
+              removeUser(selectedFlatRows);
+            }}
+          >
+            삭제하기
+          </Button> */}
+        </div>
       </div>
 
       {/* Pagination @ Footer */}
@@ -192,20 +245,5 @@ const InstructorsListItems = (props) => {
     </Fragment>
   );
 };
-
-const IndeterminateCheckbox = React.forwardRef(({ indeterminate, ...rest }, ref) => {
-  const defaultRef = React.useRef();
-  const resolvedRef = ref || defaultRef;
-
-  React.useEffect(() => {
-    resolvedRef.current.indeterminate = indeterminate;
-  }, [resolvedRef, indeterminate]);
-
-  return (
-    <>
-      <input type="checkbox" ref={resolvedRef} {...rest} />
-    </>
-  );
-});
 
 export default InstructorsListItems;

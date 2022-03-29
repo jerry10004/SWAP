@@ -26,4 +26,9 @@ public class AdminDAOImpl implements AdminDAO {
 		return sqlSession.selectList("Admin.readAdmin");
 	}
 
+	@Override
+	public void delete(int id) {
+		sqlSession.delete("Admin.deleteAdmin", id);
+	}
+
 }

@@ -26,6 +26,11 @@ public class UserDAOImpl implements UserDAO{
 	public void updateAdmin(int id) {
 		sqlSession.update("User.updateAdmin", id);
 	}
+	
+	@Override
+	public void updateUser(int id) {
+		sqlSession.update("User.updateUser", id);
+	}
 
 	@Override
 	public void updateDelDate(int id) {

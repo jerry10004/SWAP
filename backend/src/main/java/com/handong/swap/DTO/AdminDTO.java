@@ -8,7 +8,6 @@ public class AdminDTO {
 	String phone;
 	String name;
 	String email;
-	Date deldate;
 
 	
 	public int getId() {
@@ -40,12 +39,6 @@ public class AdminDTO {
 	}
 	public void setPhone(String phone) {
 		this.phone = phone;
-	}
-	public Date getDel_date() {
-		return deldate;
-	}
-	public void setDel_date(Date deldate) {
-		this.deldate = deldate;
 	}
 
 }

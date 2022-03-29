@@ -6,6 +6,6 @@ import com.handong.swap.DTO.AdminDTO;
 public interface AdminService {
 	
 	public void add(int user_id);
-	
 	public String read() throws JsonProcessingException;
+	public void delete(int id);
 }
