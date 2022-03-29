@@ -24,10 +24,9 @@ public class UserServiceImpl implements UserService{
 		return jsonString;
 	}
 
-//	@Override
-//	public void updateAdmin(int user_id) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
+	@Override
+	public void delete(int id) {
+		userDAO.updateDelDate(id);
+	}
 }
 	

@@ -39,26 +39,12 @@ public class AdminController{
 	@RequestMapping(value = "add", method = RequestMethod.POST, produces = "application/json; charset=utf8")
 	@ResponseBody
 	public void addAdministrator(HttpServletRequest httpServletRequest) {
-		String[] param_ids = httpServletRequest.getParameterValues("adminId");
+		String[] param_ids = httpServletRequest.getParameterValues("id");
 		
 		String[] ids = param_ids[0].split(",");
 		
 		for (int i = 0; i < ids.length; i++) {
-//			AdminDTO admin = new AdminDTO();
-//			admin.setUser_id(Integer.parseInt(ids[i]));
-//			int admin_result = adminService.add(admin);
 			adminService.add(Integer.parseInt(ids[i]));
-//			
-//			UserDTO user = new UserDTO();
-//			user.setId(Integer.parseInt(ids[i]));
-//			int user_result = userService.updateStatus(user);
-			
-//			if(admin_result == 0) {
-//				System.out.println("관리자 추가 실패");
-//			}
-//			else {
-//				System.out.println("관리자 추가 성공");
-//			}
 		}
 	}	
 }

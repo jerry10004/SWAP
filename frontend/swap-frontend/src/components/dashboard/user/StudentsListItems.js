@@ -175,7 +175,6 @@ const StudentsListItems = () => {
     console.log(response.data);
     setUserInfo(response.data);
   };
-  const [addId, setAddId] = useState([2, 3]);
 
   const createAdmin = async (e) => {
     var addAdminId = [];
@@ -183,30 +182,29 @@ const StudentsListItems = () => {
     e.map((d) => addAdminId.push(d.original.id));
 
     var params = new URLSearchParams();
-    params.append("adminId", addAdminId);
+    params.append("id", addAdminId);
 
     if (window.confirm("관리자로 추가하시겠습니까?")) {
       const response = await axios.post("http://localhost:8080/swap/admin/add", params);
-      alert("추가 되었습니다");
+      alert("추가 되었습니다.");
+      readUser();
     }
   };
 
-  // const removeAdmin = async (e) => {
-  //   if (window.confirm("삭제하시겠습니까?")) {
-  //     axios({
-  //       url: process.env.REACT_APP_RESTAPI_HOST + "administrator/del_date/" + id,
-  //       method: "put",
-  //       data: {
-  //         email: email,
-  //         token: window.sessionStorage.getItem("token"),
-  //         manageID: window.sessionStorage.getItem("id"),
-  //       },
-  //     }).then(function (res) {
-  //       alert("변경되었습니다.");
-  //       readAdmin();
-  //     });
-  //   }
-  // };
+  const removeUser = async (e) => {
+    var removeUserId = [];
+
+    e.map((d) => removeUserId.push(d.original.id));
+
+    var params = new URLSearchParams();
+    params.append("id", removeUserId);
+
+    if (window.confirm("삭제 하시겠습니까?")) {
+      const response = await axios.post("http://localhost:8080/swap/user/delete", params);
+      alert("삭제 되었습니다.");
+      readUser();
+    }
+  };
 
   const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
     <Link
@@ -285,7 +283,13 @@ const StudentsListItems = () => {
           >
             관리자 추가
           </Button>
-          <Button>삭제하기</Button>
+          <Button
+            onClick={() => {
+              removeUser(selectedFlatRows);
+            }}
+          >
+            삭제하기
+          </Button>
         </div>
       </div>
 

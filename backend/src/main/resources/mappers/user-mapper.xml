@@ -13,7 +13,10 @@
    		update User
 		set status = 1
 		where id = #{id};
-   		
+   	</update>
+   	<update id="updateDelDate" parameterType="hashmap">
+   		UPDATE User SET deldate=now()
+		WHERE id = #{id}
    	</update>
    	
 
