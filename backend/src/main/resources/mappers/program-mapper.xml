@@ -5,7 +5,7 @@
 
    	
    	<select id="readProgram" resultType="ProgramRead">
-	   select A.name as name, C.category_name as category, P.program_name, P.status, P.start_date, P.end_date 
+	   select A.name as name, C.category_name as category_name, P.program_name, P.status, P.start_date, P.end_date 
 		FROM swap.Program as P
 		LEFT JOIN swap.Category as C  
 		ON P.category_id = C.id
