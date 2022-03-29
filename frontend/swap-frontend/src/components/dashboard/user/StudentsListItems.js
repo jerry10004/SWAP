@@ -42,8 +42,12 @@ const StudentsListItems = () => {
       {
         accessor: "student_class",
         Header: "학년",
+        // {
+        //   value===0 ?
+        // }
         Cell: ({ value }) => {
           return value + " 학년";
+          // return "";
         },
       },
       {
@@ -65,13 +69,13 @@ const StudentsListItems = () => {
         accessor: "major2",
         Header: "2전공",
       },
-      {
-        accessor: "shortcutmenu",
-        Header: "",
-        Cell: () => {
-          return <ActionMenu />;
-        },
-      },
+      // {
+      //   accessor: "shortcutmenu",
+      //   Header: "",
+      //   Cell: () => {
+      //     return <ActionMenu />;
+      //   },
+      // },
     ],
     []
   );

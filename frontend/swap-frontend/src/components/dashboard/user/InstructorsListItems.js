@@ -29,34 +29,6 @@ const InstructorsListItems = (props) => {
       },
       { accessor: "email", Header: "이메일" },
       { accessor: "phone", Header: "연락처" },
-      // {
-      //   accessor: "delete",
-      //   Header: "",
-      //   Cell: () => {
-      //     return (
-      //       <div className="align-middle border-top-0">
-      //         <OverlayTrigger key="top" placement="top" overlay={<Tooltip id={`tooltip-top`}>Delete</Tooltip>}>
-      //           <Link to="#">
-      //             <Trash
-      //               size="15px"
-      //               className="dropdown-item-icon"
-      //               onClick={() => {
-      //                 removeAdmin();
-      //               }}
-      //             />
-      //           </Link>
-      //         </OverlayTrigger>
-      //       </div>
-      //     );
-      //   },
-      // },
-      {
-        accessor: "shortcutmenu",
-        Header: "",
-        Cell: () => {
-          return <ActionMenu />;
-        },
-      },
     ],
     []
   );
@@ -166,27 +138,6 @@ const InstructorsListItems = (props) => {
       {children}
     </Link>
   ));
-
-  const ActionMenu = () => {
-    return (
-      <Dropdown>
-        <Dropdown.Toggle as={CustomToggle}>
-          <MoreVertical size="15px" className="text-secondary" />
-        </Dropdown.Toggle>
-        <Dropdown.Menu align="end">
-          <Dropdown.Header>SETTINGS</Dropdown.Header>
-          <Dropdown.Item eventKey="1">
-            {" "}
-            <Edit size="18px" className="dropdown-item-icon" /> Edit
-          </Dropdown.Item>
-          <Dropdown.Item eventKey="2">
-            {" "}
-            <Trash size="18px" className="dropdown-item-icon" /> Remove
-          </Dropdown.Item>
-        </Dropdown.Menu>
-      </Dropdown>
-    );
-  };
 
   return (
     <Fragment>

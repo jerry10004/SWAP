@@ -37,8 +37,8 @@ public class AdminServiceImpl implements AdminService{
 
 	@Override
 	public void delete(int id) {
-		adminDAO.delete(id);
 		userDAO.updateUser(id);
+		adminDAO.delete(id);
 	}
 	
 }
