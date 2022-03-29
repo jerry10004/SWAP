@@ -52,7 +52,6 @@ const ManageInstructor = () => {
                       <Link to="add">
                         <Button>관리자 추가</Button>
                       </Link>
-                      {/* <GridListViewButton keyGrid="grid" keyList="list" /> */}
                     </div>
                   </div>
                 </Col>

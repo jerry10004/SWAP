@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.handong.swap.Service.AdminService;
 import com.handong.swap.DTO.AdminDTO;
+import com.handong.swap.DTO.UserDTO;
 
 @Controller
 @RequestMapping("/admin")
@@ -34,16 +35,20 @@ public class AdminController{
 	@RequestMapping(value = "add", method = RequestMethod.POST, produces = "application/json; charset=utf8")
 	@ResponseBody
 	public void addAdministrator(HttpServletRequest httpServletRequest) {
-		AdminDTO admin = new AdminDTO();
-		admin.setName(httpServletRequest.getParameter("name"));
-		admin.setEmail(httpServletRequest.getParameter("email"));
-		admin.setPhone(httpServletRequest.getParameter("phone"));
-		int result = adminService.add(admin);
-		if(result ==0 ) {
-			System.out.println("관리자 추가 실패");
-		}
-		else {
-			System.out.println("관리자 추가 성공");
+		String[] param_ids = httpServletRequest.getParameterValues("adminId");
+		
+		String[] ids = param_ids[0].split(",");
+		
+		for (int i = 0; i < ids.length; i++) {
+			AdminDTO admin = new AdminDTO();
+			admin.setUser_id(Integer.parseInt(ids[i]));
+			int result = adminService.add(admin);
+			if(result ==0 ) {
+				System.out.println("관리자 추가 실패");
+			}
+			else {
+				System.out.println("관리자 추가 성공");
+			}
 		}
 	}	
 }

@@ -6,6 +6,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 public class UserDTO {
 	private int id;
+	private int adminId[];
 	private String name;
 	private String email;
 	private int student_id;
@@ -20,12 +21,17 @@ public class UserDTO {
 	private Timestamp deldate;
 	private String token;
 	private DateTimeFormat expire_token;
-	
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
+	}
+	public int[] getAdminId() {
+		return adminId;
+	}
+	public void setAdminId(int[] adminId) {
+		this.adminId = adminId;
 	}
 	public String getName() {
 		return name;
@@ -111,6 +117,7 @@ public class UserDTO {
 	public void setExpire_token(DateTimeFormat expire_token) {
 		this.expire_token = expire_token;
 	}
+	
 	
 	
 }

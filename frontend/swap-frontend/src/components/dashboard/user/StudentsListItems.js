@@ -1,20 +1,14 @@
 // import node module libraries
 import React, { Fragment, useMemo, useLayoutEffect, useState } from "react";
-import { useTable, useFilters, useGlobalFilter, usePagination } from "react-table";
+import { useTable, useFilters, useGlobalFilter, usePagination, useRowSelect } from "react-table";
 import { Link } from "react-router-dom";
-import { Dropdown, Image, Row, Col, Table } from "react-bootstrap";
+import { Dropdown, Image, Row, Col, Table, Button } from "react-bootstrap";
 import { MoreVertical, Trash, Edit } from "react-feather";
 import axios from "axios";
 
 // import custom components
 import GlobalFilter from "components/elements/advance-table/GlobalFilter";
 import Pagination from "components/elements/advance-table/Pagination";
-
-// import utility file
-import { numberWithCommas } from "helper/utils";
-
-// import data files
-import { StudentsList } from "data/users/StudentsData";
 
 const StudentsListItems = () => {
   const [userInfo, setUserInfo] = useState([]);
@@ -99,7 +93,37 @@ const StudentsListItems = () => {
 
   const data = useMemo(() => userInfo);
 
-  const { getTableProps, getTableBodyProps, headerGroups, page, nextPage, previousPage, state, gotoPage, pageCount, prepareRow, setGlobalFilter } = useTable(
+  const IndeterminateCheckbox = React.forwardRef(({ indeterminate, ...rest }, ref) => {
+    const defaultRef = React.useRef();
+    const resolvedRef = ref || defaultRef;
+
+    React.useEffect(() => {
+      resolvedRef.current.indeterminate = indeterminate;
+    }, [resolvedRef, indeterminate]);
+
+    return (
+      <>
+        <input type="checkbox" ref={resolvedRef} {...rest} />
+      </>
+    );
+  });
+
+  // const { getTableProps, getTableBodyProps, headerGroups, page, nextPage, previousPage, state, gotoPage, pageCount, prepareRow, setGlobalFilter } = useTable(
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    page,
+    nextPage,
+    previousPage,
+    state,
+    gotoPage,
+    pageCount,
+    prepareRow,
+    setGlobalFilter,
+    selectedFlatRows,
+    state: { selectedRowIds },
+  } = useTable(
     {
       columns,
       data,
@@ -113,7 +137,31 @@ const StudentsListItems = () => {
     },
     useFilters,
     useGlobalFilter,
-    usePagination
+    usePagination,
+    useRowSelect,
+    (hooks) => {
+      hooks.visibleColumns.push((columns) => [
+        // Let's make a column for selection
+        {
+          id: "selection",
+          // The header can use the table's getToggleAllRowsSelectedProps method
+          // to render a checkbox
+          Header: ({ getToggleAllPageRowsSelectedProps }) => (
+            <div>
+              <IndeterminateCheckbox {...getToggleAllPageRowsSelectedProps()} />
+            </div>
+          ),
+          // The cell can use the individual row's getToggleRowSelectedProps method
+          // to the render a checkbox
+          Cell: ({ row }) => (
+            <div>
+              <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
+            </div>
+          ),
+        },
+        ...columns,
+      ]);
+    }
   );
 
   const { pageIndex, globalFilter } = state;
@@ -127,6 +175,38 @@ const StudentsListItems = () => {
     console.log(response.data);
     setUserInfo(response.data);
   };
+  const [addId, setAddId] = useState([2, 3]);
+
+  const createAdmin = async (e) => {
+    var add = [];
+
+    e.map((d) => add.push(d.original.id));
+
+    var params = new URLSearchParams();
+    params.append("adminId", add);
+
+    if (window.confirm("관리자로 추가하시겠습니까?")) {
+      const response = await axios.post("http://localhost:8080/swap/admin/add", params);
+      alert("추가 되었습니다");
+    }
+  };
+
+  // const removeAdministrator = async (id, email) => {
+  //   if (window.confirm("삭제하시겠습니까?")) {
+  //     axios({
+  //       url: process.env.REACT_APP_RESTAPI_HOST + "administrator/del_date/" + id,
+  //       method: "put",
+  //       data: {
+  //         email: email,
+  //         token: window.sessionStorage.getItem("token"),
+  //         manageID: window.sessionStorage.getItem("id"),
+  //       },
+  //     }).then(function (res) {
+  //       alert("변경되었습니다.");
+  //       readAdministrator();
+  //     });
+  //   }
+  // };
 
   const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
     <Link
@@ -189,6 +269,7 @@ const StudentsListItems = () => {
               return (
                 <tr {...row.getRowProps()}>
                   {row.cells.map((cell) => {
+                    //idx는 각 column
                     return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>;
                   })}
                 </tr>
@@ -196,6 +277,16 @@ const StudentsListItems = () => {
             })}
           </tbody>
         </Table>
+        <div>
+          <Button
+            onClick={() => {
+              createAdmin(selectedFlatRows);
+            }}
+          >
+            관리자 추가
+          </Button>
+          <Button>삭제하기</Button>
+        </div>
       </div>
 
       {/* Pagination @ Footer */}
