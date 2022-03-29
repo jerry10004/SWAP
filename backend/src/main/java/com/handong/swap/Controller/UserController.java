@@ -23,12 +23,27 @@ public class UserController {
 	
 	@RequestMapping(value = "", method = RequestMethod.GET, produces = "application/json; charset=utf8")
 	@ResponseBody
-	public String readAdministrator(HttpServletRequest httpServletRequest) throws IOException, ParseException {
+	public String readUser(HttpServletRequest httpServletRequest) throws IOException, ParseException {
 		System.out.println("읽기 시도");
 		String result = userService.read();
 		System.out.println(result);
 	    return result;
 	}
+	
+	@RequestMapping(value = "delete", method = RequestMethod.POST, produces = "application/json; charset=utf8")
+	@ResponseBody
+	public void deleteUser(HttpServletRequest httpServletRequest) {
+		String[] param_ids = httpServletRequest.getParameterValues("id");
+		
+		String[] ids = param_ids[0].split(",");
+		
+		for (int i = 0; i < ids.length; i++) {
+			System.out.println("삭제 시도");
+			System.out.println("삭제 하려는 아이디 번호: "+ids[i]);
+			userService.delete(Integer.parseInt(ids[i]));
+		}
+	}
+	
 	
 	
 }

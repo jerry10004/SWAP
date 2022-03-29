@@ -23,5 +23,10 @@ public class UserServiceImpl implements UserService{
 		String jsonString = mapper.writeValueAsString(userDATA);
 		return jsonString;
 	}
+
+	@Override
+	public void delete(int id) {
+		userDAO.updateDelDate(id);
+	}
 }
 	

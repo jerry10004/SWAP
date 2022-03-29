@@ -3,21 +3,21 @@
 
 <mapper namespace="Admin">   
 
-   	<insert id = "insertAdmin" parameterType="Admin">	
-   		INSERT INTO Admin (user_id, name, email, phone)
-		SELECT U.id, #{name}, #{email}, #{phone} FROM User AS U WHERE U.email=#{email}
+   	<insert id = "insertAdmin" parameterType="Integer">	
+	   	INSERT INTO Admin (user_id, name, email, phone)
+		SELECT U.id, U.name, U.email, U.phone FROM User AS U WHERE U.id=#{user_id};
    	</insert>
    	
    	<select id="readAdmin" resultType="Admin">
 	   	select A.id, A.user_id, A.name, A.phone, A.email
 		from Admin AS A
 		JOIN User AS U
-		ON U.id = A.user_id AND A.deldate is null
+		ON U.id = A.user_id
 		ORDER BY A.regdate desc;
    	</select>
-   	
-<!--    	<update id="deleteAdmin" resultType="Admin">
-   		
-   	</update>
-   	 -->
+   	<delete id="deleteAdmin" parameterType="Integer">
+	   	delete from Admin
+	   	where id = #{id}
+   	</delete>
+
 </mapper>
