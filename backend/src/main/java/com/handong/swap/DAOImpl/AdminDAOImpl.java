@@ -17,14 +17,12 @@ public class AdminDAOImpl implements AdminDAO {
 	SqlSession sqlSession;
 	
 	@Override
-	public int add(AdminDTO admin) {
-		int result = sqlSession.insert("Admin.insertAdmin", admin);
-		return result;
+	public void add(int user_id) {
+		sqlSession.insert("Admin.insertAdmin", user_id);
 	}
 	
 	@Override
 	public List<AdminDTO> read(){
-//		Map<String, Object> param = new HashMap<String, Object>();
 		return sqlSession.selectList("Admin.readAdmin");
 	}
 

@@ -6,7 +6,7 @@ import com.handong.swap.DTO.AdminDTO;
 
 public interface AdminDAO {
 
-	public int add(AdminDTO admin);
+	public void add(int user_id);
 	
 	List<AdminDTO> read();
 }

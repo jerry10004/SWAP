@@ -23,5 +23,11 @@ public class UserServiceImpl implements UserService{
 		String jsonString = mapper.writeValueAsString(userDATA);
 		return jsonString;
 	}
+
+//	@Override
+//	public void updateAdmin(int user_id) {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
 }
 	

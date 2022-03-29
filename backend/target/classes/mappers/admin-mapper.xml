@@ -3,7 +3,7 @@
 
 <mapper namespace="Admin">   
 
-   	<insert id = "insertAdmin" parameterType="Admin">	
+   	<insert id = "insertAdmin" parameterType="Integer">	
 	   	INSERT INTO Admin (user_id, name, email, phone)
 		SELECT U.id, U.name, U.email, U.phone FROM User AS U WHERE U.id=#{user_id};
    	</insert>

@@ -18,7 +18,11 @@ public class UserDAOImpl implements UserDAO{
 	
 	@Override
 	public List<UserDTO> read(){
-//		Map<String, Object> param = new HashMap<String, Object>();
 		return sqlSession.selectList("User.readUser");
+	}
+
+	@Override
+	public void updateAdmin(int id) {
+		sqlSession.update("User.updateAdmin", id);
 	}
 }

@@ -9,6 +9,12 @@
 		where deldate is null
 		ORDER BY regdate desc;
    	</select>
+   	<update id="updateAdmin" parameterType="Integer">
+   		update User
+		set status = 1
+		where id = #{id};
+   		
+   	</update>
    	
 
 </mapper>

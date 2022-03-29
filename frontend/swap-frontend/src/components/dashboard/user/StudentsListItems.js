@@ -178,12 +178,12 @@ const StudentsListItems = () => {
   const [addId, setAddId] = useState([2, 3]);
 
   const createAdmin = async (e) => {
-    var add = [];
+    var addAdminId = [];
 
-    e.map((d) => add.push(d.original.id));
+    e.map((d) => addAdminId.push(d.original.id));
 
     var params = new URLSearchParams();
-    params.append("adminId", add);
+    params.append("adminId", addAdminId);
 
     if (window.confirm("관리자로 추가하시겠습니까?")) {
       const response = await axios.post("http://localhost:8080/swap/admin/add", params);
@@ -191,7 +191,7 @@ const StudentsListItems = () => {
     }
   };
 
-  // const removeAdministrator = async (id, email) => {
+  // const removeAdmin = async (e) => {
   //   if (window.confirm("삭제하시겠습니까?")) {
   //     axios({
   //       url: process.env.REACT_APP_RESTAPI_HOST + "administrator/del_date/" + id,
@@ -203,7 +203,7 @@ const StudentsListItems = () => {
   //       },
   //     }).then(function (res) {
   //       alert("변경되었습니다.");
-  //       readAdministrator();
+  //       readAdmin();
   //     });
   //   }
   // };
