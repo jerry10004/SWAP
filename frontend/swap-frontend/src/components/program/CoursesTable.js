@@ -43,23 +43,32 @@ const CoursesTable = ({ program_data }) => {
     </Link>
   ));
 
+  const handleSelect = (e) => {
+    console.log(e);
+    // var params = new URLSearchParams();
+    // params.append("status", e);
+    //const response = await axios.post("http://localhost:8080/swap/program/updateStatus", params);
+    //alert("status update 되었습니다.");
+    readProgram();
+  };
+
   const ActionMenu = () => {
     return (
-      <Dropdown>
+      <Dropdown onSelect={handleSelect}>
         <Dropdown.Toggle as={CustomToggle}>
           <MoreVertical size="15px" className="text-secondary" />
         </Dropdown.Toggle>
         <Dropdown.Menu align="end">
           <Dropdown.Header>상태 변경하기</Dropdown.Header>
-          <Dropdown.Item eventKey="1">
+          <Dropdown.Item eventKey="0">
             {" "}
             <DotBadge bg="warning"></DotBadge>대기
           </Dropdown.Item>
-          <Dropdown.Item eventKey="2">
+          <Dropdown.Item eventKey="1">
             {" "}
             <DotBadge bg="success"></DotBadge> 진행
           </Dropdown.Item>
-          <Dropdown.Item eventKey="3">
+          <Dropdown.Item eventKey="2">
             {" "}
             <DotBadge bg="danger"></DotBadge> 종료
           </Dropdown.Item>
