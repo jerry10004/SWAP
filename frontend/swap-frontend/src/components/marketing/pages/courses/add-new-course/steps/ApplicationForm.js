@@ -2,7 +2,6 @@
 import { Col, Card, Form, Button } from "react-bootstrap";
 import { FormSelect } from "components/elements/form-select/FormSelect";
 import React, { Fragment } from "react";
-import { Link } from "react-router-dom";
 
 const CoursesMedia = (props) => {
   const { next, previous } = props;
@@ -31,7 +30,7 @@ const CoursesMedia = (props) => {
           <Col md={6} sm={12} className="mb-4">
             <Form.Group controlId="Phone number">
               <Form.Label>전화번호</Form.Label>
-              <Form.Control type="text" placeholder="Phone number (010-0000-0000)" required />
+              <Form.Control type="text" placeholder="Phone number (010-1234-5678)" required />
             </Form.Group>
           </Col>
 
@@ -39,7 +38,7 @@ const CoursesMedia = (props) => {
           <Col md={6} sm={12} className="mb-4">
             <Form.Group controlId="Phone number">
               <Form.Label>이메일</Form.Label>
-              <Form.Control type="text" placeholder="00000@handong.ac.kr" required />
+              <Form.Control type="text" placeholder="Handong123@handong.ac.kr" required />
             </Form.Group>
           </Col>
 
@@ -98,7 +97,7 @@ const CoursesMedia = (props) => {
         <Button variant="secondary" onClick={previous}>
           이전
         </Button>
-        <Button variant="danger" onClick={next}>
+        <Button className="btn btn-success" onClick={next}>
           제출
         </Button>
       </div>

@@ -43,15 +43,19 @@ public class ProgramController {
 	public void addAdministrator(HttpServletRequest httpServletRequest) throws ParseException {
 		ProgramDTO program = new ProgramDTO();
 		
-		SimpleDateFormat formatter = new SimpleDateFormat("dd mm:ss");
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		Date start_date = (Date) formatter.parse(httpServletRequest.getParameter("start_date"));
 		Date end_date = (Date) formatter.parse(httpServletRequest.getParameter("end_date"));
 		
+		program.setAdmin_id(Integer.parseInt(httpServletRequest.getParameter("admin_id")));
 		program.setCategory_id(Integer.parseInt(httpServletRequest.getParameter("category_id")));
+		program.setApplication_form(Integer.parseInt(httpServletRequest.getParameter("application_form")));
+		program.setQuota(Integer.parseInt(httpServletRequest.getParameter("program_quota")));
 		program.setProgram_name(httpServletRequest.getParameter("program_name"));
 		program.setInformation(httpServletRequest.getParameter("information"));
 		program.setStart_date(start_date);
 		program.setEnd_date(end_date);
+		
 		
 		int result = programService.add(program);
 		

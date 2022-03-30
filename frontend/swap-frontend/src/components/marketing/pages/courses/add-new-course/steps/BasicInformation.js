@@ -1,16 +1,16 @@
-// import node module libraries
 import React, { useState } from "react";
 import { Card, Row, Form, Button, Col, InputGroup } from "react-bootstrap";
 import { FormSelect } from "components/elements/form-select/FormSelect";
-import { FlatPickr } from "components/elements/flat-pickr/FlatPickr";
 import { DropFiles } from "components/elements/dropfiles/DropFiles";
-import { Image } from "react-bootstrap-icons";
-import Flatpickr from "react-flatpickr";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import "assets/scss/addProgram.scss";
+import { ko } from "date-fns/esm/locale";
 
 const BasicInformation = (props) => {
   const { next, handleChange } = props;
-  const { value, placeholder } = props;
-  const [picker, setPicker] = useState(new Date());
+  const [startDate, setStartDate] = useState();
+  const [endDate, setEndDate] = useState();
 
   const categoryOptions = [
     { value: "대회", label: "대회" },
@@ -45,7 +45,9 @@ const BasicInformation = (props) => {
               {/* Description */}
               <Col xs={12} className="mb-4">
                 <Form.Group controlId="formProjectBrief">
-                  <Form.Label>프로그램 설명</Form.Label>
+                  <Form.Label>
+                    프로그램 설명 <span className="text-danger">*</span>
+                  </Form.Label>
                   <Form.Control as="textarea" rows={3} name="program_description" onChange={handleChange} placeholder="프로그램에 관한 정보를 입력하세요." />
                 </Form.Group>
               </Col>
@@ -55,28 +57,19 @@ const BasicInformation = (props) => {
                 <Form.Label>
                   프로그램 시작 날짜 <span className="text-danger">*</span>
                 </Form.Label>
-                <InputGroup>
-                  <Flatpickr
-                    value={value === "" ? "" : value ? value : picker}
-                    className="form-control"
-                    placeholder={placeholder}
+                <InputGroup className="datePicker-wrapper">
+                  <DatePicker
+                    locale={ko}
+                    dateFormat="yyyy-MM-dd HH:mm"
+                    className="datePicker"
+                    placeholderText="시작 날짜를 선택해주세요."
+                    selected={startDate}
                     onChange={(date) => {
-                      setPicker(date);
+                      setStartDate(date);
                       props.setStart_date(date);
                     }}
-                    options={{
-                      dateFormat: "Y-m-d",
-                      disable: [
-                        {
-                          from: "2020-02-01",
-                          to: "2020-02-10",
-                        },
-                      ],
-                    }}
+                    showTimeSelect
                   />
-                  <InputGroup.Text className="text-muted">
-                    <i className="fe fe-calendar"></i>
-                  </InputGroup.Text>
                 </InputGroup>
               </Col>
 
@@ -86,18 +79,27 @@ const BasicInformation = (props) => {
                   프로그램 종료 날짜 <span className="text-danger">*</span>
                 </Form.Label>
                 <InputGroup>
-                  <Form.Control as={FlatPickr} value="" name="end_date" dateValue />
-
-                  <InputGroup.Text className="text-muted">
-                    <i className="fe fe-calendar"></i>
-                  </InputGroup.Text>
+                  <DatePicker
+                    locale={ko}
+                    dateFormat="yyyy-MM-dd HH:mm"
+                    className="datePicker"
+                    placeholderText="종료 날짜를 선택해주세요."
+                    selected={endDate}
+                    onChange={(date) => {
+                      setEndDate(date);
+                      props.setEnd_date(date);
+                    }}
+                    showTimeSelect
+                  />
                 </InputGroup>
               </Col>
 
               {/* 프로그램 정원 */}
               <Col md={6} xs={12} className="mb-4">
                 <Form.Group>
-                  <Form.Label>프로그램 정원</Form.Label>
+                  <Form.Label>
+                    프로그램 정원 <span className="text-danger">*</span>
+                  </Form.Label>
                   <Form.Control type="text" placeholder="숫자만 기입" id="program_quota" name="program_quota" onChange={handleChange} />
                 </Form.Group>
               </Col>
@@ -105,7 +107,9 @@ const BasicInformation = (props) => {
               {/* 카테고리 */}
               <Col md={6} xs={12} className="mb-4">
                 <Form.Group controlId="formPrivacyOptions">
-                  <Form.Label>카테고리</Form.Label>
+                  <Form.Label>
+                    카테고리 <span className="text-danger">*</span>
+                  </Form.Label>
                   <Form.Control as={FormSelect} placeholder="카테고리를 선택하세요." options={categoryOptions} />
                 </Form.Group>
               </Col>
@@ -124,10 +128,11 @@ const BasicInformation = (props) => {
       {/* Button */}
       <div className="d-flex justify-content-end">
         <Button variant="primary" onClick={next}>
-          Next
+          다음
         </Button>
       </div>
     </Form>
   );
 };
+
 export default BasicInformation;

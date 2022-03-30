@@ -7,8 +7,8 @@ import { Col, Row, Tab, Card, Nav, Breadcrumb } from "react-bootstrap";
 import CoursesTable from "components/program/CoursesTable";
 
 // import data files
-import { allcourses, allapprovedcourses, allpendingcourses } from "data/courses/AllCoursesData";
-
+// import { allcourses, allapprovedcourses, allpendingcourses } from "data/courses/AllCoursesData";
+import { allPrograms, waitPrograms, progressPrograms, finishPrograms } from "components/program/CoursesTable";
 // import sub components
 import NavbarVertical from "layouts/dashboard/NavbarVertical";
 import NavbarTop from "layouts/dashboard/NavbarTop";
@@ -65,12 +65,12 @@ const AllCourses = () => {
                           </Nav.Link>
                         </Nav.Item>
                         <Nav.Item>
-                          <Nav.Link eventKey="approved" className="mb-sm-3 mb-md-0">
+                          <Nav.Link eventKey="waiting" className="mb-sm-3 mb-md-0">
                             대기
                           </Nav.Link>
                         </Nav.Item>
                         <Nav.Item>
-                          <Nav.Link eventKey="pending" className="mb-sm-3 mb-md-0">
+                          <Nav.Link eventKey="progress" className="mb-sm-3 mb-md-0">
                             진행
                           </Nav.Link>
                         </Nav.Item>
@@ -84,13 +84,16 @@ const AllCourses = () => {
                     <Card.Body className="p-0">
                       <Tab.Content>
                         <Tab.Pane eventKey="all" className="pb-4">
-                          <CoursesTable courses_data={allcourses} />
+                          <CoursesTable program_data={3} />
                         </Tab.Pane>
-                        <Tab.Pane eventKey="approved" className="pb-4">
-                          <CoursesTable courses_data={allapprovedcourses} />
+                        <Tab.Pane eventKey="waiting" className="pb-4">
+                          <CoursesTable program_data={0} />
                         </Tab.Pane>
-                        <Tab.Pane eventKey="pending" className="pb-4">
-                          <CoursesTable courses_data={allpendingcourses} />
+                        <Tab.Pane eventKey="progress" className="pb-4">
+                          <CoursesTable program_data={1} />
+                        </Tab.Pane>
+                        <Tab.Pane eventKey="end" className="pb-4">
+                          <CoursesTable program_data={2} />
                         </Tab.Pane>
                       </Tab.Content>
                     </Card.Body>
