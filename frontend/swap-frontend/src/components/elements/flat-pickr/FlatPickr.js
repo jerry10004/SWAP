@@ -23,7 +23,10 @@ export const FlatPickr = (props) => {
       value={value === "" ? "" : value ? value : picker}
       className="form-control"
       placeholder={placeholder}
-      onChange={(date) => setPicker(date)}
+      onChange={(date) => {
+        setPicker(date);
+        props.setStart_date(date);
+      }}
       options={{
         dateFormat: "Y-m-d",
         disable: [

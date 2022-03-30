@@ -14,9 +14,9 @@
 		order by P.regdate desc;
    	</select>
    	
-   		<insert id = "insertProgram" parameterType="Program">	
-   		INSERT INTO Program (category_id, program_name, information, start_date, end_date)
-		VALUES (#{category_id}, #{program_name}, #{information}, #{start_date}, #{end_date})
+   	<insert id = "insertProgram" parameterType="Program">	
+   		INSERT INTO Program (admin_id, category_id, application_form, program_name, information, start_date, end_date,quota)
+		VALUES (#{admin_id}, #{category_id}, #{application_form}, #{program_name}, #{information}, #{start_date}, #{end_date},#{quota})
    	</insert>
    	
    	

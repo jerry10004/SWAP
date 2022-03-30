@@ -4,19 +4,20 @@ import java.util.Date;
 
 public class ProgramDTO {
 	int id;
+	int quota;
+	int status;
 	int admin_id;
 	int category_id;
-	String program_name;
-	int recruitment_type;
-	int quota;
 	int applicants_num;
+	int recruitment_type;
+	int application_form;
+	String program_name;
 	String information;
-	int status;
 	Date start_date;
 	Date edit_date;
 	Date end_date;
 	Date regdate;
-	int application_form;
+	
 	public int getId() {
 		return id;
 	}
