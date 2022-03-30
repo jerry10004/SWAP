@@ -12,6 +12,7 @@ import Pagination from "components/elements/advance-table/Pagination";
 
 import styled from "styled-components";
 import DotBadge from "components/elements/bootstrap/DotBadge";
+import { useHistory } from "react-router-dom";
 
 // const StyledButton = styled.button`
 //   background-color: #fe4f4f;
@@ -181,6 +182,7 @@ const UsersListItems = () => {
       const response = await axios.post("http://localhost:8080/swap/admin/add", params);
       alert("추가 되었습니다.");
       readUser();
+      window.location.reload();
     }
   };
 

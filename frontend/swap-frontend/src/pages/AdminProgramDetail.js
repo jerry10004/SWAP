@@ -1,23 +1,21 @@
 // import node module libraries
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-
-// import node module libraries
 import { Fragment } from "react";
-import { Col, Row, Card, Tab, Breadcrumb, Button, Nav } from "react-bootstrap";
+import { Row, Col, Card, Tab, Breadcrumb, Button, Nav } from "react-bootstrap";
+import React, { useState } from "react";
 
 // import sub components
-import UsersListItems from "components/dashboard/user/UsersListItems";
-import StudentsListItems from "components/dashboard/user/StudentsListItems";
-import InstructorsListItems from "components/dashboard/user/InstructorsListItems";
-import DeletedUsersListItems from "components/dashboard/user/DeletedUsersListItems";
-import CoursesTable from "components/program/CoursesTable";
+import ProjectSummary from "components/dashboard/single/overview/ProjectSummary";
+import BudgetSection from "components/dashboard/single/overview/BudgetSection";
+import UpcomingDeadlines from "components/dashboard/single/overview/UpcomingDeadlines";
+import LaunchDate from "components/dashboard/single/overview/LaunchDate";
+import OverallProgressChart from "components/dashboard/single/overview/OverallProgressChart";
+import RecentActivity from "components/dashboard/single/overview/RecentActivity";
 
 // import sub components
 import NavbarVertical from "layouts/dashboard/NavbarVertical";
 import NavbarTop from "layouts/dashboard/NavbarTop";
 
-const ManageUser = () => {
+const AdminProgramDetail = () => {
   const [showMenu, setShowMenu] = useState(true);
   const ToggleMenu = () => {
     return setShowMenu(!showMenu);
@@ -43,10 +41,7 @@ const ManageUser = () => {
                 <Col lg={12} md={12} sm={12}>
                   <div className="border-bottom pb-4 mb-4 d-flex align-items-center justify-content-between">
                     <div className="mb-3 mb-md-0">
-                      <h1 className="mb-1 h2 fw-bold">
-                        Users
-                        {/* <span className="fs-5 text-muted">(12,105)</span> */}
-                      </h1>
+                      <h1 className="mb-1 h2 fw-bold">맥북신청</h1>
                       <Breadcrumb>
                         <Breadcrumb.Item href="#">Dashboard</Breadcrumb.Item>
                         <Breadcrumb.Item active>Users</Breadcrumb.Item>
@@ -58,45 +53,49 @@ const ManageUser = () => {
 
               <Row>
                 <Col lg={12} md={12} sm={12}>
-                  <Tab.Container defaultActiveKey="all">
+                  <Tab.Container defaultActiveKey="information">
                     <Card>
                       <Card.Header className="border-bottom-0 p-0 bg-white">
                         <Nav className="nav-lb-tab">
                           <Nav.Item>
-                            <Nav.Link eventKey="all" className="mb-sm-3 mb-md-0">
-                              전체
+                            <Nav.Link eventKey="information" className="mb-sm-3 mb-md-0">
+                              정보
                             </Nav.Link>
                           </Nav.Item>
                           <Nav.Item>
-                            <Nav.Link eventKey="instructors" className="mb-sm-3 mb-md-0">
-                              Instructors
+                            <Nav.Link eventKey="application" className="mb-sm-3 mb-md-0">
+                              신청서
                             </Nav.Link>
                           </Nav.Item>
                           <Nav.Item>
-                            <Nav.Link eventKey="students" className="mb-sm-3 mb-md-0">
-                              Students
+                            <Nav.Link eventKey="survey" className="mb-sm-3 mb-md-0">
+                              설문지
                             </Nav.Link>
                           </Nav.Item>
                           <Nav.Item>
-                            <Nav.Link eventKey="deletedUsers" className="mb-sm-3 mb-md-0">
-                              삭제된 사용자
+                            <Nav.Link eventKey="applicant" className="mb-sm-3 mb-md-0">
+                              신청현황
                             </Nav.Link>
                           </Nav.Item>
                         </Nav>
                       </Card.Header>
                       <Card.Body className="p-0">
                         <Tab.Content>
-                          <Tab.Pane eventKey="all" className="pb-4">
-                            <UsersListItems />
+                          <Tab.Pane eventKey="information" className="pb-4">
+                            <ProjectSummary />
                           </Tab.Pane>
-                          <Tab.Pane eventKey="instructors" className="pb-4">
-                            <InstructorsListItems />
+                          <Tab.Pane eventKey="application" className="pb-4">
+                            <BudgetSection />
                           </Tab.Pane>
-                          <Tab.Pane eventKey="students" className="pb-4">
-                            <StudentsListItems />
+                          <Tab.Pane eventKey="survey" className="pb-4">
+                            <UpcomingDeadlines />
                           </Tab.Pane>
-                          <Tab.Pane eventKey="deletedUsers" className="pb-4">
-                            <DeletedUsersListItems />
+                          <Tab.Pane eventKey="applicant" className="pb-4">
+                            <LaunchDate />
+
+                            <OverallProgressChart />
+
+                            <RecentActivity />
                           </Tab.Pane>
                         </Tab.Content>
                       </Card.Body>
@@ -111,4 +110,5 @@ const ManageUser = () => {
     </Fragment>
   );
 };
-export default ManageUser;
+
+export default AdminProgramDetail;

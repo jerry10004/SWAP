@@ -73,7 +73,7 @@ const AddNewCourse = () => {
     if (window.confirm("프로그램을 추가하시겠습니까?")) {
       const response = await axios.post("http://localhost:8080/swap/program/add", params);
       alert(formData.program_title + " 프로그램이 추가 되었습니다.");
-      navigate("/admin/manageprogram");
+      navigate("/admin/program");
     }
   };
 

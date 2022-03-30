@@ -14,6 +14,7 @@ import ManageStudent from "./pages/ManageStudent";
 import ManageUser from "./pages/ManageUser";
 import ManageInstructor from "./pages/ManageInstructor";
 import ManageProgram from "./pages/ManageProgram";
+import AdminProgramDetail from "./pages/AdminProgramDetail";
 import Admin from "./pages/Admin";
 import Test from "./pages/Test";
 
@@ -33,6 +34,7 @@ function Router() {
         <Route path="/admin/instructor" element={<ManageInstructor />} />
         <Route path="/admin/user" element={<ManageUser />} />
         <Route path="/admin/program" element={<ManageProgram />} />
+        <Route path="/admin/program/detail" element={<AdminProgramDetail />} />
         <Route path="/admin/test" element={<Test />} />
       </Routes>
     </BrowserRouter>
