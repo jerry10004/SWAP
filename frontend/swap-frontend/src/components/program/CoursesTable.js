@@ -221,7 +221,6 @@ const CoursesTable = ({ courses_data }) => {
             </div>
           </Col>
           <Col xxl={2} lg={2} md={6} xs={12}>
-            {/* records filtering options */}
             <Form.Control as={FormSelect} placeholder="카테고리" options={filterOptions} />
           </Col>
         </Row>

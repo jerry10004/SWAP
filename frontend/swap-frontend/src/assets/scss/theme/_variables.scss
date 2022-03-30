@@ -13,6 +13,7 @@ $black: #000 !default;
 
 $grays: () !default;
 $primary: #754ffe !default;
+$primary_danger: #fe4f4f !default;
 $secondary: #79758f !default;
 $success: #19cb98 !default;
 $info: #29baf9 !default;
@@ -159,7 +160,7 @@ $lead-font-weight: 400 !default;
 
 // scss-docs-start breadcrumb-variables
 $breadcrumb-font-size: 12px;
-$breadcrumb-margin-bottom:0rem;
+$breadcrumb-margin-bottom: 0rem;
 // Border
 
 // scss-docs-start border-variables
@@ -224,7 +225,7 @@ $container-max-widths: (
   sm: 540px,
   md: 720px,
   lg: 960px,
-  xl: 1140px // xxl: 1320px,,,,,,,,,,,
+  xl: 1140px // xxl: 1320px,,,,,,,,,,,,
 ) !default;
 // scss-docs-end container-max-widths
 
@@ -311,11 +312,9 @@ $box-shadow-lg: 0 6px 8px 0 rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.04) !
 
 // Smooth Box Shadow
 $box-shadow-smooth-sm: 0px 2px 4px rgba(0, 0, 20, 0.08), 0px 1px 2px rgba(0, 0, 20, 0.08) !default;
-$box-shadow-smooth-md: 0 1px 2px rgba(21, 30, 40, 0.07), 0 2px 4px rgba(21, 30, 40, 0.07),
-  0 4px 8px rgba(21, 30, 40, 0.07), 0 8px 16px rgba(21, 30, 40, 0.07), 0 16px 32px rgba(21, 30, 40, 0.07),
+$box-shadow-smooth-md: 0 1px 2px rgba(21, 30, 40, 0.07), 0 2px 4px rgba(21, 30, 40, 0.07), 0 4px 8px rgba(21, 30, 40, 0.07), 0 8px 16px rgba(21, 30, 40, 0.07), 0 16px 32px rgba(21, 30, 40, 0.07),
   0 32px 64px rgba(21, 30, 40, 0.07) !default;
-$box-shadow-smooth-lg: 0 1px 1px rgba(21, 30, 40, 0.11), 0 2px 2px rgba(21, 30, 40, 0.11),
-  0 4px 4px rgba(21, 30, 40, 0.11), 0 8px 8px rgba(21, 30, 40, 0.11), 0 16px 16px rgba(21, 30, 40, 0.11),
+$box-shadow-smooth-lg: 0 1px 1px rgba(21, 30, 40, 0.11), 0 2px 2px rgba(21, 30, 40, 0.11), 0 4px 4px rgba(21, 30, 40, 0.11), 0 8px 8px rgba(21, 30, 40, 0.11), 0 16px 16px rgba(21, 30, 40, 0.11),
   0 32px 32px rgba(21, 30, 40, 0.11) !default;
 
 // Hr

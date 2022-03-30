@@ -9,9 +9,18 @@ import axios from "axios";
 // import custom components
 import GlobalFilter from "components/elements/advance-table/GlobalFilter";
 import Pagination from "components/elements/advance-table/Pagination";
+
+import styled from "styled-components";
 import DotBadge from "components/elements/bootstrap/DotBadge";
 
-const StudentsListItems = () => {
+// const StyledButton = styled.button`
+//   background-color: #fe4f4f;
+//   color: white;
+//   padding: 0.22rem 0.75rem;
+//   font-size: 0.75rem;
+// `;
+
+const UsersListItems = () => {
   const [userInfo, setUserInfo] = useState([]);
 
   const columns = useMemo(
@@ -23,7 +32,7 @@ const StudentsListItems = () => {
         Cell: ({ value, row }) => {
           return (
             <div className="d-flex align-items-center">
-              <DotBadge bg="warning"></DotBadge>
+              <DotBadge bg={row.original.status === 0 ? "warning" : "success"}></DotBadge>
               <h5 className="mb-0">{value}</h5>
             </div>
           );
@@ -31,23 +40,37 @@ const StudentsListItems = () => {
       },
       { accessor: "phone", Header: "연락처" },
       { accessor: "email", Header: "이메일" },
-
       {
         accessor: "student_id",
         Header: "학번",
+        Cell: ({ value }) => {
+          return (
+            <Fragment>
+              <Col> {value === 0 ? "" : value}</Col>
+            </Fragment>
+          );
+        },
       },
       {
         accessor: "student_class",
         Header: "학년",
         Cell: ({ value }) => {
-          return value + " 학년";
+          return (
+            <Fragment>
+              <Col> {value === 0 ? "" : value + " 학년"}</Col>
+            </Fragment>
+          );
         },
       },
       {
         accessor: "semester",
         Header: "학기",
         Cell: ({ value }) => {
-          return value + " 학기";
+          return (
+            <Fragment>
+              <Col> {value === 0 ? "" : value + " 학기"}</Col>
+            </Fragment>
+          );
         },
       },
       {
@@ -62,49 +85,9 @@ const StudentsListItems = () => {
         accessor: "major2",
         Header: "2전공",
       },
-      {
-        accessor: "shortcutmenu",
-        Header: "",
-        Cell: () => {
-          return <ActionMenu />;
-        },
-      },
     ],
     []
   );
-
-  const ActionMenu = () => {
-    return (
-      <Dropdown>
-        <Dropdown.Toggle as={CustomToggle}>
-          <MoreVertical size="15px" className="text-secondary" />
-        </Dropdown.Toggle>
-        <Dropdown.Menu align="end">
-          <Dropdown.Header>SETTINGS</Dropdown.Header>
-          <Dropdown.Item eventKey="1">
-            {" "}
-            <Edit size="18px" className="dropdown-item-icon" /> 활동내역 보기
-          </Dropdown.Item>
-          {/* <Dropdown.Item eventKey="2">
-            {" "}
-            <Trash size="18px" className="dropdown-item-icon" /> 탈퇴시키기
-          </Dropdown.Item> */}
-        </Dropdown.Menu>
-      </Dropdown>
-    );
-  };
-  const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
-    <Link
-      to=""
-      ref={ref}
-      onClick={(e) => {
-        e.preventDefault();
-        onClick(e);
-      }}
-    >
-      {children}
-    </Link>
-  ));
 
   const data = useMemo(() => userInfo);
 
@@ -152,7 +135,25 @@ const StudentsListItems = () => {
     useFilters,
     useGlobalFilter,
     usePagination,
-    useRowSelect
+    useRowSelect,
+    (hooks) => {
+      hooks.visibleColumns.push((columns) => [
+        {
+          id: "selection",
+          Header: ({ getToggleAllPageRowsSelectedProps }) => (
+            <div>
+              <IndeterminateCheckbox {...getToggleAllPageRowsSelectedProps()} />
+            </div>
+          ),
+          Cell: ({ row }) => (
+            <div>
+              <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
+            </div>
+          ),
+        },
+        ...columns,
+      ]);
+    }
   );
 
   const { pageIndex, globalFilter } = state;
@@ -162,16 +163,76 @@ const StudentsListItems = () => {
   }, []);
 
   const readUser = async () => {
-    const response = await axios.get("http://localhost:8080/swap/user/students");
+    const response = await axios.get("http://localhost:8080/swap/user");
+    console.log("$$$$$$$$$$$$$$");
+    console.log(response.data);
     setUserInfo(response.data);
+  };
+
+  const createAdmin = async (e) => {
+    var addAdminId = [];
+
+    e.map((d) => addAdminId.push(d.original.id));
+
+    var params = new URLSearchParams();
+    params.append("id", addAdminId);
+
+    if (window.confirm("관리자로 추가하시겠습니까?")) {
+      const response = await axios.post("http://localhost:8080/swap/admin/add", params);
+      alert("추가 되었습니다.");
+      readUser();
+    }
+  };
+
+  const removeUser = async (e) => {
+    var removeUserId = [];
+
+    e.map((d) => removeUserId.push(d.original.id));
+
+    var params = new URLSearchParams();
+    params.append("id", removeUserId);
+
+    if (window.confirm("삭제 하시겠습니까?")) {
+      const response = await axios.post("http://localhost:8080/swap/user/delete", params);
+      alert("삭제 되었습니다.");
+      readUser();
+    }
   };
 
   return (
     <Fragment>
       <div className=" overflow-hidden">
-        <Row>
-          <Col xl={8} lg={12} md={12} sm={12} className="mb-lg-0 mb-2 px-5 py-4">
-            <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} placeholder="Search Students" />
+        <Row className="justify-content-md-between m-3 mb-xl-0">
+          <Col xl={8} lg={6} md={6} xs={12}>
+            <div className="mb-2 mb-lg-4">
+              <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} placeholder="Search Users" />
+            </div>
+          </Col>
+          <Col xxl={3} lg={6} md={6} xs={12} className="justify-content-between mb-2 mb-lg-4">
+            <Button
+              className="mx-4"
+              onClick={() => {
+                createAdmin(selectedFlatRows);
+              }}
+            >
+              관리자 추가
+            </Button>
+            <Button
+              className="danger-button"
+              onClick={() => {
+                removeUser(selectedFlatRows);
+              }}
+            >
+              삭제하기
+            </Button>
+
+            {/* <StyledButton
+              onClick={() => {
+                removeUser(selectedFlatRows);
+              }}
+            >
+              삭제하기
+            </StyledButton> */}
           </Col>
         </Row>
       </div>
@@ -193,6 +254,7 @@ const StudentsListItems = () => {
               return (
                 <tr {...row.getRowProps()}>
                   {row.cells.map((cell) => {
+                    //idx는 각 column
                     return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>;
                   })}
                 </tr>
@@ -208,4 +270,4 @@ const StudentsListItems = () => {
   );
 };
 
-export default StudentsListItems;
+export default UsersListItems;

@@ -9,10 +9,11 @@
    	</insert>
    	
    	<select id="readAdmin" resultType="Admin">
-	   	select A.id, A.user_id, A.name, A.phone, A.email
+	   select A.id, A.user_id, A.name, A.phone, A.email
 		from Admin AS A
 		JOIN User AS U
 		ON U.id = A.user_id
+		WHERE U.status = 1
 		ORDER BY A.regdate desc;
    	</select>
    	<delete id="deleteAdmin" parameterType="Integer">

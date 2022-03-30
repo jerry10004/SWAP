@@ -38,4 +38,19 @@ public class UserDAOImpl implements UserDAO{
 		param.put("id", id);
 	    sqlSession.update("User.updateDelDate", param);
 	}
+
+	@Override
+	public List<UserDTO> readStudents() {
+		return sqlSession.selectList("User.readStudents");
+	}
+
+	@Override
+	public List<UserDTO> readDeletedUsers() {
+		return sqlSession.selectList("User.readDeletedUsers");
+	}
+
+	@Override
+	public void restore(int id) {
+		sqlSession.update("User.restoreUser", id);
+	}
 }

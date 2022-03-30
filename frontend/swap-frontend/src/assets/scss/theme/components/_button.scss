@@ -13,6 +13,17 @@
   }
 }
 
+// .danger-button .btn-play {
+//   background-color: $white;
+//   color: $primary;
+//   transition: 0.2s ease;
+//   &:hover {
+//     background-color: rgb(230, 25, 25);
+//     color: $white;
+//     transition: 0.2s ease;
+//   }
+// }
+
 // btn outline white
 .btn-outline-white {
   border-color: $gray-300;
@@ -82,23 +93,26 @@
   color: $primary !important;
 }
 
-
-
 // primary hover
 .primary-hover {
   &:hover {
-    background-color: $primary;
+    // background-color: $primary;
+    background-color: rgb(216, 41, 41);
+
     color: $white;
     border: $primary;
   }
   &:focus {
-    background-color: $primary;
+    // background-color: $primary;
+    background-color: $danger;
     color: $white;
-    border: $primary;
+    // border: $primary;
+    background-color: rgb(216, 41, 41);
     box-shadow: 0 0 0 0.2rem rgba(129, 97, 244, 0.5);
   }
   &.active {
-    background-color: $primary;
+    // background-color: $primary;
+    background-color: $danger;
     color: $white;
     border: $primary;
   }
@@ -110,8 +124,6 @@
     box-shadow: none;
   }
 }
-
-
 
 //
 // Link buttons
@@ -142,17 +154,14 @@
 
 // btn-dashed
 
-.btn-dashed{
+.btn-dashed {
   border-style: dashed !important;
 
-
-  &:hover{
+  &:hover {
     border-color: $primary !important;
     color: $primary !important;
-
   }
-  &:focus{
-  box-shadow: none !important;
-
+  &:focus {
+    box-shadow: none !important;
   }
 }

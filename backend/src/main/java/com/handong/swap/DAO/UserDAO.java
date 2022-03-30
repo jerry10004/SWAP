@@ -9,7 +9,10 @@ import com.handong.swap.DTO.UserDTO;
 @Repository
 public interface UserDAO {
 	List<UserDTO> read();
+	List<UserDTO> readStudents();
+	List<UserDTO> readDeletedUsers();
 	public void updateAdmin(int id);
 	public void updateUser(int id);
 	public void updateDelDate(int id);
+	public void restore(int id);
 }

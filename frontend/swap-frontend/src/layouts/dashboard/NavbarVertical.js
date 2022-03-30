@@ -21,16 +21,17 @@ export const DashboardMenu = [
     id: uuid(),
     title: "User",
     icon: "home",
-    children: [
-      { id: uuid(), link: "/admin/instructor", name: "관리자" },
-      { id: uuid(), link: "/admin/student", name: "사용자" },
-    ],
+    link: "/admin/user",
+    // children: [
+    //   { id: uuid(), link: "/admin/instructor", name: "관리자" },
+    //   { id: uuid(), link: "/admin/student", name: "사용자" },
+    // ],
   },
   {
     id: uuid(),
     title: "Program",
     icon: "clipboard",
-    link: "/admin/manageprogram",
+    link: "/admin/program",
   },
 ];
 

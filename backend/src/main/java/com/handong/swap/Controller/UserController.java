@@ -30,6 +30,15 @@ public class UserController {
 	    return result;
 	}
 	
+	@RequestMapping(value = "students", method = RequestMethod.GET, produces = "application/json; charset=utf8")
+	@ResponseBody
+	public String readStudents(HttpServletRequest httpServletRequest) throws IOException, ParseException {
+		System.out.println("읽기 시도");
+		String result = userService.readStudents();
+		System.out.println(result);
+	    return result;
+	}
+	
 	@RequestMapping(value = "delete", method = RequestMethod.POST, produces = "application/json; charset=utf8")
 	@ResponseBody
 	public void deleteUser(HttpServletRequest httpServletRequest) {
@@ -41,6 +50,28 @@ public class UserController {
 			System.out.println("삭제 시도");
 			System.out.println("삭제 하려는 아이디 번호: "+ids[i]);
 			userService.delete(Integer.parseInt(ids[i]));
+		}
+	}
+	
+	@RequestMapping(value = "deletedusers", method = RequestMethod.GET, produces = "application/json; charset=utf8")
+	@ResponseBody
+	public String readDeletedUsers(HttpServletRequest httpServletRequest) throws IOException, ParseException {
+		System.out.println("읽기 시도");
+		String result = userService.readDeletedUsers();
+		System.out.println(result);
+	    return result;
+	}
+	
+	@RequestMapping(value = "restore", method = RequestMethod.POST, produces = "application/json; charset=utf8")
+	@ResponseBody
+	public void restoreUser(HttpServletRequest httpServletRequest) {
+		String[] param_ids = httpServletRequest.getParameterValues("id");
+		
+		String[] ids = param_ids[0].split(",");
+		
+		for (int i = 0; i < ids.length; i++) {
+			System.out.println("복구 시도");
+			userService.restore(Integer.parseInt(ids[i]));
 		}
 	}
 	

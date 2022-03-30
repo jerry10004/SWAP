@@ -28,5 +28,26 @@ public class UserServiceImpl implements UserService{
 	public void delete(int id) {
 		userDAO.updateDelDate(id);
 	}
+
+	@Override
+	public String readStudents() throws JsonProcessingException {
+		List<UserDTO> userDATA = userDAO.readStudents();
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonString = mapper.writeValueAsString(userDATA);
+		return jsonString;
+	}
+
+	@Override
+	public String readDeletedUsers() throws JsonProcessingException {
+		List<UserDTO> userDATA = userDAO.readDeletedUsers();
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonString = mapper.writeValueAsString(userDATA);
+		return jsonString;
+	}
+
+	@Override
+	public void restore(int id) {
+		userDAO.restore(id);
+	}
 }
 	

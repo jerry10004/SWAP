@@ -4,9 +4,21 @@
 <mapper namespace="User">   
 
    	<select id="readUser" resultType="User">
-	   	select id, name, phone, email, student_id, student_class, semester, department,major1, major2
+	   	select id, name, phone, email, student_id, student_class, semester, department,major1, major2, status
 		from User 
 		where deldate is null
+		ORDER BY regdate desc;
+   	</select>
+   	<select id="readStudents" resultType="User">
+	   	select id, name, phone, email, student_id, student_class, semester, department,major1, major2
+		from User 
+		where deldate is null AND status = 0 
+		ORDER BY regdate desc;
+   	</select>
+   	<select id="readDeletedUsers" resultType="User">
+	   	select id, name, phone, email, student_id, student_class, semester, department,major1, major2
+		from User 
+		where status = -1 
 		ORDER BY regdate desc;
    	</select>
    	<update id="updateAdmin" parameterType="Integer">
@@ -24,6 +36,9 @@
    		UPDATE User SET deldate=now(), status = -1
 		WHERE id = #{id}
    	</update>
-   	
-
+   	<update id="restoreUser" parameterType="Integer">
+   		update User
+		set deldate = null, status = 0
+		where id = #{id};
+   	</update>
 </mapper>

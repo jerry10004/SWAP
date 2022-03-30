@@ -9,6 +9,7 @@ import axios from "axios";
 // import custom components
 import GlobalFilter from "components/elements/advance-table/GlobalFilter";
 import Pagination from "components/elements/advance-table/Pagination";
+import DotBadge from "components/elements/bootstrap/DotBadge";
 
 const InstructorsListItems = (props) => {
   const [adminInfo, setAdminInfo] = useState([]);
@@ -22,6 +23,7 @@ const InstructorsListItems = (props) => {
         Cell: ({ value, row }) => {
           return (
             <div className="d-flex align-items-center">
+              <DotBadge bg="success"></DotBadge>
               <h5 className="mb-0">{value}</h5>
             </div>
           );
@@ -142,9 +144,20 @@ const InstructorsListItems = (props) => {
   return (
     <Fragment>
       <div className=" overflow-hidden">
-        <Row>
-          <Col lg={12} md={12} sm={12} className="mb-lg-0 mb-2 px-5 py-4">
-            <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} placeholder="Search Instructor" />
+        <Row className="justify-content-md-between m-3 mb-xl-0">
+          <Col xl={8} lg={6} md={6} xs={12}>
+            <div className="mb-2 mb-lg-4">
+              <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} placeholder="Search Instructors" />
+            </div>
+          </Col>
+          <Col xxl={2} lg={6} md={6} xs={12} className="justify-content-between mb-2 mb-lg-4">
+            <Button
+              onClick={() => {
+                removeAdmin(selectedFlatRows);
+              }}
+            >
+              관리자에서 내보내기
+            </Button>
           </Col>
         </Row>
       </div>
@@ -174,13 +187,6 @@ const InstructorsListItems = (props) => {
           </tbody>
         </Table>
         <div>
-          <Button
-            onClick={() => {
-              removeAdmin(selectedFlatRows);
-            }}
-          >
-            관리자에서 내보내기
-          </Button>
           {/* <Button
             onClick={() => {
               removeUser(selectedFlatRows);
