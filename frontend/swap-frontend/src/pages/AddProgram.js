@@ -77,6 +77,14 @@ const AddNewCourse = () => {
     }
   };
 
+  //   if (window.confirm("프로그램을 추가하시겠습니까?")) {
+  //     console.log("----------------------");
+  //     const response = await axios.post("http://localhost:8080/swap/program/add", params);
+  //     console.log("++++++++++++++++++++++");
+  //     alert(response.data);
+  //   }
+  // };
+
   const steps = [
     {
       id: 1,

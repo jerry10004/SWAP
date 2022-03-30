@@ -1,14 +1,20 @@
 package com.handong.swap.DTO;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
+
+import com.google.protobuf.TextFormat.ParseException;
 
 public class ProgramReadDTO {
 	String name;
 	String category_name;
 	String program_name;
 	int status;
-	Date start_date;
-	Date end_date;
+	String start_date;
+	String end_date;
+	String date;
+	
 	public String getName() {
 		return name;
 	}
@@ -33,17 +39,46 @@ public class ProgramReadDTO {
 	public void setStatus(int status) {
 		this.status = status;
 	}
-	public Date getStart_date() {
+	public String getStart_date() {
 		return start_date;
 	}
-	public void setStart_date(Date start_date) {
-		this.start_date = start_date;
+	public void setStart_date(String start_date) {
+		SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd",Locale.US);
+	    Date date = null;
+		try {
+			date = inputFormat.parse(start_date);
+		} catch (java.text.ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		SimpleDateFormat outputFormat = new SimpleDateFormat("yy-MM-dd (EE)", Locale.KOREA);
+		String result = outputFormat.format(date);
+
+		this.start_date = result;
 	}
-	public Date getEnd_date() {
+	public String getEnd_date() {
 		return end_date;
 	}
-	public void setEnd_date(Date end_date) {
-		this.end_date = end_date;
+	public void setEnd_date(String end_date) {
+		SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd",Locale.US);
+	    Date date = null;
+		try {
+			date = inputFormat.parse(end_date);
+		} catch (java.text.ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		SimpleDateFormat outputFormat = new SimpleDateFormat("yy-MM-dd (EE)", Locale.KOREA);
+		String result = outputFormat.format(date);
+
+		this.end_date = result;
+	}
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String start_date, String end_date) {
+		this.date = start_date + " ~ " + end_date;
 	}
 
 	

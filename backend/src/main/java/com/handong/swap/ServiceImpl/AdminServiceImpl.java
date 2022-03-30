@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.handong.swap.DAO.AdminDAO;
+import com.handong.swap.DAO.UserDAO;
 import com.handong.swap.DTO.AdminDTO;
 import com.handong.swap.Service.AdminService;
 
@@ -17,10 +18,13 @@ public class AdminServiceImpl implements AdminService{
 	
 	@Autowired
 	AdminDAO adminDAO;
+	@Autowired
+	UserDAO userDAO;
 	
 	@Override
-	public int add(AdminDTO admin) {
-		return adminDAO.add(admin);
+	public void add(int user_id) {
+		adminDAO.add(user_id);
+		userDAO.updateAdmin(user_id);
 	}
 	
 	@Override
@@ -30,10 +34,11 @@ public class AdminServiceImpl implements AdminService{
 		String jsonString = mapper.writeValueAsString(adminDATA);
 		return jsonString;
 	}
+
+	@Override
+	public void delete(int id) {
+		userDAO.updateUser(id);
+		adminDAO.delete(id);
+	}
 	
-//	@Override
-//	public void delete(int id, String email) {
-//		userDAO.updateDelDate(email);
-//		adminDAO.delete(id);
-//	}
 }

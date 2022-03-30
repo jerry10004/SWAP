@@ -10,12 +10,19 @@ import axios from "axios";
 import GlobalFilter from "components/elements/advance-table/GlobalFilter";
 import Pagination from "components/elements/advance-table/Pagination";
 import DotBadge from "components/elements/bootstrap/DotBadge";
-
+import SelectFilter from "components/elements/advance-table/SelectFilter";
 // import custom components
 import { FormSelect } from "components/elements/form-select/FormSelect";
+import { boolean } from "yup";
 
-const CoursesTable = ({ courses_data }) => {
+const CoursesTable = ({ program_data }) => {
   const [programInfo, setProgramInfo] = useState([]);
+  // const [isAll, setisAll] = useState(0);
+  var isAll = 0;
+  const [waitProgram, setWaitProgram] = useState([]);
+  const [progressProgram, setProgressProgram] = useState([]);
+  const [finishProgram, setFinishProgram] = useState([]);
+
   const columns = useMemo(
     () => [
       { accessor: "id", Header: "ID", show: false },
@@ -25,14 +32,16 @@ const CoursesTable = ({ courses_data }) => {
         Cell: ({ value, row }) => {
           return (
             <Link className="text-inherit" to="#">
-              <div className="d-lg-flex align-items-center">
-                <div>
+              {/* <div className="d-lg-flex align-items-center"> */}
+              {/* <div>
                   <Image src={row.original.image} alt="" className="img-4by3-lg rounded" />
-                </div>
-                <div className="ms-lg-3 mt-2 mt-lg-0">
-                  <h4 className="mb-1 text-primary-hover">{value}...</h4>
-                </div>
+                </div> */}
+              {/* <div className="ms-lg-3 mt-2 mt-lg-0"> */}
+              <div className="d-flex align-items-center">
+                <h5 className="mb-1 text-primary-hover">{value}</h5>
               </div>
+              {/* </div> */}
+              {/* </div> */}
             </Link>
           );
         },
@@ -51,7 +60,18 @@ const CoursesTable = ({ courses_data }) => {
       },
       {
         accessor: "start_date",
-        Header: "날짜",
+        Header: "시작 일자",
+        Cell: ({ value, row }) => {
+          return (
+            <div className="d-flex align-items-center">
+              <h5 className="mb-0">{value}</h5>
+            </div>
+          );
+        },
+      },
+      {
+        accessor: "end_date",
+        Header: "마감 일자",
         Cell: ({ value, row }) => {
           return (
             <div className="d-flex align-items-center">
@@ -74,46 +94,25 @@ const CoursesTable = ({ courses_data }) => {
       {
         accessor: "status",
         Header: "상태",
+        // Filter: SelectColumnFilter,
+        // filter: "includes",
 
         Cell: ({ value, row }) => {
+          if (value === 0) {
+            value = "대기";
+          }
+          if (value === 1) {
+            value = "진행";
+          }
+          if (value === 2) {
+            value = "종료";
+          }
           return (
             <Fragment>
-              <DotBadge bg={value === 0 ? "warning" : value === 1 ? "success" : ""}></DotBadge>
-              {/* {value.charAt(0).toUpperCase() + value.slice(1)} */}
+              <DotBadge bg={value === "대기" ? "warning" : value === "진행" ? "success" : value === "종료" ? "danger" : ""}></DotBadge>
+              {value}
             </Fragment>
           );
-        },
-      },
-      // {
-      //   accessor: "action",
-      //   Header: "설정",
-      //   Cell: ({ value }) => {
-      //     if (value === 2) {
-      //       return (
-      //         <Fragment>
-      //           <Button href="#" variant="outline" className="btn-outline-white btn-sm">
-      //             Reject
-      //           </Button>{" "}
-      //           <Button href="#" variant="success" className="btn-sm">
-      //             Approved
-      //           </Button>
-      //         </Fragment>
-      //       );
-      //     }
-      //     if (value === 1) {
-      //       return (
-      //         <Button href="#" variant="secondary" className="btn-sm">
-      //           Change Status
-      //         </Button>
-      //       );
-      //     }
-      //   },
-      // },
-      {
-        accessor: "shortcutmenu",
-        Header: "",
-        Cell: () => {
-          return <ActionMenu />;
         },
       },
     ],
@@ -151,68 +150,36 @@ const CoursesTable = ({ courses_data }) => {
   ];
 
   useLayoutEffect(() => {
-    console.log("*********");
     readProject();
   }, []);
 
   const readProject = async () => {
-    console.log("???===========================");
-
     const response = await axios.get("http://localhost:8080/swap/program");
-    setProgramInfo(response.data);
-    console.log("======response is =======");
-    console.log(response);
-    console.log("======response.data is =======");
-    console.log(response.data);
-    console.log("========programInfo is========");
-    console.log(programInfo);
-    console.log("========0.programInfo is========");
-    console.log(programInfo[0]);
-    console.log("========1.programInfo is========");
-    console.log(programInfo[1]);
-    // const datas = useMemo(() => InstructorData, []);
-  };
 
-  // The forwardRef is important!!
-  // Dropdown needs access to the DOM node in order to position the Menu
-  const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
-    <Link
-      to="#"
-      ref={ref}
-      onClick={(e) => {
-        e.preventDefault();
-        onClick(e);
-      }}
-    >
-      {children}
-    </Link>
-  ));
-
-  const ActionMenu = () => {
-    return (
-      <Dropdown>
-        <Dropdown.Toggle as={CustomToggle}>
-          <MoreVertical size="15px" className="text-secondary" />
-        </Dropdown.Toggle>
-        <Dropdown.Menu align="end">
-          <Dropdown.Header>SETTINGS</Dropdown.Header>
-          <Dropdown.Item eventKey="1">
-            {" "}
-            <XCircle size="18px" /> Reject with Feedback
-          </Dropdown.Item>
-        </Dropdown.Menu>
-      </Dropdown>
+    response.data.map((item, i) =>
+      item.status === 0
+        ? setWaitProgram(waitProgram.push(item))
+        : item.status === 1
+        ? setProgressProgram(progressProgram.push(item))
+        : item.status === 2
+        ? setFinishProgram(finishProgram.push(item))
+        : ""
     );
+
+    if (program_data === 0) {
+      setProgramInfo(waitProgram);
+    } else if (program_data === 1) {
+      setProgramInfo(progressProgram);
+    } else if (program_data === 2) {
+      setProgramInfo(finishProgram);
+    } else {
+      setProgramInfo(response.data);
+    }
   };
 
   return (
     <Fragment>
       <div className=" overflow-hidden">
-        {/* <Row>
-          <Col lg={12} md={12} sm={12} className="mb-lg-0 mb-2 py-4 px-5 ">
-            <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} placeholder="Search Course" />
-          </Col>
-        </Row> */}
         <Row className="justify-content-md-between m-3 mb-xl-0">
           <Col xl={6} lg={6} md={6} xs={12}>
             {/* search records */}
@@ -222,7 +189,8 @@ const CoursesTable = ({ courses_data }) => {
           </Col>
           <Col xxl={2} lg={2} md={6} xs={12}>
             {/* records filtering options */}
-            <Form.Control as={FormSelect} placeholder="카테고리" options={filterOptions} />
+            <SelectFilter filter={globalFilter} setFilter={setGlobalFilter} placeholder="카테고리" options={filterOptions} />
+            {/* <SelectFilter filter={selectFilter} setFilter={setSelectFilter} options={filterOptions} /> */}
           </Col>
         </Row>
       </div>
@@ -233,7 +201,10 @@ const CoursesTable = ({ courses_data }) => {
             {headerGroups.map((headerGroup) => (
               <tr {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map((column) => (
-                  <th {...column.getHeaderProps()}>{column.render("Header")}</th>
+                  <th {...column.getHeaderProps()}>
+                    {column.render("Header")}
+                    {/* <div>{column.canFilter ? column.render("Filter") : null}</div> */}
+                  </th>
                 ))}
               </tr>
             ))}

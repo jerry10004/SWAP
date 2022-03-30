@@ -1,9 +1,12 @@
-//package com.handong.swap.Service;
-//
-//import org.springframework.stereotype.Service;
-//import com.handong.swap.DTO.UserDTO;
-//
-//@Service
-//public interface UserService {
-//	public int insertUser(UserDTO dto);
-//}
+package com.handong.swap.Service;
+
+import org.springframework.stereotype.Service;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+
+@Service
+public interface UserService {
+	
+	public String read() throws JsonProcessingException;
+	public void delete(int id);
+}
