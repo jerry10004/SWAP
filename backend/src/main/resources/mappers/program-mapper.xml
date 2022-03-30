@@ -5,12 +5,13 @@
 
    	
    	<select id="readProgram" resultType="ProgramRead">
-	   select A.name as name, C.category_name as category_name, P.program_name, P.status, P.start_date, P.end_date 
+	   select P.id, A.name as name, C.category_name as category_name, P.program_name, P.status, P.start_date, P.end_date 
 		FROM swap.Program as P
 		LEFT JOIN swap.Category as C  
 		ON P.category_id = C.id
 		LEFT JOIN swap.Admin as A
 		ON P.admin_id = A.id
+		where P.deldate is null
 		order by P.regdate desc;
    	</select>
    	
@@ -18,6 +19,11 @@
    		INSERT INTO Program (admin_id, category_id, application_form, program_name, information, start_date, end_date,quota)
 		VALUES (#{admin_id}, #{category_id}, #{application_form}, #{program_name}, #{information}, #{start_date}, #{end_date},#{quota})
    	</insert>
+   	
+   	<update id="updateDelDate" parameterType="hashmap">
+   		UPDATE Program SET deldate=now(), status = -1
+		WHERE id = #{id}
+   	</update>
    	
    	
 </mapper>

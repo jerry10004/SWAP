@@ -17,6 +17,7 @@ public class ProgramDTO {
 	Date edit_date;
 	Date end_date;
 	Date regdate;
+	Date deldate;
 	
 	public int getId() {
 		return id;
@@ -101,6 +102,12 @@ public class ProgramDTO {
 	}
 	public void setApplication_form(int application_form) {
 		this.application_form = application_form;
+	}
+	public Date getDeldate() {
+		return deldate;
+	}
+	public void setDeldate(Date deldate) {
+		this.deldate = deldate;
 	}
 
 	

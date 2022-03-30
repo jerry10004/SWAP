@@ -1,9 +1,8 @@
 // import node module libraries
 import React, { Fragment, useMemo, useState, useEffect, useLayoutEffect } from "react";
-import { useTable, useFilters, useGlobalFilter, usePagination } from "react-table";
+import { useTable, useFilters, useGlobalFilter, usePagination, useRowSelect } from "react-table";
 import { Link } from "react-router-dom";
 import { Col, Row, Button, Image, Dropdown, Table, Form } from "react-bootstrap";
-import { XCircle, MoreVertical } from "react-feather";
 import axios from "axios";
 
 // import custom components
@@ -11,13 +10,9 @@ import GlobalFilter from "components/elements/advance-table/GlobalFilter";
 import Pagination from "components/elements/advance-table/Pagination";
 import DotBadge from "components/elements/bootstrap/DotBadge";
 import SelectFilter from "components/elements/advance-table/SelectFilter";
-// import custom components
-import { FormSelect } from "components/elements/form-select/FormSelect";
-import { boolean } from "yup";
 
 const CoursesTable = ({ program_data }) => {
   const [programInfo, setProgramInfo] = useState([]);
-  // const [isAll, setisAll] = useState(0);
   var isAll = 0;
   const [waitProgram, setWaitProgram] = useState([]);
   const [progressProgram, setProgressProgram] = useState([]);
@@ -121,7 +116,36 @@ const CoursesTable = ({ program_data }) => {
 
   const data = useMemo(() => programInfo);
 
-  const { getTableProps, getTableBodyProps, headerGroups, page, nextPage, previousPage, state, gotoPage, pageCount, prepareRow, setGlobalFilter } = useTable(
+  const IndeterminateCheckbox = React.forwardRef(({ indeterminate, ...rest }, ref) => {
+    const defaultRef = React.useRef();
+    const resolvedRef = ref || defaultRef;
+
+    React.useEffect(() => {
+      resolvedRef.current.indeterminate = indeterminate;
+    }, [resolvedRef, indeterminate]);
+
+    return (
+      <>
+        <input type="checkbox" ref={resolvedRef} {...rest} />
+      </>
+    );
+  });
+
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    page,
+    nextPage,
+    previousPage,
+    state,
+    gotoPage,
+    pageCount,
+    prepareRow,
+    setGlobalFilter,
+    selectedFlatRows,
+    state: { selectedRowIds },
+  } = useTable(
     {
       columns,
       data,
@@ -135,7 +159,26 @@ const CoursesTable = ({ program_data }) => {
     },
     useFilters,
     useGlobalFilter,
-    usePagination
+    usePagination,
+    useRowSelect,
+    (hooks) => {
+      hooks.visibleColumns.push((columns) => [
+        {
+          id: "selection",
+          Header: ({ getToggleAllPageRowsSelectedProps }) => (
+            <div>
+              <IndeterminateCheckbox {...getToggleAllPageRowsSelectedProps()} />
+            </div>
+          ),
+          Cell: ({ row }) => (
+            <div>
+              <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
+            </div>
+          ),
+        },
+        ...columns,
+      ]);
+    }
   );
 
   const { pageIndex, globalFilter } = state;
@@ -150,10 +193,10 @@ const CoursesTable = ({ program_data }) => {
   ];
 
   useLayoutEffect(() => {
-    readProject();
+    readProgram();
   }, []);
 
-  const readProject = async () => {
+  const readProgram = async () => {
     const response = await axios.get("http://localhost:8080/swap/program");
 
     response.data.map((item, i) =>
@@ -177,21 +220,47 @@ const CoursesTable = ({ program_data }) => {
     }
   };
 
+  const removeProgram = async (e) => {
+    var removeProgramId = [];
+
+    e.map((d) => removeProgramId.push(d.original.id));
+
+    var params = new URLSearchParams();
+    params.append("id", removeProgramId);
+
+    if (window.confirm("삭제 하시겠습니까?")) {
+      const response = await axios.post("http://localhost:8080/swap/program/delete", params);
+      alert("삭제 되었습니다.");
+      readProgram();
+      window.location.reload();
+    }
+  };
+
   return (
     <Fragment>
       <div className=" overflow-hidden">
         <Row className="justify-content-md-between m-3 mb-xl-0">
-          <Col xl={6} lg={6} md={6} xs={12}>
-            {/* search records */}
-            <div className="mb-2 mb-lg-4">
-              <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} placeholder="프로그램 이름으로 검색하세요" />
-            </div>
-          </Col>
           <Col xxl={2} lg={2} md={6} xs={12}>
             {/* <Form.Control as={FormSelect} placeholder="카테고리" options={filterOptions} /> */}
             {/* records filtering options */}
             <SelectFilter filter={globalFilter} setFilter={setGlobalFilter} placeholder="카테고리" options={filterOptions} />
             {/* <SelectFilter filter={selectFilter} setFilter={setSelectFilter} options={filterOptions} /> */}
+          </Col>
+          <Col xl={8} lg={6} md={6} xs={12}>
+            {/* search records */}
+            <div className="mb-2 mb-lg-4">
+              <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} placeholder="프로그램 이름으로 검색하세요" />
+            </div>
+          </Col>
+          <Col className="d-flex justify-content-end mb-2 mb-lg-4">
+            <Button
+              className="danger-button justify-content-end"
+              onClick={() => {
+                removeProgram(selectedFlatRows);
+              }}
+            >
+              삭제하기
+            </Button>
           </Col>
         </Row>
       </div>

@@ -27,5 +27,12 @@ public class ProgramDAOImpl implements ProgramDAO {
 		int result = sqlSession.insert("Program.insertProgram", program);
 		return result;
 	}
+	
+	@Override
+	public void updateDelDate(int id) {
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("id", id);
+	    sqlSession.update("Program.updateDelDate", param);
+	}
 
 }

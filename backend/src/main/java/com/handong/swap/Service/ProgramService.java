@@ -11,5 +11,7 @@ public interface ProgramService {
 	public String read() throws JsonProcessingException;
 
 	public int add(ProgramDTO program);
+	
+	public void delete(int id);
 
 }

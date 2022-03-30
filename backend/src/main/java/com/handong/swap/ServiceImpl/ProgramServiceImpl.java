@@ -33,4 +33,10 @@ public class ProgramServiceImpl implements ProgramService{
 		return programDAO.add(program);
 
 	}
+	
+	@Override
+	public void delete(int id) {
+		programDAO.updateDelDate(id);
+	}
+
 }
