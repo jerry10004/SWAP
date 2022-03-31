@@ -1,27 +1,72 @@
 // import node module libraries
 import React, { Fragment, useMemo, useState, useEffect, useLayoutEffect } from "react";
-import { useTable, useFilters, useGlobalFilter, usePagination } from "react-table";
+import { useTable, useFilters, useGlobalFilter, usePagination, useRowSelect } from "react-table";
 import { Link } from "react-router-dom";
 import { Col, Row, Button, Image, Dropdown, Table, Form } from "react-bootstrap";
-import { XCircle, MoreVertical } from "react-feather";
 import axios from "axios";
+import { XCircle, MoreVertical } from "react-feather";
 
 // import custom components
 import GlobalFilter from "components/elements/advance-table/GlobalFilter";
 import Pagination from "components/elements/advance-table/Pagination";
 import DotBadge from "components/elements/bootstrap/DotBadge";
 import SelectFilter from "components/elements/advance-table/SelectFilter";
-// import custom components
 import { FormSelect } from "components/elements/form-select/FormSelect";
-import { boolean } from "yup";
 
 const CoursesTable = ({ program_data }) => {
   const [programInfo, setProgramInfo] = useState([]);
-  // const [isAll, setisAll] = useState(0);
+  const [programList, setProgramList] = useState([]);
   var isAll = 0;
   const [waitProgram, setWaitProgram] = useState([]);
   const [progressProgram, setProgressProgram] = useState([]);
   const [finishProgram, setFinishProgram] = useState([]);
+
+  const filterOptions = [
+    { value: "대회", label: "대회" },
+    { value: "봉사", label: "봉사" },
+    { value: "캠프", label: "캠프" },
+    { value: "동아리", label: "동아리" },
+    { value: "행사", label: "행사" },
+    { value: "기타", label: "기타" },
+  ];
+
+  const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
+    <Link
+      to="#"
+      ref={ref}
+      onClick={(e) => {
+        e.preventDefault();
+        onClick(e);
+      }}
+    >
+      {children}
+    </Link>
+  ));
+
+  const ActionMenu = () => {
+    return (
+      <Dropdown>
+        <Dropdown.Toggle as={CustomToggle}>
+          <MoreVertical size="15px" className="text-secondary" />
+        </Dropdown.Toggle>
+        <Dropdown.Menu align="end">
+          <Dropdown.Header>상태 변경하기</Dropdown.Header>
+          <Dropdown.Item eventKey="1">
+            {" "}
+            <DotBadge bg="warning"></DotBadge>대기
+          </Dropdown.Item>
+          <Dropdown.Item eventKey="2">
+            {" "}
+            <DotBadge bg="success"></DotBadge> 진행
+          </Dropdown.Item>
+          <Dropdown.Item eventKey="3">
+            {" "}
+            <DotBadge bg="danger"></DotBadge> 종료
+          </Dropdown.Item>
+        </Dropdown.Menu>
+      </Dropdown>
+    );
+  };
 
   const columns = useMemo(
     () => [
@@ -115,13 +160,35 @@ const CoursesTable = ({ program_data }) => {
           );
         },
       },
+      {
+        accessor: "shortcutmenu",
+        Header: "",
+        Cell: () => {
+          return <ActionMenu />;
+        },
+      },
     ],
     []
   );
 
   const data = useMemo(() => programInfo);
 
-  const { getTableProps, getTableBodyProps, headerGroups, page, nextPage, previousPage, state, gotoPage, pageCount, prepareRow, setGlobalFilter } = useTable(
+  const IndeterminateCheckbox = React.forwardRef(({ indeterminate, ...rest }, ref) => {
+    const defaultRef = React.useRef();
+    const resolvedRef = ref || defaultRef;
+
+    React.useEffect(() => {
+      resolvedRef.current.indeterminate = indeterminate;
+    }, [resolvedRef, indeterminate]);
+
+    return (
+      <>
+        <input type="checkbox" ref={resolvedRef} {...rest} />
+      </>
+    );
+  });
+
+  const { getTableProps, getTableBodyProps, headerGroups, page, nextPage, previousPage, state, gotoPage, pageCount, prepareRow, setGlobalFilter, selectedFlatRows } = useTable(
     {
       columns,
       data,
@@ -135,25 +202,49 @@ const CoursesTable = ({ program_data }) => {
     },
     useFilters,
     useGlobalFilter,
-    usePagination
+    usePagination,
+    useRowSelect,
+    (hooks) => {
+      hooks.visibleColumns.push((columns) => [
+        {
+          id: "selection",
+          Header: ({ getToggleAllPageRowsSelectedProps }) => (
+            <div>
+              <IndeterminateCheckbox {...getToggleAllPageRowsSelectedProps()} />
+            </div>
+          ),
+          Cell: ({ row }) => (
+            <div>
+              <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
+            </div>
+          ),
+        },
+        ...columns,
+      ]);
+    }
   );
+
+  const getFilterTerm = (event) => {
+    let filterTerm = event.target.value;
+    console.log("filter", filterTerm);
+    if (filterTerm !== "") {
+      const newProjectsList = programList.filter((project) => {
+        console.log("project", project);
+        return Object.values(project).join(" ").toLowerCase().includes(filterTerm.toLowerCase());
+      });
+      setProgramInfo(newProjectsList);
+    } else {
+      setProgramInfo(programList);
+    }
+  };
 
   const { pageIndex, globalFilter } = state;
 
-  const filterOptions = [
-    { value: "대회", label: "대회" },
-    { value: "봉사", label: "봉사" },
-    { value: "캠프", label: "캠프" },
-    { value: "동아리", label: "동아리" },
-    { value: "행사", label: "행사" },
-    { value: "기타", label: "기타" },
-  ];
-
   useLayoutEffect(() => {
-    readProject();
+    readProgram();
   }, []);
 
-  const readProject = async () => {
+  const readProgram = async () => {
     const response = await axios.get("http://localhost:8080/swap/program");
 
     response.data.map((item, i) =>
@@ -175,27 +266,51 @@ const CoursesTable = ({ program_data }) => {
     } else {
       setProgramInfo(response.data);
     }
+    setProgramList(response.data);
+  };
+
+  const removeProgram = async (e) => {
+    var removeProgramId = [];
+
+    e.map((d) => removeProgramId.push(d.original.id));
+
+    var params = new URLSearchParams();
+    params.append("id", removeProgramId);
+
+    if (window.confirm("삭제 하시겠습니까?")) {
+      const response = await axios.post("http://localhost:8080/swap/program/delete", params);
+      alert("삭제 되었습니다.");
+      readProgram();
+      window.location.reload();
+    }
   };
 
   return (
     <Fragment>
       <div className=" overflow-hidden">
         <Row className="justify-content-md-between m-3 mb-xl-0">
-          <Col xl={6} lg={6} md={6} xs={12}>
+          <Col xxl={2} lg={2} md={6} xs={12}>
+            {/* records filtering options */}
+            <Form.Control as={FormSelect} placeholder="카테고리" options={filterOptions} onChange={getFilterTerm} />
+          </Col>
+          <Col xl={8} lg={6} md={6} xs={12}>
             {/* search records */}
             <div className="mb-2 mb-lg-4">
-              <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} placeholder="프로그램 이름으로 검색하세요" />
+              <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} placeholder="프로그램을 검색하세요" />
             </div>
           </Col>
-          <Col xxl={2} lg={2} md={6} xs={12}>
-            {/* <Form.Control as={FormSelect} placeholder="카테고리" options={filterOptions} /> */}
-            {/* records filtering options */}
-            <SelectFilter filter={globalFilter} setFilter={setGlobalFilter} placeholder="카테고리" options={filterOptions} />
-            {/* <SelectFilter filter={selectFilter} setFilter={setSelectFilter} options={filterOptions} /> */}
+          <Col className="d-flex justify-content-end mb-2 mb-lg-4">
+            <Button
+              className="danger-button justify-content-end"
+              onClick={() => {
+                removeProgram(selectedFlatRows);
+              }}
+            >
+              삭제하기
+            </Button>
           </Col>
         </Row>
       </div>
-
       <div className="table-responsive border-0 overflow-y-hidden">
         <Table {...getTableProps()} className="text-nowrap">
           <thead className="table-light">

@@ -77,5 +77,19 @@ public class ProgramController {
 			System.out.println("프로그램 추가 성공");
 		}
 		
-	}	
+	}
+	
+	@RequestMapping(value = "/delete", method = RequestMethod.POST, produces = "application/json; charset=utf8")
+	@ResponseBody
+	public void deleteUser(HttpServletRequest httpServletRequest) {
+		String[] param_ids = httpServletRequest.getParameterValues("id");
+		
+		String[] ids = param_ids[0].split(",");
+		
+		for (int i = 0; i < ids.length; i++) {
+			System.out.println("삭제 시도");
+			System.out.println("삭제 하려는 아이디 번호: "+ids[i]);
+			programService.delete(Integer.parseInt(ids[i]));
+		}
+	}
 }

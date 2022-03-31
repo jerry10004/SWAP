@@ -7,13 +7,13 @@ import java.util.Locale;
 import com.google.protobuf.TextFormat.ParseException;
 
 public class ProgramReadDTO {
+	int id;
 	String name;
 	String category_name;
 	String program_name;
 	int status;
 	String start_date;
 	String end_date;
-	String date;
 	
 	public String getName() {
 		return name;
@@ -73,12 +73,12 @@ public class ProgramReadDTO {
 
 		this.end_date = result;
 	}
-	public String getDate() {
-		return date;
+	
+	public int getId() {
+		return id;
 	}
-
-	public void setDate(String start_date, String end_date) {
-		this.date = start_date + " ~ " + end_date;
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	

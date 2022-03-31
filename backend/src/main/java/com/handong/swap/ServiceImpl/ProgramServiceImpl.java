@@ -41,4 +41,10 @@ public class ProgramServiceImpl implements ProgramService{
 		String jsonString = mapper.writeValueAsString(programDATA);
 		return jsonString;
 	}
+	
+	@Override
+	public void delete(int id) {
+		programDAO.updateDelDate(id);
+	}
+
 }
