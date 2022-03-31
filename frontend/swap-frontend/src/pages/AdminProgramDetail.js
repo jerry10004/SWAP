@@ -11,6 +11,8 @@ import LaunchDate from "components/dashboard/single/overview/LaunchDate";
 import OverallProgressChart from "components/dashboard/single/overview/OverallProgressChart";
 import RecentActivity from "components/dashboard/single/overview/RecentActivity";
 
+import ProgramInformation from "components/marketing/pages/courses/add-new-course/steps/ProgramInformation";
+
 // import sub components
 import NavbarVertical from "layouts/dashboard/NavbarVertical";
 import NavbarTop from "layouts/dashboard/NavbarTop";
@@ -82,7 +84,7 @@ const AdminProgramDetail = () => {
                       <Card.Body className="p-0">
                         <Tab.Content>
                           <Tab.Pane eventKey="information" className="pb-4">
-                            <ProjectSummary />
+                            <ProgramInformation />
                           </Tab.Pane>
                           <Tab.Pane eventKey="application" className="pb-4">
                             <BudgetSection />

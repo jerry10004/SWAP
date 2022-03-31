@@ -28,4 +28,9 @@ public class ProgramDAOImpl implements ProgramDAO {
 		return result;
 	}
 
+	@Override
+	public List<ProgramReadDTO> readProgramInformationByProgramId(int id) {
+		return sqlSession.selectList("Program.readProgramInformationByProgramId");
+	}
+
 }

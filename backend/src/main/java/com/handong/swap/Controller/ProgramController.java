@@ -14,6 +14,7 @@ import java.text.SimpleDateFormat;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -37,6 +38,16 @@ public class ProgramController {
 		System.out.println(result);
 	    return result;
 	}
+	
+	@RequestMapping(value = "/information/{id}", method = RequestMethod.GET, produces = "application/json; charset=utf8")
+	@ResponseBody
+	public String readProgramInformationByProgramId(@PathVariable int id) throws IOException, ParseException {
+		System.out.println("프로그램 별 프로그램 정보 읽기");
+		System.out.println(id);
+
+		return programService.readProgramInformationByProgramId(id);
+	}
+	
 	
 	@RequestMapping(value = "/add", method = RequestMethod.POST, produces = "application/json; charset=utf8")
 	@ResponseBody

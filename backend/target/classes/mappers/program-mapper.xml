@@ -14,6 +14,12 @@
 		order by P.regdate desc;
    	</select>
    	
+   	<select id="readProgramInformationByProgramId" parameterType="Integer" resultType="Program">
+	   select program_name, category_id, quota, information, start_date, end_date
+		FROM Program
+		where id = 17;
+   	</select>
+   	
    	<insert id = "insertProgram" parameterType="Program">	
    		INSERT INTO Program (admin_id, category_id, application_form, program_name, information, start_date, end_date,quota)
 		VALUES (#{admin_id}, #{category_id}, #{application_form}, #{program_name}, #{information}, #{start_date}, #{end_date},#{quota})
