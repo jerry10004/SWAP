@@ -15,6 +15,7 @@ const ProgramInformation = (props) => {
   const [programInformation, setProgramInformation] = useState(null);
   const [programInformationLoading, setProgramInformationLoading] = useState(null);
   const programId = 0;
+  const [isEdit, setIsEdit] = useState(false);
 
   const categoryOptions = [
     { value: "대회", label: "대회" },
@@ -53,6 +54,14 @@ const ProgramInformation = (props) => {
 
     // console.log(programInformation[0].program_name);
     setProgramInformationLoading(true);
+  };
+
+  const edit = () => {
+    setIsEdit(true);
+  };
+
+  const save = () => {
+    setIsEdit(false);
   };
 
   return (
@@ -158,11 +167,19 @@ const ProgramInformation = (props) => {
             {/* ))} */}
           </Card>
           {/* Button */}
-          <div className="d-flex justify-content-end">
-            <Button variant="primary" onClick={next}>
-              다음
-            </Button>
-          </div>
+          {isEdit === false ? (
+            <div className="d-flex justify-content-end me-4">
+              <Button variant="primary" onClick={edit}>
+                수정
+              </Button>
+            </div>
+          ) : (
+            <div className="d-flex justify-content-end me-4">
+              <Button variant="primary" onClick={save}>
+                완료
+              </Button>
+            </div>
+          )}
         </>
       ) : (
         ""

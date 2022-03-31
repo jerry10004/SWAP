@@ -45,7 +45,9 @@ public class ProgramController {
 		System.out.println("프로그램 별 프로그램 정보 읽기");
 		System.out.println(id);
 
-		return programService.readProgramInformationByProgramId(id);
+		String result = programService.readProgramInformationByProgramId(id);
+		System.out.println("result is "+result);
+		return result;
 	}
 	
 	
