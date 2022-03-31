@@ -84,18 +84,12 @@ const CoursesTable = ({ program_data }) => {
         accessor: "program_name",
         Header: "제목",
         Cell: ({ value, row }) => {
+          const id = "detail/" + row.original.id.toString();
           return (
-            <Link className="text-inherit" to="#">
-              {/* <div className="d-lg-flex align-items-center"> */}
-              {/* <div>
-                  <Image src={row.original.image} alt="" className="img-4by3-lg rounded" />
-                </div> */}
-              {/* <div className="ms-lg-3 mt-2 mt-lg-0"> */}
+            <Link className="text-inherit" to={id}>
               <div className="d-flex align-items-center">
                 <h5 className="mb-1 text-primary-hover">{value}</h5>
               </div>
-              {/* </div> */}
-              {/* </div> */}
             </Link>
           );
         },

@@ -12,6 +12,7 @@ public interface ProgramService {
 
 	public int add(ProgramDTO program);
 	
+	public String readProgramInformationByProgramId(int id) throws JsonProcessingException;
 	public void delete(int id);
 
 }

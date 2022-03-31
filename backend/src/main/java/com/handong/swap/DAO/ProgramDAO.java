@@ -8,5 +8,6 @@ import com.handong.swap.DTO.ProgramReadDTO;
 public interface ProgramDAO {
 	List<ProgramReadDTO> read();
 	public int add(ProgramDTO program);
+	List<ProgramReadDTO> readProgramInformationByProgramId(int id);
 	public void updateDelDate(int id);
 }

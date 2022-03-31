@@ -35,4 +35,9 @@ public class ProgramDAOImpl implements ProgramDAO {
 	    sqlSession.update("Program.updateDelDate", param);
 	}
 
+	@Override
+	public List<ProgramReadDTO> readProgramInformationByProgramId(int id) {
+		return sqlSession.selectList("Program.readProgramInformationByProgramId",id);
+	}
+
 }

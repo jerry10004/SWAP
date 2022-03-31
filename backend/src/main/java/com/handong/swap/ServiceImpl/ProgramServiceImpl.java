@@ -33,6 +33,14 @@ public class ProgramServiceImpl implements ProgramService{
 		return programDAO.add(program);
 
 	}
+
+	@Override
+	public String readProgramInformationByProgramId(int id) throws JsonProcessingException{
+		List<ProgramReadDTO> programDATA = programDAO.readProgramInformationByProgramId(id);
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonString = mapper.writeValueAsString(programDATA);
+		return jsonString;
+	}
 	
 	@Override
 	public void delete(int id) {

@@ -9,7 +9,7 @@ import SimpleBar from "simplebar-react";
 import "simplebar/dist/simplebar.min.css";
 
 // import media files
-import InverseLogo from "assets/images/SWAPLogo.png";
+import InverseLogo from "assets/images/SWAPInverted.png";
 
 // import routes file
 //import { DashboardMenu } from "./DashboardRoutes";

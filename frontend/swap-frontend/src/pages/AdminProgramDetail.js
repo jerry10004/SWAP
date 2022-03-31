@@ -2,7 +2,7 @@
 import { Fragment } from "react";
 import { Row, Col, Card, Tab, Breadcrumb, Button, Nav } from "react-bootstrap";
 import React, { useState } from "react";
-
+import { useLocation, useParams } from "react-router-dom";
 // import sub components
 import ProjectSummary from "components/dashboard/single/overview/ProjectSummary";
 import BudgetSection from "components/dashboard/single/overview/BudgetSection";
@@ -10,6 +10,8 @@ import UpcomingDeadlines from "components/dashboard/single/overview/UpcomingDead
 import LaunchDate from "components/dashboard/single/overview/LaunchDate";
 import OverallProgressChart from "components/dashboard/single/overview/OverallProgressChart";
 import RecentActivity from "components/dashboard/single/overview/RecentActivity";
+
+import ProgramInformation from "components/marketing/pages/courses/add-new-course/steps/ProgramInformation";
 
 // import sub components
 import NavbarVertical from "layouts/dashboard/NavbarVertical";
@@ -20,6 +22,9 @@ const AdminProgramDetail = () => {
   const ToggleMenu = () => {
     return setShowMenu(!showMenu);
   };
+
+  const id = useParams();
+
   return (
     <Fragment>
       <div id="db-wrapper" className={`${showMenu ? "" : "toggled"}`}>
@@ -43,8 +48,8 @@ const AdminProgramDetail = () => {
                     <div className="mb-3 mb-md-0">
                       <h1 className="mb-1 h2 fw-bold">맥북신청</h1>
                       <Breadcrumb>
-                        <Breadcrumb.Item href="#">Dashboard</Breadcrumb.Item>
-                        <Breadcrumb.Item active>Users</Breadcrumb.Item>
+                        <Breadcrumb.Item href="#">Program</Breadcrumb.Item>
+                        <Breadcrumb.Item active>Detail</Breadcrumb.Item>
                       </Breadcrumb>
                     </div>
                   </div>
@@ -82,7 +87,7 @@ const AdminProgramDetail = () => {
                       <Card.Body className="p-0">
                         <Tab.Content>
                           <Tab.Pane eventKey="information" className="pb-4">
-                            <ProjectSummary />
+                            <ProgramInformation param1={id} />
                           </Tab.Pane>
                           <Tab.Pane eventKey="application" className="pb-4">
                             <BudgetSection />

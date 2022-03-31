@@ -34,7 +34,7 @@ function Router() {
         <Route path="/admin/instructor" element={<ManageInstructor />} />
         <Route path="/admin/user" element={<ManageUser />} />
         <Route path="/admin/program" element={<ManageProgram />} />
-        <Route path="/admin/program/detail" element={<AdminProgramDetail />} />
+        <Route path="/admin/program/detail/:id" element={<AdminProgramDetail />} />
         <Route path="/admin/test" element={<Test />} />
       </Routes>
     </BrowserRouter>
