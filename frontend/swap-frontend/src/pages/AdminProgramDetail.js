@@ -2,7 +2,7 @@
 import { Fragment } from "react";
 import { Row, Col, Card, Tab, Breadcrumb, Button, Nav } from "react-bootstrap";
 import React, { useState } from "react";
-
+import { useLocation, useParams } from "react-router-dom";
 // import sub components
 import ProjectSummary from "components/dashboard/single/overview/ProjectSummary";
 import BudgetSection from "components/dashboard/single/overview/BudgetSection";
@@ -22,6 +22,9 @@ const AdminProgramDetail = () => {
   const ToggleMenu = () => {
     return setShowMenu(!showMenu);
   };
+
+  const id = useParams();
+
   return (
     <Fragment>
       <div id="db-wrapper" className={`${showMenu ? "" : "toggled"}`}>
@@ -84,7 +87,7 @@ const AdminProgramDetail = () => {
                       <Card.Body className="p-0">
                         <Tab.Content>
                           <Tab.Pane eventKey="information" className="pb-4">
-                            <ProgramInformation />
+                            <ProgramInformation param1={id} />
                           </Tab.Pane>
                           <Tab.Pane eventKey="application" className="pb-4">
                             <BudgetSection />
