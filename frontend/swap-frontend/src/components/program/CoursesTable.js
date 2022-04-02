@@ -304,6 +304,7 @@ const CoursesTable = ({ program_data }) => {
           </Col>
           <Col className="d-flex justify-content-end mb-2 mb-lg-4">
             <Button
+              variant="secondary"
               className="danger-button justify-content-end"
               onClick={() => {
                 removeProgram(selectedFlatRows);
