@@ -90,7 +90,7 @@ const AdminProgramDetail = () => {
                             <ProgramInformation param1={id} />
                           </Tab.Pane>
                           <Tab.Pane eventKey="application" className="pb-4">
-                            <ApplicationFormView />
+                            <ApplicationFormView param2={id} />
                           </Tab.Pane>
                           <Tab.Pane eventKey="survey" className="pb-4">
                             <UpcomingDeadlines />

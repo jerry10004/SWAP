@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Applicant">   
+
+   	<select id="readApplicantInformationByProgramId" parameterType="Integer" resultType="ApplicantRead">
+	   SELECT A.user_id, A.program_id, U.name, U.student_id, U.phone, U.email, U.department, U.major1
+		FROM swap.Applicant as A
+		LEFT JOIN swap.User as U
+		ON A.user_id = U.id
+		where U.deldate is null and A.program_id  = #{id}
+		order by U.name
+   	</select>
+   
+   	
+</mapper>
+

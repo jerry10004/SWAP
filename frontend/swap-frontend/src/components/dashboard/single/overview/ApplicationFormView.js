@@ -1,22 +1,37 @@
 // import node module libraries
 import { Col, Card, Form, Button, Container, Row } from "react-bootstrap";
 import React, { Fragment, useState, useLayoutEffect } from "react";
-
+import { useParams } from "react-router-dom";
 // import custom components
-import StatRightCenterIcon from "components/dashboard/common/stats/StatRightCenterIcon";
-import GKAccordionDefault from "components/marketing/common/accordions/GKAccordionDefault";
 import GKAccordionApplicant from "components/marketing/common/accordions/GKAccordionApplicant";
-import { CourseIndex } from "data/marketing/CourseIndexData";
 import { FormSelect } from "components/elements/form-select/FormSelect";
+import axios from "axios";
 
-const ApplicationFormView = () => {
+const ApplicationFormView = (props) => {
   const [isEdit, setIsEdit] = useState(false);
+  const [applicantInformation, setApplicantInformation] = useState(null);
+  const [applicantInformationLoading, setApplicantInformationLoading] = useState(null);
   const edit = () => {
     setIsEdit(true);
   };
 
   const save = () => {
     setIsEdit(false);
+  };
+
+  useLayoutEffect(() => {
+    console.log(props.param2.id);
+    readApplicantInformation(props.param2.id);
+  }, []);
+
+  const readApplicantInformation = async (id) => {
+    setApplicantInformationLoading(false);
+    console.log("id is", id);
+    const response = await axios.get("http://localhost:8080/swap/applicant/applicants/" + id);
+    setApplicantInformation(response.data);
+    console.log("~이거를보자~~~~`");
+    console.log(response.data);
+    setApplicantInformationLoading(true);
   };
 
   const FormOptions = [
@@ -26,105 +41,6 @@ const ApplicationFormView = () => {
     { value: "동아리", label: "동아리" },
     { value: "행사", label: "행사" },
     { value: "기타", label: "기타" },
-  ];
-
-  const ApplicantName = [
-    {
-      id: 1,
-      title: "신청한 학생들",
-      topics: [
-        {
-          id: 1,
-          name: "정수산나",
-          student_id: "21800662",
-          phone: "01075795847",
-          email: "sanna422@handong.ac.kr",
-          department: "전산전자공학부",
-          major1: "컴퓨터공학",
-        },
-        {
-          id: 1,
-          name: "정수산나",
-          student_id: "21800662",
-          phone: "01075795847",
-          email: "sanna422@handong.ac.kr",
-          department: "전산전자공학부",
-          major1: "컴퓨터공학",
-        },
-        {
-          id: 1,
-          name: "정수산나",
-          student_id: "21800662",
-          phone: "01075795847",
-          email: "sanna422@handong.ac.kr",
-          department: "전산전자공학부",
-          major1: "컴퓨터공학",
-        },
-        {
-          id: 1,
-          name: "정수산나",
-          student_id: "21800662",
-          phone: "01075795847",
-          email: "sanna422@handong.ac.kr",
-          department: "전산전자공학부",
-          major1: "컴퓨터공학",
-        },
-        {
-          id: 1,
-          name: "정수산나",
-          student_id: "21800662",
-          phone: "01075795847",
-          email: "sanna422@handong.ac.kr",
-          department: "전산전자공학부",
-          major1: "컴퓨터공학",
-        },
-        {
-          id: 1,
-          name: "정수산나",
-          student_id: "21800662",
-          phone: "01075795847",
-          email: "sanna422@handong.ac.kr",
-          department: "전산전자공학부",
-          major1: "컴퓨터공학",
-        },
-        {
-          id: 1,
-          name: "정수산나",
-          student_id: "21800662",
-          phone: "01075795847",
-          email: "sanna422@handong.ac.kr",
-          department: "전산전자공학부",
-          major1: "컴퓨터공학",
-        },
-        {
-          id: 1,
-          name: "정수산나",
-          student_id: "21800662",
-          phone: "01075795847",
-          email: "sanna422@handong.ac.kr",
-          department: "전산전자공학부",
-          major1: "컴퓨터공학",
-        },
-        {
-          id: 1,
-          name: "정수산나",
-          student_id: "21800662",
-          phone: "01075795847",
-          email: "sanna422@handong.ac.kr",
-          department: "전산전자공학부",
-          major1: "컴퓨터공학",
-        },
-        {
-          id: 1,
-          name: "정수산나",
-          student_id: "21800662",
-          phone: "01075795847",
-          email: "sanna422@handong.ac.kr",
-          department: "전산전자공학부",
-          major1: "컴퓨터공학",
-        },
-      ],
-    },
   ];
 
   return (
@@ -230,9 +146,15 @@ const ApplicationFormView = () => {
           <Card xxl={2} lg={2} md={6} xs={12} className="my-3">
             <Form.Control as={FormSelect} placeholder="신청서 템플릿" options={FormOptions} />
           </Card>
-          <Card>
-            <GKAccordionApplicant accordionItems={ApplicantName} />
-          </Card>
+          {applicantInformationLoading === true ? (
+            <>
+              <Card>
+                <GKAccordionApplicant accordionItems={applicantInformation} />
+              </Card>
+            </>
+          ) : (
+            ""
+          )}
         </Col>
       </Row>
     </Container>
