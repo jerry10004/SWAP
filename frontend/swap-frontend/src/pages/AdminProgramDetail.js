@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import { useLocation, useParams, Link } from "react-router-dom";
 // import sub components
 import ProjectSummary from "components/dashboard/single/overview/ProjectSummary";
-import BudgetSection from "components/dashboard/single/overview/BudgetSection";
+import ApplicationFormView from "components/dashboard/single/overview/ApplicationFormView";
 import UpcomingDeadlines from "components/dashboard/single/overview/UpcomingDeadlines";
 import LaunchDate from "components/dashboard/single/overview/LaunchDate";
 import OverallProgressChart from "components/dashboard/single/overview/OverallProgressChart";
@@ -97,7 +97,7 @@ const AdminProgramDetail = () => {
                             <ProgramInformation param1={id} />
                           </Tab.Pane>
                           <Tab.Pane eventKey="application" className="pb-4">
-                            <BudgetSection />
+                            <ApplicationFormView param2={id} />
                           </Tab.Pane>
                           <Tab.Pane eventKey="survey" className="pb-4">
                             <UpcomingDeadlines />

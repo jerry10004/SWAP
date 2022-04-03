@@ -35,6 +35,7 @@ public class ProgramController {
 	public String readprogram(HttpServletRequest httpServletRequest) throws IOException, ParseException {
 		System.out.println("읽기 시도");
 		String result = programService.read();
+		
 		System.out.println(result);
 	    return result;
 	}
