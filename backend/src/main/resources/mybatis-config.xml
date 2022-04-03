@@ -9,6 +9,7 @@
 			<typeAlias alias="Program" type="com.handong.swap.DTO.ProgramDTO"/>
 			<typeAlias alias="ProgramRead" type="com.handong.swap.DTO.ProgramReadDTO"/>
 			<typeAlias alias="ProgramReadById" type="com.handong.swap.DTO.ProgramReadByIdDTO"/>
+			<typeAlias alias="ApplicantRead" type="com.handong.swap.DTO.ApplicantReadDTO"/>
 	</typeAliases>
 		
 	</configuration>
