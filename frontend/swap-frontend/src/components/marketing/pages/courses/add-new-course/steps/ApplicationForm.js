@@ -3,15 +3,15 @@ import { Col, Card, Form, Button } from "react-bootstrap";
 import { FormSelect } from "components/elements/form-select/FormSelect";
 import React, { Fragment } from "react";
 
-const CoursesMedia = (props) => {
-  const { next, previous } = props;
+const ApplicationForm = (props) => {
+  const { submit, previous, handleChange } = props;
   const templateOptions = [
-    { value: "대회", label: "대회" },
-    { value: "봉사", label: "봉사" },
-    { value: "캠프", label: "캠프" },
-    { value: "동아리", label: "동아리" },
-    { value: "행사", label: "행사" },
-    { value: "기타", label: "기타" },
+    { value: "1", label: "대회" },
+    { value: "2", label: "봉사" },
+    { value: "3", label: "캠프" },
+    { value: "4", label: "동아리" },
+    { value: "5", label: "행사" },
+    { value: "6", label: "기타" },
   ];
 
   const ApplicationForm = () => {
@@ -30,7 +30,7 @@ const CoursesMedia = (props) => {
           <Col md={6} sm={12} className="mb-4">
             <Form.Group controlId="Phone number">
               <Form.Label>전화번호</Form.Label>
-              <Form.Control type="text" placeholder="Phone number (010-1234-5678)" required />
+              <Form.Control type="text" placeholder="Phone number (010-1234-5678)" required disabled="true" />
             </Form.Group>
           </Col>
 
@@ -38,7 +38,7 @@ const CoursesMedia = (props) => {
           <Col md={6} sm={12} className="mb-4">
             <Form.Group controlId="Phone number">
               <Form.Label>이메일</Form.Label>
-              <Form.Control type="text" placeholder="Handong123@handong.ac.kr" required />
+              <Form.Control type="text" placeholder="Handong123@handong.ac.kr" required disabled="true" />
             </Form.Group>
           </Col>
 
@@ -46,7 +46,7 @@ const CoursesMedia = (props) => {
           <Col md={12} sm={12} className="mb-4">
             <Form.Group controlId="Phone number">
               <Form.Label>신청동기</Form.Label>
-              <Form.Control type="text" placeholder="신청동기를 입력해주세요" required />
+              <Form.Control type="text" placeholder="신청동기를 입력해주세요" required disabled="true" />
             </Form.Group>
           </Col>
 
@@ -65,7 +65,7 @@ const CoursesMedia = (props) => {
           <Col md={12} sm={12} className="mb-5">
             {/*  Checkbox  */}
             <Form.Group controlId="customCheck1">
-              <Form.Check type="checkbox" label="개인정보 활용에 동의합니다." />
+              <Form.Check type="checkbox" label="개인정보 활용에 동의합니다." disabled="true" />
             </Form.Group>
           </Col>
         </Form>
@@ -78,7 +78,7 @@ const CoursesMedia = (props) => {
       {/* Category */}
       <div className="d-flex justify-content-end">
         <Form.Group className="mb-3 w-26 ">
-          <FormSelect options={templateOptions} id="application-template" name="application-template" placeholder="신청서 템플릿 선택" />
+          <FormSelect options={templateOptions} id="application-template" name="application_form" onChange={handleChange} placeholder="신청서 템플릿 선택" />
         </Form.Group>
       </div>
       {/* Card */}
@@ -97,11 +97,11 @@ const CoursesMedia = (props) => {
         <Button variant="secondary" onClick={previous}>
           이전
         </Button>
-        <Button className="btn btn-success" onClick={next}>
+        <Button className="btn btn-success" type="submit" onClick={submit}>
           제출
         </Button>
       </div>
     </Form>
   );
 };
-export default CoursesMedia;
+export default ApplicationForm;
