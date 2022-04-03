@@ -13,7 +13,6 @@ import Pagination from "components/elements/advance-table/Pagination";
 const StudentsListItems = () => {
   const [userInfo, setUserInfo] = useState([]);
   const [isEdit, setIsEdit] = useState(false);
-  const [isDisabled, setIsDisabled] = useState(true);
 
   const columns = useMemo(
     () => [
@@ -71,19 +70,24 @@ const StudentsListItems = () => {
   );
   const edit = () => {
     setIsEdit(true);
-    console.log(isDisabled);
-    setIsDisabled(false);
-    console.log(isDisabled);
-    // setIsDisabled(false);
+
+    const target = document.getElementsByClassName("applicant_status");
+
+    for (let i = 0; i < target.length; i++) {
+      target[0].disabled = false;
+    }
   };
 
   const save = () => {
     setIsEdit(false);
+
+    const target = document.getElementsByClassName("applicant_status");
+    target[0].disabled = true;
   };
 
   const StatusSelect = () => {
     return (
-      <select id="program_category" name="program_category" disabled={isDisabled}>
+      <select id="applicant_status" className="applicant_status" name="program_category" disabled>
         <option value="1">미입금</option>
         <option value="2">입금 완료</option>
       </select>
