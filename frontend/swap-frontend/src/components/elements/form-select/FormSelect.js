@@ -4,10 +4,11 @@ import { Form } from "react-bootstrap";
 import PropTypes from "prop-types";
 
 export const FormSelect = (props) => {
-  const { placeholder, defaultselected, options, id, name, onChange } = props;
+  const { placeholder, defaultselected, options, id, name, onChange, isEdit, value } = props;
+
   return (
     <Fragment>
-      <Form.Select defaultValue={defaultselected} id={id} name={name} onChange={onChange}>
+      <Form.Select defaultValue={defaultselected} id={id} name={name} onChange={onChange} value={value}>
         {placeholder ? (
           <option value="" className="text-muted">
             {placeholder}
