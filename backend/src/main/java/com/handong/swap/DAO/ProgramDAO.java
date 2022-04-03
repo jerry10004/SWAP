@@ -10,4 +10,5 @@ public interface ProgramDAO {
 	public int add(ProgramDTO program);
 	List<ProgramReadDTO> readProgramInformationByProgramId(int id);
 	public void updateDelDate(int id);
+	public void updateStatus(int program_id, int status);
 }

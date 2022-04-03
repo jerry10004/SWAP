@@ -39,5 +39,13 @@ public class ProgramDAOImpl implements ProgramDAO {
 	public List<ProgramReadDTO> readProgramInformationByProgramId(int id) {
 		return sqlSession.selectList("Program.readProgramInformationByProgramId",id);
 	}
+	
+	@Override
+	public void updateStatus(int program_id, int status) {
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("program_id", program_id);
+		param.put("status", status);
+	    sqlSession.update("Program.updateStatus", param);
+	}
 
 }

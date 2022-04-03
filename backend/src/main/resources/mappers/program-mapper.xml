@@ -33,6 +33,11 @@
 		WHERE id = #{id}
    	</update>
    	
+   	<update id="updateStatus" parameterType="hashmap">
+   		UPDATE Program SET status=#{status}
+		WHERE id = #{program_id}
+   	</update>
+   	
    	
 </mapper>
 

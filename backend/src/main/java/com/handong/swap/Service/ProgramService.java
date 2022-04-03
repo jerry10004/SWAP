@@ -14,5 +14,7 @@ public interface ProgramService {
 	
 	public String readProgramInformationByProgramId(int id) throws JsonProcessingException;
 	public void delete(int id);
+	
+	public void updateStatus(int program_id, int status);
 
 }

@@ -46,5 +46,11 @@ public class ProgramServiceImpl implements ProgramService{
 	public void delete(int id) {
 		programDAO.updateDelDate(id);
 	}
+	
+	@Override
+	public void updateStatus(int program_id, int status) {
+		programDAO.updateStatus(program_id, status);
+	}
+
 
 }
