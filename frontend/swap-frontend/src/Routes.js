@@ -17,7 +17,6 @@ import ManageProgram from "./pages/ManageProgram";
 import AdminProgramDetail from "./pages/AdminProgramDetail";
 import ApplicationFormView from "components/dashboard/single/overview/ApplicationFormView";
 import Admin from "./pages/Admin";
-import Test from "./pages/Test";
 
 function Router() {
   return (

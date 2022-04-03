@@ -15,16 +15,18 @@ const AddNewCourse = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState({
     program_title: "Title",
-    program_category: "1",
+    program_category: "0",
     program_description: "Hello, world!",
     program_quota: "0",
     program_img: "img",
     start_date: "",
     end_date: "",
+    application_form: "",
   });
 
   const [start_date, setStart_date] = useState(new Date());
   const [end_date, setEnd_date] = useState(new Date());
+  const [validated, setValidated] = useState(false);
 
   const handleChange = (event) => {
     setFormData({
@@ -48,8 +50,16 @@ const AddNewCourse = () => {
     return year + "-" + month + "-" + day + " " + hour + ":" + minute; //'-' 추가하여 yyyy-MM-dd HH:mm 형태 생성 가능
   };
 
-  const next = () => {
-    setCurrentStep(currentStep === 4 ? 1 : currentStep + 1);
+  const next = (event) => {
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+      console.log("====================");
+    } else {
+      setCurrentStep(currentStep === 4 ? 1 : currentStep + 1);
+    }
+    setValidated(true);
   };
   const previous = () => {
     setCurrentStep(currentStep === 1 ? 1 : currentStep - 1);
@@ -59,12 +69,10 @@ const AddNewCourse = () => {
     var params = new URLSearchParams();
     var formattedStartDate = getFormatDate(start_date);
     var formattedEndDate = getFormatDate(end_date);
-    console.log(formattedStartDate);
-    console.log(formattedEndDate);
 
     params.append("admin_id", "8");
-    params.append("category_id", "1");
-    params.append("application_form", "1");
+    params.append("category_id", formData.program_category);
+    params.append("application_form", formData.application_form);
     params.append("program_quota", formData.program_quota);
     params.append("program_name", formData.program_title);
     params.append("information", formData.program_description);
@@ -77,24 +85,16 @@ const AddNewCourse = () => {
     }
   };
 
-  //   if (window.confirm("프로그램을 추가하시겠습니까?")) {
-  //     console.log("----------------------");
-  //     const response = await axios.post("http://localhost:8080/swap/program/add", params);
-  //     console.log("++++++++++++++++++++++");
-  //     alert(response.data);
-  //   }
-  // };
-
   const steps = [
     {
       id: 1,
       title: "프로그램 기본 정보 작성",
-      content: <BasicInformation data={formData} handleChange={handleChange} setStart_date={setStart_date} setEnd_date={setEnd_date} next={next} />,
+      content: <BasicInformation data={formData} handleChange={handleChange} setStart_date={setStart_date} setEnd_date={setEnd_date} next={next} validated={validated} setValidated={setValidated} />,
     },
     {
       id: 2,
-      title: "프로그램 신청서 Form 제작",
-      content: <CoursesMedia data={formData} handleChange={handleChange} setStart_date={setStart_date} setEnd_date={setEnd_date} next={addProgram} previous={previous} />,
+      title: "프로그램 신청서 Form 선택",
+      content: <CoursesMedia data={formData} handleChange={handleChange} setStart_date={setStart_date} setEnd_date={setEnd_date} submit={addProgram} previous={previous} />,
     },
     // {
     //   id: 3,
@@ -114,7 +114,7 @@ const AddNewCourse = () => {
                   <h1 className="text-white mb-1">새 프로그램 추가</h1>
                 </div>
                 <div>
-                  <Link to="#" className="btn btn-white ">
+                  <Link to="../admin/program" className="btn btn-white ">
                     프로그램 목록 보기
                   </Link>{" "}
                   {/* 저장 기능 나중에 추가 */}

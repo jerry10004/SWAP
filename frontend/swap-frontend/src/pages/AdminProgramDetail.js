@@ -2,7 +2,7 @@
 import { Fragment } from "react";
 import { Row, Col, Card, Tab, Breadcrumb, Button, Nav } from "react-bootstrap";
 import React, { useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useParams, Link } from "react-router-dom";
 // import sub components
 import ProjectSummary from "components/dashboard/single/overview/ProjectSummary";
 import ApplicationFormView from "components/dashboard/single/overview/ApplicationFormView";
@@ -10,6 +10,7 @@ import UpcomingDeadlines from "components/dashboard/single/overview/UpcomingDead
 import LaunchDate from "components/dashboard/single/overview/LaunchDate";
 import OverallProgressChart from "components/dashboard/single/overview/OverallProgressChart";
 import RecentActivity from "components/dashboard/single/overview/RecentActivity";
+import ApplicantsListItems from "components/dashboard/user/ApplicantsListItems";
 
 import ProgramInformation from "components/marketing/pages/courses/add-new-course/steps/ProgramInformation";
 
@@ -47,10 +48,16 @@ const AdminProgramDetail = () => {
                   <div className="border-bottom pb-4 mb-4 d-flex align-items-center justify-content-between">
                     <div className="mb-3 mb-md-0">
                       <h1 className="mb-1 h2 fw-bold">맥북신청</h1>
+
                       <Breadcrumb>
                         <Breadcrumb.Item href="#">Program</Breadcrumb.Item>
                         <Breadcrumb.Item active>Detail</Breadcrumb.Item>
                       </Breadcrumb>
+                    </div>
+                    <div>
+                      <Link to="../admin/program" className="btn btn-success ">
+                        프로그램 목록 보기
+                      </Link>
                     </div>
                   </div>
                 </Col>
@@ -96,11 +103,11 @@ const AdminProgramDetail = () => {
                             <UpcomingDeadlines />
                           </Tab.Pane>
                           <Tab.Pane eventKey="applicant" className="pb-4">
-                            <LaunchDate />
+                            {/* <LaunchDate />
 
-                            <OverallProgressChart />
-
-                            <RecentActivity />
+                            <OverallProgressChart /> */}
+                            <ApplicantsListItems />
+                            {/* <RecentActivity /> */}
                           </Tab.Pane>
                         </Tab.Content>
                       </Card.Body>
