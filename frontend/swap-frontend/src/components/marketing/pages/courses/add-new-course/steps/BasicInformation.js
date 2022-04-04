@@ -80,9 +80,10 @@ const BasicInformation = (props) => {
 
                 <InputGroup className="datePicker-wrapper">
                   <DatePicker
+                    required
                     locale={ko}
                     dateFormat="yyyy-MM-dd HH:mm"
-                    className="datePicker"
+                    className="datePicker form-control"
                     placeholderText="시작 날짜를 선택해주세요."
                     selected={startDate}
                     onChange={(date) => {
@@ -102,9 +103,10 @@ const BasicInformation = (props) => {
               </Form.Label>
               <InputGroup required>
                 <DatePicker
+                  required
                   locale={ko}
                   dateFormat="yyyy-MM-dd HH:mm"
-                  className="datePicker"
+                  className="datePicker form-control"
                   placeholderText="종료 날짜를 선택해주세요."
                   selected={endDate}
                   onChange={(date) => {
@@ -122,8 +124,7 @@ const BasicInformation = (props) => {
                 <Form.Label>
                   프로그램 정원 <span className="text-danger">*</span>
                 </Form.Label>
-                <Form.Control type="text" placeholder="숫자만 기입" id="program_quota" name="program_quota" onChange={handleChange} required />
-                <Form.Control.Feedback type="invalid">프로그램 정원을 입력해주세요.</Form.Control.Feedback>
+                <Form.Control type="text" placeholder="0" id="program_quota" name="program_quota" onChange={handleChange} />
               </Form.Group>
             </Col>
 
@@ -136,9 +137,10 @@ const BasicInformation = (props) => {
                 {/* <Form.Control required as={FormSelect} placeholder="카테고리를 선택하세요." name="program_category" options={categoryOptions} onChange={handleChange} />
                 <Form.Control.Feedback type="invalid">카테고리를 선택해주세요.</Form.Control.Feedback> */}
                 <select class="form-select" id="program_category" name="program_category" required>
-                  <option selected value="1">
-                    대회
+                  <option selected value="">
+                    카테고리를 선택해주세요.
                   </option>
+                  <option value="1">대회</option>
                   <option value="2">봉사</option>
                   <option value="3">캠프</option>
                   <option value="4">동아리</option>
