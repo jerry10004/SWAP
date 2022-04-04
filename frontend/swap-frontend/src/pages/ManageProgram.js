@@ -39,11 +39,12 @@ const AllCourses = () => {
               <Col lg={12} md={12} sm={12}>
                 <div className="border-bottom pb-4 mb-4 d-md-flex align-items-center justify-content-between">
                   <div className="mb-3 mb-md-0">
-                    <h1 className="mb-1 h2 fw-bold">프로그램 관리 </h1>
+                    <h1 className="mb-1 h2 fw-bold">Program </h1>
                     <Breadcrumb>
-                      <Breadcrumb.Item href="#">Admin</Breadcrumb.Item>
-                      <Breadcrumb.Item href="#">Program</Breadcrumb.Item>
-                      <Breadcrumb.Item active>All</Breadcrumb.Item>
+                      <Breadcrumb.Item href="#">Dashboard</Breadcrumb.Item>
+                      <Breadcrumb.Item href="#" active>
+                        Program
+                      </Breadcrumb.Item>
                     </Breadcrumb>
                   </div>
                   <div>
