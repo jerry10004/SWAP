@@ -4,7 +4,7 @@
 <mapper namespace="Applicant">   
 
    	<select id="readApplicantInformationByProgramId" parameterType="Integer" resultType="ApplicantRead">
-	   SELECT A.user_id, A.program_id, U.name, U.student_id, U.phone, U.email, U.department, U.major1
+	   SELECT A.user_id, A.program_id, U.email, U.name, U.student_id, U.phone, U.email, U.department, U.major1
 		FROM swap.Applicant as A
 		LEFT JOIN swap.User as U
 		ON A.user_id = U.id

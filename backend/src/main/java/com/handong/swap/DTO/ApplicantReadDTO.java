@@ -6,9 +6,17 @@ public class ApplicantReadDTO {
 	int program_id;
 	String name;
 	String phone;
+	String email;
 	int student_id;
 	String department;
 	String major1;
+	
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
 	public int getUser_id() {
 		return user_id;
 	}
