@@ -39,9 +39,16 @@
 		WHERE id = #{id}
    	</update>
    	
+
+   	<update id="updateStatus" parameterType="hashmap">
+   		UPDATE Program SET status=#{status}
+		WHERE id = #{program_id}
+	</update>
+
    	<update id="edit" parameterType="Program">
    		UPDATE Program SET edit_date=now(), program_name = #{program_name}, information = #{information}, quota = #{quota}, category_id=#{category_id}, start_date=#{start_date}, end_date=#{end_date} 
 		WHERE id = #{id}
+
    	</update>
    	
    	

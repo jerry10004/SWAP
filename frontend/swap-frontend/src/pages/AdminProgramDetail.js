@@ -99,11 +99,11 @@ const AdminProgramDetail = () => {
                               신청서
                             </Nav.Link>
                           </Nav.Item>
-                          <Nav.Item>
+                          {/* <Nav.Item>
                             <Nav.Link eventKey="survey" className="mb-sm-3 mb-md-0">
                               설문지
                             </Nav.Link>
-                          </Nav.Item>
+                          </Nav.Item> */}
                           <Nav.Item>
                             <Nav.Link eventKey="applicant" className="mb-sm-3 mb-md-0">
                               신청현황
@@ -119,9 +119,9 @@ const AdminProgramDetail = () => {
                           <Tab.Pane eventKey="application" className="pb-4">
                             <ApplicationFormView param2={id} />
                           </Tab.Pane>
-                          <Tab.Pane eventKey="survey" className="pb-4">
+                          {/* <Tab.Pane eventKey="survey" className="pb-4">
                             <UpcomingDeadlines />
-                          </Tab.Pane>
+                          </Tab.Pane> */}
                           <Tab.Pane eventKey="applicant" className="pb-4">
                             {/* <LaunchDate />
 

@@ -43,7 +43,7 @@ public class ProgramReadDTO {
 		return start_date;
 	}
 	public void setStart_date(String start_date) {
-		SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd",Locale.US);
+		SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm",Locale.KOREA);
 	    Date date = null;
 		try {
 			date = inputFormat.parse(start_date);
@@ -51,7 +51,7 @@ public class ProgramReadDTO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		SimpleDateFormat outputFormat = new SimpleDateFormat("yy-MM-dd (EE)", Locale.KOREA);
+		SimpleDateFormat outputFormat = new SimpleDateFormat("yy-MM-dd HH:mm (EE)", Locale.KOREA);
 		String result = outputFormat.format(date);
 
 		this.start_date = result;
@@ -60,7 +60,7 @@ public class ProgramReadDTO {
 		return end_date;
 	}
 	public void setEnd_date(String end_date) {
-		SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd",Locale.US);
+		SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm",Locale.KOREA);
 	    Date date = null;
 		try {
 			date = inputFormat.parse(end_date);
@@ -68,7 +68,7 @@ public class ProgramReadDTO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		SimpleDateFormat outputFormat = new SimpleDateFormat("yy-MM-dd (EE)", Locale.KOREA);
+		SimpleDateFormat outputFormat = new SimpleDateFormat("yy-MM-dd HH:mm (EE)", Locale.KOREA);
 		String result = outputFormat.format(date);
 
 		this.end_date = result;

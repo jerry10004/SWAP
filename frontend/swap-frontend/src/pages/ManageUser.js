@@ -44,12 +44,12 @@ const ManageUser = () => {
                   <div className="border-bottom pb-4 mb-4 d-flex align-items-center justify-content-between">
                     <div className="mb-3 mb-md-0">
                       <h1 className="mb-1 h2 fw-bold">
-                        Users
+                        User
                         {/* <span className="fs-5 text-muted">(12,105)</span> */}
                       </h1>
                       <Breadcrumb>
                         <Breadcrumb.Item href="#">Dashboard</Breadcrumb.Item>
-                        <Breadcrumb.Item active>Users</Breadcrumb.Item>
+                        <Breadcrumb.Item active>User</Breadcrumb.Item>
                       </Breadcrumb>
                     </div>
                   </div>
@@ -69,12 +69,12 @@ const ManageUser = () => {
                           </Nav.Item>
                           <Nav.Item>
                             <Nav.Link eventKey="instructors" className="mb-sm-3 mb-md-0">
-                              Instructors
+                              관리자
                             </Nav.Link>
                           </Nav.Item>
                           <Nav.Item>
                             <Nav.Link eventKey="students" className="mb-sm-3 mb-md-0">
-                              Students
+                              학생
                             </Nav.Link>
                           </Nav.Item>
                           <Nav.Item>

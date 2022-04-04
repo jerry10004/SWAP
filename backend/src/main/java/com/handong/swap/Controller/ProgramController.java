@@ -7,9 +7,14 @@ import java.net.URLDecoder;
 import java.text.ParseException;
 
 import java.util.Date;
+import java.util.Locale;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +24,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.handong.swap.Service.ProgramService;
+import com.mysql.cj.xdevapi.JsonArray;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.handong.swap.DTO.ProgramDTO;
 import com.handong.swap.DTO.ProgramReadNameDTO;
 
@@ -30,6 +37,10 @@ public class ProgramController {
 	
 	@Autowired
 	ProgramService programService;
+	String startDate;
+	String endDate;
+	String status;
+	String programId;
 	
 	@RequestMapping(value = "", method = RequestMethod.GET, produces = "application/json; charset=utf8")
 	@ResponseBody
@@ -37,7 +48,51 @@ public class ProgramController {
 		System.out.println("읽기 시도");
 		String result = programService.read();
 		
-		System.out.println(result);
+		LocalDateTime now = LocalDateTime.now();
+		String currentDate = now.format(DateTimeFormatter.ofPattern("yy-MM-dd HH:mm (EE)",Locale.KOREA));
+		
+		JSONParser parser = new JSONParser();
+		Object obj;
+		try {
+			obj = parser.parse(result);
+			JSONArray jsonArr = (JSONArray) obj;
+
+			if(jsonArr.size()>0) {
+				for(int i=0; i<jsonArr.size(); i++) {
+					JSONObject jsonObj = (JSONObject) jsonArr.get(i);
+					
+					startDate = (String)jsonObj.get("start_date");
+					endDate = (String)jsonObj.get("end_date");
+					status =  jsonObj.get("status").toString();
+					programId = jsonObj.get("id").toString();
+		
+			            
+			            if(currentDate.compareTo(startDate)<0) {//대기 
+			            	if(status.equals("0") == false) {
+			            		programService.updateStatus(Integer.parseInt(programId), 0);
+			            	}
+			            }
+			            else if(currentDate.compareTo(startDate)>0 && currentDate.compareTo(endDate)<0) {//진행
+							if(status.equals("1") == false) {
+								programService.updateStatus(Integer.parseInt(programId), 1);
+							}
+			            }
+			            else if(currentDate.compareTo(endDate)>0) {//종료
+							if(status.equals("2") == false) {
+								programService.updateStatus(Integer.parseInt(programId), 2);
+							}		            	
+			            }
+					
+				}
+			}
+		} catch (org.json.simple.parser.ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		 result = programService.read();
+		
+      
 	    return result;
 	}
 	
