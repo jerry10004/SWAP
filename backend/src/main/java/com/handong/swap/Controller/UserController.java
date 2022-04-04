@@ -66,11 +66,9 @@ public class UserController {
 	@ResponseBody
 	public void restoreUser(HttpServletRequest httpServletRequest) {
 		String[] param_ids = httpServletRequest.getParameterValues("id");
-		
 		String[] ids = param_ids[0].split(",");
 		
 		for (int i = 0; i < ids.length; i++) {
-			System.out.println("복구 시도");
 			userService.restore(Integer.parseInt(ids[i]));
 		}
 	}

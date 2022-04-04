@@ -193,7 +193,6 @@ const UsersListItems = () => {
 
     var params = new URLSearchParams();
     params.append("id", removeUserId);
-
     if (window.confirm("삭제 하시겠습니까?")) {
       const response = await axios.post("http://localhost:8080/swap/user/delete", params);
       alert("삭제 되었습니다.");
