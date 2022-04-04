@@ -1,12 +1,26 @@
 package com.handong.swap.DTO;
 
 public class ProgramReadByIdDTO {
+	int id;
 	String program_name;
 	String category_name;
 	int quota;
+	int category_id;
 	String information;
 	String start_date;
 	String end_date;
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	public Integer getCategory_Id() {
+		return category_id;
+	}
+	public void setCategory_Id(Integer category_id) {
+		this.category_id = category_id;
+	}
 	public String getProgram_name() {
 		return program_name;
 	}

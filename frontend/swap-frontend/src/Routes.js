@@ -36,7 +36,6 @@ function Router() {
         <Route path="/admin/program" element={<ManageProgram />} />
         <Route path="/admin/program/detail/:id" element={<AdminProgramDetail />} />
         <Route path="/admin/program/detail/:id/:applicantid" element={<ApplicationFormView />} />
-        <Route path="/admin/test" element={<Test />} />
       </Routes>
     </BrowserRouter>
   );

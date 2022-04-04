@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.handong.swap.Service.ProgramService;
 import com.handong.swap.DTO.ProgramDTO;
+import com.handong.swap.DTO.ProgramReadNameDTO;
 
 @Controller
 @RequestMapping("/program")
@@ -51,10 +52,20 @@ public class ProgramController {
 		return result;
 	}
 	
+	@RequestMapping(value = "/name", method = RequestMethod.POST, produces = "application/json; charset=utf8")
+	@ResponseBody
+	public String readProgramName(HttpServletRequest httpServletRequest) throws IOException, ParseException {
+		System.out.println("프로그램 이름 읽기");
+		Integer id = Integer.parseInt(httpServletRequest.getParameter("id"));
+		String result = programService.readProgramName(id);
+		System.out.println("result is "+result);
+		return result;
+	}
+	
 	
 	@RequestMapping(value = "/add", method = RequestMethod.POST, produces = "application/json; charset=utf8")
 	@ResponseBody
-	public void addAdministrator(HttpServletRequest httpServletRequest) throws ParseException {
+	public void addProgram(HttpServletRequest httpServletRequest) throws ParseException {
 		ProgramDTO program = new ProgramDTO();
 		
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
@@ -84,7 +95,7 @@ public class ProgramController {
 	
 	@RequestMapping(value = "/delete", method = RequestMethod.POST, produces = "application/json; charset=utf8")
 	@ResponseBody
-	public void deleteUser(HttpServletRequest httpServletRequest) {
+	public void deleteProgram(HttpServletRequest httpServletRequest) {
 		String[] param_ids = httpServletRequest.getParameterValues("id");
 		
 		String[] ids = param_ids[0].split(",");
@@ -94,5 +105,39 @@ public class ProgramController {
 			System.out.println("삭제 하려는 아이디 번호: "+ids[i]);
 			programService.delete(Integer.parseInt(ids[i]));
 		}
+	}
+	
+	@RequestMapping(value = "/edit", method = RequestMethod.POST, produces = "application/json; charset=utf8")
+	@ResponseBody
+	public void editProgram(HttpServletRequest httpServletRequest) throws ParseException {
+		ProgramDTO program = new ProgramDTO();
+		System.out.println("edit!!!!!!!!");
+		
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		Date start_date = (Date) formatter.parse(httpServletRequest.getParameter("start_date"));
+		Date end_date = (Date) formatter.parse(httpServletRequest.getParameter("end_date"));
+		
+		program.setId(Integer.parseInt(httpServletRequest.getParameter("id")));
+		program.setProgram_name(httpServletRequest.getParameter("program_name"));
+		program.setInformation(httpServletRequest.getParameter("information"));
+		program.setStart_date(start_date);
+		program.setEnd_date(end_date);
+		program.setQuota(Integer.parseInt(httpServletRequest.getParameter("quota")));
+		
+//		String category = httpServletRequest.getParameter("category_name");
+//		int category_id;
+//		
+//		if(category=="대회") category_id = 1;
+//		else if(category=="봉사") category_id=2;
+//		else if(category=="캠프") category_id=3;
+//		else if(category=="동아리") category_id=4;
+//		else if(category=="행사") category_id=5;
+//		else category_id=6;
+//		
+		program.setCategory_id(Integer.parseInt(httpServletRequest.getParameter("category_id")));
+	
+
+		programService.edit(program);
+		
 	}
 }

@@ -16,10 +16,16 @@
    	</select>
    	
    	<select id="readProgramInformationByProgramId" parameterType="Integer" resultType="ProgramReadById">
-	   select P.program_name, C.category_name as category_name, P.quota, P.information, P.start_date, P.end_date
+	   select P.id, P.program_name,P.category_id, P.quota, P.information, P.start_date, P.end_date
 		FROM Program AS P
 		LEFT JOIN Category as C  
 		ON P.category_id = C.id
+		where P.id = #{id};
+   	</select>
+   	
+   	<select id="readProgramName" parameterType="Integer" resultType="ProgramReadName">
+	   select P.program_name
+		FROM Program AS P
 		where P.id = #{id};
    	</select>
    	
@@ -30,6 +36,11 @@
    	
    	<update id="updateDelDate" parameterType="hashmap">
    		UPDATE Program SET deldate=now(), status = -1
+		WHERE id = #{id}
+   	</update>
+   	
+   	<update id="edit" parameterType="Program">
+   		UPDATE Program SET edit_date=now(), program_name = #{program_name}, information = #{information}, quota = #{quota}, category_id=#{category_id}, start_date=#{start_date}, end_date=#{end_date} 
 		WHERE id = #{id}
    	</update>
    	
