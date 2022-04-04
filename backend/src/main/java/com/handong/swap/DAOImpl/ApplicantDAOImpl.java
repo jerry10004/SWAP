@@ -1,7 +1,8 @@
 package com.handong.swap.DAOImpl;
 
+import java.util.HashMap;
 import java.util.List;
-
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,18 @@ public class ApplicantDAOImpl implements ApplicantDAO {
 	public List<ApplicantReadDTO> readApplicantInformationByProgramId(int id) {
 		return sqlSession.selectList("Applicant.readApplicantInformationByProgramId",id);
 	}
+	
+	@Override
+	public String updateApplicantStatus(int id,int status) {
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("id", id);
+	    param.put("status", status);
+		int result = sqlSession.update("Applicant.updateApplicantStatus",param);
+		if (result==1){
+			return "success";
+		}
+		return  "error";
+	} 
 
 
 }

@@ -24,6 +24,14 @@ public class ApplicantServiceImpl implements ApplicantService{
 		String jsonString = mapper.writeValueAsString(applicantDATA);
 		return jsonString;
 	}
+	
+	@Override
+	public String updateApplicantStatus(int id, int status) {
+		String result = applicantDAO.updateApplicantStatus(id, status);
+		return result;
+	}
+	
+	
 
 	
 }

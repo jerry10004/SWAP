@@ -106,7 +106,7 @@ const AdminProgramDetail = () => {
                             {/* <LaunchDate />
 
                             <OverallProgressChart /> */}
-                            <ApplicantsListItems />
+                            <ApplicantsListItems param4={id} />
                             {/* <RecentActivity /> */}
                           </Tab.Pane>
                         </Tab.Content>

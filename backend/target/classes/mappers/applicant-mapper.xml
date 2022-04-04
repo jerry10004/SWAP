@@ -4,13 +4,21 @@
 <mapper namespace="Applicant">   
 
    	<select id="readApplicantInformationByProgramId" parameterType="Integer" resultType="ApplicantRead">
-	   SELECT A.user_id, A.program_id, U.name, U.student_id, U.phone, U.email, U.department, U.major1
+	   SELECT A.user_id, A.program_id, A.status, U.name, U.student_id, U.phone, U.email, U.department, U.major1, U.student_class, U.semester
 		FROM swap.Applicant as A
 		LEFT JOIN swap.User as U
 		ON A.user_id = U.id
 		where U.deldate is null and A.program_id  = #{id}
 		order by U.name
    	</select>
+   	
+   	<update id="updateApplicantStatus" parameterType="hashmap">
+   		UPDATE Applicant
+   		SET status = #{status}
+   		WHERE id=#{id}
+   	</update>
+   	
+ 
    
    	
 </mapper>

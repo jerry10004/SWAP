@@ -9,12 +9,37 @@ public class ApplicantReadDTO {
 	int student_id;
 	String department;
 	String major1;
+	int student_class;
+	int semester;
+	int status;
+	
 	public int getUser_id() {
 		return user_id;
 	}
 	public void setUser_id(int user_id) {
 		this.user_id = user_id;
 	}
+	public int getStudent_class() {
+		return student_class;
+	}
+	public void setStudent_class(int student_class) {
+		this.student_class = student_class;
+	}
+	
+	public int getSemester() {
+		return semester;
+	}
+	public void setSemester(int semester) {
+		this.semester = semester;
+	}
+	
+	public int getStatus() {
+		return status;
+	}
+	public void setStatus(int status) {
+		this.status = status;
+	}
+	
 	public int getProgram_id() {
 		return program_id;
 	}

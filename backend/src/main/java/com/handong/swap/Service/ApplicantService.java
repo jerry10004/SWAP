@@ -7,6 +7,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 public interface ApplicantService {
 	
 	public String readApplicantInformationByProgramId(int id) throws JsonProcessingException;
+	public String updateApplicantStatus(int id,int status);
 
 
 }
