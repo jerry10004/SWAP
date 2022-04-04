@@ -1,7 +1,7 @@
 // import node module libraries
 import { Fragment } from "react";
 import { Row, Col, Card, Tab, Breadcrumb, Button, Nav } from "react-bootstrap";
-import React, { useState } from "react";
+import React, { useState, useLayoutEffect } from "react";
 import { useLocation, useParams, Link } from "react-router-dom";
 // import sub components
 import ProjectSummary from "components/dashboard/single/overview/ProjectSummary";
@@ -11,20 +11,40 @@ import LaunchDate from "components/dashboard/single/overview/LaunchDate";
 import OverallProgressChart from "components/dashboard/single/overview/OverallProgressChart";
 import RecentActivity from "components/dashboard/single/overview/RecentActivity";
 import ApplicantsListItems from "components/dashboard/user/ApplicantsListItems";
+import axios from "axios";
 
 import ProgramInformation from "components/marketing/pages/courses/add-new-course/steps/ProgramInformation";
 
 // import sub components
 import NavbarVertical from "layouts/dashboard/NavbarVertical";
 import NavbarTop from "layouts/dashboard/NavbarTop";
+import { mdiConsoleNetworkOutline } from "@mdi/js";
 
 const AdminProgramDetail = () => {
   const [showMenu, setShowMenu] = useState(true);
+  const [programName, setProgramName] = useState();
+  const [programNameLoading, setProgramNameLoading] = useState(false);
   const ToggleMenu = () => {
     return setShowMenu(!showMenu);
   };
 
   const id = useParams();
+
+  useLayoutEffect(() => {
+    readProgramName();
+  }, [programName]);
+
+  const readProgramName = async () => {
+    setProgramNameLoading(false);
+    var params = new URLSearchParams();
+
+    if (id["id"] != null) {
+      params.append("id", id["id"]);
+      const response = await axios.post("http://localhost:8080/swap/program/name", params);
+      setProgramName(response.data[0].program_name);
+      setProgramNameLoading(true);
+    }
+  };
 
   return (
     <Fragment>
@@ -47,8 +67,8 @@ const AdminProgramDetail = () => {
                 <Col lg={12} md={12} sm={12}>
                   <div className="border-bottom pb-4 mb-4 d-flex align-items-center justify-content-between">
                     <div className="mb-3 mb-md-0">
-                      <h1 className="mb-1 h2 fw-bold">맥북신청</h1>
-
+                      {programNameLoading ? <h1 className="mb-1 h2 fw-bold">{programName}</h1> : ""}
+                      {/* <h1 className="mb-1 h2 fw-bold">~~맥북신청</h1> */}
                       <Breadcrumb>
                         <Breadcrumb.Item href="#">Program</Breadcrumb.Item>
                         <Breadcrumb.Item active>Detail</Breadcrumb.Item>

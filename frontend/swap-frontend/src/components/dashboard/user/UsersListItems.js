@@ -198,6 +198,7 @@ const UsersListItems = () => {
       const response = await axios.post("http://localhost:8080/swap/user/delete", params);
       alert("삭제 되었습니다.");
       readUser();
+      window.location.reload();
     }
   };
 
@@ -220,6 +221,7 @@ const UsersListItems = () => {
               관리자 추가
             </Button>
             <Button
+              variant="secondary"
               className="danger-button"
               onClick={() => {
                 removeUser(selectedFlatRows);

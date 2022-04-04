@@ -9,17 +9,16 @@ import { ko } from "date-fns/esm/locale";
 import axios from "axios";
 
 const ProgramInformation = (props) => {
-  // const { next, handleChange } = props;
-  // const [startDate, setStartDate] = useState();
-  // const [endDate, setEndDate] = useState();
   const [programInformation, setProgramInformation] = useState(null);
   const [programInformationLoading, setProgramInformationLoading] = useState(null);
-  const programId = 0;
+  const [programId, setProgramId] = useState();
   const [isEdit, setIsEdit] = useState(false);
   const [start_date, setStart_date] = useState();
   const [end_date, setEnd_date] = useState();
   const [editInfo, seteditInfo] = useState(null);
-  // const [editInfo, seteditInfo] = useState({ program_name: "", category_name: "", start_date: "", end_date: "", information: "", quota: "" });
+  const [editStart, seteditStart] = useState(false);
+  const [editEnd, seteditEnd] = useState(false);
+  // const [editInfo, seteditInfo] = useState({ program_id: "", program_name: "", category_name: "", information: "", quota: "" });
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
 
@@ -37,27 +36,20 @@ const ProgramInformation = (props) => {
   }, []);
 
   const onEdit = (e) => {
-    console.log("~~~~~!~!~!~!~!");
-    console.log(e.target.value);
     const name = e.target.name;
     const value = e.target.value;
-    // const { value, name } = e.target;
+
     seteditInfo({
       ...editInfo,
       [name]: value,
     });
-    console.log("result is");
-    console.log(editInfo);
   };
 
   const readProgramInformation = async (id) => {
     setProgramInformationLoading(false);
-    console.log("id is", id);
     const response = await axios.get("http://localhost:8080/swap/program/information/" + id);
     setProgramInformation(response.data);
-    seteditInfo(response.data);
-    console.log("edit info is ");
-    console.log(response.data);
+    seteditInfo(response.data[0]);
     setStart_date(response.data[0].start_date);
     setEnd_date(response.data[0].end_date);
     setProgramInformationLoading(true);
@@ -83,39 +75,32 @@ const ProgramInformation = (props) => {
   };
 
   const save = () => {
-    console.log("hihihi");
-    console.log("edit is");
-    console.log(editInfo);
     editInformation();
     setIsEdit(false);
   };
 
   const editInformation = async () => {
-    console.log("~~~~~~Edit~~~~~~");
     var params = new URLSearchParams();
-    console.log("Start date is ");
-    console.log(start_date);
-    var info_startdate = "start_date";
-    var info_enddate = "end_date";
-    seteditInfo({
-      ...editInfo,
-      [info_startdate]: start_date,
-      [info_enddate]: end_date,
-    });
 
-    console.log("$$$$$$$$$$$4");
-    console.log(editInfo);
+    if (editStart) editInfo.start_date = getFormatDate(startDate);
+    if (editEnd) editInfo.end_date = getFormatDate(endDate);
 
-    // params.append("program_quota", edit.program_quota);
-    // params.append("program_name", formData.program_title);
-    // params.append("information", formData.program_description);
-    // params.append("start_date", formattedStartDate);
-    // params.append("end_date", formattedEndDate);
-    // if (window.confirm("프로그램을 추가하시겠습니까?")) {
-    //   const response = await axios.post("http://localhost:8080/swap/program/add", params);
-    //   alert(formData.program_title + " 프로그램이 추가 되었습니다.");
-    //   navigate("/admin/program");
-    // }
+    params.append("id", editInfo.id);
+    params.append("program_name", editInfo.program_name);
+    params.append("information", editInfo.information);
+    params.append("quota", editInfo.quota);
+    params.append("category_id", editInfo.category_Id);
+    params.append("start_date", editInfo.start_date);
+    params.append("end_date", editInfo.end_date);
+
+    if (window.confirm("프로그램을 수정하시겠습니까?") && editInfo) {
+      const response = await axios.post("http://localhost:8080/swap/program/edit", params);
+      alert(" 프로그램이 수정 되었습니다.");
+      seteditStart(false);
+      seteditEnd(false);
+      readProgramInformation(props.param1.id);
+      window.location.reload();
+    }
   };
 
   return (
@@ -198,10 +183,8 @@ const ProgramInformation = (props) => {
                         <Form.Label>
                           카테고리 <span className="text-danger">*</span>
                         </Form.Label>
-                        <select class="form-select" id="program_category" name="program_category" required disabled>
-                          <option selected value="1">
-                            {programInformation[0].category_name}
-                          </option>
+                        <select class="form-select" id="program_category" name="program_category" required disabled value={programInformation[0].category_Id}>
+                          <option value="1">대회</option>
                           <option value="2">봉사</option>
                           <option value="3">캠프</option>
                           <option value="4">동아리</option>
@@ -244,7 +227,7 @@ const ProgramInformation = (props) => {
                         <Form.Label>
                           프로그램 설명 <span className="text-danger">*</span>
                         </Form.Label>
-                        <Form.Control as="textarea" rows={3} name="program_information" onChange={onEdit} placeholder="프로그램에 관한 정보를 입력하세요." />
+                        <Form.Control as="textarea" rows={3} name="information" onChange={onEdit} placeholder="프로그램에 관한 정보를 입력하세요." />
                       </Form.Group>
                     </Col>
 
@@ -262,6 +245,7 @@ const ProgramInformation = (props) => {
                           selected={startDate}
                           onChange={(date) => {
                             setStartDate(date);
+                            seteditStart(true);
                           }}
                           showTimeSelect
                         />
@@ -282,6 +266,7 @@ const ProgramInformation = (props) => {
                           selected={endDate}
                           onChange={(date) => {
                             setEndDate(date);
+                            seteditEnd(true);
                           }}
                           showTimeSelect
                         />
@@ -303,10 +288,7 @@ const ProgramInformation = (props) => {
                         <Form.Label>
                           카테고리 <span className="text-danger">*</span>
                         </Form.Label>
-                        <select class="form-select" id="program_category" name="program_category" required placeholder={programInformation[0].category_name}>
-                          <option value="" selected disabled hidden>
-                            {programInformation[0].category_name}
-                          </option>
+                        <select class="form-select" id="category_Id" name="category_Id" defaultValue={programInformation[0].category_Id} required onChange={onEdit}>
                           <option value="1">대회</option>
                           <option value="2">봉사</option>
                           <option value="3">캠프</option>

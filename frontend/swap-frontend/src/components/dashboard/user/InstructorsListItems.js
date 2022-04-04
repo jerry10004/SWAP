@@ -125,6 +125,7 @@ const InstructorsListItems = (props) => {
       const response = await axios.post("http://localhost:8080/swap/admin/delete", params);
       alert("내보내졌습니다.");
       readAdmin();
+      window.location.reload();
     }
   };
 
