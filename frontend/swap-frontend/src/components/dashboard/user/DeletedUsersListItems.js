@@ -196,6 +196,7 @@ const DeletedUsersListItems = () => {
       const response = await axios.post("http://localhost:8080/swap/user/restore", params);
       alert("복구 되었습니다.");
       readUser();
+      window.location.reload();
     }
   };
 

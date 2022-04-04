@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.handong.swap.DAO.ProgramDAO;
 import com.handong.swap.DTO.ProgramDTO;
 import com.handong.swap.DTO.ProgramReadDTO;
+import com.handong.swap.DTO.ProgramReadNameDTO;
 import com.handong.swap.Service.ProgramService;
 
 @Service
@@ -41,6 +42,13 @@ public class ProgramServiceImpl implements ProgramService{
 		String jsonString = mapper.writeValueAsString(programDATA);
 		return jsonString;
 	}
+	@Override
+	public String readProgramName(int id) throws JsonProcessingException{
+		List<ProgramReadNameDTO> programDATA = programDAO.readProgramName(id);
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonString = mapper.writeValueAsString(programDATA);
+		return jsonString;
+	}
 	
 	@Override
 	public void delete(int id) {
@@ -52,5 +60,12 @@ public class ProgramServiceImpl implements ProgramService{
 		programDAO.updateStatus(program_id, status);
 	}
 
+
+	@Override
+	public void edit(ProgramDTO program) {
+		programDAO.edit(program);
+	}
+	
+	
 
 }

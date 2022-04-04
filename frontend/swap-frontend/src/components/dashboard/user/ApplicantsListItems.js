@@ -10,10 +10,11 @@ import axios from "axios";
 import GlobalFilter from "components/elements/advance-table/GlobalFilter";
 import Pagination from "components/elements/advance-table/Pagination";
 
-const StudentsListItems = () => {
+const StudentsListItems = (props) => {
   const [userInfo, setUserInfo] = useState([]);
   const [isEdit, setIsEdit] = useState(false);
-  const [isDisabled, setIsDisabled] = useState(true);
+  const [applicantInformationLoading, setApplicantInformationLoading] = useState(null);
+  const [program_id, setProgram_id] = useState();
 
   const columns = useMemo(
     () => [
@@ -62,8 +63,16 @@ const StudentsListItems = () => {
       {
         accessor: "status",
         Header: "상태",
-        Cell: () => {
-          return <StatusSelect />;
+        Cell: ({ value }) => {
+          return (
+            <select id="applicant_status" className="applicant_status" name="program_category" disabled>
+              <option value="" selected hidden>
+                {value === 0 ? "참여보류" : "참여승인"}
+              </option>
+              <option value="0">참여승인</option>
+              <option value="1">참여보류</option>
+            </select>
+          );
         },
       },
     ],
@@ -71,23 +80,40 @@ const StudentsListItems = () => {
   );
   const edit = () => {
     setIsEdit(true);
-    console.log(isDisabled);
-    setIsDisabled(false);
-    console.log(isDisabled);
-    // setIsDisabled(false);
+
+    const target = document.getElementsByClassName("applicant_status");
+
+    for (let i = 0; i < target.length; i++) {
+      target[i].disabled = false;
+    }
   };
 
-  const save = () => {
+  const update = () => {
     setIsEdit(false);
-  };
 
-  const StatusSelect = () => {
-    return (
-      <select id="program_category" name="program_category" disabled={isDisabled}>
-        <option value="1">미입금</option>
-        <option value="2">입금 완료</option>
-      </select>
-    );
+    const target = document.getElementsByClassName("applicant_status");
+    for (let i = 0; i < target.length; i++) {
+      target[i].disabled = true;
+    }
+
+    console.log(program_id);
+
+    if (window.confirm("강의를 수정하시겠습니까?")) {
+      axios({
+        url: "http://localhost:8080/swap/applicant/applicants/" + program_id + "/update",
+        method: "post",
+        data: {
+          id: 1,
+          status: 5,
+        },
+      }).then(function (res) {
+        // readAllLecture();
+        // setSelectedLecture(null);
+        // seteditLecture(false);
+        // seteditcalendar(false);
+        alert("강의가 수정되었습니다.");
+      });
+    }
   };
 
   const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
@@ -154,14 +180,29 @@ const StudentsListItems = () => {
 
   const { pageIndex, globalFilter } = state;
 
+  // useLayoutEffect(() => {
+  //   readUser();
+  // }, []);
   useLayoutEffect(() => {
-    readUser();
+    console.log(props.param4.id);
+    readApplicantInformation(props.param4.id);
+    setProgram_id(props.param4.id);
   }, []);
 
-  const readUser = async () => {
-    const response = await axios.get("http://localhost:8080/swap/user/students");
+  const readApplicantInformation = async (id) => {
+    setApplicantInformationLoading(false);
+    console.log("id is", id);
+    const response = await axios.get("http://localhost:8080/swap/applicant/applicants/" + id);
+    console.log("~이거를보자~~~~`");
+    console.log(response.data);
+    setApplicantInformationLoading(true);
     setUserInfo(response.data);
   };
+
+  // const readUser = async () => {
+  //   const response = await axios.get("http://localhost:8080/swap/user/students");
+  //   setUserInfo(response.data);
+  // };
 
   return (
     <Fragment>
@@ -209,7 +250,7 @@ const StudentsListItems = () => {
         </div>
       ) : (
         <div className="d-flex justify-content-end me-4">
-          <Button variant="success" onClick={save}>
+          <Button variant="success" onClick={update}>
             완료
           </Button>
         </div>

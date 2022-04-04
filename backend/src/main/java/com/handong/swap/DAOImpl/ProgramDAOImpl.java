@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import com.handong.swap.DAO.ProgramDAO;
+import com.handong.swap.DTO.ProgramReadNameDTO;
 import com.handong.swap.DTO.ProgramReadDTO;
 import com.handong.swap.DTO.ProgramDTO;
 
@@ -46,6 +47,16 @@ public class ProgramDAOImpl implements ProgramDAO {
 		param.put("program_id", program_id);
 		param.put("status", status);
 	    sqlSession.update("Program.updateStatus", param);
+	}
+
+	@Override
+	public List<ProgramReadNameDTO> readProgramName(int id) {
+		return sqlSession.selectList("Program.readProgramName",id);
+	}
+
+	@Override
+	public void edit(ProgramDTO program) {
+	    sqlSession.update("Program.edit", program);
 	}
 
 }
