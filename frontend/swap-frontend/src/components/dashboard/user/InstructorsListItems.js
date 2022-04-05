@@ -1,9 +1,8 @@
 // import node module libraries
-import React, { Fragment, useMemo, useEffect, useLayoutEffect, useState } from "react";
+import React, { Fragment, useMemo, useLayoutEffect, useState } from "react";
 import { useTable, useFilters, useGlobalFilter, usePagination, useRowSelect } from "react-table";
 import { Link } from "react-router-dom";
-import { Dropdown, OverlayTrigger, Tooltip, Row, Col, Table, Button } from "react-bootstrap";
-import { MoreVertical, Trash, Edit } from "react-feather";
+import { Row, Col, Table, Button } from "react-bootstrap";
 import axios from "axios";
 
 // import custom components
@@ -109,7 +108,7 @@ const InstructorsListItems = (props) => {
   }, []);
 
   const readAdmin = async () => {
-    const response = await axios.get("http://localhost:8080/swap/admin");
+    const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "admin");
     setAdminInfo(response.data);
   };
 
@@ -122,7 +121,7 @@ const InstructorsListItems = (props) => {
     params.append("id", removeAdminId);
 
     if (window.confirm("관리자에서 내보내시겠습니까?")) {
-      const response = await axios.post("http://localhost:8080/swap/admin/delete", params);
+      const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "admin/delete", params);
       alert("내보내졌습니다.");
       readAdmin();
       window.location.reload();
@@ -187,15 +186,6 @@ const InstructorsListItems = (props) => {
             })}
           </tbody>
         </Table>
-        <div>
-          {/* <Button
-            onClick={() => {
-              removeUser(selectedFlatRows);
-            }}
-          >
-            삭제하기
-          </Button> */}
-        </div>
       </div>
 
       {/* Pagination @ Footer */}

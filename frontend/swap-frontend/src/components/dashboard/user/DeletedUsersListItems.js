@@ -1,24 +1,13 @@
 // import node module libraries
 import React, { Fragment, useMemo, useLayoutEffect, useState } from "react";
 import { useTable, useFilters, useGlobalFilter, usePagination, useRowSelect } from "react-table";
-import { Link } from "react-router-dom";
-import { Dropdown, Image, Row, Col, Table, Button } from "react-bootstrap";
-import { MoreVertical, Trash, Edit } from "react-feather";
+import { Row, Col, Table, Button } from "react-bootstrap";
 import axios from "axios";
 
 // import custom components
 import GlobalFilter from "components/elements/advance-table/GlobalFilter";
 import Pagination from "components/elements/advance-table/Pagination";
 import DotBadge from "components/elements/bootstrap/DotBadge";
-
-import styled from "styled-components";
-
-// const StyledButton = styled.button`
-//   background-color: #fe4f4f;
-//   color: white;
-//   padding: 0.22rem 0.75rem;
-//   font-size: 0.75rem;
-// `;
 
 const DeletedUsersListItems = () => {
   const [userInfo, setUserInfo] = useState([]);
@@ -29,7 +18,7 @@ const DeletedUsersListItems = () => {
       {
         accessor: "name",
         Header: "이름",
-        Cell: ({ value, row }) => {
+        Cell: ({ value }) => {
           return (
             <div className="d-flex align-items-center">
               <DotBadge bg="danger"></DotBadge>
@@ -41,7 +30,6 @@ const DeletedUsersListItems = () => {
       { accessor: "phone", Header: "연락처" },
       { accessor: "email", Header: "이메일" },
 
-      // { accessor: "image", Header: "", show: false },
       {
         accessor: "student_id",
         Header: "학번",
@@ -165,24 +153,9 @@ const DeletedUsersListItems = () => {
   }, []);
 
   const readUser = async () => {
-    const response = await axios.get("http://localhost:8080/swap/user/deletedusers");
+    const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "user/deletedusers");
     setUserInfo(response.data);
   };
-
-  // const createAdmin = async (e) => {
-  //   var addAdminId = [];
-
-  //   e.map((d) => addAdminId.push(d.original.id));
-
-  //   var params = new URLSearchParams();
-  //   params.append("id", addAdminId);
-
-  //   if (window.confirm("관리자로 추가하시겠습니까?")) {
-  //     const response = await axios.post("http://localhost:8080/swap/admin/add", params);
-  //     alert("추가 되었습니다.");
-  //     readUser();
-  //   }
-  // };
 
   const RestoreUser = async (e) => {
     var restoreUserId = [];
@@ -193,7 +166,7 @@ const DeletedUsersListItems = () => {
     params.append("id", restoreUserId);
 
     if (window.confirm("복구 하시겠습니까?")) {
-      const response = await axios.post("http://localhost:8080/swap/user/restore", params);
+      const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "user/restore", params);
       alert("복구 되었습니다.");
       readUser();
       window.location.reload();

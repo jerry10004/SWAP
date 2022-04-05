@@ -11,7 +11,6 @@ import DotBadge from "components/elements/bootstrap/DotBadge";
 
 const StudentsListItems = (props) => {
   const [userInfo, setUserInfo] = useState([]);
-  const [isEdit, setIsEdit] = useState(false);
   const [applicantInformationLoading, setApplicantInformationLoading] = useState(null);
   const [program_id, setProgram_id] = useState();
   const [applicant_id, setApplicant_id] = useState([]);
@@ -77,16 +76,6 @@ const StudentsListItems = (props) => {
     []
   );
 
-  // const edit = () => {
-  //   setIsEdit(true);
-
-  //   const target = document.getElementsByClassName("applicant_status");
-
-  //   for (let i = 0; i < target.length; i++) {
-  //     target[i].disabled = false;
-  //   }
-  // };
-
   const update = async (e) => {
     var updateApplicantId = [];
     var updateApplicantStatus = [];
@@ -104,7 +93,7 @@ const StudentsListItems = (props) => {
 
     if (updateApplicantId != "") {
       if (window.confirm("강의를 수정하시겠습니까?")) {
-        const response = await axios.post("http://localhost:8080/swap/applicant/applicants/" + program_id + "/update", params);
+        const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "applicant/applicants/" + program_id + "/update", params);
         readApplicantInformation(props.param4.id);
         alert("강의가 수정되었습니다.");
       }
@@ -193,7 +182,7 @@ const StudentsListItems = (props) => {
   const readApplicantInformation = async (id) => {
     setApplicantInformationLoading(false);
     console.log("id is", id);
-    const response = await axios.get("http://localhost:8080/swap/applicant/applicants/" + id);
+    const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "applicant/applicants/" + id);
     console.log("~이거를보자~~~~`");
     console.log(response.data);
 

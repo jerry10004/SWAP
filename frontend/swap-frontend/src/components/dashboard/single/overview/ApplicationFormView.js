@@ -21,7 +21,7 @@ const ApplicationFormView = (props) => {
 
   const readApplicantInformation = async (id) => {
     setApplicantInformationLoading(false);
-    const response = await axios.get("http://localhost:8080/swap/applicant/applicants/" + id);
+    const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "applicant/applicants/" + id);
     setApplicantInformation(response.data);
     setApplicantInformationLoading(true);
   };
@@ -31,7 +31,7 @@ const ApplicationFormView = (props) => {
     console.log("클릭된 학생의 정보:", user);
   };
 
-  const ContextAwareToggle = ({ children, eventKey, callback }) => {
+  const ContextAwareToggle = ({ eventKey, callback }) => {
     const { activeEventKey } = useContext(AccordionContext);
 
     const decoratedOnClick = useAccordionButton(eventKey, () => callback && callback(eventKey));

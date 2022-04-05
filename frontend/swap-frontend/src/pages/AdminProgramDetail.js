@@ -2,14 +2,10 @@
 import { Fragment } from "react";
 import { Row, Col, Card, Tab, Breadcrumb, Button, Nav } from "react-bootstrap";
 import React, { useState, useLayoutEffect } from "react";
-import { useLocation, useParams, Link } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
+
 // import sub components
-import ProjectSummary from "components/dashboard/single/overview/ProjectSummary";
 import ApplicationFormView from "components/dashboard/single/overview/ApplicationFormView";
-import UpcomingDeadlines from "components/dashboard/single/overview/UpcomingDeadlines";
-import LaunchDate from "components/dashboard/single/overview/LaunchDate";
-import OverallProgressChart from "components/dashboard/single/overview/OverallProgressChart";
-import RecentActivity from "components/dashboard/single/overview/RecentActivity";
 import ApplicantsListItems from "components/dashboard/user/ApplicantsListItems";
 import axios from "axios";
 
@@ -18,7 +14,6 @@ import ProgramInformation from "components/marketing/pages/courses/add-new-cours
 // import sub components
 import NavbarVertical from "layouts/dashboard/NavbarVertical";
 import NavbarTop from "layouts/dashboard/NavbarTop";
-import { mdiConsoleNetworkOutline } from "@mdi/js";
 
 const AdminProgramDetail = () => {
   const [showMenu, setShowMenu] = useState(true);
@@ -40,7 +35,7 @@ const AdminProgramDetail = () => {
 
     if (id["id"] != null) {
       params.append("id", id["id"]);
-      const response = await axios.post("http://localhost:8080/swap/program/name", params);
+      const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "program/name", params);
       setProgramName(response.data[0].program_name);
       setProgramNameLoading(true);
     }

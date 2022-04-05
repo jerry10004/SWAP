@@ -2,8 +2,8 @@
 import React, { Fragment, useMemo, useLayoutEffect, useState } from "react";
 import { useTable, useFilters, useGlobalFilter, usePagination, useRowSelect } from "react-table";
 import { Link } from "react-router-dom";
-import { Dropdown, Image, Row, Col, Table, Button } from "react-bootstrap";
-import { MoreVertical, Trash, Edit } from "react-feather";
+import { Dropdown, Row, Col, Table } from "react-bootstrap";
+import { MoreVertical, Edit } from "react-feather";
 import axios from "axios";
 
 // import custom components
@@ -82,7 +82,6 @@ const StudentsListItems = () => {
         <Dropdown.Menu align="end">
           <Dropdown.Header>SETTINGS</Dropdown.Header>
           <Dropdown.Item eventKey="1">
-            {" "}
             <Edit size="18px" className="dropdown-item-icon" /> 활동내역 보기
           </Dropdown.Item>
           {/* <Dropdown.Item eventKey="2">
@@ -162,7 +161,7 @@ const StudentsListItems = () => {
   }, []);
 
   const readUser = async () => {
-    const response = await axios.get("http://localhost:8080/swap/user/students");
+    const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "user/students");
     setUserInfo(response.data);
   };
 
