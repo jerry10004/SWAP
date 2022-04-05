@@ -12,6 +12,7 @@ const ApplicationForm = (props) => {
     { value: "4", label: "동아리" },
     { value: "5", label: "행사" },
     { value: "6", label: "기타" },
+    { value: "7", label: "직접만들기" },
   ];
 
   const ApplicationForm = () => {

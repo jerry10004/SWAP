@@ -123,11 +123,7 @@ const AdminProgramDetail = () => {
                             <UpcomingDeadlines />
                           </Tab.Pane> */}
                           <Tab.Pane eventKey="applicant" className="pb-4">
-                            {/* <LaunchDate />
-
-                            <OverallProgressChart /> */}
                             <ApplicantsListItems param4={id} />
-                            {/* <RecentActivity /> */}
                           </Tab.Pane>
                         </Tab.Content>
                       </Card.Body>

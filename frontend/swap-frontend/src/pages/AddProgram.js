@@ -9,6 +9,7 @@ import GKStepper from "components/elements/stepper/GKStepper";
 // import sub components ( Steps )
 import BasicInformation from "components/marketing/pages/courses/add-new-course/steps/BasicInformation";
 import CoursesMedia from "components/marketing/pages/courses/add-new-course/steps/ApplicationForm";
+import ApplicationFormPractice from "pages/ApplicationFormPractice";
 
 const AddNewCourse = () => {
   const navigate = useNavigate();
@@ -94,7 +95,8 @@ const AddNewCourse = () => {
     {
       id: 2,
       title: "프로그램 신청서 Form 선택",
-      content: <CoursesMedia data={formData} handleChange={handleChange} setStart_date={setStart_date} setEnd_date={setEnd_date} submit={addProgram} previous={previous} />,
+      // content: <CoursesMedia data={formData} handleChange={handleChange} setStart_date={setStart_date} setEnd_date={setEnd_date} submit={addProgram} previous={previous} />,
+      content: <ApplicationFormPractice data={formData} handleChange={handleChange} setStart_date={setStart_date} setEnd_date={setEnd_date} submit={addProgram} previous={previous} />,
     },
     // {
     //   id: 3,
