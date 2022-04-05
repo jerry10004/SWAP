@@ -11,12 +11,14 @@ import BasicInformation from "components/marketing/pages/courses/add-new-course/
 import CoursesMedia from "components/marketing/pages/courses/add-new-course/steps/ApplicationForm";
 import ApplicationFormPractice from "pages/ApplicationFormPractice";
 
+import ApplicationForm from "components/marketing/pages/courses/add-new-course/steps/ApplicationForm";
+import FormBuilder from "./FormBuilder";
 const AddNewCourse = () => {
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState({
     program_title: "Title",
-    program_category: "0",
+    program_category: "1",
     program_description: "Hello, world!",
     program_quota: "0",
     program_img: "img",
@@ -56,7 +58,6 @@ const AddNewCourse = () => {
     if (form.checkValidity() === false) {
       event.preventDefault();
       event.stopPropagation();
-      console.log("====================");
     } else {
       setCurrentStep(currentStep === 4 ? 1 : currentStep + 1);
     }
@@ -80,7 +81,7 @@ const AddNewCourse = () => {
     params.append("start_date", formattedStartDate);
     params.append("end_date", formattedEndDate);
     if (window.confirm("프로그램을 추가하시겠습니까?")) {
-      const response = await axios.post("http://localhost:8080/swap/program/add", params);
+      const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "program/add", params);
       alert(formData.program_title + " 프로그램이 추가 되었습니다.");
       navigate("/admin/program");
     }
@@ -95,8 +96,13 @@ const AddNewCourse = () => {
     {
       id: 2,
       title: "프로그램 신청서 Form 선택",
+<<<<<<< HEAD
       // content: <CoursesMedia data={formData} handleChange={handleChange} setStart_date={setStart_date} setEnd_date={setEnd_date} submit={addProgram} previous={previous} />,
       content: <ApplicationFormPractice data={formData} handleChange={handleChange} setStart_date={setStart_date} setEnd_date={setEnd_date} submit={addProgram} previous={previous} />,
+=======
+      content: <FormBuilder />,
+      // content: <ApplicationForm data={formData} handleChange={handleChange} setStart_date={setStart_date} setEnd_date={setEnd_date} submit={addProgram} previous={previous} />,
+>>>>>>> origin/main
     },
     // {
     //   id: 3,

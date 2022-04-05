@@ -90,14 +90,6 @@ const PostsTable = ({ table_data }) => {
           );
         },
       },
-
-      // {
-      //   accessor: "shortcutmenu",
-      //   Header: "",
-      //   Cell: ({ value, row }) => {
-      //     return <ActionMenu />;
-      //   },
-      // },
     ],
     []
   );
@@ -120,16 +112,6 @@ const PostsTable = ({ table_data }) => {
     useGlobalFilter,
     usePagination,
     useRowSelect
-    // (hooks) => {
-    //   hooks.visibleColumns.push((columns) => [
-    //     {
-    //       id: "selection",
-    //       Header: ({ getToggleAllRowsSelectedProps }) => <Checkbox {...getToggleAllRowsSelectedProps()} />,
-    //       Cell: ({ row }) => <Checkbox {...row.getToggleRowSelectedProps()} />,
-    //     },
-    //     ...columns,
-    //   ]);
-    // }
   );
 
   const { pageIndex, globalFilter } = state;

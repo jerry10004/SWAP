@@ -1,22 +1,19 @@
 // import node module libraries
-import React, { Fragment, useMemo, useState, useEffect, useLayoutEffect } from "react";
+import React, { Fragment, useMemo, useState, useLayoutEffect } from "react";
 import { useTable, useFilters, useGlobalFilter, usePagination, useRowSelect } from "react-table";
 import { Link } from "react-router-dom";
-import { Col, Row, Button, Image, Dropdown, Table, Form } from "react-bootstrap";
+import { Col, Row, Button, Table, Form } from "react-bootstrap";
 import axios from "axios";
-import { XCircle, MoreVertical } from "react-feather";
 
 // import custom components
 import GlobalFilter from "components/elements/advance-table/GlobalFilter";
 import Pagination from "components/elements/advance-table/Pagination";
 import DotBadge from "components/elements/bootstrap/DotBadge";
-import SelectFilter from "components/elements/advance-table/SelectFilter";
 import { FormSelect } from "components/elements/form-select/FormSelect";
 
 const CoursesTable = ({ program_data }) => {
   const [programInfo, setProgramInfo] = useState([]);
   const [programList, setProgramList] = useState([]);
-  var isAll = 0;
   const [waitProgram, setWaitProgram] = useState([]);
   const [progressProgram, setProgressProgram] = useState([]);
   const [finishProgram, setFinishProgram] = useState([]);
@@ -29,53 +26,6 @@ const CoursesTable = ({ program_data }) => {
     { value: "행사", label: "행사" },
     { value: "기타", label: "기타" },
   ];
-
-  const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
-    <Link
-      to="#"
-      ref={ref}
-      onClick={(e) => {
-        e.preventDefault();
-        onClick(e);
-      }}
-    >
-      {children}
-    </Link>
-  ));
-
-  const handleSelect = (e) => {
-    console.log(e);
-    // var params = new URLSearchParams();
-    // params.append("status", e);
-    //const response = await axios.post("http://localhost:8080/swap/program/updateStatus", params);
-    //alert("status update 되었습니다.");
-    readProgram();
-  };
-
-  // const ActionMenu = () => {
-  //   return (
-  //     <Dropdown onSelect={handleSelect}>
-  //       <Dropdown.Toggle as={CustomToggle}>
-  //         <MoreVertical size="15px" className="text-secondary" />
-  //       </Dropdown.Toggle>
-  //       <Dropdown.Menu align="end">
-  //         <Dropdown.Header>상태 변경하기</Dropdown.Header>
-  //         <Dropdown.Item eventKey="0">
-  //           {" "}
-  //           <DotBadge bg="warning"></DotBadge>대기
-  //         </Dropdown.Item>
-  //         <Dropdown.Item eventKey="1">
-  //           {" "}
-  //           <DotBadge bg="success"></DotBadge> 진행
-  //         </Dropdown.Item>
-  //         <Dropdown.Item eventKey="2">
-  //           {" "}
-  //           <DotBadge bg="danger"></DotBadge> 종료
-  //         </Dropdown.Item>
-  //       </Dropdown.Menu>
-  //     </Dropdown>
-  //   );
-  // };
 
   const columns = useMemo(
     () => [
@@ -142,8 +92,6 @@ const CoursesTable = ({ program_data }) => {
       {
         accessor: "status",
         Header: "상태",
-        // Filter: SelectColumnFilter,
-        // filter: "includes",
 
         Cell: ({ value, row }) => {
           if (value === 0) {
@@ -163,13 +111,6 @@ const CoursesTable = ({ program_data }) => {
           );
         },
       },
-      // {
-      //   accessor: "shortcutmenu",
-      //   Header: "",
-      //   Cell: () => {
-      //     return <ActionMenu />;
-      //   },
-      // },
     ],
     []
   );
@@ -248,7 +189,7 @@ const CoursesTable = ({ program_data }) => {
   }, []);
 
   const readProgram = async () => {
-    const response = await axios.get("http://localhost:8080/swap/program");
+    const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "program");
 
     response.data.map((item, i) =>
       item.status === 0
@@ -281,7 +222,7 @@ const CoursesTable = ({ program_data }) => {
     params.append("id", removeProgramId);
 
     if (window.confirm("삭제 하시겠습니까?")) {
-      const response = await axios.post("http://localhost:8080/swap/program/delete", params);
+      const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "program/delete", params);
       alert("삭제 되었습니다.");
       readProgram();
       window.location.reload();
@@ -321,10 +262,7 @@ const CoursesTable = ({ program_data }) => {
             {headerGroups.map((headerGroup) => (
               <tr {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map((column) => (
-                  <th {...column.getHeaderProps()}>
-                    {column.render("Header")}
-                    {/* <div>{column.canFilter ? column.render("Filter") : null}</div> */}
-                  </th>
+                  <th {...column.getHeaderProps()}>{column.render("Header")}</th>
                 ))}
               </tr>
             ))}

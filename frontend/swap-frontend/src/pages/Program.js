@@ -7,8 +7,6 @@ import { Link } from "react-router-dom";
 import Icon from "@mdi/react";
 import { mdiAccountMultipleOutline } from "@mdi/js";
 
-// import custom components
-import GKYouTube from "components/marketing/common/video/GKYouTube";
 import Ratings from "components/marketing/common/ratings/Ratings";
 import GKAccordionProgress from "components/marketing/common/accordions/GKAccordionProgress";
 import LevelIcon from "components/marketing/common/miscellaneous/LevelIcon";

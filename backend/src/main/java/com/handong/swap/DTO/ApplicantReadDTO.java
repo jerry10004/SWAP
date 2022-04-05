@@ -1,7 +1,7 @@
 package com.handong.swap.DTO;
 
 public class ApplicantReadDTO {
-	
+	int id;
 	int user_id;
 	int program_id;
 	String name;
@@ -13,6 +13,13 @@ public class ApplicantReadDTO {
 	int student_class;
 	int semester;
 	int status;
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	
 	public String getEmail() {
 		return email;

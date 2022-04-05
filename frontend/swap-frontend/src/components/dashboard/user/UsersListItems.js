@@ -1,25 +1,14 @@
 // import node module libraries
 import React, { Fragment, useMemo, useLayoutEffect, useState } from "react";
 import { useTable, useFilters, useGlobalFilter, usePagination, useRowSelect } from "react-table";
-import { Link } from "react-router-dom";
-import { Dropdown, Image, Row, Col, Table, Button } from "react-bootstrap";
-import { MoreVertical, Trash, Edit } from "react-feather";
+import { Row, Col, Table, Button } from "react-bootstrap";
 import axios from "axios";
 
 // import custom components
 import GlobalFilter from "components/elements/advance-table/GlobalFilter";
 import Pagination from "components/elements/advance-table/Pagination";
 
-import styled from "styled-components";
 import DotBadge from "components/elements/bootstrap/DotBadge";
-import { useHistory } from "react-router-dom";
-
-// const StyledButton = styled.button`
-//   background-color: #fe4f4f;
-//   color: white;
-//   padding: 0.22rem 0.75rem;
-//   font-size: 0.75rem;
-// `;
 
 const UsersListItems = () => {
   const [userInfo, setUserInfo] = useState([]);
@@ -164,9 +153,8 @@ const UsersListItems = () => {
   }, []);
 
   const readUser = async () => {
-    const response = await axios.get("http://localhost:8080/swap/user");
-    console.log("$$$$$$$$$$$$$$");
-    console.log(response.data);
+    const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "user");
+
     setUserInfo(response.data);
   };
 
@@ -179,7 +167,7 @@ const UsersListItems = () => {
     params.append("id", addAdminId);
 
     if (window.confirm("관리자로 추가하시겠습니까?")) {
-      const response = await axios.post("http://localhost:8080/swap/admin/add", params);
+      const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "admin/add", params);
       alert("추가 되었습니다.");
       readUser();
       window.location.reload();
@@ -193,9 +181,8 @@ const UsersListItems = () => {
 
     var params = new URLSearchParams();
     params.append("id", removeUserId);
-
     if (window.confirm("삭제 하시겠습니까?")) {
-      const response = await axios.post("http://localhost:8080/swap/user/delete", params);
+      const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "user/delete", params);
       alert("삭제 되었습니다.");
       readUser();
       window.location.reload();
@@ -229,14 +216,6 @@ const UsersListItems = () => {
             >
               삭제하기
             </Button>
-
-            {/* <StyledButton
-              onClick={() => {
-                removeUser(selectedFlatRows);
-              }}
-            >
-              삭제하기
-            </StyledButton> */}
           </Col>
         </Row>
       </div>

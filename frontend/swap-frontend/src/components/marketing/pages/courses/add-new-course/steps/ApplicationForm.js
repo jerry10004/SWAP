@@ -98,7 +98,7 @@ const ApplicationForm = (props) => {
         <Button variant="secondary" onClick={previous}>
           이전
         </Button>
-        <Button className="btn btn-success" type="submit" onClick={submit}>
+        <Button className="btn btn-success" onClick={submit}>
           제출
         </Button>
       </div>

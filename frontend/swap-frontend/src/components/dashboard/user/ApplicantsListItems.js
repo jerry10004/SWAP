@@ -1,20 +1,20 @@
 // import node module libraries
 import React, { Fragment, useMemo, useLayoutEffect, useState } from "react";
 import { useTable, useFilters, useGlobalFilter, usePagination, useRowSelect } from "react-table";
-import { Link } from "react-router-dom";
-import { Dropdown, Image, Row, Col, Table, Button } from "react-bootstrap";
-import { MoreVertical, Trash, Edit } from "react-feather";
+import { Row, Col, Table, Button, Form } from "react-bootstrap";
 import axios from "axios";
 
 // import custom components
 import GlobalFilter from "components/elements/advance-table/GlobalFilter";
 import Pagination from "components/elements/advance-table/Pagination";
+import DotBadge from "components/elements/bootstrap/DotBadge";
 
 const StudentsListItems = (props) => {
   const [userInfo, setUserInfo] = useState([]);
-  const [isEdit, setIsEdit] = useState(false);
   const [applicantInformationLoading, setApplicantInformationLoading] = useState(null);
   const [program_id, setProgram_id] = useState();
+  const [applicant_id, setApplicant_id] = useState([]);
+  const [applicant_status, setApplicant_status] = useState("1");
 
   const columns = useMemo(
     () => [
@@ -22,7 +22,7 @@ const StudentsListItems = (props) => {
       {
         accessor: "name",
         Header: "이름",
-        Cell: ({ value, row }) => {
+        Cell: ({ value }) => {
           return (
             <div className="d-flex align-items-center">
               <h5 className="mb-0">{value}</h5>
@@ -30,7 +30,7 @@ const StudentsListItems = (props) => {
           );
         },
       },
-      { accessor: "phone", Header: "연락처" },
+
       { accessor: "email", Header: "이메일" },
 
       {
@@ -63,71 +63,42 @@ const StudentsListItems = (props) => {
       {
         accessor: "status",
         Header: "상태",
-        Cell: ({ value }) => {
+        Cell: ({ value, row }) => {
           return (
-            <select id="applicant_status" className="applicant_status" name="program_category" disabled>
-              <option value="" selected hidden>
-                {value === 0 ? "참여보류" : "참여승인"}
-              </option>
-              <option value="0">참여승인</option>
-              <option value="1">참여보류</option>
-            </select>
+            <div className="d-flex align-items-center">
+              <DotBadge bg={row.original.status === 2 ? "warning" : "success"}></DotBadge>
+              {value === 2 ? "참여보류" : "참여승인"}
+            </div>
           );
         },
       },
     ],
     []
   );
-  const edit = () => {
-    setIsEdit(true);
 
-    const target = document.getElementsByClassName("applicant_status");
+  const update = async (e) => {
+    var updateApplicantId = [];
+    var updateApplicantStatus = [];
+    var params = new URLSearchParams();
 
-    for (let i = 0; i < target.length; i++) {
-      target[i].disabled = false;
-    }
-  };
+    e.map((d) => {
+      updateApplicantId.push(d.original.id);
+      updateApplicantStatus.push(applicant_status);
+    });
 
-  const update = () => {
-    setIsEdit(false);
+    params.append("id", updateApplicantId);
+    params.append("status", updateApplicantStatus);
+    console.log("선택된 status: ", applicant_status);
+    console.log("id 리스트: ", updateApplicantStatus.toString);
 
-    const target = document.getElementsByClassName("applicant_status");
-    for (let i = 0; i < target.length; i++) {
-      target[i].disabled = true;
-    }
-
-    console.log(program_id);
-
-    if (window.confirm("강의를 수정하시겠습니까?")) {
-      axios({
-        url: "http://localhost:8080/swap/applicant/applicants/" + program_id + "/update",
-        method: "post",
-        data: {
-          id: 1,
-          status: 5,
-        },
-      }).then(function (res) {
-        // readAllLecture();
-        // setSelectedLecture(null);
-        // seteditLecture(false);
-        // seteditcalendar(false);
+    if (updateApplicantId != "") {
+      if (window.confirm("강의를 수정하시겠습니까?")) {
+        const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "applicant/applicants/" + program_id + "/update", params);
+        readApplicantInformation(props.param4.id);
         alert("강의가 수정되었습니다.");
-      });
+      }
     }
   };
-
-  const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
-    <Link
-      to=""
-      ref={ref}
-      onClick={(e) => {
-        e.preventDefault();
-        onClick(e);
-      }}
-    >
-      {children}
-    </Link>
-  ));
 
   const data = useMemo(() => userInfo);
 
@@ -175,14 +146,33 @@ const StudentsListItems = (props) => {
     useFilters,
     useGlobalFilter,
     usePagination,
-    useRowSelect
+    useRowSelect,
+    (hooks) => {
+      hooks.visibleColumns.push((columns) => [
+        {
+          id: "selection",
+          Header: ({ getToggleAllPageRowsSelectedProps }) => (
+            <div>
+              <IndeterminateCheckbox {...getToggleAllPageRowsSelectedProps()} />
+            </div>
+          ),
+          Cell: ({ row }) => (
+            <div>
+              <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
+            </div>
+          ),
+        },
+        ...columns,
+      ]);
+    }
   );
 
   const { pageIndex, globalFilter } = state;
 
-  // useLayoutEffect(() => {
-  //   readUser();
-  // }, []);
+  const handleChangeSelect = (e) => {
+    setApplicant_status(e.target.value);
+  };
+
   useLayoutEffect(() => {
     console.log(props.param4.id);
     readApplicantInformation(props.param4.id);
@@ -192,25 +182,41 @@ const StudentsListItems = (props) => {
   const readApplicantInformation = async (id) => {
     setApplicantInformationLoading(false);
     console.log("id is", id);
-    const response = await axios.get("http://localhost:8080/swap/applicant/applicants/" + id);
+    const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "applicant/applicants/" + id);
     console.log("~이거를보자~~~~`");
     console.log(response.data);
+
+    console.log("id 입니다. ", applicant_id);
     setApplicantInformationLoading(true);
     setUserInfo(response.data);
   };
-
-  // const readUser = async () => {
-  //   const response = await axios.get("http://localhost:8080/swap/user/students");
-  //   setUserInfo(response.data);
-  // };
 
   return (
     <Fragment>
       <div className=" overflow-hidden">
         <Row>
-          <Col xl={12} lg={12} md={12} sm={12} className="mb-lg-0 mb-2 px-5 py-4">
+          <Col xl={6} lg={12} md={6} sm={12} className="mb-lg-0 mb-2 px-5 py-4">
             <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} placeholder="Search Students" />
           </Col>
+          <Col xl={3} lg={12} md={3} sm={12} className="mb-lg-0 mb-2 px-5 py-4">
+            <Form.Select onChange={handleChangeSelect}>
+              <option value="1">참여승인</option>
+              <option value="2">승인보류</option>
+            </Form.Select>
+          </Col>
+          <Col xl={3} lg={12} md={3} sm={12} className="mb-lg-0 mb-2 px-5 py-4">
+            <Button
+              variant="primary"
+              onClick={() => {
+                update(selectedFlatRows);
+              }}
+            >
+              저장
+            </Button>
+          </Col>
+          {/* <Form.Group className="mb-3 w-26 ">
+            <FormSelect options={templateOptions} id="application-template" name="application_form" onChange={handleChange} placeholder="신청서 템플릿 선택" />
+          </Form.Group> */}
         </Row>
       </div>
 
@@ -242,19 +248,6 @@ const StudentsListItems = (props) => {
 
       {/* Pagination @ Footer */}
       <Pagination previousPage={previousPage} pageCount={pageCount} pageIndex={pageIndex} gotoPage={gotoPage} nextPage={nextPage} />
-      {isEdit === false ? (
-        <div className="d-flex justify-content-end me-4">
-          <Button variant="primary" onClick={edit}>
-            수정
-          </Button>
-        </div>
-      ) : (
-        <div className="d-flex justify-content-end me-4">
-          <Button variant="success" onClick={update}>
-            완료
-          </Button>
-        </div>
-      )}
     </Fragment>
   );
 };

@@ -1,7 +1,5 @@
 import React, { useState, useLayoutEffect } from "react";
 import { Card, Row, Form, Button, Col, InputGroup } from "react-bootstrap";
-import { FormSelect } from "components/elements/form-select/FormSelect";
-import { DropFiles } from "components/elements/dropfiles/DropFiles";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "assets/scss/addProgram.scss";
@@ -11,25 +9,14 @@ import axios from "axios";
 const ProgramInformation = (props) => {
   const [programInformation, setProgramInformation] = useState(null);
   const [programInformationLoading, setProgramInformationLoading] = useState(null);
-  const [programId, setProgramId] = useState();
   const [isEdit, setIsEdit] = useState(false);
   const [start_date, setStart_date] = useState();
   const [end_date, setEnd_date] = useState();
   const [editInfo, seteditInfo] = useState(null);
   const [editStart, seteditStart] = useState(false);
   const [editEnd, seteditEnd] = useState(false);
-  // const [editInfo, seteditInfo] = useState({ program_id: "", program_name: "", category_name: "", information: "", quota: "" });
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
-
-  const categoryOptions = [
-    { value: "대회", label: "대회" },
-    { value: "봉사", label: "봉사" },
-    { value: "캠프", label: "캠프" },
-    { value: "동아리", label: "동아리" },
-    { value: "행사", label: "행사" },
-    { value: "기타", label: "기타" },
-  ];
 
   useLayoutEffect(() => {
     readProgramInformation(props.param1.id);
@@ -47,7 +34,7 @@ const ProgramInformation = (props) => {
 
   const readProgramInformation = async (id) => {
     setProgramInformationLoading(false);
-    const response = await axios.get("http://localhost:8080/swap/program/information/" + id);
+    const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "program/information/" + id);
     setProgramInformation(response.data);
     seteditInfo(response.data[0]);
     setStart_date(response.data[0].start_date);
@@ -94,7 +81,7 @@ const ProgramInformation = (props) => {
     params.append("end_date", editInfo.end_date);
 
     if (window.confirm("프로그램을 수정하시겠습니까?") && editInfo) {
-      const response = await axios.post("http://localhost:8080/swap/program/edit", params);
+      const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "program/edit", params);
       alert(" 프로그램이 수정 되었습니다.");
       seteditStart(false);
       seteditEnd(false);

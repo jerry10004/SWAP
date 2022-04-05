@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import { Card, Row, Form, Button, Col, InputGroup } from "react-bootstrap";
-import { FormSelect } from "components/elements/form-select/FormSelect";
-import { DropFiles } from "components/elements/dropfiles/DropFiles";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "assets/scss/addProgram.scss";
@@ -11,32 +9,6 @@ const BasicInformation = (props) => {
   const { validated, next, handleChange } = props;
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
-
-  // const categoryOptions = [
-  //   { value: "", label: "카테고리를 선택하세요." },
-  //   { value: "1", label: "대회" },
-  //   { value: "2", label: "봉사" },
-  //   { value: "3", label: "캠프" },
-  //   { value: "4", label: "동아리" },
-  //   { value: "5", label: "행사" },
-  //   { value: "6", label: "기타" },
-  // ];
-
-  // const [validated, setValidated] = useState(false);
-
-  // const handleSubmit = (event) => {
-  //   const form = event.currentTarget;
-  //   console.log(form);
-  //   event.preventDefault();
-
-  //   if (form.checkValidity() === false) {
-  //     event.stopPropagation();
-  //     console.log("====================");
-  //   }
-
-  // };
-
-  //const [validated, setValidated] = useState(false);
 
   return (
     <Form noValidate validated={validated} onSubmit={next}>
@@ -80,9 +52,10 @@ const BasicInformation = (props) => {
 
                 <InputGroup className="datePicker-wrapper">
                   <DatePicker
+                    required
                     locale={ko}
                     dateFormat="yyyy-MM-dd HH:mm"
-                    className="datePicker"
+                    className="datePicker form-control"
                     placeholderText="시작 날짜를 선택해주세요."
                     selected={startDate}
                     onChange={(date) => {
@@ -102,9 +75,10 @@ const BasicInformation = (props) => {
               </Form.Label>
               <InputGroup required>
                 <DatePicker
+                  required
                   locale={ko}
                   dateFormat="yyyy-MM-dd HH:mm"
-                  className="datePicker"
+                  className="datePicker form-control"
                   placeholderText="종료 날짜를 선택해주세요."
                   selected={endDate}
                   onChange={(date) => {
@@ -122,8 +96,7 @@ const BasicInformation = (props) => {
                 <Form.Label>
                   프로그램 정원 <span className="text-danger">*</span>
                 </Form.Label>
-                <Form.Control type="text" placeholder="숫자만 기입" id="program_quota" name="program_quota" onChange={handleChange} required />
-                <Form.Control.Feedback type="invalid">프로그램 정원을 입력해주세요.</Form.Control.Feedback>
+                <Form.Control type="text" placeholder="0" id="program_quota" name="program_quota" onChange={handleChange} />
               </Form.Group>
             </Col>
 
@@ -133,12 +106,11 @@ const BasicInformation = (props) => {
                 <Form.Label>
                   카테고리 <span className="text-danger">*</span>
                 </Form.Label>
-                {/* <Form.Control required as={FormSelect} placeholder="카테고리를 선택하세요." name="program_category" options={categoryOptions} onChange={handleChange} />
-                <Form.Control.Feedback type="invalid">카테고리를 선택해주세요.</Form.Control.Feedback> */}
-                <select class="form-select" id="program_category" name="program_category" required>
-                  <option selected value="1">
-                    대회
+                <select class="form-select" id="program_category" name="program_category" onChange={handleChange} required>
+                  <option selected value="">
+                    카테고리를 선택해주세요.
                   </option>
+                  <option value="1">대회</option>
                   <option value="2">봉사</option>
                   <option value="3">캠프</option>
                   <option value="4">동아리</option>
@@ -157,7 +129,6 @@ const BasicInformation = (props) => {
                 </div>
               </Col> */}
           </Row>
-          {/* </Form> */}
         </Card.Body>
       </Card>
       {/* Button */}

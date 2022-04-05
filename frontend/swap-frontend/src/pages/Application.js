@@ -2,7 +2,7 @@
 import React, { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
 import InputMask from "react-input-mask";
-import { Col, Row, Container, Card, Form, Button, ListGroup, Badge, OverlayTrigger, Tooltip } from "react-bootstrap";
+import { Col, Row, Container, Card, Form, Button, ListGroup, Badge } from "react-bootstrap";
 import imgA from "assets/images/application/application-01.png";
 
 import "assets/scss/application.scss";
@@ -12,51 +12,6 @@ import NavbarDefault from "layouts/marketing/navbars/NavbarDefault";
 import Footer from "layouts/marketing/Footer";
 
 const Application = () => {
-  const statelist = [
-    { value: "1", label: "Gujarat" },
-    { value: "2", label: "Rajasthan" },
-    { value: "3", label: "Maharashtra" },
-  ];
-  const countrylist = [
-    { value: "1", label: "India" },
-    { value: "2", label: "UK" },
-    { value: "3", label: "USA" },
-  ];
-
-  // Month select control values
-  const months = [
-    { value: "Jan", label: "Jan" },
-    { value: "Feb", label: "Feb" },
-    { value: "Mar", label: "Mar" },
-    { value: "Apr", label: "Apr" },
-    { value: "May", label: "May" },
-    { value: "Jun", label: "Jun" },
-    { value: "Jul", label: "Jul" },
-    { value: "Aug", label: "Aug" },
-    { value: "Sep", label: "Sep" },
-    { value: "Oct", label: "Oct" },
-    { value: "Nov", label: "Nov" },
-    { value: "Dec", label: "Dec" },
-  ];
-
-  // Year select control values
-  const year = [
-    { value: "2021", label: "2021" },
-    { value: "2022", label: "2022" },
-    { value: "2023", label: "2023" },
-    { value: "2024", label: "2024" },
-  ];
-
-  const CardNumberInput = (props) => (
-    <InputMask mask="9999-9999-9999-9999" placeholder="xxxx-xxxx-xxxx-xxxx" value={props.value} onChange={props.onChange} className="form-control bg-white px-4 p-2">
-      {(inputProps) => <Form.Control {...inputProps} type="tel" />}
-    </InputMask>
-  );
-
-  const onChange = () => {
-    console.log("onChange was called!");
-  };
-
   const CreditDebitCardMethod = () => {
     return (
       <Fragment>
