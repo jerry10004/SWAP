@@ -2,23 +2,16 @@
 import { Fragment, useState } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import { Row, Col, Image, Navbar, Nav, NavDropdown, Container, Form, Dropdown, ListGroup, OverlayTrigger, Tooltip } from "react-bootstrap";
+import { Image, Navbar, Nav, Container, Form, Dropdown } from "react-bootstrap";
 import { useMediaQuery } from "react-responsive";
 
 // simple bar scrolling used for notification item scrolling
 // import SimpleBar from "simplebar-react";
 // import "simplebar/dist/simplebar.min.css";
 
-// import custom components
-import DotBadge from "components/elements/bootstrap/DotBadge";
-
 // import media files
 import Logo from "assets/images/SWAPLogo.png";
 import Avatar1 from "assets/images/avatar/avatar-1.jpg";
-
-// import data files
-// import NotificationList from "data/Notification";
-import NavDropdownMain from "layouts/marketing/navbars/NavDropdownMain";
 
 const NavbarDefault = ({ headerstyle, login }) => {
   const isDesktop = useMediaQuery({

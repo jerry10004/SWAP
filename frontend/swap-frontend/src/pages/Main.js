@@ -24,9 +24,6 @@ const Main = () => {
       {/*  Page Content  */}
       <HeroHeader />
 
-      {/*  Features list  */}
-      {/* <FeaturesList /> */}
-
       <div className="pt-lg-3 pb-lg-3 pt-8 pb-6">
         <Container>
           <div className="py-6">

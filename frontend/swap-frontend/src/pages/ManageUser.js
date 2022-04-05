@@ -11,7 +11,6 @@ import UsersListItems from "components/dashboard/user/UsersListItems";
 import StudentsListItems from "components/dashboard/user/StudentsListItems";
 import InstructorsListItems from "components/dashboard/user/InstructorsListItems";
 import DeletedUsersListItems from "components/dashboard/user/DeletedUsersListItems";
-import CoursesTable from "components/program/CoursesTable";
 
 // import sub components
 import NavbarVertical from "layouts/dashboard/NavbarVertical";

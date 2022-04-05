@@ -5,11 +5,7 @@ import { Col, Row, Tab, Card, Nav, Breadcrumb } from "react-bootstrap";
 
 // import sub custom components
 import CoursesTable from "components/program/CoursesTable";
-import { removeProgram } from "components/program/CoursesTable";
 
-// import data files
-// import { allcourses, allapprovedcourses, allpendingcourses } from "data/courses/AllCoursesData";
-import { allPrograms, waitPrograms, progressPrograms, finishPrograms } from "components/program/CoursesTable";
 // import sub components
 import NavbarVertical from "layouts/dashboard/NavbarVertical";
 import NavbarTop from "layouts/dashboard/NavbarTop";

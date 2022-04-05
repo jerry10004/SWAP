@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import { Card, Row, Form, Button, Col, InputGroup } from "react-bootstrap";
-import { FormSelect } from "components/elements/form-select/FormSelect";
-import { DropFiles } from "components/elements/dropfiles/DropFiles";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "assets/scss/addProgram.scss";
@@ -11,32 +9,6 @@ const BasicInformation = (props) => {
   const { validated, next, handleChange } = props;
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
-
-  // const categoryOptions = [
-  //   { value: "", label: "카테고리를 선택하세요." },
-  //   { value: "1", label: "대회" },
-  //   { value: "2", label: "봉사" },
-  //   { value: "3", label: "캠프" },
-  //   { value: "4", label: "동아리" },
-  //   { value: "5", label: "행사" },
-  //   { value: "6", label: "기타" },
-  // ];
-
-  // const [validated, setValidated] = useState(false);
-
-  // const handleSubmit = (event) => {
-  //   const form = event.currentTarget;
-  //   console.log(form);
-  //   event.preventDefault();
-
-  //   if (form.checkValidity() === false) {
-  //     event.stopPropagation();
-  //     console.log("====================");
-  //   }
-
-  // };
-
-  //const [validated, setValidated] = useState(false);
 
   return (
     <Form noValidate validated={validated} onSubmit={next}>
@@ -134,9 +106,7 @@ const BasicInformation = (props) => {
                 <Form.Label>
                   카테고리 <span className="text-danger">*</span>
                 </Form.Label>
-                {/* <Form.Control required as={FormSelect} placeholder="카테고리를 선택하세요." name="program_category" options={categoryOptions} onChange={handleChange} />
-                <Form.Control.Feedback type="invalid">카테고리를 선택해주세요.</Form.Control.Feedback> */}
-                <select class="form-select" id="program_category" name="program_category" required>
+                <select class="form-select" id="program_category" name="program_category" onChange={handleChange} required>
                   <option selected value="">
                     카테고리를 선택해주세요.
                   </option>
@@ -159,7 +129,6 @@ const BasicInformation = (props) => {
                 </div>
               </Col> */}
           </Row>
-          {/* </Form> */}
         </Card.Body>
       </Card>
       {/* Button */}
