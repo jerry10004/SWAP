@@ -9,7 +9,7 @@ import GKStepper from "components/elements/stepper/GKStepper";
 // import sub components ( Steps )
 import BasicInformation from "components/marketing/pages/courses/add-new-course/steps/BasicInformation";
 import ApplicationForm from "components/marketing/pages/courses/add-new-course/steps/ApplicationForm";
-
+import FormBuilder from "./FormBuilder";
 const AddNewCourse = () => {
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
@@ -93,7 +93,8 @@ const AddNewCourse = () => {
     {
       id: 2,
       title: "프로그램 신청서 Form 선택",
-      content: <ApplicationForm data={formData} handleChange={handleChange} setStart_date={setStart_date} setEnd_date={setEnd_date} submit={addProgram} previous={previous} />,
+      content: <FormBuilder />,
+      // content: <ApplicationForm data={formData} handleChange={handleChange} setStart_date={setStart_date} setEnd_date={setEnd_date} submit={addProgram} previous={previous} />,
     },
     // {
     //   id: 3,
