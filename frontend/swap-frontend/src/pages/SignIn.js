@@ -15,7 +15,7 @@ const SignIn = () => {
         <Col lg={5} md={5} className="py-8 py-xl-0">
           <Card>
             <Card.Body className="p-6">
-              <div className="mb-4">
+              <div className="mb-4 d-flex flex-column align-items-center">
                 <Link to="/" className="m-0">
                   <Image src={Logo} width="50px" className="mb-4" alt="" />
                 </Link>

@@ -13,12 +13,13 @@ const SignUp = () => {
         <Col lg={5} md={5} className="py-8 py-xl-0">
           <Card>
             <Card.Body className="p-6">
-              <div className="mb-4">
+              <div className="mb-4 ">
                 <Link to="/">
                   <Image src={Logo} width="50px" className="mb-4" alt="" />
                 </Link>
-                <h1 className="mb-1 fw-bold">Sign up</h1>
+                <h1 className="mb-1 fw-bold">Sign Up</h1>
               </div>
+
               {/* Form */}
               <Form>
                 <Row>
