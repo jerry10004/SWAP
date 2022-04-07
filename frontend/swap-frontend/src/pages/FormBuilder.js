@@ -1,6 +1,7 @@
 import $ from "jquery";
 import React, { Component, createRef } from "react";
 import ReactDOM from "react-dom";
+import { Col, Row, Card, Form, Button } from "react-bootstrap";
 
 window.jQuery = $;
 window.$ = $;
@@ -8,47 +9,42 @@ window.$ = $;
 require("jquery-ui-sortable");
 require("formBuilder");
 
-const formData = [
-  {
-    type: "header",
-    subtype: "h1",
-    label: "formBuilder in React",
-  },
-  {
-    type: "paragraph",
-    label: "This is a demonstration of formBuilder running in a React project.",
-  },
-];
-
-/* 
-The order of the imports and requires is very important, especially in the online enviornment.
-The two jQuery libraries must be imported using Node's require(), and not ES6 import.
-Also, these two requires MUST come after setting the global jQuery and $ symbols.
-
-In my Babel/Webpack project, the type and order of the imports is a little less sensitive.
-For my project, the following alternative works:
-
-    import $ from 'jquery';
-    import React from 'react';
-    import ReactDOM from 'react-dom';
-    import 'jquery-ui-sortable';
-
-    window.jQuery = $;
-    window.$ = $;
-
-    require('formBuilder');
-*/
+var formData = [];
 
 class FormBuilder extends Component {
+  constructor(props) {
+    super(props);
+    formData = props.content;
+  }
+
   fb = createRef();
   componentDidMount() {
-    $(this.fb.current).formBuilder({ formData });
+    var fbTemplate = document.getElementById("fb-editor");
+    var options = {
+      disabledActionButtons: ["save", "clear", "data"],
+    };
+
+    var formBuilder = $(this.fb.current).formBuilder({ formData }, options);
+
+    document.getElementById("saveData").addEventListener("click", () => {
+      console.log("external save clicked");
+      const result = formBuilder.actions.save();
+      console.log("result:", result);
+    });
   }
 
   render() {
-    return <div id="fb-editor" ref={this.fb} />;
+    return (
+      <>
+        <div id="fb-editor" ref={this.fb} />
+        <div class="saveDataWrap" className="d-flex justify-content-end">
+          <Button id="saveData" type="button">
+            저장
+          </Button>
+        </div>
+      </>
+    );
   }
 }
 
-// ReactDOM.render(<FormBuilder />, document.getElementById("root"));
 export default FormBuilder;

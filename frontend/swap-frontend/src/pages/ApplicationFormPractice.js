@@ -6,6 +6,7 @@ import axios from "axios";
 import Element from "json/Element";
 import ElementCreate from "json/ElementCreate";
 import jsonSkeleton from "json/jsonSkeleton.json";
+import FormBuilder from "./FormBuilder";
 
 const ApplicationFormPractice = (props) => {
   const { submit, previous } = props;
@@ -17,7 +18,9 @@ const ApplicationFormPractice = (props) => {
   const [elementOption, setElementOption] = useState(0);
   const [obj, setObj] = useState();
   const [individual, setIndividual] = useState(false);
-  var formOption = 1;
+  var formOption = 0;
+  const [formContent, setFormContent] = useState();
+  const [readyFormContent, setReadyFormContent] = useState(false);
 
   useLayoutEffect(() => {
     readJson();
@@ -60,6 +63,8 @@ const ApplicationFormPractice = (props) => {
 
   // DB에서 Json 읽어오는 함수
   const readJson = async () => {
+    setReadyFormContent(false);
+
     setReadyJson(false);
     setCreateJson(false);
     setIndividual(false);
@@ -73,10 +78,31 @@ const ApplicationFormPractice = (props) => {
       params.append("category_id", formOption);
 
       const response = await axios.post("http://localhost:8080/swap/application", params);
-      setObj(JSON.parse(response.data[0].content));
+      console.log("********받아온 값");
+      console.log(response.data[0].content);
+      var json_total = response.data[0].content;
+      var json_sub = json_total.slice(1, json_total.length - 1);
+
+      var arr = JSON.parse("[" + json_sub + "]");
+
+      setFormContent(arr);
+      setReadyFormContent(true);
+
+      // formContent = arr;
+      if (readyFormContent) {
+        console.log("==========제발======");
+        console.log(formContent);
+      }
+
+      // setObj(JSON.parse(response.data[0].content));
     }
 
     setReadyJson(true);
+
+    if (readyJson) {
+      console.log("*********결과*******");
+      console.log(formContent);
+    }
   };
 
   // selectbox에서 클릭한 element의 value 숫자 값을 jsonData라는 배열에 넣는 함수
@@ -194,7 +220,8 @@ const ApplicationFormPractice = (props) => {
           <h4 className="mb-0">프로그램 신청서</h4>
         </Card.Header>
         <Card.Body>
-          <ApplicationFormPractice />
+          {/* <ApplicationFormPractice /> */}
+          {readyJson && formContent ? <FormBuilder content={formContent} /> : ""}
         </Card.Body>
       </Card>
 
