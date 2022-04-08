@@ -21,21 +21,24 @@ const ApplicationFormPractice = (props) => {
   var formOption = 0;
   const [formContent, setFormContent] = useState();
   const [readyFormContent, setReadyFormContent] = useState(false);
+  const [readyElementOption, setReadyElementOption] = useState(false);
 
   useLayoutEffect(() => {
+    readApplication();
     readJson();
     setJson(jsonSkeleton);
   }, []);
 
-  const templateOptions = [
-    { value: "1", label: "대회" },
-    { value: "2", label: "봉사" },
-    { value: "3", label: "캠프" },
-    { value: "4", label: "동아리" },
-    { value: "5", label: "행사" },
-    { value: "6", label: "기타" },
-    { value: "7", label: "직접생성" },
-  ];
+  // const templateOptions = [
+  //   { value: "1", label: "대회" },
+  //   { value: "2", label: "봉사" },
+  //   { value: "3", label: "캠프" },
+  //   { value: "4", label: "동아리" },
+  //   { value: "5", label: "행사" },
+  //   { value: "6", label: "기타" },
+  //   { value: "7", label: "직접생성" },
+  // ];
+  const [templateOptions, setTemplateOptions] = useState([]);
 
   const elementOptions = [
     { value: "1", label: "Text" },
@@ -61,8 +64,23 @@ const ApplicationFormPractice = (props) => {
 
   const save = (event) => {};
 
+  //DB에서 Application 종류 읽어오는 함수
+  const readApplication = async () => {
+    setReadyElementOption(false);
+    const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "application/name");
+    console.log("=======================");
+    console.log(response.data);
+    // response.data.map((entity, index) => (
+    //   console.log("&&&&&&&");
+
+    // ))
+    setTemplateOptions(response.data);
+    setReadyElementOption(true);
+  };
+
   // DB에서 Json 읽어오는 함수
   const readJson = async () => {
+    console.log("hello~!!!!!!!!");
     setReadyFormContent(false);
 
     setReadyJson(false);
@@ -189,7 +207,7 @@ const ApplicationFormPractice = (props) => {
   // 큰 틀
   return (
     <Form>
-      {readyJson && createJson ? (
+      {readyJson && createJson && readyElementOption ? (
         <div className="d-flex justify-content-between">
           <Row>
             <Col>

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import com.handong.swap.DAO.ApplicationDAO;
 import com.handong.swap.DTO.ApplicationDTO;
+import com.handong.swap.DTO.ApplicationNameDTO;
 
 @Repository
 public class ApplicationDAOImpl implements ApplicationDAO {
@@ -20,6 +21,19 @@ public class ApplicationDAOImpl implements ApplicationDAO {
 	@Override
 	public List<ApplicationDTO> readJson(int id) {
 		return sqlSession.selectList("Application.readJson", id);
+	}
+
+
+	@Override
+	public int add(ApplicationDTO application) {
+		int result = sqlSession.insert("Application.insertApplication", application);
+		return result;
+	}
+
+
+	@Override
+	public List<ApplicationNameDTO> readName() {
+		return sqlSession.selectList("Application.readName");
 	}
 	
 
