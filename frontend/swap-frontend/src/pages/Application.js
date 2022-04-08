@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import InputMask from "react-input-mask";
 import { Col, Row, Container, Card, Form, Button, ListGroup, Badge } from "react-bootstrap";
 import imgA from "assets/images/application/application-01.png";
+import FormRender from "./FormRender";
 
 import "assets/scss/application.scss";
 
@@ -15,16 +16,17 @@ const Application = () => {
   const CreditDebitCardMethod = () => {
     return (
       <Fragment>
+        <FormRender />
         {/*  Form */}
-        <Form className="row  " id="application">
-          {/*  Name on card */}
+        {/* <Form className="row  " id="application">
+          
           <Col sm={12} md={12} className="mb-4 ">
             <Form.Group controlId="nameoncard">
               <Form.Label>신청자 정보</Form.Label>
               <div>문하현 / 21800760 / 전산전자공학부 AI·컴퓨터공학심화</div>
             </Form.Group>
           </Col>
-          {/*  Phone number */}
+     
           <Col md={6} sm={12} className="mb-4">
             <Form.Group controlId="Phone number">
               <Form.Label>전화번호</Form.Label>
@@ -32,7 +34,7 @@ const Application = () => {
             </Form.Group>
           </Col>
 
-          {/*  이메일 */}
+       
           <Col md={6} sm={12} className="mb-4">
             <Form.Group controlId="Phone number">
               <Form.Label>이메일</Form.Label>
@@ -40,7 +42,7 @@ const Application = () => {
             </Form.Group>
           </Col>
 
-          {/* 신청동기 */}
+         
           <Col md={12} sm={12} className="mb-4">
             <Form.Group controlId="Phone number">
               <Form.Label>신청동기</Form.Label>
@@ -48,7 +50,7 @@ const Application = () => {
             </Form.Group>
           </Col>
 
-          {/*  개인정보활용동의 */}
+         
           <Col md={12} sm={12} className="mb-4">
             <Form.Group controlId="postalcode">
               <Form.Label>개인정보활용동의</Form.Label>
@@ -59,15 +61,15 @@ const Application = () => {
               </div>
             </Form.Group>
           </Col>
-          {/*  CheckBox */}
+          
           <Col md={12} sm={12} className="mb-5">
-            {/*  Checkbox  */}
+           
             <Form.Group controlId="customCheck1">
               <Form.Check type="checkbox" label="개인정보 활용에 동의합니다." />
             </Form.Group>
           </Col>
           <Col md={12} sm={12}>
-            {/*  Button */}
+          
             <div className="d-flex justify-content-end">
               <Link to="../../program">
                 <Button className="cancel-btn" variant="secondary">
@@ -79,7 +81,7 @@ const Application = () => {
               </Link>
             </div>
           </Col>
-        </Form>
+        </Form> */}
       </Fragment>
     );
   };

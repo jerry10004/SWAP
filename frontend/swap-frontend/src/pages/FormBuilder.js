@@ -1,6 +1,7 @@
 import $ from "jquery";
 import React, { Component, createRef } from "react";
 import ReactDOM from "react-dom";
+import { Save } from "react-feather";
 
 window.jQuery = $;
 window.$ = $;
@@ -40,13 +41,45 @@ For my project, the following alternative works:
 */
 
 class FormBuilder extends Component {
-  fb = createRef();
+  //fb = createRef();
   componentDidMount() {
-    $(this.fb.current).formBuilder({ formData });
-  }
+    //$(this.fb.current).formBuilder({ formData });
 
+    var fbTemplate = document.getElementById("fb-editor");
+    var options = {
+      disabledActionButtons: ["save", "clear", "data"],
+    };
+    const formBuilder = $(fbTemplate).formBuilder(options, { formData });
+
+    // const fbEditor = document.getElementById("build-wrap");
+    // const formBuilder = $(fbEditor).formBuilder({ formData });
+
+    document.getElementById("saveData").addEventListener("click", () => {
+      console.log("external save clicked");
+      const result = formBuilder.actions.save();
+      console.log("result:", result);
+    });
+    document.getElementById("clear-all-fields").onclick = function () {
+      if (window.confirm("Do you want to remove all fields?") == true) {
+        formBuilder.actions.clearFields();
+      }
+    };
+  }
   render() {
-    return <div id="fb-editor" ref={this.fb} />;
+    return (
+      <div>
+        <div id="fb-editor" ref={this.fb} />
+        {/* <div id="build-wrap"></div> */}
+        <div class="saveDataWrap">
+          <button id="clear-all-fields" type="button">
+            Clear Fields
+          </button>
+          <button id="saveData" type="button">
+            External Save Button
+          </button>
+        </div>
+      </div>
+    );
   }
 }
 
