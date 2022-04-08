@@ -1,6 +1,7 @@
 package com.handong.swap.DTO;
 
 import java.security.Timestamp;
+import java.sql.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -21,6 +22,8 @@ public class UserDTO {
 	private Timestamp deldate;
 	private String token;
 	private DateTimeFormat expire_token;
+
+	
 	public int getId() {
 		return id;
 	}

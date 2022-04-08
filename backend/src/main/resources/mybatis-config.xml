@@ -11,6 +11,7 @@
 			<typeAlias alias="ProgramReadById" type="com.handong.swap.DTO.ProgramReadByIdDTO"/>
 			<typeAlias alias="ProgramReadName" type="com.handong.swap.DTO.ProgramReadNameDTO"/>
 			<typeAlias alias="ApplicantRead" type="com.handong.swap.DTO.ApplicantReadDTO"/>
+			<typeAlias alias="Login" type="com.handong.swap.DTO.LoginDTO"/>
 			<typeAlias alias="Application" type="com.handong.swap.DTO.ApplicationDTO"/>
 			<typeAlias alias="ApplicationName" type="com.handong.swap.DTO.ApplicationNameDTO"/>
 			

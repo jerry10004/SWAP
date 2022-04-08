@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.handong.swap.DAO.AdminDAO;
 import com.handong.swap.DTO.AdminDTO;
 
+
 @Repository
 public class AdminDAOImpl implements AdminDAO {
 	
@@ -29,6 +30,14 @@ public class AdminDAOImpl implements AdminDAO {
 	@Override
 	public void delete(int id) {
 		sqlSession.delete("Admin.deleteAdmin", id);
+	}
+	
+	@Override
+	public AdminDTO readAdminByUserId(int user_id) {
+		Map<String, Object> param = new HashMap<String, Object>();
+	    param.put("user_id", user_id);
+
+		return sqlSession.selectOne("readAdminByUserID", param);
 	}
 
 }
