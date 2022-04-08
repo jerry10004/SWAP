@@ -1,0 +1,157 @@
+[
+  {},
+  {
+    "id": "",
+    "label": "Text Label",
+    "placeholder": "Enter your text",
+    "value": "",
+    "width": "half",
+    "type": "text",
+    "create": "1"
+  },
+  {
+    "id": "",
+    "label": "Email Label",
+    "placeholder": "abc@example.com",
+    "value": "",
+    "width": "half",
+    "type": "email",
+    "create": "1"
+  },
+  {
+    "id": "",
+    "label": "Password Label",
+    "placeholder": "abcdef",
+    "value": "",
+    "width": "half",
+    "type": "password",
+    "create": "1"
+  },
+  {
+    "id": "",
+    "label": "TextArea Label",
+    "placeholder": "Enter your text",
+    "value": "",
+    "cols": "50",
+    "rows": "10",
+    "maxlength": "1000",
+    "width": "full",
+    "type": "textarea",
+    "create": "1"
+  },
+  {
+    "id": "",
+    "label": "Selection Label",
+    "value": "",
+    "options": [{ "option_label": "Selection1" }, { "option_label": "Selection2" }],
+    "width": "half",
+    "type": "select",
+    "create": "1"
+  },
+
+  {
+    "id": "",
+    "label": "Checkbox Label",
+    "value": "",
+    "width": "full",
+    "type": "checkbox",
+    "create": "1"
+  },
+  {
+    "id": "",
+    "label": "Radio Label",
+    "value": "radio",
+    "options": [{ "option_label": "Option1" }, { "option_label": "Option2" }],
+    "width": "full",
+    "type": "radio",
+    "create": "1"
+  },
+  {
+    "id": "",
+    "label": "File Label",
+    "value": "",
+    "width": "half",
+    "type": "file",
+    "create": "1"
+  },
+  {
+    "id": "",
+    "label": "Color picker",
+    "value": "",
+    "width": "",
+    "type": "color",
+    "create": "1"
+  },
+
+  {
+    "id": "",
+    "label": "Date picker",
+    "value": "",
+    "min": "2000-01-01",
+    "max": "2022-12-12",
+    "width": "quarter",
+    "type": "date",
+    "create": "1"
+  },
+  {
+    "id": "",
+    "label": "DateTime picker",
+    "value": "",
+    "min": "2000-01-01T00:00",
+    "max": "2022-12-31T00:00",
+    "width": "quarter",
+    "type": "datetime-local",
+    "create": "1"
+  },
+  {
+    "id": "",
+    "label": "Month picker",
+    "value": "",
+    "min": "2000-01",
+    "max": "2022-12",
+    "width": "quarter",
+    "type": "month",
+    "create": "1"
+  },
+
+  {
+    "id": "",
+    "label": "Number Label",
+    "value": "",
+    "min": "0",
+    "max": "100",
+    "width": "one",
+    "type": "number",
+    "create": "1"
+  },
+  {
+    "id": "",
+    "label": "Telephone Label",
+    "placeholder": "010-7579-5847",
+    "value": "",
+    "pattern": "[0-9]{3}-[0-9]{4}-[0-9]{4}",
+    "width": "half",
+    "type": "tel",
+    "create": "1"
+  },
+  {
+    "id": "",
+    "label": "Range Label",
+    "value": "",
+    "min": "0",
+    "max": "100",
+    "step": "1",
+    "width": "full",
+    "type": "range",
+    "create": "1"
+  },
+
+  {
+    "id": "",
+    "label": "Button Label",
+    "value": "",
+    "width": "quarter",
+    "type": "button",
+    "create": "1"
+  }
+]

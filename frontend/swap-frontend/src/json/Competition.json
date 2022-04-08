@@ -1,0 +1,57 @@
+{
+  "page_label": "이력서 Form",
+  "group": [
+    {
+      "group_name": "대회 신청 폼",
+      "fields": [
+        {
+          "id": "text_1",
+          "label": "이름",
+          "placeholder": "Enter your text",
+          "value": "",
+          "width": "half",
+          "type": "text"
+        },
+        {
+          "id": "text_2",
+          "label": "주제",
+          "placeholder": "Enter your text",
+          "value": "",
+          "width": "half",
+          "type": "text"
+        },
+
+        {
+          "id": "email_1",
+          "label": "대표학생 이메일",
+          "placeholder": "abc@example.com",
+          "value": "",
+          "width": "half",
+          "type": "email"
+        },
+
+        {
+          "id": "telephone_1",
+          "label": "대표학생 연락처",
+          "placeholder": "010-7579-5847",
+          "value": "",
+          "pattern": "[0-9]{3}-[0-9]{4}-[0-9]{4}",
+          "width": "half",
+          "type": "tel"
+        },
+
+        {
+          "id": "textarea_1",
+          "label": "주제에 대한 설명",
+          "placeholder": "Enter your text",
+          "value": "",
+          "cols": "50",
+          "rows": "10",
+          "maxlength": "1000",
+          "width": "full",
+          "type": "textarea"
+        }
+      ]
+    }
+  ]
+}
