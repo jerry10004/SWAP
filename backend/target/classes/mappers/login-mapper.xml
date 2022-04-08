@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Login">   
+
+   	<insert id="insertUser" parameterType="hashmap">
+		INSERT INTO `User`(`name`, `email`, `status`) VALUES (#{name}, #{email}, #{status})
+	</insert>
+	
+	<select id="getUserDataByToken" resultType="Login" parameterType="hashmap">
+   		SELECT * from User where token = #{token} and expire_token <![CDATA[ <]]> now() and deldate is null
+   	</select>
+   	
+   	<select id="getUserDataByEmail" resultType="Login" parameterType="hashmap">
+   		SELECT * from User where email = #{email}
+   			AND deldate IS NULL
+   	</select>
+   	
+   	<update id="updateUserToken" parameterType="hashmap">
+		UPDATE User SET token=#{token}, expire_token=#{expire_token} where id=#{id}
+	</update>
+ 
+</mapper>

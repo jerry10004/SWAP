@@ -9,5 +9,6 @@ public interface AdminDAO {
 	public void add(int user_id);
 	List<AdminDTO> read();
 	public void delete(int id);
+	AdminDTO readAdminByUserId(int user_id);
 
 }
