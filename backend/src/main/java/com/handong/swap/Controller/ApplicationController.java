@@ -28,6 +28,7 @@ import com.handong.swap.Service.ApplicationService;
 import com.handong.swap.Service.ProgramService;
 import com.mysql.cj.xdevapi.JsonArray;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.handong.swap.DTO.ApplicationDTO;
 import com.handong.swap.DTO.ProgramDTO;
 import com.handong.swap.DTO.ProgramReadNameDTO;
 //import org.json.simple.JSONObject;
@@ -50,20 +51,36 @@ public class ApplicationController {
 		Integer id = Integer.parseInt(httpServletRequest.getParameter("category_id"));
 		System.out.println("Json 읽기 시도, category_id is "+id);
 		String result = applicationService.readJson(id);
-//		String result_parse = result.substring(1, result.length()-1);
-//		System.out.println(result_parse);
-		
-//		
-//		JSONParser parser = new JSONParser();
-//		JSONObject jsonObject = (JSONObject) parser.parse(result_parse);
-//		
-//		System.out.println("=======json====");
-//		System.out.println(jsonObject);
-//		System.out.println(jsonObject.get("id"));
-
-		
-
 	    return result;
 	}
+	
+	@RequestMapping(value = "/add", method = RequestMethod.POST, produces = "application/json; charset=utf8")
+	@ResponseBody
+	public void addApplication(HttpServletRequest httpServletRequest) throws ParseException {
+		ApplicationDTO application = new ApplicationDTO();
+		
+		application.setName(httpServletRequest.getParameter("name"));
+		application.setContent(httpServletRequest.getParameter("content"));		
+		
+		int result = applicationService.add(application);
+		
+		if(result ==0 ) {
+			System.out.println("신청서 추가 실패");
+		}
+		else {
+			System.out.println("신청서 추가 성공");
+		}
+		
+	}
+	
+	@RequestMapping(value = "/name", method = RequestMethod.GET, produces = "application/json; charset=utf8")
+	@ResponseBody
+	public String readApplicationName(HttpServletRequest httpServletRequest) throws IOException, ParseException {
+		System.out.println("신청서 이름 읽기");
+		String result = applicationService.readName();
+		System.out.println(result);
+	    return result;
+	}
+	
 
 }
