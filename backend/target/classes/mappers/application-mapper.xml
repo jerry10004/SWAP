@@ -9,5 +9,15 @@
 		where A.id = #{id}
    	</select>
 
+	<insert id = "insertApplication" parameterType="Application">	
+   		INSERT INTO Application (name, content)
+		VALUES (#{name}, #{content})
+   	</insert>
+   	
+   	
+   	<select id="readName" resultType="ApplicationName">
+	   select A.id as value, A.name as label
+		from Application AS A
+   	</select>
 
 </mapper>

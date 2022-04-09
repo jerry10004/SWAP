@@ -12,6 +12,7 @@ import com.handong.swap.DAO.ApplicationDAO;
 import com.handong.swap.DAO.UserDAO;
 import com.handong.swap.DTO.AdminDTO;
 import com.handong.swap.DTO.ApplicationDTO;
+import com.handong.swap.DTO.ApplicationNameDTO;
 import com.handong.swap.Service.AdminService;
 import com.handong.swap.Service.ApplicationService;
 
@@ -26,6 +27,21 @@ public class ApplicationServiceImpl implements ApplicationService{
 	@Override
 	public String readJson(int id) throws JsonProcessingException{
 		List<ApplicationDTO> applicationDATA = applicationDAO.readJson(id);
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonString = mapper.writeValueAsString(applicationDATA);
+		return jsonString;
+	}
+
+
+	@Override
+	public int add(ApplicationDTO application) {
+		return applicationDAO.add(application);
+	}
+
+
+	@Override
+	public String readName() throws JsonProcessingException {
+		List<ApplicationNameDTO> applicationDATA = applicationDAO.readName();
 		ObjectMapper mapper = new ObjectMapper();
 		String jsonString = mapper.writeValueAsString(applicationDATA);
 		return jsonString;
