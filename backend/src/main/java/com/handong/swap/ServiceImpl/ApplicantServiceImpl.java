@@ -37,6 +37,8 @@ public class ApplicantServiceImpl implements ApplicantService{
 		return applicantDAO.applyApplication(applicant);
 
 	}
+	
+	
 
 	
 }

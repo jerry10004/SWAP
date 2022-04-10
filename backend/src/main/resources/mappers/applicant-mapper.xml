@@ -4,7 +4,7 @@
 <mapper namespace="Applicant">   
 
    	<select id="readApplicantInformationByProgramId" parameterType="Integer" resultType="ApplicantRead">
-	   SELECT A.id, A.user_id, A.program_id, A.status, U.name, U.student_id, U.phone, U.email, U.department, U.major1, U.student_class, U.semester
+	   SELECT A.id, A.user_id, A.program_id, A.application_form, A.status, U.name, U.student_id, U.phone, U.email, U.department, U.major1, U.student_class, U.semester
 		FROM swap.Applicant as A
 		JOIN swap.User as U
 		ON A.user_id = U.id
@@ -22,6 +22,7 @@
    		INSERT INTO Applicant (user_id, program_id, application_form)
 		VALUES (#{user_id}, #{program_id}, #{application_form})
    	</insert>
+   	
    	
    	
 </mapper>

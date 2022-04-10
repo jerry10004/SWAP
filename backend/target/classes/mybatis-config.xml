@@ -15,6 +15,7 @@
 			<typeAlias alias="Application" type="com.handong.swap.DTO.ApplicationDTO"/>
 			<typeAlias alias="ApplicationName" type="com.handong.swap.DTO.ApplicationNameDTO"/>
 			<typeAlias alias="Applicant" type="com.handong.swap.DTO.ApplicantDTO"/>
+		
 	</typeAliases>
 		
 	</configuration>

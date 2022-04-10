@@ -1,23 +1,37 @@
 // import node module libraries
 import { Col, Card, Form, Button, Container, Row, Accordion, useAccordionButton, AccordionContext, ListGroup } from "react-bootstrap";
-import React, { Fragment, useState, useLayoutEffect, useContext } from "react";
+import React, { Fragment, useState, useEffect, useLayoutEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 // import custom components
 import axios from "axios";
+import $ from "jquery";
 
 // import simple bar scrolling used for notification item scrolling
 import SimpleBar from "simplebar-react";
 import "simplebar/dist/simplebar.min.css";
+import { setDefaultLocale } from "react-datepicker";
+
+window.jQuery = $;
+window.$ = $;
+require("formBuilder/dist/form-render.min.js");
 
 const ApplicationFormView = (props) => {
   const [applicantInformation, setApplicantInformation] = useState(null);
   const [applicantInformationLoading, setApplicantInformationLoading] = useState(null);
   const [userInfo, setUserInfo] = useState();
+  const [originalFormData, setoriginalFormData] = useState([]);
+  const [studentFormData, setstudentFormData] = useState([]);
+  const [applicantClick, setApplicantClick] = useState(false);
 
   useLayoutEffect(() => {
-    console.log(props.param2.id);
+    //console.log(props.param2);
     readApplicantInformation(props.param2.id);
+    readFormData(props.param2.id);
   }, []);
+
+  useEffect(() => {
+    componentDidMount();
+  }, [originalFormData, userInfo]);
 
   const readApplicantInformation = async (id) => {
     setApplicantInformationLoading(false);
@@ -26,9 +40,30 @@ const ApplicationFormView = (props) => {
     setApplicantInformationLoading(true);
   };
 
+  const readFormData = async (id) => {
+    console.log("id", id);
+    const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "application/readApplicationForm/" + id);
+    console.log(response.data[0].content);
+    var json_total = response.data[0].content;
+    setoriginalFormData(json_total);
+    console.log(originalFormData);
+  };
+
   const getUserInfo = (user) => {
     setUserInfo(user);
+    console.log(user.id);
+    console.log(user.application_form);
+    setstudentFormData(user.application_form);
+
     console.log("클릭된 학생의 정보:", user);
+    setApplicantClick(true);
+  };
+
+  const componentDidMount = async () => {
+    const fbRender = document.getElementById("fb-render");
+    const formData = userInfo != null ? studentFormData : originalFormData;
+
+    $(fbRender).formRender({ formData });
   };
 
   const ContextAwareToggle = ({ eventKey, callback }) => {
@@ -115,15 +150,15 @@ const ApplicationFormView = (props) => {
                     </Col>
 
                     {/* 신청동기 */}
-                    <Col md={12} sm={12} className="mb-4">
+                    {/* <Col md={12} sm={12} className="mb-4">
                       <Form.Group controlId="ApplyingReason">
                         <Form.Label>신청동기</Form.Label>
                         <Form.Control type="text" placeholder="신청동기를 입력해주세요" required />
                       </Form.Group>
-                    </Col>
+                    </Col> */}
 
                     {/*  개인정보활용동의 */}
-                    <Col md={12} sm={12} className="mb-4">
+                    {/* <Col md={12} sm={12} className="mb-4">
                       <Form.Group controlId="postalcode">
                         <Form.Label>개인정보활용동의</Form.Label>
                         <div className="agreement">
@@ -133,13 +168,14 @@ const ApplicationFormView = (props) => {
                         </div>
                       </Form.Group>
                     </Col>
-                    {/*  CheckBox */}
+
                     <Col md={12} sm={12} className="mb-5">
-                      {/*  Checkbox  */}
+                    
                       <Form.Group controlId="customCheck1">
                         <Form.Check type="checkbox" label="개인정보 활용에 동의합니다." />
                       </Form.Group>
-                    </Col>
+                    </Col> */}
+                    <form id="fb-render"></form>
                   </Form>
                 </Card.Body>
               </Card>
@@ -199,15 +235,15 @@ const ApplicationFormView = (props) => {
                   </Col>
 
                   {/* 신청동기 */}
-                  <Col md={12} sm={12} className="mb-4">
+                  {/* <Col md={12} sm={12} className="mb-4">
                     <Form.Group controlId="ApplyingReason">
                       <Form.Label>신청동기</Form.Label>
                       <Form.Control type="text" placeholder="신청동기를 입력해주세요" />
                     </Form.Group>
-                  </Col>
+                  </Col> */}
 
                   {/*  개인정보활용동의 */}
-                  <Col md={12} sm={12} className="mb-4">
+                  {/* <Col md={12} sm={12} className="mb-4">
                     <Form.Group controlId="postalcode">
                       <Form.Label>개인정보활용동의</Form.Label>
                       <div className="agreement">
@@ -218,12 +254,13 @@ const ApplicationFormView = (props) => {
                     </Form.Group>
                   </Col>
                   {/*  CheckBox */}
-                  <Col md={12} sm={12} className="mb-5">
-                    {/*  Checkbox  */}
+                  {/* <Col md={12} sm={12} className="mb-5">
+      
                     <Form.Group controlId="customCheck1">
                       <Form.Check type="checkbox" label="개인정보 활용에 동의합니다." />
                     </Form.Group>
-                  </Col>
+                  </Col> */}
+                  <form id="fb-render"></form>
                 </Form>
               </Card.Body>
             </Card>

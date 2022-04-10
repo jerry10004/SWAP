@@ -14,4 +14,5 @@ public interface ApplicantService {
 	public int applyApplication(ApplicantDTO applicant);
 
 
+
 }

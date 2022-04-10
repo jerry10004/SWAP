@@ -40,6 +40,8 @@ public class ApplicantDAOImpl implements ApplicantDAO {
 		int result = sqlSession.insert("Applicant.applyApplication", applicant);
 		return result;
 	}
+	
+
 
 
 }
