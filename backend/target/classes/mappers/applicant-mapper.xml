@@ -18,6 +18,11 @@
    		WHERE id=#{id}
    	</update>
    	
+   	<insert id = "applyApplication" parameterType="Applicant">	
+   		INSERT INTO Applicant (user_id, program_id, application_form)
+		VALUES (#{user_id}, #{program_id}, #{application_form})
+   	</insert>
+   	
    	
 </mapper>
 

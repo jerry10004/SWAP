@@ -82,5 +82,15 @@ public class ApplicationController {
 	    return result;
 	}
 	
+	@RequestMapping(value = "/readApplicationForm/{id}", method = RequestMethod.GET, produces = "application/json; charset=utf8")
+	@ResponseBody
+	public String readApplicationFormByProgramId(@PathVariable int id) throws IOException, ParseException, org.json.simple.parser.ParseException {
+		String result = applicationService.readApplicationFormByProgramId(id);
+	    System.out.println(result);
+		return result;
+	}
+	
+	
+	
 
 }

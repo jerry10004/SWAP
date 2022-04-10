@@ -1,112 +1,77 @@
 import $ from "jquery";
-import React, { Component, createRef, useState, useLayoutEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import React, { Component, createRef, useState, useEffect, useLayoutEffect, useContext } from "react";
 import { Button } from "react-bootstrap";
 import ReactDOM from "react-dom";
 import { Save } from "react-feather";
 // import custom components
 import axios from "axios";
+import "./formBuilder.css";
 
 window.jQuery = $;
 window.$ = $;
 require("formBuilder/dist/form-render.min.js");
 
-const originalFormData = [
-  {
-    type: "text",
-    label: "Text Field",
-    className: "form-control",
-    name: "text-1478701075825",
-    userData: ["user entered data"],
-  },
-  {
-    type: "checkbox-group",
-    label: "Checkbox Group",
-    className: "checkbox-group",
-    name: "checkbox-group-1478704652409",
-    values: [
-      {
-        label: "Option 1",
-        value: "option-1",
-        selected: true,
-      },
-      {
-        label: "Option 2",
-        value: "option-2",
-      },
-      {
-        label: "Option 3",
-        value: "option-3",
-        selected: true,
-      },
-    ],
-  },
-  {
-    type: "select",
-    label: "Select",
-    className: "form-control",
-    name: "select-1478701076382",
-    values: [
-      {
-        label: "Option 1",
-        value: "option-1",
-        selected: true,
-      },
-      {
-        label: "Option 2",
-        value: "option-2",
-      },
-      {
-        label: "Option 3",
-        value: "option-3",
-      },
-    ],
-  },
-  {
-    type: "textarea",
-    label: "Text Area",
-    className: "form-control",
-    name: "textarea-1478701077511",
-  },
-];
-
-const FormRender = () => {
+const FormRender = (props) => {
+  const navigate = useNavigate();
+  console.log("props id", props.param.programid, props.param.userid);
   const [test, setTest] = useState(0);
-
+  const [originalFormData, setoriginalFormData] = useState([]);
+  const [readyFormContent, setReadyFormContent] = useState([]);
+  var programID = parseInt(props.param.programid);
+  var userID = parseInt(props.param.userid);
+  var formRenderInstance = "";
   useLayoutEffect(() => {
-    //console.log(props.param2.id);
-    componentDidMount();
-    readFormData(1);
+    readFormData(programID);
   }, []);
+
+  useEffect(() => {
+    componentDidMount();
+  }, [originalFormData]);
 
   const componentDidMount = async () => {
     const getUserDataBtn = document.getElementById("get-user-data");
     const fbRender = document.getElementById("fb-render");
     const formData = JSON.stringify(originalFormData);
 
-    $(fbRender).formRender({ formData });
+    formRenderInstance = $(fbRender).formRender({ formData });
     getUserDataBtn.addEventListener(
       "click",
       () => {
-        console.log(window.JSON.stringify($(fbRender).formRender("userData")));
-        window.alert("신청이 완료되었습니다.");
+        // console.log(window.JSON.stringify($(fbRender).formRender("userData")));
+        console.log(formRenderInstance.userData);
+        addFormData();
       },
+
       false
     );
   };
 
-  const readFormData = () => {
-    setTest(1);
-    console.log(test);
+  const readFormData = async (id) => {
+    console.log("id", id);
+    const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "application/readApplicationForm/" + id);
+    console.log(response.data[0].content);
+    var json_total = response.data[0].content;
+    var json_sub = json_total.slice(1, json_total.length - 1);
+    console.log(json_sub);
+    var arr = JSON.parse("[" + json_sub + "]");
+    console.log(arr);
+    setoriginalFormData(arr);
+    console.log(originalFormData);
   };
 
-  // const readFormData = async (id) => {
-  //   //setFormDataLoading(false);
-  //   //const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "applicant/applicants/" + id);
-  //   console.log("read form");
-  //   //setoriginalFormData(response.data);
-  //   //setFormDataLoading(true);
-  // };
-  // render() {
+  const addFormData = async () => {
+    var params = new URLSearchParams();
+    params.append("program_id", programID);
+    params.append("user_id", userID);
+    params.append("content", JSON.stringify(formRenderInstance.userData));
+    const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "applicant/apply", params);
+
+    console.log(JSON.stringify(formRenderInstance.userData));
+    alert(" 프로그램이 신청 되었습니다.");
+    navigate("/mypage");
+  };
+
   return (
     <div>
       <form id="fb-render"></form>

@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.handong.swap.DAO.ApplicantDAO;
+import com.handong.swap.DTO.ApplicantDTO;
 import com.handong.swap.DTO.ApplicantReadDTO;
+import com.handong.swap.DTO.ProgramDTO;
 import com.handong.swap.Service.ApplicantService;
 
 @Service
@@ -31,7 +33,10 @@ public class ApplicantServiceImpl implements ApplicantService{
 		return result;
 	}
 	
-	
+	public int applyApplication(ApplicantDTO applicant) {
+		return applicantDAO.applyApplication(applicant);
+
+	}
 
 	
 }

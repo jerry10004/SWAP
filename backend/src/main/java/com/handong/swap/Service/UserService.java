@@ -12,4 +12,5 @@ public interface UserService {
 	public String readDeletedUsers() throws JsonProcessingException;
 	public void delete(int id);
 	public void restore(int id);
+	public String readLoggedInUserById(int id) throws JsonProcessingException;
 }

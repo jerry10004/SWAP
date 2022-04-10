@@ -1,10 +1,13 @@
 // import node module libraries
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useLayoutEffect } from "react";
 import { Link } from "react-router-dom";
 import InputMask from "react-input-mask";
 import { Col, Row, Container, Card, Form, Button, ListGroup, Badge } from "react-bootstrap";
 import imgA from "assets/images/application/application-01.png";
 import FormRender from "./FormRender";
+
+// import custom components
+import axios from "axios";
 
 import "assets/scss/application.scss";
 
@@ -14,18 +17,52 @@ import Footer from "layouts/marketing/Footer";
 
 const Application = () => {
   const CreditDebitCardMethod = () => {
+    const [applicantInformation, setApplicantInformation] = useState(null);
+    const [applicantInformationLoading, setApplicantInformationLoading] = useState(null);
+    const [userInfo, setUserInfo] = useState();
+
+    //로그인 된 사용자의 ID 가져오기
+    var ID = parseInt(window.sessionStorage.getItem("id"));
+    var programID = 34;
+
+    const props = { userid: ID, programid: programID };
+
+    useLayoutEffect(() => {
+      console.log(ID);
+      readApplicantInformation(ID);
+    }, []);
+
+    //로그인 된 사용자 정보 가져오기
+    const readApplicantInformation = async (id) => {
+      console.log(id);
+      setApplicantInformationLoading(false);
+      const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "user/loggedinUser/" + id);
+      setApplicantInformation(response.data);
+      setApplicantInformationLoading(true);
+      console.log(applicantInformation);
+    };
+
     return (
       <Fragment>
-        <FormRender />
-        {/*  Form */}
-        {/* <Form className="row  " id="application">
-          
-          <Col sm={12} md={12} className="mb-4 ">
-            <Form.Group controlId="nameoncard">
-              <Form.Label>신청자 정보</Form.Label>
-              <div>문하현 / 21800760 / 전산전자공학부 AI·컴퓨터공학심화</div>
-            </Form.Group>
-          </Col>
+        {applicantInformationLoading ? (
+          <>
+            <Form className="row  " id="application">
+              <Col sm={12} md={12} className="mb-4 ">
+                <Form.Group controlId="nameoncard">
+                  <Form.Label>신청자 정보</Form.Label>
+                  <div>
+                    {applicantInformation[0].name}/ {applicantInformation[0].student_id} / {applicantInformation[0].department}/{applicantInformation[0].major1}
+                  </div>
+                </Form.Group>
+              </Col>
+            </Form>
+          </>
+        ) : (
+          ""
+        )}
+        <FormRender param={props} />
+
+        {/* 
      
           <Col md={6} sm={12} className="mb-4">
             <Form.Group controlId="Phone number">

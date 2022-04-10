@@ -12,4 +12,5 @@ public interface ApplicationDAO {
 	List<ApplicationDTO> readJson(int id);
 	public int add(ApplicationDTO application);
 	List<ApplicationNameDTO> readName();
+	List<ApplicationDTO> readApplicationFormByProgramId(int id);
 }

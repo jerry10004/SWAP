@@ -9,5 +9,7 @@ public interface ApplicationService {
 	public int add(ApplicationDTO application);
 	
 	public String readName() throws JsonProcessingException;
+	
+	public String readApplicationFormByProgramId(int id) throws JsonProcessingException;
 
 }

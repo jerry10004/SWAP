@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -71,6 +72,17 @@ public class UserController {
 		for (int i = 0; i < ids.length; i++) {
 			userService.restore(Integer.parseInt(ids[i]));
 		}
+	}
+	
+	@RequestMapping(value = "loggedinUser/{id}", method = RequestMethod.GET, produces = "application/json; charset=utf8")
+	@ResponseBody
+	public String readLoggedInUserById(@PathVariable int id) throws IOException, ParseException {
+		System.out.println("로그인 된 사용자 정보 읽기");
+		System.out.println(id);
+
+		String result = userService.readLoggedInUserById(id);
+		System.out.println("result is "+result);
+		return result;
 	}
 	
 	
