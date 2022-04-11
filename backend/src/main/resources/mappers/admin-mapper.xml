@@ -16,6 +16,12 @@
 		WHERE U.status = 1
 		ORDER BY A.regdate desc;
    	</select>
+   		<select id="readWaitAdmin" resultType="Admin">
+	    select U.id, U.name, U.phone, U.email
+		from User AS U
+		WHERE U.status = 2
+		ORDER BY U.regdate desc;
+   	</select>
    	<delete id="deleteAdmin" parameterType="Integer">
 	   	delete from Admin
 	   	where id = #{id}

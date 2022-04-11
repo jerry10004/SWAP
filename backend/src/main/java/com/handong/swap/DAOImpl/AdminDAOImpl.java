@@ -40,4 +40,9 @@ public class AdminDAOImpl implements AdminDAO {
 		return sqlSession.selectOne("readAdminByUserID", param);
 	}
 
+	@Override
+	public List<AdminDTO> readWaitAdmin() {
+		return sqlSession.selectList("Admin.readWaitAdmin");
+	}
+
 }

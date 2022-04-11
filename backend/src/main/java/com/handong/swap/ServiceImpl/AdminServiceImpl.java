@@ -34,11 +34,22 @@ public class AdminServiceImpl implements AdminService{
 		String jsonString = mapper.writeValueAsString(adminDATA);
 		return jsonString;
 	}
+	
 
 	@Override
 	public void delete(int id) {
 		userDAO.updateUser(id);
 		adminDAO.delete(id);
 	}
+
+	@Override
+	public String readWaitAdmin() throws JsonProcessingException {
+		List<AdminDTO> adminDATA = adminDAO.readWaitAdmin();
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonString = mapper.writeValueAsString(adminDATA);
+		return jsonString;
+	}
+	
+	
 	
 }

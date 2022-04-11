@@ -7,5 +7,6 @@ public interface AdminService {
 	
 	public void add(int user_id);
 	public String read() throws JsonProcessingException;
+	public String readWaitAdmin() throws JsonProcessingException;
 	public void delete(int id);
 }

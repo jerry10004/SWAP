@@ -43,11 +43,11 @@ const ManageApplication = () => {
                       </Breadcrumb.Item>
                     </Breadcrumb>
                   </div>
-                  <div>
+                  {/* <div>
                     <Link to="/admin/addprogram" className="btn btn-primary">
                       신청서 추가
                     </Link>
-                  </div>
+                  </div> */}
                 </div>
               </Col>
             </Row>

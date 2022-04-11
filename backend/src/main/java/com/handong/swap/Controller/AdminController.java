@@ -35,6 +35,16 @@ public class AdminController{
 	    return result;
 	}
 	
+	@RequestMapping(value = "waitinstructors", method = RequestMethod.GET, produces = "application/json; charset=utf8")
+	@ResponseBody
+	public String readWaitAdministrator(HttpServletRequest httpServletRequest) throws IOException, ParseException {
+		System.out.println("대기중 관리자 읽기 시도");
+		String result = adminService.readWaitAdmin();
+		System.out.println(result);
+	    return result;
+	}
+	
+	
 	
 	@RequestMapping(value = "add", method = RequestMethod.POST, produces = "application/json; charset=utf8")
 	@ResponseBody
