@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 // import custom components
 import axios from "axios";
 import $ from "jquery";
+import "pages/formBuilder.scss";
 
 // import simple bar scrolling used for notification item scrolling
 import SimpleBar from "simplebar-react";
@@ -109,35 +110,35 @@ const ApplicationFormView = (props) => {
                     <Col md={6} sm={12} className="mb-4">
                       <Form.Group controlId="Name">
                         <Form.Label>이름</Form.Label>
-                        <Form.Control type="text" placeholder="이름을 입력해 주세요" value={userInfo.name} />
+                        <Form.Control type="text" placeholder="이름을 입력해 주세요" value={userInfo.name} readOnly />
                       </Form.Group>
                     </Col>
                     {/*  Student Id */}
                     <Col md={6} sm={12} className="mb-4">
                       <Form.Group controlId="StudentID">
                         <Form.Label>학번</Form.Label>
-                        <Form.Control type="text" placeholder="학번을 입력해 주세요" value={userInfo.student_id} />
+                        <Form.Control type="text" placeholder="학번을 입력해 주세요" value={userInfo.student_id} readOnly />
                       </Form.Group>
                     </Col>
                     {/*  Department */}
                     <Col md={6} sm={12} className="mb-4">
                       <Form.Group controlId="StudentID">
                         <Form.Label>학부</Form.Label>
-                        <Form.Control type="text" placeholder="학부를 입력해 주세요" value={userInfo.department} />
+                        <Form.Control type="text" placeholder="학부를 입력해 주세요" value={userInfo.department} readOnly />
                       </Form.Group>
                     </Col>
                     {/*  Major1 */}
                     <Col md={6} sm={12} className="mb-4">
                       <Form.Group controlId="StudentID">
                         <Form.Label>전공</Form.Label>
-                        <Form.Control type="text" placeholder="전공을 입력해 주세요" value={userInfo.major1} />
+                        <Form.Control type="text" placeholder="전공을 입력해 주세요" value={userInfo.major1} readOnly />
                       </Form.Group>
                     </Col>
                     {/*  Phone number */}
                     <Col md={6} sm={12} className="mb-4">
                       <Form.Group controlId="Phone number">
                         <Form.Label>전화번호</Form.Label>
-                        <Form.Control type="text" placeholder="Phone number (010-1234-5678)" value={userInfo.phone} />
+                        <Form.Control type="text" placeholder="Phone number (010-1234-5678)" value={userInfo.phone} readOnly />
                       </Form.Group>
                     </Col>
 
@@ -145,7 +146,7 @@ const ApplicationFormView = (props) => {
                     <Col md={6} sm={12} className="mb-4">
                       <Form.Group controlId="Email">
                         <Form.Label>이메일</Form.Label>
-                        <Form.Control type="text" placeholder="Handong123@handong.ac.kr" value={userInfo.email} />
+                        <Form.Control type="text" placeholder="Handong123@handong.ac.kr" value={userInfo.email} readOnly />
                       </Form.Group>
                     </Col>
 

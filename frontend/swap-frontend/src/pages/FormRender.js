@@ -6,7 +6,7 @@ import ReactDOM from "react-dom";
 import { Save } from "react-feather";
 // import custom components
 import axios from "axios";
-import "./formBuilder.css";
+import "./formBuilder.scss";
 
 window.jQuery = $;
 window.$ = $;
