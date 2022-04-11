@@ -7,7 +7,7 @@ import com.handong.swap.DTO.LoginDTO;
 
 
 public interface LoginDAO {
-	public void insertUser(LoginDTO user);
+	public int insertUser(LoginDTO user);
 //	public User insertUserForAdmin(User user);
 //	
 	public LoginDTO getUserByToken(String token);	

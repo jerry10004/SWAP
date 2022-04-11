@@ -18,8 +18,6 @@ import NavbarDefault from "layouts/marketing/navbars/NavbarDefault";
 import Footer from "layouts/marketing/Footer";
 
 const Main = ({ login }) => {
-  console.log(login);
-
   return (
     <Fragment>
       <NavbarDefault login={false} />

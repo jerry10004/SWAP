@@ -23,13 +23,9 @@ public class LoginDAOImpl implements LoginDAO{
 	SqlSession sqlSession;
 	
 	@Override
-	public void insertUser(LoginDTO user) {
-		Map<String, Object> param = new HashMap<String, Object>();
-		param.put("name", user.getName());
-	    param.put("email", user.getEmail());
-	    param.put("status", user.getStatus());
-	    
-		sqlSession.insert("insertUser", param);
+	public int insertUser(LoginDTO user) {
+	    int result = sqlSession.insert("Login.insertUser", user);
+		return result;
 	}
 	
 	@Override

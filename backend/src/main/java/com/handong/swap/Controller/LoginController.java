@@ -19,6 +19,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.handong.swap.DTO.LoginDTO;
+import com.handong.swap.DTO.ProgramDTO;
 import com.handong.swap.Service.LoginService;
 
 
@@ -57,12 +59,81 @@ public class LoginController {
 		
 		ObjectMapper mapper = new ObjectMapper();
 		Map<String,String> userInfo = mapper.readValue(resultJson, new TypeReference<Map<String, String>>(){});
+		System.out.println(userInfo.toString());
 		
 		if(email.equals(userInfo.get("email"))) {
 			return loginService.setUserTokenJsonData(name, email, token, expire_token);
 		}else {
 			return "fail";
 		}
+		
+	}
+	
+	@RequestMapping(value = "signUp", method = RequestMethod.POST, produces = "application/json; charset=utf8")
+	@ResponseBody
+	public String signUp(HttpServletRequest httpServletRequest) throws IOException, ParseException {
+		String token = httpServletRequest.getParameter("token");
+		String email = httpServletRequest.getParameter("email");
+		String name = httpServletRequest.getParameter("name");
+		int status = Integer.parseInt(httpServletRequest.getParameter("status"));
+		Date expire_token = new Date(Long.parseLong((httpServletRequest.getParameter("expire"))));
+		
+		RestTemplate restTemplate = new RestTemplate();
+		String requestUrl;
+		System.out.println("token: "+token);
+		System.out.println("email: "+email);
+		System.out.println("name: "+name);
+		
+
+		try{
+			requestUrl = UriComponentsBuilder.fromHttpUrl("https://oauth2.googleapis.com/tokeninfo")
+					.queryParam("id_token", token).build().toUriString();
+			System.out.println("requestUrl: "+ requestUrl);
+		}catch (Exception e){
+			return "fail";
+		}
+		
+		String resultJson = restTemplate.getForObject(requestUrl, String.class);
+	
+		ObjectMapper mapper = new ObjectMapper();
+		Map<String,String> userInfo = mapper.readValue(resultJson, new TypeReference<Map<String, String>>(){});
+		System.out.println(userInfo.toString());
+		LoginDTO user = new LoginDTO();
+		
+		if(email.equals(userInfo.get("email"))) {
+			if(status==0) {
+				user.setName(httpServletRequest.getParameter("name"));
+				user.setEmail(httpServletRequest.getParameter("email"));
+				user.setStudent_id(Integer.parseInt(httpServletRequest.getParameter("student_id")));
+				user.setPhone(httpServletRequest.getParameter("phone"));
+				user.setDepartment(httpServletRequest.getParameter("department"));
+				user.setStudent_class(Integer.parseInt(httpServletRequest.getParameter("student_class")));
+				user.setSemester(Integer.parseInt(httpServletRequest.getParameter("semester")));
+				user.setMajor1(httpServletRequest.getParameter("major1"));
+				user.setMajor2(httpServletRequest.getParameter("major2"));
+				user.setExpire_token(expire_token);
+				user.setStatus(status);
+				System.out.println("userInfo: "+ user.toString());
+			}
+			
+			if(status==2) {
+				user.setName(httpServletRequest.getParameter("name"));
+				user.setEmail(httpServletRequest.getParameter("email"));
+				user.setPhone(httpServletRequest.getParameter("phone"));
+				user.setExpire_token(expire_token);
+				user.setStatus(status);
+				System.out.println("userInfo: "+ user.toString());
+			}
+	
+			int result = loginService.insertUser(user);
+			
+			if(result == 1)
+				return "success";
+			else return "fail";
+		}else {
+			return "fail";
+		}
+		
 		
 	}
 		

@@ -6,12 +6,13 @@ import { Image, Navbar, Nav, Container, Form, Dropdown, Button } from "react-boo
 import { useMediaQuery } from "react-responsive";
 import { GoogleLogin, GoogleLogout } from "react-google-login";
 import axios from "axios";
+import LoginModal from "./LoginModal";
 
 // import media files
 import Logo from "assets/images/SWAPLogo.png";
 import Avatar1 from "assets/images/avatar/avatar-1.jpg";
 
-const NavbarDefault = ({ headerstyle }) => {
+const NavbarDefault = ({ headerstyle }, { props }) => {
   const navigate = useNavigate();
   const isDesktop = useMediaQuery({
     query: "(min-width: 1224px)",
@@ -35,14 +36,14 @@ const NavbarDefault = ({ headerstyle }) => {
         <Dropdown as={Nav.Item}>
           <Dropdown.Toggle as={Nav.Link} bsPrefix="dt" className="rounded-circle border-bottom-0" id="dropdownUser">
             <div className="avatar avatar-md avatar-indicators avatar-online">
-              <Image alt="avatar" src={Avatar1} className="rounded-circle" />
+              <Image src={window.sessionStorage.getItem("profileImg")} className="rounded-circle" />
             </div>
           </Dropdown.Toggle>
           <Dropdown.Menu show={isDesktop ? true : false} className="dashboard-dropdown dropdown-menu-end mt-4 py-0" aria-labelledby="dropdownUser" align="end">
             <Dropdown.Item className="mt-3">
               <div className="d-flex">
                 <div className="avatar avatar-md">
-                  <Image alt="avatar" src={Avatar1} className="rounded-circle" />
+                  <Image src={window.sessionStorage.getItem("profileImg")} className="rounded-circle" />
                 </div>
                 <div className="ms-3 lh-1">
                   <h5 className="mb-1">{window.sessionStorage.getItem("name")}</h5>
@@ -83,8 +84,6 @@ const NavbarDefault = ({ headerstyle }) => {
 
   const [isLogin, setIsLogin] = useState(false);
   const onSuccess = async (response) => {
-    console.log(response);
-
     const params = new URLSearchParams();
     params.append("token", response.tokenObj.id_token);
     params.append("name", response.profileObj.name);
@@ -93,9 +92,11 @@ const NavbarDefault = ({ headerstyle }) => {
     params.append("manageID", window.sessionStorage.getItem("id"));
 
     const res = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "login", params);
-    if (res.data !== "fail") {
+
+    if (res.data !== "fail" && res.data !== "newUser") {
       window.sessionStorage.setItem("email", response.profileObj.email);
       window.sessionStorage.setItem("name", response.profileObj.name);
+      window.sessionStorage.setItem("profileImg", response.profileObj.imageUrl);
       window.sessionStorage.setItem("token", response.tokenObj.id_token);
       window.sessionStorage.setItem("expires_at", response.tokenObj.expires_at);
       window.sessionStorage.setItem("status", res.data.status);
@@ -103,6 +104,10 @@ const NavbarDefault = ({ headerstyle }) => {
       setIsLogin(true);
 
       console.log("로그인 성공");
+    } else if (res.data === "newUser") {
+      console.log("user 등록 페이지로 가기!!");
+
+      navigate("/sign-up", { state: { data: response.profileObj, tokenObj: response.tokenObj } });
     } else {
       alert("로그인 할 수 없습니다. 관리자에게 문의해주세요.");
       setIsLogin(false);
@@ -125,6 +130,7 @@ const NavbarDefault = ({ headerstyle }) => {
       window.sessionStorage.removeItem("expires_at");
       window.sessionStorage.removeItem("status");
       window.sessionStorage.removeItem("id");
+      window.sessionStorage.removeItem("profileImg");
 
       setIsLogin(false);
       console.log("로그아웃 성공!!!");
@@ -134,6 +140,14 @@ const NavbarDefault = ({ headerstyle }) => {
 
   const onFailure = (error) => {
     console.log(error);
+  };
+
+  const [modalOpen, setModalOpen] = useState(false);
+  const openModal = () => {
+    setModalOpen(true);
+  };
+  const closeModal = () => {
+    setModalOpen(false);
   };
 
   return (
@@ -191,6 +205,12 @@ const NavbarDefault = ({ headerstyle }) => {
                     )}
                   />
                 </span>
+                // <>
+                //   <Button className="btn btn-primary shadow-sm" onClick={openModal}>
+                //     로그인
+                //   </Button>
+                //   <LoginModal open={modalOpen} close={closeModal} />
+                // </>
               )}
             </Nav>
           </Navbar.Collapse>

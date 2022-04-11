@@ -3,8 +3,9 @@
 
 <mapper namespace="Login">   
 
-   	<insert id="insertUser" parameterType="hashmap">
-		INSERT INTO `User`(`name`, `email`, `status`) VALUES (#{name}, #{email}, #{status})
+   	<insert id="insertUser" parameterType="Login">
+		INSERT INTO User (`name`, `email`, student_id, phone, department, student_class, semester,major1,major2,  expire_token, `status`) 
+		VALUES (#{name}, #{email}, #{student_id}, #{phone}, #{department}, #{student_class}, #{semester}, #{major1}, #{major2}, #{expire_token},#{status} )
 	</insert>
 	
 	<select id="getUserDataByToken" resultType="Login" parameterType="hashmap">
