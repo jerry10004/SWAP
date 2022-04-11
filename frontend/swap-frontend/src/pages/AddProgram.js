@@ -15,6 +15,8 @@ import ApplicationForm from "components/marketing/pages/courses/add-new-course/s
 const AddNewCourse = () => {
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
+  // const [application_form, setApplication_form] = useState(1);
+
   const [formData, setFormData] = useState({
     program_title: "Title",
     program_category: "1",
@@ -96,7 +98,7 @@ const AddNewCourse = () => {
       id: 2,
       title: "프로그램 신청서 Form 선택",
       // content: <CoursesMedia data={formData} handleChange={handleChange} setStart_date={setStart_date} setEnd_date={setEnd_date} submit={addProgram} previous={previous} />,
-      content: <ApplicationFormPractice data={formData} handleChange={handleChange} setStart_date={setStart_date} setEnd_date={setEnd_date} submit={addProgram} previous={previous} />,
+      content: <ApplicationFormPractice data={formData} handleChange={handleChange} setEnd_date={setEnd_date} submit={addProgram} previous={previous} />,
       // content: <FormBuilder />,
       // content: <ApplicationForm data={formData} handleChange={handleChange} setStart_date={setStart_date} setEnd_date={setEnd_date} submit={addProgram} previous={previous} />,
     },

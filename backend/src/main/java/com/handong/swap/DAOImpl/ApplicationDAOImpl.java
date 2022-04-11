@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import com.handong.swap.DAO.ApplicationDAO;
 import com.handong.swap.DTO.ApplicationDTO;
+import com.handong.swap.DTO.ApplicationDeleteConfirmDTO;
 import com.handong.swap.DTO.ApplicationNameDTO;
+import com.handong.swap.DTO.ProgramReadNameDTO;
 
 @Repository
 public class ApplicationDAOImpl implements ApplicationDAO {
@@ -35,6 +37,29 @@ public class ApplicationDAOImpl implements ApplicationDAO {
 	public List<ApplicationNameDTO> readName() {
 		return sqlSession.selectList("Application.readName");
 	}
-	
+
+
+	@Override
+	public List<ApplicationDTO> read() {
+		return sqlSession.selectList("Application.read");
+	}
+
+
+	@Override
+	public void delete(int id) {
+	    sqlSession.delete("Application.delete", id);
+	}
+
+
+	@Override
+	public int deleteConfirm(int id) {
+	    return sqlSession.selectOne("Application.deleteConfirm", id);
+	}
+
+
+	@Override
+	public List<ApplicationDTO> readApplicationById(int id) {
+		return sqlSession.selectList("Application.readApplicationById",id);
+	}
 
 }

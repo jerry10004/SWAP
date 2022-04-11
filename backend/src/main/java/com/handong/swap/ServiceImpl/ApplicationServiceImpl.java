@@ -12,7 +12,9 @@ import com.handong.swap.DAO.ApplicationDAO;
 import com.handong.swap.DAO.UserDAO;
 import com.handong.swap.DTO.AdminDTO;
 import com.handong.swap.DTO.ApplicationDTO;
+import com.handong.swap.DTO.ApplicationDeleteConfirmDTO;
 import com.handong.swap.DTO.ApplicationNameDTO;
+import com.handong.swap.DTO.ProgramReadNameDTO;
 import com.handong.swap.Service.AdminService;
 import com.handong.swap.Service.ApplicationService;
 
@@ -22,6 +24,14 @@ public class ApplicationServiceImpl implements ApplicationService{
 	
 	@Autowired
 	ApplicationDAO applicationDAO;
+	
+	@Override
+	public String read() throws JsonProcessingException {
+		List<ApplicationDTO> applicationDATA = applicationDAO.read();
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonString = mapper.writeValueAsString(applicationDATA);
+		return jsonString;
+	}
 
 	
 	@Override
@@ -44,6 +54,27 @@ public class ApplicationServiceImpl implements ApplicationService{
 		List<ApplicationNameDTO> applicationDATA = applicationDAO.readName();
 		ObjectMapper mapper = new ObjectMapper();
 		String jsonString = mapper.writeValueAsString(applicationDATA);
+		return jsonString;
+	}
+	
+	@Override
+	public void delete(int id) {
+		applicationDAO.delete(id);
+	}
+
+
+	@Override
+	public int deleteConfirm(int id) throws JsonProcessingException {
+		int applicationDATA = applicationDAO.deleteConfirm(id);
+		return applicationDATA;
+	}
+
+
+	@Override
+	public String readApplicationById(int id) throws JsonProcessingException {
+		List<ApplicationDTO> programDATA = applicationDAO.readApplicationById(id);
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonString = mapper.writeValueAsString(programDATA);
 		return jsonString;
 	}
 

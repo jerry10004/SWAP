@@ -11,12 +11,9 @@ import Pagination from "components/elements/advance-table/Pagination";
 import DotBadge from "components/elements/bootstrap/DotBadge";
 import { FormSelect } from "components/elements/form-select/FormSelect";
 
-const CoursesTable = ({ program_data }) => {
-  const [programInfo, setProgramInfo] = useState([]);
-  const [programList, setProgramList] = useState([]);
-  const [waitProgram, setWaitProgram] = useState([]);
-  const [progressProgram, setProgressProgram] = useState([]);
-  const [finishProgram, setFinishProgram] = useState([]);
+const ApplicationsListItems = ({ application_data }) => {
+  const [applicationInfo, setApplicationInfo] = useState([]);
+  const [applicationList, setApplicationList] = useState([]);
 
   const filterOptions = [
     { value: "대회", label: "대회" },
@@ -31,7 +28,7 @@ const CoursesTable = ({ program_data }) => {
     () => [
       { accessor: "id", Header: "ID", show: false },
       {
-        accessor: "program_name",
+        accessor: "name",
         Header: "제목",
         Cell: ({ value, row }) => {
           const id = "detail/" + row.original.id.toString();
@@ -46,40 +43,7 @@ const CoursesTable = ({ program_data }) => {
       },
 
       {
-        accessor: "category_name",
-        Header: "카테고리",
-        Cell: ({ value, row }) => {
-          return (
-            <div className="d-flex align-items-center">
-              <h5 className="mb-0">{value}</h5>
-            </div>
-          );
-        },
-      },
-      {
-        accessor: "start_date",
-        Header: "시작 일자",
-        Cell: ({ value, row }) => {
-          return (
-            <div className="d-flex align-items-center">
-              <h5 className="mb-0">{value}</h5>
-            </div>
-          );
-        },
-      },
-      {
-        accessor: "end_date",
-        Header: "마감 일자",
-        Cell: ({ value, row }) => {
-          return (
-            <div className="d-flex align-items-center">
-              <h5 className="mb-0">{value}</h5>
-            </div>
-          );
-        },
-      },
-      {
-        accessor: "name",
+        accessor: "admin",
         Header: "작성자",
         Cell: ({ value, row }) => {
           return (
@@ -90,24 +54,13 @@ const CoursesTable = ({ program_data }) => {
         },
       },
       {
-        accessor: "status",
-        Header: "상태",
-
+        accessor: "regdate",
+        Header: "생성 일자",
         Cell: ({ value, row }) => {
-          if (value === 0) {
-            value = "대기";
-          }
-          if (value === 1) {
-            value = "진행";
-          }
-          if (value === 2) {
-            value = "종료";
-          }
           return (
-            <Fragment>
-              <DotBadge bg={value === "대기" ? "warning" : value === "진행" ? "success" : value === "종료" ? "danger" : ""}></DotBadge>
-              {value}
-            </Fragment>
+            <div className="d-flex align-items-center">
+              <h5 className="mb-0">{value}</h5>
+            </div>
           );
         },
       },
@@ -115,7 +68,7 @@ const CoursesTable = ({ program_data }) => {
     []
   );
 
-  const data = useMemo(() => programInfo);
+  const data = useMemo(() => applicationInfo);
 
   const IndeterminateCheckbox = React.forwardRef(({ indeterminate, ...rest }, ref) => {
     const defaultRef = React.useRef();
@@ -172,58 +125,45 @@ const CoursesTable = ({ program_data }) => {
     let filterTerm = event.target.value;
     console.log("filter", filterTerm);
     if (filterTerm !== "") {
-      const newProjectsList = programList.filter((project) => {
+      const newApplicationsList = applicationList.filter((project) => {
         console.log("project", project);
         return Object.values(project).join(" ").toLowerCase().includes(filterTerm.toLowerCase());
       });
-      setProgramInfo(newProjectsList);
+      setApplicationInfo(newApplicationsList);
     } else {
-      setProgramInfo(programList);
+      setApplicationInfo(applicationList);
     }
   };
 
   const { pageIndex, globalFilter } = state;
 
   useLayoutEffect(() => {
-    readProgram();
+    readApplication();
   }, []);
 
-  const readProgram = async () => {
-    const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "program");
-    response.data.map((item, i) =>
-      item.status === 0
-        ? setWaitProgram(waitProgram.push(item))
-        : item.status === 1
-        ? setProgressProgram(progressProgram.push(item))
-        : item.status === 2
-        ? setFinishProgram(finishProgram.push(item))
-        : ""
-    );
-
-    if (program_data === 0) {
-      setProgramInfo(waitProgram);
-    } else if (program_data === 1) {
-      setProgramInfo(progressProgram);
-    } else if (program_data === 2) {
-      setProgramInfo(finishProgram);
-    } else {
-      setProgramInfo(response.data);
-    }
-    setProgramList(response.data);
+  const readApplication = async () => {
+    const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "application");
+    setApplicationInfo(response.data);
   };
 
-  const removeProgram = async (e) => {
-    var removeProgramId = [];
+  const removeApplication = async (e) => {
+    var removeApplicationId = [];
 
-    e.map((d) => removeProgramId.push(d.original.id));
+    e.map((d) => removeApplicationId.push(d.original.id));
 
     var params = new URLSearchParams();
-    params.append("id", removeProgramId);
+    params.append("id", removeApplicationId);
 
     if (window.confirm("삭제 하시겠습니까?")) {
-      const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "program/delete", params);
-      alert("삭제 되었습니다.");
-      readProgram();
+      const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "application/deleteConfirm", params);
+      if (response.data == 0) {
+        alert("사용중인 프로그램이 있어 삭제할 수 없습니다.");
+      } else {
+        const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "application/delete", params);
+        alert("삭제 되었습니다.");
+      }
+
+      readApplication();
       window.location.reload();
     }
   };
@@ -239,7 +179,7 @@ const CoursesTable = ({ program_data }) => {
           <Col xl={8} lg={6} md={6} xs={12}>
             {/* search records */}
             <div className="mb-2 mb-lg-4">
-              <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} placeholder="프로그램을 검색하세요" />
+              <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} placeholder="신청서를 검색하세요" />
             </div>
           </Col>
           <Col className="d-flex justify-content-end mb-2 mb-lg-4">
@@ -247,7 +187,7 @@ const CoursesTable = ({ program_data }) => {
               variant="secondary"
               className="danger-button justify-content-end"
               onClick={() => {
-                removeProgram(selectedFlatRows);
+                removeApplication(selectedFlatRows);
               }}
             >
               삭제하기
@@ -287,4 +227,4 @@ const CoursesTable = ({ program_data }) => {
   );
 };
 
-export default CoursesTable;
+export default ApplicationsListItems;

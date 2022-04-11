@@ -43,9 +43,18 @@ public class ApplicationController {
 	
 	@Autowired
 	ApplicationService applicationService;
+	
+	@RequestMapping(value = "", method = RequestMethod.GET, produces = "application/json; charset=utf8")
+	@ResponseBody
+	public String readAdministrator(HttpServletRequest httpServletRequest) throws IOException, ParseException {
+		System.out.println("신청서 읽기 시도");
+		String result = applicationService.read();
+		System.out.println(result);
+	    return result;
+	}
 
 	
-	@RequestMapping(value = "", method = RequestMethod.POST, produces = "application/json; charset=utf8")
+	@RequestMapping(value = "/json", method = RequestMethod.POST, produces = "application/json; charset=utf8")
 	@ResponseBody
 	public String readJson(HttpServletRequest httpServletRequest) throws IOException, ParseException, org.json.simple.parser.ParseException {
 		Integer id = Integer.parseInt(httpServletRequest.getParameter("category_id"));
@@ -80,6 +89,49 @@ public class ApplicationController {
 		String result = applicationService.readName();
 		System.out.println(result);
 	    return result;
+	}
+	
+	@RequestMapping(value = "/readApplicationById", method = RequestMethod.POST, produces = "application/json; charset=utf8")
+	@ResponseBody
+	public String readApplicationById(HttpServletRequest httpServletRequest) throws IOException, ParseException {
+		System.out.println("신청서 아이디 별 읽기");
+		Integer id = Integer.parseInt(httpServletRequest.getParameter("id"));
+		String result = applicationService.readApplicationById(id);
+		System.out.println("result is "+result);
+		return result;
+	}
+	
+	
+	@RequestMapping(value = "deleteConfirm", method = RequestMethod.POST, produces = "application/json; charset=utf8")
+	@ResponseBody
+	public int deleteConfirmApplication(HttpServletRequest httpServletRequest)throws IOException, ParseException  {
+		String[] param_ids = httpServletRequest.getParameterValues("id");
+		int result = 1;
+		
+		String[] ids = param_ids[0].split(",");
+		
+		for (int i = 0; i < ids.length; i++) {
+			System.out.println("신청서 삭제 시도");
+			System.out.println("삭제 하려는 아이디 번호: "+ids[i]);
+			result = applicationService.deleteConfirm(Integer.parseInt(ids[i]));
+			if(result == 0) return result;
+		}
+		if(result==1) return result;
+		else return result;
+	}
+	
+	@RequestMapping(value = "delete", method = RequestMethod.POST, produces = "application/json; charset=utf8")
+	@ResponseBody
+	public void deleteApplication(HttpServletRequest httpServletRequest) {
+		String[] param_ids = httpServletRequest.getParameterValues("id");
+		
+		String[] ids = param_ids[0].split(",");
+		
+		for (int i = 0; i < ids.length; i++) {
+			System.out.println("신청서 삭제 시도");
+			System.out.println("삭제 하려는 아이디 번호: "+ids[i]);
+			applicationService.delete(Integer.parseInt(ids[i]));
+		}
 	}
 	
 

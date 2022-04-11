@@ -33,6 +33,12 @@ export const DashboardMenu = [
     icon: "clipboard",
     link: "/admin/program",
   },
+  {
+    id: uuid(),
+    title: "Application",
+    icon: "clipboard",
+    link: "/admin/application",
+  },
 ];
 
 const NavbarVertical = (props) => {
