@@ -37,7 +37,7 @@ public class AdminDAOImpl implements AdminDAO {
 		Map<String, Object> param = new HashMap<String, Object>();
 	    param.put("user_id", user_id);
 
-		return sqlSession.selectOne("readAdminByUserID", param);
+		return sqlSession.selectOne("Admin.readAdminByUserId", param);
 	}
 
 	@Override
