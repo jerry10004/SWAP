@@ -31,9 +31,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.handong.swap.DTO.ApplicationDTO;
 import com.handong.swap.DTO.ProgramDTO;
 import com.handong.swap.DTO.ProgramReadNameDTO;
-//import org.json.simple.JSONObject;
-//import org.json.simple.parser.JSONParser;
-//import org.json.simple.parser.ParseException;
 
 @Controller
 @RequestMapping("/application")
@@ -100,6 +97,15 @@ public class ApplicationController {
 		System.out.println("result is "+result);
 		return result;
 	}
+		
+		
+	@RequestMapping(value = "/readApplicationForm/{id}", method = RequestMethod.GET, produces = "application/json; charset=utf8")
+	@ResponseBody
+	public String readApplicationFormByProgramId(@PathVariable int id) throws IOException, ParseException, org.json.simple.parser.ParseException {
+		String result = applicationService.readApplicationFormByProgramId(id);
+	    System.out.println(result);
+		return result;
+	}
 	
 	
 	@RequestMapping(value = "deleteConfirm", method = RequestMethod.POST, produces = "application/json; charset=utf8")
@@ -133,6 +139,5 @@ public class ApplicationController {
 			applicationService.delete(Integer.parseInt(ids[i]));
 		}
 	}
-	
 
 }

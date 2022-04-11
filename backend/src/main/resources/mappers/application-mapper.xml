@@ -45,4 +45,12 @@
 		where A.id = #{id};
    	</select>
 
+   	<select id="readApplicationForm" resultType="Application">
+	   select A.id, A.content
+		from Application AS A
+		LEFT JOIN Program as P
+		ON P.application_form = A.id
+		where P.id = #{id}
+   	</select>
+   	
 </mapper>

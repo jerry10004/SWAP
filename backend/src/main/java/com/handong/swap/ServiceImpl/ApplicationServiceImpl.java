@@ -78,5 +78,12 @@ public class ApplicationServiceImpl implements ApplicationService{
 		return jsonString;
 	}
 
+		public String readApplicationFormByProgramId(int id) throws JsonProcessingException{
+		List<ApplicationDTO> applicationDATA = applicationDAO.readApplicationFormByProgramId(id);
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonString = mapper.writeValueAsString(applicationDATA);
+		return jsonString;
+	}
+
 	
 }

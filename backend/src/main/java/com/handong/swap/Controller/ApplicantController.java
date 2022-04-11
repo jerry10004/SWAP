@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.reflect.TypeToken;
+import com.handong.swap.DTO.ApplicantDTO;
+import com.handong.swap.DTO.ApplicationDTO;
 import com.handong.swap.Service.ApplicantService;
 
 import net.sf.json.JSONArray;
@@ -53,6 +55,26 @@ public class ApplicantController {
 		
 		for (int i = 0; i < ids.length; i++) {
 			applicantService.updateApplicantStatus(Integer.parseInt(ids[i]),Integer.parseInt(status[i]));
+		}
+		
+	}
+	
+	@RequestMapping(value = "/apply", method = RequestMethod.POST, produces = "application/json; charset=utf8")
+	@ResponseBody
+	public void applyApplication(HttpServletRequest httpServletRequest) throws ParseException {
+		ApplicantDTO applicant = new ApplicantDTO();
+		
+		applicant.setProgram_id(Integer.parseInt(httpServletRequest.getParameter("program_id")));
+		applicant.setUser_id(Integer.parseInt(httpServletRequest.getParameter("user_id")));	
+		applicant.setApplication_form(httpServletRequest.getParameter("content"));
+		
+		int result = applicantService.applyApplication(applicant);
+		
+		if(result ==0 ) {
+			System.out.println("신청서 추가 실패");
+		}
+		else {
+			System.out.println("신청서 추가 성공");
 		}
 		
 	}

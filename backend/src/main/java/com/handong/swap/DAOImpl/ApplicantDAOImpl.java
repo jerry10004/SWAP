@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.handong.swap.DAO.ApplicantDAO;
+import com.handong.swap.DTO.ApplicantDTO;
 import com.handong.swap.DTO.ApplicantReadDTO;
+import com.handong.swap.DTO.ProgramDTO;
 
 @Repository
 public class ApplicantDAOImpl implements ApplicantDAO {
@@ -33,6 +35,13 @@ public class ApplicantDAOImpl implements ApplicantDAO {
 		}
 		return  "error";
 	} 
+	
+	public int applyApplication(ApplicantDTO applicant) {
+		int result = sqlSession.insert("Applicant.applyApplication", applicant);
+		return result;
+	}
+	
+
 
 
 }

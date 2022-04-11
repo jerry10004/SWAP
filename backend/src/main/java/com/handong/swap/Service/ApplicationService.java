@@ -18,5 +18,6 @@ public interface ApplicationService {
 	
 	public int deleteConfirm(int id) throws JsonProcessingException;
 	
+	public String readApplicationFormByProgramId(int id) throws JsonProcessingException;
 
 }

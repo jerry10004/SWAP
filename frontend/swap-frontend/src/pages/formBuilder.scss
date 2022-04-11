@@ -1,0 +1,88 @@
+.formbuilder-text,
+.formbuilder-textarea {
+  label {
+    font-weight: normal;
+    color: #18113c;
+    width: 100%;
+    display: inline-block;
+    margin-bottom: 0.5rem;
+  }
+  input {
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    display: block;
+    width: 100%;
+    line-height: 1.6;
+    border: 1px solid #e8e7ed;
+    border-radius: 4px;
+    padding: 0.75rem 1.25rem;
+  }
+  ::placeholder {
+    color: #b5b4be;
+  }
+  input:focus {
+    outline: 0;
+    box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%), 0 0 8px rgb(102 175 233 / 60%);
+    color: #18113c;
+    background-color: #fff;
+    border-color: #754ffe;
+    outline: 0;
+  }
+}
+
+.formbuilder-checkbox-group,
+.formbuilder-radio-group {
+  .formbuilder-radio-group-label {
+    font-weight: normal;
+    color: #18113c;
+    margin-bottom: 0.5rem;
+  }
+  input[type="checkbox"],
+  input[type="radio"] {
+    margin: 0 4px 0 0;
+  }
+}
+
+.formbuilder-checkbox-inline,
+.formbuilder-radio-inline {
+  margin-right: 8px;
+  display: inline-block;
+  vertical-align: middle;
+  padding-left: 0;
+
+  label {
+    input[type="text"] {
+      margin-top: 0;
+    }
+  }
+}
+
+.formbuilder-checkbox-inline:first-child,
+.formbuilder-radio-inline:first-child {
+  padding-left: 0;
+}
+
+.formbuilder-autocomplete-list {
+  background-color: white;
+  display: none;
+  list-style: none;
+  padding: 0;
+  border: 1px solid lightgrey;
+  border-width: 0 1px 1px;
+  position: absolute;
+  z-index: 20;
+  max-height: 200px;
+  overflow-y: auto;
+
+  li {
+    display: none;
+    cursor: default;
+    padding: 5px;
+    margin: 0;
+    transition: background-color 200ms ease-in-out;
+
+    &:hover,
+    &.active-option {
+      background-color: white;
+    }
+  }
+}
