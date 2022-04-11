@@ -12,6 +12,7 @@ import com.handong.swap.DAO.AdminDAO;
 import com.handong.swap.DAO.LoginDAO;
 import com.handong.swap.DAO.UserDAO;
 import com.handong.swap.DTO.AdminDTO;
+import com.handong.swap.DTO.ApplicationDTO;
 import com.handong.swap.DTO.LoginDTO;
 import com.handong.swap.DTO.UserDTO;
 import com.handong.swap.Service.LoginService;
@@ -33,10 +34,13 @@ public class LoginServiceImpl implements LoginService{
 		LoginDTO user = loginDAO.getUserByEmail(email);
 		
 		
+//		if(user == null) {
+//			user = new LoginDTO(0,name, email, 0, token, expire_token);
+//			loginDAO.insertUser(user);
+//			user.setId(loginDAO.getUserByEmail(email).getId());
+//		}
 		if(user == null) {
-			user = new LoginDTO(0,name, email, 0, token, expire_token);
-			loginDAO.insertUser(user);
-			user.setId(loginDAO.getUserByEmail(email).getId());
+			return "newUser";
 		}
 	    
 		user.setExpire_token(expire_token);
@@ -56,6 +60,44 @@ public class LoginServiceImpl implements LoginService{
 		
 		
 		return jsonString;
+	}
+	
+//	@Override
+//	public String insertUser(String name, String email, String token, Date expire_token) throws JsonProcessingException {
+//		LoginDTO user = loginDAO.getUserByEmail(email);
+//		
+//		
+////		if(user == null) {
+////			user = new LoginDTO(0,name, email, 0, token, expire_token);
+////			loginDAO.insertUser(user);
+////			user.setId(loginDAO.getUserByEmail(email).getId());
+////		}
+//		if(user == null) {
+//			return "newUser";
+//		}
+//	    
+//		user.setExpire_token(expire_token);
+//	    user.setToken(token);
+//	    
+//	    loginDAO.updateUserByToken(user);
+//	    user = loginDAO.getUserByEmail(email);
+//	    
+//	    if(user.getStatus() == 1) {
+//	    	AdminDTO admin = adminDAO.readAdminByUserId(user.getId());
+//	    }else if(user.getStatus() == -1) {
+//	    	return "fail";
+//	    }
+//	    
+//	    ObjectMapper mapper = new ObjectMapper();
+//		String jsonString = mapper.writeValueAsString(user);
+//		
+//		
+//		return jsonString;
+//	}
+	
+	@Override
+	public int insertUser(LoginDTO user) {
+		return loginDAO.insertUser(user);
 	}
 }
 	

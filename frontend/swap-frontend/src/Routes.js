@@ -21,7 +21,7 @@ import ApplicationFormView from "components/dashboard/single/overview/Applicatio
 import Admin from "./pages/Admin";
 import SignIn from "./pages/SignIn";
 import SignUpAdmin from "./pages/SignUpAdmin";
-import SignUpStudent from "./pages/SignUpStudent";
+import SignUp from "./pages/SignUp";
 
 function Router() {
   return (
@@ -45,7 +45,7 @@ function Router() {
         <Route path="/admin/program/detail/:id/:applicantid" element={<ApplicationFormView />} />
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/sign-up/admin" element={<SignUpAdmin />} />
-        <Route path="/sign-up/student" element={<SignUpStudent />} />
+        <Route path="/sign-up" element={<SignUp />} />
       </Routes>
     </BrowserRouter>
   );

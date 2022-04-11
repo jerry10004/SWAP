@@ -9,15 +9,22 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class LoginDTO {
 	int id;
+	int student_id;
+	int student_class;
+	int semester;
+	int status;
+	
 	String name;
 	String email;
-	int status;
+	String major1;
+	String major2;
 	String token;
+	String phone;
+	String department;
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	Date expire_token;
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	Date regdate;
-	
 	
 	public LoginDTO() {}
 	
@@ -37,7 +44,6 @@ public class LoginDTO {
 		this.expire_token = expire_token;
 	}
 
-	
 	public int getId() {
 		return id;
 	}
@@ -45,7 +51,39 @@ public class LoginDTO {
 	public void setId(int id) {
 		this.id = id;
 	}
-	
+
+	public int getStudent_id() {
+		return student_id;
+	}
+
+	public void setStudent_id(int student_id) {
+		this.student_id = student_id;
+	}
+
+	public int getStudent_class() {
+		return student_class;
+	}
+
+	public void setStudent_class(int student_class) {
+		this.student_class = student_class;
+	}
+
+	public int getSemester() {
+		return semester;
+	}
+
+	public void setSemester(int semester) {
+		this.semester = semester;
+	}
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -62,12 +100,20 @@ public class LoginDTO {
 		this.email = email;
 	}
 
-	public int getStatus() {
-		return status;
+	public String getMajor1() {
+		return major1;
 	}
 
-	public void setStatus(int status) {
-		this.status = status;
+	public void setMajor1(String major1) {
+		this.major1 = major1;
+	}
+
+	public String getMajor2() {
+		return major2;
+	}
+
+	public void setMajor2(String major2) {
+		this.major2 = major2;
 	}
 
 	public String getToken() {
@@ -78,6 +124,22 @@ public class LoginDTO {
 		this.token = token;
 	}
 
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getDepartment() {
+		return department;
+	}
+
+	public void setDepartment(String department) {
+		this.department = department;
+	}
+
 	public Date getExpire_token() {
 		return expire_token;
 	}
@@ -86,12 +148,13 @@ public class LoginDTO {
 		this.expire_token = expire_token;
 	}
 
-	public Date getReg_date() {
+	public Date getRegdate() {
 		return regdate;
 	}
 
-	public void setReg_date(Date regdate) {
+	public void setRegdate(Date regdate) {
 		this.regdate = regdate;
 	}
+
 	
 }
