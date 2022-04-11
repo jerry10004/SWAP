@@ -10,6 +10,8 @@ import Program from "./pages/Program";
 import Survey from "./pages/Survey";
 import MyPage from "./pages/MyPage";
 import AddProgram from "./pages/AddProgram";
+import ManageApplication from "./pages/ManageApplication";
+import ManageApplicationDetail from "./pages/ManageApplicationDetail";
 import ManageStudent from "./pages/ManageStudent";
 import ManageUser from "./pages/ManageUser";
 import ManageInstructor from "./pages/ManageInstructor";
@@ -33,6 +35,8 @@ function Router() {
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/admin/addprogram" element={<AddProgram />} />
         <Route path="/admin" element={<Admin />} />
+        <Route path="/admin/application" element={<ManageApplication />} />
+        <Route path="/admin/application/detail/:id" element={<ManageApplicationDetail />} />
         <Route path="/admin/student" element={<ManageStudent />} />
         <Route path="/admin/instructor" element={<ManageInstructor />} />
         <Route path="/admin/user" element={<ManageUser />} />

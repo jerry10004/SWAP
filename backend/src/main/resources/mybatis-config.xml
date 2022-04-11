@@ -13,8 +13,11 @@
 			<typeAlias alias="ApplicantRead" type="com.handong.swap.DTO.ApplicantReadDTO"/>
 			<typeAlias alias="Login" type="com.handong.swap.DTO.LoginDTO"/>
 			<typeAlias alias="Application" type="com.handong.swap.DTO.ApplicationDTO"/>
+			<typeAlias alias="ApplicationRead" type="com.handong.swap.DTO.ApplicationReadDTO"/>
 			<typeAlias alias="ApplicationName" type="com.handong.swap.DTO.ApplicationNameDTO"/>
-			
+			<typeAlias alias="ApplicationDeleteConfirm" type="com.handong.swap.DTO.ApplicationDeleteConfirmDTO"/>
+			<typeAlias alias="Applicant" type="com.handong.swap.DTO.ApplicantDTO"/>
+		
 	</typeAliases>
 		
 	</configuration>

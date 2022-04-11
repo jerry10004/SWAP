@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.handong.swap.DAO.UserDAO;
+import com.handong.swap.DTO.ProgramReadDTO;
 import com.handong.swap.DTO.UserDTO;
 import com.handong.swap.Service.UserService;
 
@@ -48,6 +49,14 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public void restore(int id) {
 		userDAO.restore(id);
+	}
+	
+	@Override
+	public String readLoggedInUserById(int id) throws JsonProcessingException{
+		List<UserDTO> userDATA = userDAO.readLoggedInUserById(id);
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonString = mapper.writeValueAsString(userDATA);
+		return jsonString;
 	}
 }
 	

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.handong.swap.DAO.UserDAO;
+import com.handong.swap.DTO.ProgramReadDTO;
 import com.handong.swap.DTO.UserDTO;
 
 @Repository
@@ -52,5 +53,10 @@ public class UserDAOImpl implements UserDAO{
 	@Override
 	public void restore(int id) {
 		sqlSession.update("User.restoreUser", id);
+	}
+	
+	@Override
+	public List<UserDTO> readLoggedInUserById(int id) {
+		return sqlSession.selectList("User.readLoggedInUser",id);
 	}
 }

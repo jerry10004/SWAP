@@ -11,6 +11,7 @@ import UsersListItems from "components/dashboard/user/UsersListItems";
 import StudentsListItems from "components/dashboard/user/StudentsListItems";
 import InstructorsListItems from "components/dashboard/user/InstructorsListItems";
 import DeletedUsersListItems from "components/dashboard/user/DeletedUsersListItems";
+import WaitInstructorsListItems from "components/dashboard/user/WaitInstructorsListItems";
 
 // import sub components
 import NavbarVertical from "layouts/dashboard/NavbarVertical";
@@ -81,6 +82,11 @@ const ManageUser = () => {
                               삭제된 사용자
                             </Nav.Link>
                           </Nav.Item>
+                          <Nav.Item>
+                            <Nav.Link eventKey="waitInstructors" className="mb-sm-3 mb-md-0">
+                              대기중인 관리자
+                            </Nav.Link>
+                          </Nav.Item>
                         </Nav>
                       </Card.Header>
                       <Card.Body className="p-0">
@@ -96,6 +102,9 @@ const ManageUser = () => {
                           </Tab.Pane>
                           <Tab.Pane eventKey="deletedUsers" className="pb-4">
                             <DeletedUsersListItems />
+                          </Tab.Pane>
+                          <Tab.Pane eventKey="waitInstructors" className="pb-4">
+                            <WaitInstructorsListItems />
                           </Tab.Pane>
                         </Tab.Content>
                       </Card.Body>

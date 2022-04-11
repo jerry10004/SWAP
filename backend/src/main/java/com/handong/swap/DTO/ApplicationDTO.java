@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class ApplicationDTO {
 	int id;
+	int admin_id;
 	String name;
 	String content;
 	Date regdate;
@@ -13,6 +14,12 @@ public class ApplicationDTO {
 	}
 	public void setId(int id) {
 		this.id = id;
+	}
+	public int getAdmin_id() {
+		return admin_id;
+	}
+	public void setAdmin_id(int admin_id) {
+		this.admin_id = admin_id;
 	}
 	public String getName() {
 		return name;

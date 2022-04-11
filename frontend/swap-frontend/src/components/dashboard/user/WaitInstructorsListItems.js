@@ -7,10 +7,9 @@ import axios from "axios";
 // import custom components
 import GlobalFilter from "components/elements/advance-table/GlobalFilter";
 import Pagination from "components/elements/advance-table/Pagination";
-
 import DotBadge from "components/elements/bootstrap/DotBadge";
 
-const UsersListItems = () => {
+const WaitInstructorsListItems = () => {
   const [userInfo, setUserInfo] = useState([]);
 
   const columns = useMemo(
@@ -19,10 +18,10 @@ const UsersListItems = () => {
       {
         accessor: "name",
         Header: "이름",
-        Cell: ({ value, row }) => {
+        Cell: ({ value }) => {
           return (
             <div className="d-flex align-items-center">
-              <DotBadge bg={row.original.status === 0 ? "warning" : row.original.status === 1 ? "success" : "secondary"}></DotBadge>
+              <DotBadge bg="secondary"></DotBadge>
               <h5 className="mb-0">{value}</h5>
             </div>
           );
@@ -30,51 +29,6 @@ const UsersListItems = () => {
       },
       { accessor: "phone", Header: "연락처" },
       { accessor: "email", Header: "이메일" },
-      {
-        accessor: "student_id",
-        Header: "학번",
-        Cell: ({ value }) => {
-          return (
-            <Fragment>
-              <Col> {value === 0 ? "" : value}</Col>
-            </Fragment>
-          );
-        },
-      },
-      {
-        accessor: "student_class",
-        Header: "학년",
-        Cell: ({ value }) => {
-          return (
-            <Fragment>
-              <Col> {value === 0 ? "" : value + " 학년"}</Col>
-            </Fragment>
-          );
-        },
-      },
-      {
-        accessor: "semester",
-        Header: "학기",
-        Cell: ({ value }) => {
-          return (
-            <Fragment>
-              <Col> {value === 0 ? "" : value + " 학기"}</Col>
-            </Fragment>
-          );
-        },
-      },
-      {
-        accessor: "department",
-        Header: "학부",
-      },
-      {
-        accessor: "major1",
-        Header: "1전공",
-      },
-      {
-        accessor: "major2",
-        Header: "2전공",
-      },
     ],
     []
   );
@@ -149,12 +103,11 @@ const UsersListItems = () => {
   const { pageIndex, globalFilter } = state;
 
   useLayoutEffect(() => {
-    readUser();
+    readWaitInstructors();
   }, []);
 
-  const readUser = async () => {
-    const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "user");
-
+  const readWaitInstructors = async () => {
+    const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "admin/waitinstructors");
     setUserInfo(response.data);
   };
 
@@ -169,7 +122,7 @@ const UsersListItems = () => {
     if (window.confirm("관리자로 추가하시겠습니까?")) {
       const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "admin/add", params);
       alert("추가 되었습니다.");
-      readUser();
+      readWaitInstructors();
       window.location.reload();
     }
   };
@@ -184,7 +137,7 @@ const UsersListItems = () => {
     if (window.confirm("삭제 하시겠습니까?")) {
       const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "user/delete", params);
       alert("삭제 되었습니다.");
-      readUser();
+      readWaitInstructors();
       window.location.reload();
     }
   };
@@ -237,7 +190,6 @@ const UsersListItems = () => {
               return (
                 <tr {...row.getRowProps()}>
                   {row.cells.map((cell) => {
-                    //idx는 각 column
                     return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>;
                   })}
                 </tr>
@@ -253,4 +205,4 @@ const UsersListItems = () => {
   );
 };
 
-export default UsersListItems;
+export default WaitInstructorsListItems;

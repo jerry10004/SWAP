@@ -1,85 +1,74 @@
 // import node module libraries
-import React, { Fragment, useMemo, useLayoutEffect, useState } from "react";
+import React, { Fragment, useMemo, useState, useLayoutEffect } from "react";
 import { useTable, useFilters, useGlobalFilter, usePagination, useRowSelect } from "react-table";
-import { Row, Col, Table, Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import { Col, Row, Button, Table, Form } from "react-bootstrap";
 import axios from "axios";
 
 // import custom components
 import GlobalFilter from "components/elements/advance-table/GlobalFilter";
 import Pagination from "components/elements/advance-table/Pagination";
-
 import DotBadge from "components/elements/bootstrap/DotBadge";
+import { FormSelect } from "components/elements/form-select/FormSelect";
 
-const UsersListItems = () => {
-  const [userInfo, setUserInfo] = useState([]);
+const ApplicationsListItems = ({ application_data }) => {
+  const [applicationInfo, setApplicationInfo] = useState([]);
+  const [applicationList, setApplicationList] = useState([]);
+
+  const filterOptions = [
+    { value: "대회", label: "대회" },
+    { value: "봉사", label: "봉사" },
+    { value: "캠프", label: "캠프" },
+    { value: "동아리", label: "동아리" },
+    { value: "행사", label: "행사" },
+    { value: "기타", label: "기타" },
+  ];
 
   const columns = useMemo(
     () => [
       { accessor: "id", Header: "ID", show: false },
       {
         accessor: "name",
-        Header: "이름",
+        Header: "제목",
+        Cell: ({ value, row }) => {
+          const id = "detail/" + row.original.id.toString();
+          return (
+            <Link className="text-inherit" to={id}>
+              <div className="d-flex align-items-center">
+                <h5 className="mb-1 text-primary-hover">{value}</h5>
+              </div>
+            </Link>
+          );
+        },
+      },
+
+      {
+        accessor: "admin",
+        Header: "작성자",
         Cell: ({ value, row }) => {
           return (
             <div className="d-flex align-items-center">
-              <DotBadge bg={row.original.status === 0 ? "warning" : row.original.status === 1 ? "success" : "secondary"}></DotBadge>
               <h5 className="mb-0">{value}</h5>
             </div>
           );
         },
       },
-      { accessor: "phone", Header: "연락처" },
-      { accessor: "email", Header: "이메일" },
       {
-        accessor: "student_id",
-        Header: "학번",
-        Cell: ({ value }) => {
+        accessor: "regdate",
+        Header: "생성 일자",
+        Cell: ({ value, row }) => {
           return (
-            <Fragment>
-              <Col> {value === 0 ? "" : value}</Col>
-            </Fragment>
+            <div className="d-flex align-items-center">
+              <h5 className="mb-0">{value}</h5>
+            </div>
           );
         },
-      },
-      {
-        accessor: "student_class",
-        Header: "학년",
-        Cell: ({ value }) => {
-          return (
-            <Fragment>
-              <Col> {value === 0 ? "" : value + " 학년"}</Col>
-            </Fragment>
-          );
-        },
-      },
-      {
-        accessor: "semester",
-        Header: "학기",
-        Cell: ({ value }) => {
-          return (
-            <Fragment>
-              <Col> {value === 0 ? "" : value + " 학기"}</Col>
-            </Fragment>
-          );
-        },
-      },
-      {
-        accessor: "department",
-        Header: "학부",
-      },
-      {
-        accessor: "major1",
-        Header: "1전공",
-      },
-      {
-        accessor: "major2",
-        Header: "2전공",
       },
     ],
     []
   );
 
-  const data = useMemo(() => userInfo);
+  const data = useMemo(() => applicationInfo);
 
   const IndeterminateCheckbox = React.forwardRef(({ indeterminate, ...rest }, ref) => {
     const defaultRef = React.useRef();
@@ -96,21 +85,7 @@ const UsersListItems = () => {
     );
   });
 
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    page,
-    nextPage,
-    previousPage,
-    state,
-    gotoPage,
-    pageCount,
-    prepareRow,
-    setGlobalFilter,
-    selectedFlatRows,
-    state: { selectedRowIds },
-  } = useTable(
+  const { getTableProps, getTableBodyProps, headerGroups, page, nextPage, previousPage, state, gotoPage, pageCount, prepareRow, setGlobalFilter, selectedFlatRows } = useTable(
     {
       columns,
       data,
@@ -146,45 +121,49 @@ const UsersListItems = () => {
     }
   );
 
-  const { pageIndex, globalFilter } = state;
-
-  useLayoutEffect(() => {
-    readUser();
-  }, []);
-
-  const readUser = async () => {
-    const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "user");
-
-    setUserInfo(response.data);
-  };
-
-  const createAdmin = async (e) => {
-    var addAdminId = [];
-
-    e.map((d) => addAdminId.push(d.original.id));
-
-    var params = new URLSearchParams();
-    params.append("id", addAdminId);
-
-    if (window.confirm("관리자로 추가하시겠습니까?")) {
-      const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "admin/add", params);
-      alert("추가 되었습니다.");
-      readUser();
-      window.location.reload();
+  const getFilterTerm = (event) => {
+    let filterTerm = event.target.value;
+    console.log("filter", filterTerm);
+    if (filterTerm !== "") {
+      const newApplicationsList = applicationList.filter((project) => {
+        console.log("project", project);
+        return Object.values(project).join(" ").toLowerCase().includes(filterTerm.toLowerCase());
+      });
+      setApplicationInfo(newApplicationsList);
+    } else {
+      setApplicationInfo(applicationList);
     }
   };
 
-  const removeUser = async (e) => {
-    var removeUserId = [];
+  const { pageIndex, globalFilter } = state;
 
-    e.map((d) => removeUserId.push(d.original.id));
+  useLayoutEffect(() => {
+    readApplication();
+  }, []);
+
+  const readApplication = async () => {
+    const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "application");
+    setApplicationInfo(response.data);
+  };
+
+  const removeApplication = async (e) => {
+    var removeApplicationId = [];
+
+    e.map((d) => removeApplicationId.push(d.original.id));
 
     var params = new URLSearchParams();
-    params.append("id", removeUserId);
+    params.append("id", removeApplicationId);
+
     if (window.confirm("삭제 하시겠습니까?")) {
-      const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "user/delete", params);
-      alert("삭제 되었습니다.");
-      readUser();
+      const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "application/deleteConfirm", params);
+      if (response.data == 0) {
+        alert("사용중인 프로그램이 있어 삭제할 수 없습니다.");
+      } else {
+        const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "application/delete", params);
+        alert("삭제 되었습니다.");
+      }
+
+      readApplication();
       window.location.reload();
     }
   };
@@ -193,25 +172,22 @@ const UsersListItems = () => {
     <Fragment>
       <div className=" overflow-hidden">
         <Row className="justify-content-md-between m-3 mb-xl-0">
+          <Col xxl={2} lg={2} md={6} xs={12}>
+            {/* records filtering options */}
+            <Form.Control as={FormSelect} placeholder="카테고리" options={filterOptions} onChange={getFilterTerm} />
+          </Col>
           <Col xl={8} lg={6} md={6} xs={12}>
+            {/* search records */}
             <div className="mb-2 mb-lg-4">
-              <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} placeholder="Search Users" />
+              <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} placeholder="신청서를 검색하세요" />
             </div>
           </Col>
-          <Col xxl={3} lg={6} md={6} xs={12} className="justify-content-between mb-2 mb-lg-4">
-            <Button
-              className="mx-4"
-              onClick={() => {
-                createAdmin(selectedFlatRows);
-              }}
-            >
-              관리자 추가
-            </Button>
+          <Col className="d-flex justify-content-end mb-2 mb-lg-4">
             <Button
               variant="secondary"
-              className="danger-button"
+              className="danger-button justify-content-end"
               onClick={() => {
-                removeUser(selectedFlatRows);
+                removeApplication(selectedFlatRows);
               }}
             >
               삭제하기
@@ -219,8 +195,7 @@ const UsersListItems = () => {
           </Col>
         </Row>
       </div>
-
-      <div className="table-responsive ">
+      <div className="table-responsive border-0 overflow-y-hidden">
         <Table {...getTableProps()} className="text-nowrap">
           <thead className="table-light">
             {headerGroups.map((headerGroup) => (
@@ -237,7 +212,6 @@ const UsersListItems = () => {
               return (
                 <tr {...row.getRowProps()}>
                   {row.cells.map((cell) => {
-                    //idx는 각 column
                     return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>;
                   })}
                 </tr>
@@ -253,4 +227,4 @@ const UsersListItems = () => {
   );
 };
 
-export default UsersListItems;
+export default ApplicationsListItems;

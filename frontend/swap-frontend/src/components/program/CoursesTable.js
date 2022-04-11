@@ -190,7 +190,6 @@ const CoursesTable = ({ program_data }) => {
 
   const readProgram = async () => {
     const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "program");
-
     response.data.map((item, i) =>
       item.status === 0
         ? setWaitProgram(waitProgram.push(item))
