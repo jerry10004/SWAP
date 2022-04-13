@@ -158,37 +158,6 @@ const UsersListItems = () => {
     setUserInfo(response.data);
   };
 
-  const createAdmin = async (e) => {
-    var addAdminId = [];
-
-    e.map((d) => addAdminId.push(d.original.id));
-
-    var params = new URLSearchParams();
-    params.append("id", addAdminId);
-
-    if (window.confirm("관리자로 추가하시겠습니까?")) {
-      const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "admin/add", params);
-      alert("추가 되었습니다.");
-      readUser();
-      window.location.reload();
-    }
-  };
-
-  const removeUser = async (e) => {
-    var removeUserId = [];
-
-    e.map((d) => removeUserId.push(d.original.id));
-
-    var params = new URLSearchParams();
-    params.append("id", removeUserId);
-    if (window.confirm("삭제 하시겠습니까?")) {
-      const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "user/delete", params);
-      alert("삭제 되었습니다.");
-      readUser();
-      window.location.reload();
-    }
-  };
-
   return (
     <Fragment>
       <div className=" overflow-hidden">
@@ -198,7 +167,7 @@ const UsersListItems = () => {
               <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} placeholder="Search Users" />
             </div>
           </Col>
-          <Col xxl={3} lg={6} md={6} xs={12} className="justify-content-between mb-2 mb-lg-4">
+          {/* <Col xxl={3} lg={6} md={6} xs={12} className="justify-content-between mb-2 mb-lg-4">
             <Button
               className="mx-4"
               onClick={() => {
@@ -216,7 +185,7 @@ const UsersListItems = () => {
             >
               삭제하기
             </Button>
-          </Col>
+          </Col> */}
         </Row>
       </div>
 

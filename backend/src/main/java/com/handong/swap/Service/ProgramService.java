@@ -12,6 +12,8 @@ public interface ProgramService {
 
 	public int add(ProgramDTO program);
 	
+	public String readByCategory(int category_id) throws JsonProcessingException;
+	
 	public String readProgramInformationByProgramId(int id) throws JsonProcessingException;
 	
 	public String readProgramName(int id) throws JsonProcessingException;

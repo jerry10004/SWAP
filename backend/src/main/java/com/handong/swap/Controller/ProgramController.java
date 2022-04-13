@@ -96,6 +96,17 @@ public class ProgramController {
 	    return result;
 	}
 	
+	@RequestMapping(value = "/read/category", method = RequestMethod.POST, produces = "application/json; charset=utf8")
+	@ResponseBody
+	public String readprogramByCategory(HttpServletRequest httpServletRequest) throws IOException, ParseException {
+		System.out.println("카테고리 별 프로그램 읽기 시도");
+		Integer category_id = Integer.parseInt(httpServletRequest.getParameter("category_id"));
+		System.out.println(category_id);
+		String result = programService.readByCategory(category_id);		
+		System.out.println("result is "+result);
+	    return result;
+	}
+	
 	@RequestMapping(value = "/information/{id}", method = RequestMethod.GET, produces = "application/json; charset=utf8")
 	@ResponseBody
 	public String readProgramInformationByProgramId(@PathVariable int id) throws IOException, ParseException {

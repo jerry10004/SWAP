@@ -7,6 +7,7 @@ import Main from "./pages/Main";
 
 import Application from "./pages/Application";
 import Program from "./pages/Program";
+import ProgramDetail from "./pages/ProgramDetail";
 import Survey from "./pages/Survey";
 import MyPage from "./pages/MyPage";
 import AddProgram from "./pages/AddProgram";
@@ -31,6 +32,7 @@ function Router() {
         <Route path="/main" element={<Main />} />
         <Route path="/program/application" element={<Application />} />
         <Route path="/program" element={<Program />} />
+        <Route path="/program/:id" element={<ProgramDetail />} />
         <Route path="/survey" element={<Survey />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/admin/addprogram" element={<AddProgram />} />

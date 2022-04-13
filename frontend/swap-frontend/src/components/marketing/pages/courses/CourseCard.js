@@ -31,23 +31,23 @@ const CourseCard = ({ item, free, viewby, showprogressbar, extraclass }) => {
             </Link>
           </h3>
           <ListGroup as="ul" bsPrefix="list-inline" className="mb-3">
-            <ListGroup.Item as="li" bsPrefix="list-inline-item">
+            {/* <ListGroup.Item as="li" bsPrefix="list-inline-item">
               <i className="far fa-clock me-1"></i>
               {item.duration}
-            </ListGroup.Item>
-            <ListGroup.Item as="li" bsPrefix="list-inline-item">
+            </ListGroup.Item> */}
+            {/* <ListGroup.Item as="li" bsPrefix="list-inline-item">
               <LevelIcon level={item.level} />
               {item.level}
-            </ListGroup.Item>
+            </ListGroup.Item> */}
           </ListGroup>
-          <div className={`lh-1 d-flex align-items-center ${free || item.price === undefined || item.price <= 0 || item.discount === undefined ? "mb-5" : ""}`}>
+          {/* <div className={`lh-1 d-flex align-items-center ${free || item.price === undefined || item.price <= 0 || item.discount === undefined ? "mb-5" : ""}`}>
             <span className="text-warning me-1 mb-1">
               {" "}
               <Ratings rating={item.rating} />
             </span>
             <span className="text-warning me-1"> {item.rating.toFixed(1)}</span>
             <span className="fs-6 text-muted"> ({numberWithCommas(item.ratingby)})</span>
-          </div>
+          </div> */}
           <div className={`lh-1 mt-3 ${free || item.price === undefined || item.price <= 0 || item.discount === undefined ? "d-none" : ""}`}>
             {/* <span className="text-dark fw-bold">${item.price - item.discount}</span> <del className="fs-6 text-muted">${item.price}</del> */}
             <span className="text-dark fw-bold">D-5</span>

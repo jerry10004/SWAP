@@ -14,5 +14,5 @@ public interface ProgramDAO {
 	public void updateStatus(int program_id, int status);
 	List<ProgramReadNameDTO> readProgramName(int id);
 	public void edit(ProgramDTO program);
-
+	List<ProgramReadDTO> readByCategory(int category_id);
 }
