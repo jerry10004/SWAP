@@ -29,7 +29,7 @@
    	<update id="updateUser" parameterType="Integer">	
 		update User As U
 		inner join Admin As A on A.user_id = U.id
-		set U.status = 0
+		set U.status = 2
 		where  A.id = #{id};
    	</update>
    	<update id="updateDelDate" parameterType="hashmap">

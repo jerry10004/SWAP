@@ -65,6 +65,14 @@ public class ProgramServiceImpl implements ProgramService{
 	public void edit(ProgramDTO program) {
 		programDAO.edit(program);
 	}
+
+	@Override
+	public String readByCategory(int category_id) throws JsonProcessingException {
+		List<ProgramReadDTO> programDATA = programDAO.readByCategory(category_id);
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonString = mapper.writeValueAsString(programDATA);
+		return jsonString;
+	}
 	
 	
 

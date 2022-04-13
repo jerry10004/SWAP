@@ -15,6 +15,19 @@
 		order by P.regdate desc;
    	</select>
    	
+   	
+   	<select id="readByCategory" parameterType="Integer" resultType="ProgramRead">
+		 select P.id, A.name as name, P.program_name, P.category_id, P.quota, P.information, P.status, P.start_date, P.end_date
+		FROM Program AS P
+		LEFT JOIN Category as C
+		ON P.category_id = C.id
+		LEFT JOIN swap.Admin as A
+		ON P.admin_id = A.id
+		where  P.deldate is null AND C.id = #{category_id}
+		order by P.regdate desc;
+   	</select>
+   	
+   	
    	<select id="readProgramInformationByProgramId" parameterType="Integer" resultType="ProgramReadById">
 	   select P.id, P.program_name,P.category_id, P.quota, P.information, P.start_date, P.end_date
 		FROM Program AS P

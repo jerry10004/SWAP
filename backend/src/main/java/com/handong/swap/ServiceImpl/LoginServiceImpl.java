@@ -50,7 +50,7 @@ public class LoginServiceImpl implements LoginService{
 	    user = loginDAO.getUserByEmail(email);
 	    
 	    if(user.getStatus() == 1) {
-	    	AdminDTO admin = adminDAO.readAdminByUserId(user.getId());
+//	    	AdminDTO admin = adminDAO.readAdminByUserId(user.getId());
 	    }else if(user.getStatus() == -1) {
 	    	return "fail";
 	    }

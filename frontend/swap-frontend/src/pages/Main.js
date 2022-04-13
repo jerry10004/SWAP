@@ -8,10 +8,9 @@ import CourseSlider from "components/marketing/pages/courses/CourseSlider";
 
 // import sub components
 import HeroHeader from "components/marketing/pages/courses/course-index/HeroHeader";
-import CourseCard from "components/marketing/pages/courses/CourseCard";
 
 // import data files
-import { AllCoursesData } from "data/slider/AllCoursesData";
+import AllProgramsData from "data/slider/AllProgramsData";
 
 // import layouts
 import NavbarDefault from "layouts/marketing/navbars/NavbarDefault";
@@ -43,23 +42,18 @@ const Main = ({ login }) => {
                         </Nav.Link>
                       </Nav.Item>
                       <Nav.Item>
-                        <Nav.Link eventKey="camp" className="mb-sm-3 mb-md-0">
-                          캠프
-                        </Nav.Link>
-                      </Nav.Item>
-                      <Nav.Item>
                         <Nav.Link eventKey="volunteer" className="mb-sm-3 mb-md-0">
                           봉사
                         </Nav.Link>
                       </Nav.Item>
                       <Nav.Item>
-                        <Nav.Link eventKey="lecture" className="mb-sm-3 mb-md-0">
-                          특강
+                        <Nav.Link eventKey="camp" className="mb-sm-3 mb-md-0">
+                          캠프
                         </Nav.Link>
                       </Nav.Item>
                       <Nav.Item>
-                        <Nav.Link eventKey="exam" className="mb-sm-3 mb-md-0">
-                          시험
+                        <Nav.Link eventKey="event" className="mb-sm-3 mb-md-0">
+                          행사
                         </Nav.Link>
                       </Nav.Item>
                       <Nav.Item>
@@ -72,70 +66,82 @@ const Main = ({ login }) => {
                           맥북
                         </Nav.Link>
                       </Nav.Item>
+                      <Nav.Item>
+                        <Nav.Link eventKey="study" className="mb-sm-3 mb-md-0">
+                          프로젝트/스터디
+                        </Nav.Link>
+                      </Nav.Item>
+                      <Nav.Item>
+                        <Nav.Link eventKey="intern" className="mb-sm-3 mb-md-0">
+                          인턴/현장실습
+                        </Nav.Link>
+                      </Nav.Item>
+                      <Nav.Item>
+                        <Nav.Link eventKey="lecture" className="mb-sm-3 mb-md-0">
+                          특강
+                        </Nav.Link>
+                      </Nav.Item>
+                      <Nav.Item>
+                        <Nav.Link eventKey="etc" className="mb-sm-3 mb-md-0">
+                          기타
+                        </Nav.Link>
+                      </Nav.Item>
                     </Nav>
 
                     <Tab.Content>
                       <Tab.Pane eventKey="total" className="pb-4 p-4 ps-0 pe-0">
-                        <div className="pt-lg-3 pb-lg-3 pt-8 pb-6">
-                          <Container>
-                            <Row className="mb-4">
-                              <Col>
-                                <h2 className="mb-0 mx-2">대회</h2>
-                              </Col>
-                            </Row>
-                            <div className="position-relative">
-                              <CourseSlider recommended={true} />
-                            </div>
-                          </Container>
-                        </div>
-
-                        <div className="pb-lg-3 pt-lg-3">
-                          <Container>
-                            <Row className="mb-4">
-                              <Col>
-                                <h2 className="mb-0 mx-2">캠프</h2>
-                              </Col>
-                            </Row>
-                            <div className="position-relative">
-                              <CourseSlider popular={true} />
-                            </div>
-                          </Container>
-                        </div>
-
-                        <div className="pb-lg-8 pt-lg-3 py-6">
-                          <Container>
-                            <Row className="mb-4">
-                              <Col>
-                                <h2 className="mb-0 mx-2">봉사</h2>
-                              </Col>
-                            </Row>
-                            <div className="position-relative">
-                              <CourseSlider trending={true} />
-                            </div>
-                          </Container>
-                        </div>
+                        <Row>
+                          <AllProgramsData category="0" />
+                        </Row>
                       </Tab.Pane>
-
                       <Tab.Pane eventKey="competition" className="pb-4 p-4 ps-0 pe-0">
                         <Row>
-                          {AllCoursesData.filter(function (datasource) {
-                            return datasource.id === 1 || datasource.id === 2 || datasource.id === 3 || datasource.id === 4;
-                          }).map((item, index) => (
-                            <Col lg={3} md={6} sm={12} key={index}>
-                              <CourseCard item={item} />
-                            </Col>
-                          ))}
+                          <AllProgramsData category="1" />
+                        </Row>
+                      </Tab.Pane>
+                      <Tab.Pane eventKey="volunteer" className="pb-4 p-4 ps-0 pe-0">
+                        <Row>
+                          <AllProgramsData category="2" />
                         </Row>
                       </Tab.Pane>
                       <Tab.Pane eventKey="camp" className="pb-4 p-4 ps-0 pe-0">
                         <Row>
-                          {AllCoursesData.filter(function (datasource) {
-                            return datasource.id === 1 || datasource.id === 2 || datasource.id === 3 || datasource.id === 4;
-                          }).map((item, index) => (
-                            <Col lg={3} md={6} sm={12} key={index}>
-                              <CourseCard item={item} />
-                            </Col>
-                          ))}
+                          <AllProgramsData category="3" />
+                        </Row>
+                      </Tab.Pane>
+                      <Tab.Pane eventKey="event" className="pb-4 p-4 ps-0 pe-0">
+                        <Row>
+                          <AllProgramsData category="4" />
+                        </Row>
+                      </Tab.Pane>
+                      <Tab.Pane eventKey="club" className="pb-4 p-4 ps-0 pe-0">
+                        <Row>
+                          <AllProgramsData category="5" />
+                        </Row>
+                      </Tab.Pane>
+                      <Tab.Pane eventKey="macbook" className="pb-4 p-4 ps-0 pe-0">
+                        <Row>
+                          <AllProgramsData category="6" />
+                        </Row>
+                      </Tab.Pane>
+                      <Tab.Pane eventKey="study" className="pb-4 p-4 ps-0 pe-0">
+                        <Row>
+                          <AllProgramsData category="7" />
+                        </Row>
+                      </Tab.Pane>
+                      <Tab.Pane eventKey="intern" className="pb-4 p-4 ps-0 pe-0">
+                        <Row>
+                          <AllProgramsData category="8" />
+                        </Row>
+                      </Tab.Pane>
+                      <Tab.Pane eventKey="lecture" className="pb-4 p-4 ps-0 pe-0">
+                        <Row>
+                          <AllProgramsData category="9" />
+                        </Row>
+                      </Tab.Pane>
+                      <Tab.Pane eventKey="etc" className="pb-4 p-4 ps-0 pe-0">
+                        <Row>
+                          <AllProgramsData category="10" />
                         </Row>
                       </Tab.Pane>
                     </Tab.Content>
