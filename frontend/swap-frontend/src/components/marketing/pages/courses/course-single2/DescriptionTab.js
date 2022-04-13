@@ -5,53 +5,23 @@ import { Col, Row, ListGroup } from "react-bootstrap";
 const DescriptionTab = () => {
   return (
     <Fragment>
-      <div className="mb-4">
-        <h3 className="mb-2">Course Descriptions</h3>
-        <p>
-          If you’re learning to program for the first time, or if you’re coming from a different language, this course, JavaScript: Getting Started, will give you the basics for coding in JavaScript.
-          First, you'll discover the types of applications that can be built with JavaScript, and the platforms they’ll run on.
-        </p>
-        <p>
-          Next, you’ll explore the basics of the language, giving plenty of examples. Lastly, you’ll put your JavaScript knowledge to work and modify a modern, responsive web page. When you’re
-          finished with this course, you’ll have the skills and knowledge in JavaScript to create simple programs, create simple web applications, and modify web pages.
-        </p>
+      <div className="h4">
+        1. 강 사 : 김동현 CTO(뉴로핏) <br />
+        <br />
+        2. 강의 주제 : Neuroimaging for Healthy Aging: Diagnosis and Prognosis using AI <br />
+        <br />
+        3. 일 시 : 2022년 4월 13일(수) 오후 1시~2시15분 <br />
+        <br />
+        4. 장 소 : 온라인 Zoom https://handong.zoom.us/j/81117381230?pwd=RURweXY2S2RYeXk3aEhqUU84TUFNZz09
+        <br />
+        회의 ID: 811 1738 1230 암호: 123123
+        <br />
+        <br />
+        5. 소감문 제출 방법 : 링크 접속 후 제출 (https://forms.gle/8XaCQMV1Cpn3WZRV7) <br />* 공프기 및 캡스톤 수강생 외 학생들은 강의 시청 후 반드시 소감문을 제출하셔야 합니다. <br />
+        (4. 15(금) 밤12시까지)
+        <br />
+        <br />☎ 문의 : SW중심대학 지원사업단 김선영 (T.260-1492, E-Mail : pooh8276@handong.edu)
       </div>
-      <h4 className="mb-3">What you’ll learn</h4>
-      <Row className="mb-3">
-        <Col lg={6} md={6} sm={12}>
-          <ListGroup bsPrefix="list-unstyled" variant="flush">
-            <ListGroup.Item bsPrefix=" " className="d-flex mb-2">
-              <i className="far fa-check-circle text-success me-2 mt-2"></i>
-              <span>Recognize the importance of understanding your objectives when addressing an audience.</span>
-            </ListGroup.Item>
-            <ListGroup.Item bsPrefix=" " className="d-flex mb-2">
-              <i className="far fa-check-circle text-success me-2 mt-2"></i>
-              <span>Identify the fundaments of composing a successful close.</span>
-            </ListGroup.Item>
-            <ListGroup.Item bsPrefix=" " className="d-flex mb-2">
-              <i className="far fa-check-circle text-success me-2 mt-2"></i>
-              <span>Explore how to connect with your audience through crafting compelling stories.</span>
-            </ListGroup.Item>
-          </ListGroup>
-        </Col>
-        <Col lg={6} md={6} sm={12}>
-          <ListGroup bsPrefix="list-unstyled" variant="flush">
-            <ListGroup.Item bsPrefix=" " className="d-flex mb-2">
-              <i className="far fa-check-circle text-success me-2 mt-1"></i> <span>Examine ways to connect with your audience by personalizing your content.</span>
-            </ListGroup.Item>
-            <ListGroup.Item bsPrefix=" " className="d-flex mb-2">
-              <i className="far fa-check-circle text-success me-2 mt-1"></i>
-              <span>Break down the best ways to exude executive presence.</span>
-            </ListGroup.Item>
-            <ListGroup.Item bsPrefix=" " className="d-flex mb-2">
-              <i className="far fa-check-circle text-success me-2 mt-1"></i>
-              <span>Explore how to communicate the unknown in an impromptu communication.</span>
-            </ListGroup.Item>
-          </ListGroup>
-        </Col>
-      </Row>
-      <p>Maecenas viverra condimentum nulla molestie condimentum. Nunc ex libero, feugiat quis lectus vel, ornare euismod ligula. Aenean sit amet arcu nulla.</p>
-      <p>Duis facilisis ex a urna blandit ultricies. Nullam sagittis ligula non eros semper, nec mattis odio ullamcorper. Phasellus feugiat sit amet leo eget consectetur.</p>
     </Fragment>
   );
 };
