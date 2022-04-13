@@ -39,7 +39,7 @@ const SignUpAdmin = (props) => {
         <Row>
           <Col lg={12} md={12} className="mb-3">
             <Form.Label>이름</Form.Label>
-            <Form.Control type="text" id="username" placeholder="이름을 입력하세요 " value={name} readOnly />
+            <Form.Control type="text" id="username" placeholder="이름을 입력하세요 " value={name} />
           </Col>
           <Col lg={12} md={12} className="mb-3">
             <Form.Label>이메일 </Form.Label>

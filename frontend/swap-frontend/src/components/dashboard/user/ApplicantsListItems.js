@@ -88,14 +88,12 @@ const StudentsListItems = (props) => {
 
     params.append("id", updateApplicantId);
     params.append("status", updateApplicantStatus);
-    console.log("선택된 status: ", applicant_status);
-    console.log("id 리스트: ", updateApplicantStatus.toString);
 
     if (updateApplicantId != "") {
-      if (window.confirm("강의를 수정하시겠습니까?")) {
+      if (window.confirm("사용자 상태를 수정하시겠습니까?")) {
         const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "applicant/applicants/" + program_id + "/update", params);
         readApplicantInformation(props.param4.id);
-        alert("강의가 수정되었습니다.");
+        alert("사용자 상태가 수정되었습니다.");
       }
     }
   };

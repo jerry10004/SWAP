@@ -6,6 +6,7 @@ import axios from "axios";
 const SignUpStudent = (props) => {
   const { name, email, tokenObj } = props;
   const [formData, setFormData] = useState({
+    name: name,
     student_id: "",
     phone: "",
     department: "",
@@ -26,7 +27,7 @@ const SignUpStudent = (props) => {
   const addUser = async () => {
     var params = new URLSearchParams();
     console.log(formData.semester.toString());
-    params.append("name", name);
+    params.append("name", formData.name);
     params.append("email", email);
     params.append("student_id", formData.student_id);
     params.append("phone", formData.phone);
@@ -53,7 +54,7 @@ const SignUpStudent = (props) => {
         <Row>
           <Col lg={6} md={6} className="mb-3">
             <Form.Label>이름</Form.Label>
-            <Form.Control type="text" id="username" placeholder="이름을 입력하세요 " value={name} readOnly />
+            <Form.Control type="text" id="username" placeholder="이름을 입력하세요 " name="name" onChange={handleChange} value={formData.name} required />
           </Col>
           <Col lg={6} md={6} className="mb-3">
             <Form.Label>이메일 </Form.Label>
