@@ -30,7 +30,7 @@ function Router() {
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/main" element={<Main />} />
-        <Route path="/program/application" element={<Application />} />
+        <Route path="/program/:id/application" element={<Application />} />
         <Route path="/program" element={<Program />} />
         <Route path="/program/:id" element={<ProgramDetail />} />
         <Route path="/survey" element={<Survey />} />
