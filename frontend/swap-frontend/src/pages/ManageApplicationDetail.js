@@ -1,6 +1,6 @@
 // import node module libraries
 import { Fragment } from "react";
-import { Row, Col, Card, Tab, Breadcrumb, Nav } from "react-bootstrap";
+import { Row, Col, Card, Tab, Breadcrumb, Nav, ListGroup, Table } from "react-bootstrap";
 import React, { useState, useLayoutEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import $ from "jquery";
@@ -18,9 +18,14 @@ require("formBuilder/dist/form-render.min.js");
 const ManageApplicationDetail = () => {
   const [showMenu, setShowMenu] = useState(true);
   const [applicationName, setApplicationName] = useState();
+  const [programName, setProgramName] = useState();
+
   var applicationLoading = false;
+  // var programNameLoading = false;
   var formData = "";
   const [formDataLoading, setFormDataLoading] = useState(false);
+  const [programNameLoading, setProgramNameLoading] = useState(false);
+
   var formRenderInstance = "";
   var json_total = "";
   const ToggleMenu = () => {
@@ -32,6 +37,7 @@ const ManageApplicationDetail = () => {
   useLayoutEffect(() => {
     readApplication();
     componentDidMount();
+    // readProgramName();
   }, []);
 
   const readApplication = async () => {
@@ -47,6 +53,7 @@ const ManageApplicationDetail = () => {
       applicationLoading = true;
       if (applicationLoading && formData !== "") {
         componentDidMount();
+        readProgramName();
       }
     }
   };
@@ -55,6 +62,26 @@ const ManageApplicationDetail = () => {
     const fbRender = document.getElementById("fb-editor");
     formRenderInstance = $(fbRender).formRender({ formData });
     setFormDataLoading(true);
+  };
+
+  const readProgramName = async () => {
+    // programNameLoading = false;
+    setProgramNameLoading(false);
+    console.log("55555");
+    if (applicationLoading) {
+      console.log("666666");
+      var params = new URLSearchParams();
+      if (id["id"] != null) {
+        console.log("777777");
+        params.append("id", id["id"]);
+        const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "application/readProgramName", params);
+
+        console.log("@@@@@@@@ ", response.data);
+        setProgramName(response.data);
+
+        setProgramNameLoading(true);
+      }
+    }
   };
 
   return (
@@ -104,16 +131,42 @@ const ManageApplicationDetail = () => {
                               신청서
                             </Nav.Link>
                           </Nav.Item>
+                          <Nav.Item>
+                            <Nav.Link eventKey="program" className="mb-sm-3 mb-md-0">
+                              사용중인 프로그램
+                            </Nav.Link>
+                          </Nav.Item>
                         </Nav>
                       </Card.Header>
                       <Card.Body className="p-5">
-                        {formDataLoading ? (
-                          <div>
-                            <form id="fb-editor"></form>
-                          </div>
-                        ) : (
-                          ""
-                        )}
+                        <Tab.Content>
+                          <Tab.Pane eventKey="application" className="pb-4">
+                            {formDataLoading ? (
+                              <div>
+                                <form id="fb-editor"></form>
+                              </div>
+                            ) : (
+                              ""
+                            )}
+                          </Tab.Pane>
+                          <Tab.Pane eventKey="program" className="pb-4">
+                            {programNameLoading ? (
+                              <div className="table-responsive ">
+                                <Table className="text-nowrap">
+                                  <tbody>
+                                    {programName.map((subitem, subindex) => (
+                                      <tr>
+                                        <td>{subitem}</td>
+                                      </tr>
+                                    ))}
+                                  </tbody>
+                                </Table>
+                              </div>
+                            ) : (
+                              ""
+                            )}
+                          </Tab.Pane>
+                        </Tab.Content>
                       </Card.Body>
                     </Card>
                   </Tab.Container>

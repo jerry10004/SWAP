@@ -46,11 +46,19 @@
    	</select>
 
    	<select id="readApplicationForm" resultType="Application">
-	   select A.id, A.content
+	   select A.id, A.content,A.name
 		from Application AS A
 		LEFT JOIN Program as P
 		ON P.application_form = A.id
 		where P.id = #{id}
    	</select>
+   	
+   	
+   	 <select id="readProgramName" parameterType="Integer" resultType="String">
+	   select P.program_name
+		FROM Program AS P
+		where P.application_form = #{id}
+   	</select>
+   	
    	
 </mapper>

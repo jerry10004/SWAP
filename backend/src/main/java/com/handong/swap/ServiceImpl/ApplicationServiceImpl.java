@@ -85,5 +85,14 @@ public class ApplicationServiceImpl implements ApplicationService{
 		return jsonString;
 	}
 
+
+		@Override
+		public String readProgramName(int id) throws JsonProcessingException {
+			List<String> applicationDATA = applicationDAO.readProgramName(id);
+			ObjectMapper mapper = new ObjectMapper();
+			String jsonString = mapper.writeValueAsString(applicationDATA);
+			return jsonString;
+		}
+
 	
 }

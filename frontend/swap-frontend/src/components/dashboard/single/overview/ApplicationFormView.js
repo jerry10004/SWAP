@@ -20,9 +20,11 @@ const ApplicationFormView = (props) => {
   const [applicantInformation, setApplicantInformation] = useState(null);
   const [applicantInformationLoading, setApplicantInformationLoading] = useState(null);
   const [userInfo, setUserInfo] = useState();
+  const [applicationName, setApplicationName] = useState();
   const [originalFormData, setoriginalFormData] = useState([]);
   const [studentFormData, setstudentFormData] = useState([]);
   const [applicantClick, setApplicantClick] = useState(false);
+  const [applicationNameLoading, setApplicationNameLoading] = useState(false);
 
   useLayoutEffect(() => {
     //console.log(props.param2);
@@ -42,10 +44,14 @@ const ApplicationFormView = (props) => {
   };
 
   const readFormData = async (id) => {
+    setApplicationNameLoading(false);
     console.log("id", id);
     const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "application/readApplicationForm/" + id);
     console.log(response.data[0].content);
     var json_total = response.data[0].content;
+    console.log("!!!!!!!!! ", response.data[0].name);
+    setApplicationName(response.data[0].name);
+    setApplicationNameLoading(true);
     setoriginalFormData(json_total);
     console.log(originalFormData);
   };
@@ -100,9 +106,14 @@ const ApplicationFormView = (props) => {
           <>
             <Col xl={9} lg={12} md={12} sm={12} className="mb-4 mb-xl-0">
               <Card>
-                <Card.Header>
-                  <h4>신청서 보기</h4>
-                </Card.Header>
+                {applicationNameLoading ? (
+                  <Card.Header>
+                    <h4>{applicationName}</h4>
+                  </Card.Header>
+                ) : (
+                  ""
+                )}
+
                 <Card.Body>
                   {/*  Form */}
                   <Form className="row  " id="application">
@@ -185,9 +196,16 @@ const ApplicationFormView = (props) => {
         ) : (
           <Col xl={9} lg={12} md={12} sm={12} className="mb-4 mb-xl-0">
             <Card>
-              <Card.Header>
+              {/* <Card.Header>
                 <h4>신청서 보기</h4>
-              </Card.Header>
+              </Card.Header> */}
+              {applicationNameLoading ? (
+                <Card.Header>
+                  <h4>{applicationName}</h4>
+                </Card.Header>
+              ) : (
+                ""
+              )}
               <Card.Body>
                 {/*  Form */}
                 <Form className="row  " id="application">
