@@ -139,6 +139,8 @@ public class ProgramController {
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		Date start_date = (Date) formatter.parse(httpServletRequest.getParameter("start_date"));
 		Date end_date = (Date) formatter.parse(httpServletRequest.getParameter("end_date"));
+		Date Applystart_date = (Date) formatter.parse(httpServletRequest.getParameter("Applystart_date"));
+		Date Applyend_date = (Date) formatter.parse(httpServletRequest.getParameter("Applyend_date"));
 		
 		program.setAdmin_id(Integer.parseInt(httpServletRequest.getParameter("admin_id")));
 		program.setCategory_id(Integer.parseInt(httpServletRequest.getParameter("category_id")));
@@ -148,7 +150,10 @@ public class ProgramController {
 		program.setInformation(httpServletRequest.getParameter("information"));
 		program.setStart_date(start_date);
 		program.setEnd_date(end_date);
-		
+		program.setManager_name(httpServletRequest.getParameter("manager_name"));
+		program.setManager_contact(httpServletRequest.getParameter("manager_contact"));
+		program.setApplystart_date(Applystart_date);
+		program.setApplyend_date(Applyend_date);
 		
 		int result = programService.add(program);
 		
@@ -184,12 +189,18 @@ public class ProgramController {
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		Date start_date = (Date) formatter.parse(httpServletRequest.getParameter("start_date"));
 		Date end_date = (Date) formatter.parse(httpServletRequest.getParameter("end_date"));
+		Date Applystart_date = (Date) formatter.parse(httpServletRequest.getParameter("Applystart_date"));
+		Date Applyend_date = (Date) formatter.parse(httpServletRequest.getParameter("Applyend_date"));
 		
 		program.setId(Integer.parseInt(httpServletRequest.getParameter("id")));
 		program.setProgram_name(httpServletRequest.getParameter("program_name"));
 		program.setInformation(httpServletRequest.getParameter("information"));
 		program.setStart_date(start_date);
 		program.setEnd_date(end_date);
+		program.setApplystart_date(Applystart_date);
+		program.setApplyend_date(Applyend_date);
+		program.setManager_name(httpServletRequest.getParameter("manager_name"));
+		program.setManager_contact(httpServletRequest.getParameter("manager_contact"));
 		program.setQuota(Integer.parseInt(httpServletRequest.getParameter("quota")));
 		
 //		String category = httpServletRequest.getParameter("category_name");

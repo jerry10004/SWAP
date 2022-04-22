@@ -17,6 +17,12 @@ const ProgramInformation = (props) => {
   const [editEnd, seteditEnd] = useState(false);
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
+  const [Applystart_date, setApplyStart_date] = useState();
+  const [Applyend_date, setApplyEnd_date] = useState();
+  const [ApplystartDate, setApplyStartDate] = useState();
+  const [ApplyendDate, setApplyEndDate] = useState();
+  const [editApplyStart, seteditApplyStart] = useState(false);
+  const [editApplyEnd, seteditApplyEnd] = useState(false);
 
   useLayoutEffect(() => {
     readProgramInformation(props.param1.id);
@@ -36,9 +42,12 @@ const ProgramInformation = (props) => {
     setProgramInformationLoading(false);
     const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "program/information/" + id);
     setProgramInformation(response.data);
+    console.log(response.data);
     seteditInfo(response.data[0]);
     setStart_date(response.data[0].start_date);
     setEnd_date(response.data[0].end_date);
+    setApplyStart_date(response.data[0].Applystart_date);
+    setApplyEnd_date(response.data[0].Applyend_date);
     setProgramInformationLoading(true);
   };
 
@@ -71,6 +80,8 @@ const ProgramInformation = (props) => {
 
     if (editStart) editInfo.start_date = getFormatDate(startDate);
     if (editEnd) editInfo.end_date = getFormatDate(endDate);
+    if (editApplyStart) editInfo.Applystart_date = getFormatDate(ApplystartDate);
+    if (editApplyEnd) editInfo.Applyend_date = getFormatDate(ApplyendDate);
 
     params.append("id", editInfo.id);
     params.append("program_name", editInfo.program_name);
@@ -79,12 +90,18 @@ const ProgramInformation = (props) => {
     params.append("category_id", editInfo.category_Id);
     params.append("start_date", editInfo.start_date);
     params.append("end_date", editInfo.end_date);
+    params.append("Applystart_date", editInfo.Applystart_date);
+    params.append("Applyend_date", editInfo.Applyend_date);
+    params.append("manager_name", editInfo.manager_name);
+    params.append("manager_contact", editInfo.manager_contact);
 
     if (window.confirm("프로그램을 수정하시겠습니까?") && editInfo) {
       const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "program/edit", params);
       alert(" 프로그램이 수정 되었습니다.");
       seteditStart(false);
       seteditEnd(false);
+      seteditApplyStart(false);
+      seteditApplyEnd(false);
       readProgramInformation(props.param1.id);
       window.location.reload();
     }
@@ -116,7 +133,7 @@ const ProgramInformation = (props) => {
                         <Form.Label>
                           프로그램 설명 <span className="text-danger">*</span>
                         </Form.Label>
-                        <Form.Control as="textarea" rows={3} name="program_description" value={programInformation[0].information} placeholder="프로그램에 관한 정보를 입력하세요." disabled />
+                        <Form.Control as="textarea" rows={10} name="program_description" value={programInformation[0].information} placeholder="프로그램에 관한 정보를 입력하세요." disabled />
                       </Form.Group>
                     </Col>
 
@@ -157,6 +174,42 @@ const ProgramInformation = (props) => {
                     </Col>
 
                     <Col md={6} xs={12} className="mb-4">
+                      <Form.Label>
+                        신청 시작 날짜 <span className="text-danger">*</span>
+                      </Form.Label>
+                      <InputGroup className="datePicker-wrapper">
+                        <DatePicker
+                          locale={ko}
+                          value={programInformation[0].applystart_date}
+                          dateFormat="yyyy-MM-dd HH:mm"
+                          className="datePicker"
+                          name="Applystart_date"
+                          placeholderText="신청 시작 날짜를 선택해주세요."
+                          showTimeSelect
+                          disabled
+                        />
+                      </InputGroup>
+                    </Col>
+
+                    <Col md={6} xs={12} className="mb-4">
+                      <Form.Label>
+                        신청 마감 날짜 <span className="text-danger">*</span>
+                      </Form.Label>
+                      <InputGroup>
+                        <DatePicker
+                          locale={ko}
+                          value={programInformation[0].applyend_date}
+                          dateFormat="yyyy-MM-dd HH:mm"
+                          className="datePicker"
+                          placeholderText="신청 마감 날짜를 선택해주세요."
+                          name="Applyend_date"
+                          showTimeSelect
+                          disabled
+                        />
+                      </InputGroup>
+                    </Col>
+
+                    <Col md={6} xs={12} className="mb-4">
                       <Form.Group>
                         <Form.Label>
                           프로그램 정원 <span className="text-danger">*</span>
@@ -179,6 +232,20 @@ const ProgramInformation = (props) => {
                           <option value="6">기타</option>
                         </select>
                         <Form.Control.Feedback type="invalid">카테고리를 선택해주세요.</Form.Control.Feedback>
+                      </Form.Group>
+                    </Col>
+
+                    <Col md={6} xs={12} className="mb-4">
+                      <Form.Group controlId="manager_name">
+                        <Form.Label>담당자</Form.Label>
+                        <Form.Control type="text" placeholder="담당자 이름을 입력하세요." name="manager_name" value={programInformation[0].manager_name} disabled />
+                      </Form.Group>
+                    </Col>
+
+                    <Col md={6} xs={12} className="mb-4">
+                      <Form.Group controlId="manager_contact">
+                        <Form.Label>담당자 연락처</Form.Label>
+                        <Form.Control type="text" placeholder="담당자 연락처를 입력하세요." name="manager_contact" value={programInformation[0].manager_contact} disabled />
                       </Form.Group>
                     </Col>
                   </Row>
@@ -214,7 +281,7 @@ const ProgramInformation = (props) => {
                         <Form.Label>
                           프로그램 설명 <span className="text-danger">*</span>
                         </Form.Label>
-                        <Form.Control as="textarea" rows={3} name="information" onChange={onEdit} placeholder="프로그램에 관한 정보를 입력하세요." />
+                        <Form.Control as="textarea" rows={10} name="information" onChange={onEdit} placeholder="프로그램에 관한 정보를 입력하세요." />
                       </Form.Group>
                     </Col>
 
@@ -259,6 +326,47 @@ const ProgramInformation = (props) => {
                         />
                       </InputGroup>
                     </Col>
+                    <Col md={6} xs={12} className="mb-4">
+                      <Form.Label>
+                        신청 시작 날짜 <span className="text-danger">*</span>
+                      </Form.Label>
+                      <InputGroup className="datePicker-wrapper">
+                        <DatePicker
+                          locale={ko}
+                          dateFormat="yyyy-MM-dd HH:mm"
+                          className="datePicker"
+                          name="Applystart_date"
+                          placeholderText={programInformation[0].applystart_date}
+                          selected={ApplystartDate}
+                          onChange={(date) => {
+                            setApplyStartDate(date);
+                            seteditApplyStart(true);
+                          }}
+                          showTimeSelect
+                        />
+                      </InputGroup>
+                    </Col>
+
+                    <Col md={6} xs={12} className="mb-4">
+                      <Form.Label>
+                        신청 마감 날짜 <span className="text-danger">*</span>
+                      </Form.Label>
+                      <InputGroup>
+                        <DatePicker
+                          locale={ko}
+                          dateFormat="yyyy-MM-dd HH:mm"
+                          className="datePicker"
+                          placeholderText={programInformation[0].applyend_date}
+                          name="Applyend_date"
+                          selected={ApplyendDate}
+                          onChange={(date) => {
+                            setApplyEndDate(date);
+                            seteditApplyEnd(true);
+                          }}
+                          showTimeSelect
+                        />
+                      </InputGroup>
+                    </Col>
 
                     <Col md={6} xs={12} className="mb-4">
                       <Form.Group>
@@ -284,6 +392,20 @@ const ProgramInformation = (props) => {
                           <option value="6">기타</option>
                         </select>
                         <Form.Control.Feedback type="invalid">카테고리를 선택해주세요.</Form.Control.Feedback>
+                      </Form.Group>
+                    </Col>
+
+                    <Col md={6} xs={12} className="mb-4">
+                      <Form.Group controlId="manager_name">
+                        <Form.Label>담당자</Form.Label>
+                        <Form.Control type="text" placeholder="담당자 이름을 입력하세요." name="manager_name" value={programInformation[0].manager_name} onChange={onEdit} />
+                      </Form.Group>
+                    </Col>
+
+                    <Col md={6} xs={12} className="mb-4">
+                      <Form.Group controlId="manager_contact">
+                        <Form.Label>담당자 연락처</Form.Label>
+                        <Form.Control type="text" placeholder="담당자 연락처를 입력하세요." name="manager_contact" value={programInformation[0].manager_contact} onChange={onEdit} />
                       </Form.Group>
                     </Col>
                   </Row>
