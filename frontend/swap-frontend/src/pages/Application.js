@@ -34,12 +34,12 @@ const Application = () => {
   }, []);
 
   const readApplicantInformation = async (id) => {
-    console.log(id);
+    // console.log("111111 ", id);
     setApplicantInformationLoading(false);
     const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "user/loggedinUser/" + id);
     setApplicantInformation(response.data);
     setApplicantInformationLoading(true);
-    console.log(applicantInformation);
+    // console.log("222222 ", applicantInformation);
   };
 
   const readProgramInformation = async () => {
@@ -49,7 +49,7 @@ const Application = () => {
     if (id["id"] != null) {
       params.append("id", id["id"]);
       const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "program/information/" + id["id"]);
-      console.log("~~~ ", response.data[0]);
+      // console.log("333333 ", response.data[0]);
       setProgramInfo(response.data[0]);
       setProgramInfoLoading(true);
     }

@@ -56,6 +56,7 @@
     "react-youtube": "^7.13.1",
     "sass": "^1.50.0",
     "sass-loader": "^10.2.1",
+    "shebang-regex": "4.0.0",
     "simplebar-react": "^2.3.4",
     "styled-components": "5.3.5",
     "styled-react-modal": "3.0.0",
