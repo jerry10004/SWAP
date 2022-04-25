@@ -6,7 +6,7 @@ import { Image, Navbar, Nav, Container, Form, Dropdown, Button } from "react-boo
 import { useMediaQuery } from "react-responsive";
 import { GoogleLogin, GoogleLogout } from "react-google-login";
 import axios from "axios";
-import LoginModal from "./LoginModal";
+import "../../../assets/scss/navbar.scss";
 
 // import media files
 import Logo from "assets/images/SWAPLogo.png";
