@@ -20,9 +20,9 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        {window.sessionStorage.getItem("token") !== null && parseInt(window.sessionStorage.getItem("status")) === 1 && window.sessionStorage.getItem("expires_at") >= today.getTime() ? (
+        {window.sessionStorage.getItem("token") !== null && parseInt(window.sessionStorage.getItem("status")) === 0 && window.sessionStorage.getItem("expires_at") >= today.getTime() ? (
           <Admin />
-        ) : window.sessionStorage.getItem("token") !== null && parseInt(window.sessionStorage.getItem("status")) === 0 && window.sessionStorage.getItem("expires_at") >= today.getTime() ? (
+        ) : window.sessionStorage.getItem("token") !== null && parseInt(window.sessionStorage.getItem("status")) === 1 && window.sessionStorage.getItem("expires_at") >= today.getTime() ? (
           <User />
         ) : (
           <NotLogin />
