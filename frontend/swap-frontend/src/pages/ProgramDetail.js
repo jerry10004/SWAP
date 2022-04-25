@@ -32,6 +32,7 @@ const Program = () => {
       params.append("id", id["id"]);
       const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "program/information/" + id["id"]);
       setProgramInfo(response.data[0]);
+      console.log(response.data[0]);
       setProgramInfoLoading(true);
     }
   };
@@ -65,11 +66,13 @@ const Program = () => {
                     <div className="d-flex justify-content-between">
                       <div>
                         <Icon path={mdiCalendarBlank} size={0.7} />
-                        <span>신청기간 : 2022-04-01 ~ 2022-05-01</span>
+                        <span>
+                          신청기간 : {programInfo.start_date} ~ {programInfo.end_date}
+                        </span>
                         <br />
                         <Icon path={mdiAccountMultipleOutline} size={0.7} />
                         <span>
-                          신청현황 : {programInfo.applicants_num}0명 / {programInfo.quota}명{" "}
+                          신청현황 : {programInfo.applicants_num}명 / {programInfo.quota}명{" "}
                         </span>
                       </div>
                       <div className="d-flex justify-content-end">
