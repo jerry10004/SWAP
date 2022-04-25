@@ -67,4 +67,10 @@ public class ApplicationDAOImpl implements ApplicationDAO {
 		return sqlSession.selectList("Application.readApplicationForm", id);
 	}
 
+
+	@Override
+	public List<String> readProgramName(int id) {
+		return sqlSession.selectList("Application.readProgramName", id);
+	}
+
 }
