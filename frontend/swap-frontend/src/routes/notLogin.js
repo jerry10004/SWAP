@@ -4,8 +4,8 @@ import Main from "../pages/Main";
 import SignIn from "../pages/SignIn";
 import SignUp from "../pages/SignUp";
 import Application from "../pages/Application";
-import Program from "../pages/Program";
 import ProgramDetail from "../pages/ProgramDetail";
+import ProgramPractice from "../pages/ProgramPractice";
 
 function Admin() {
   return (
@@ -18,8 +18,8 @@ function Admin() {
         <Route path="/admin/*" element={<Navigate replace to="/" />} />
         <Route path="/mypage" element={<Navigate replace to="/" />} />
         <Route path="/program/:id/application" element={<Application />} />
-        <Route path="/program" element={<Program />} />
         <Route path="/program/:id" element={<ProgramDetail />} />
+        <Route path="/programPractice" element={<ProgramPractice />} />
       </Routes>
     </>
   );

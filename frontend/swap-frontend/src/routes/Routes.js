@@ -6,7 +6,7 @@ import "assets/scss/theme.scss";
 import Main from "../pages/Main";
 
 import Application from "../pages/Application";
-import Program from "../pages/Program";
+import Program from "../pages/ProgramDetail";
 import ProgramDetail from "../pages/ProgramDetail";
 import Survey from "../pages/Survey";
 import MyPage from "../pages/MyPage";

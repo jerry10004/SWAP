@@ -3,7 +3,6 @@ import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import Main from "../pages/Main";
 import MyPage from "../pages/MyPage";
 import Application from "../pages/Application";
-import Program from "../pages/Program";
 import ProgramDetail from "../pages/ProgramDetail";
 
 function Admin() {
@@ -15,7 +14,6 @@ function Admin() {
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/admin/*" element={<Navigate replace to="/" />} />
         <Route path="/program/:id/application" element={<Application />} />
-        <Route path="/program" element={<Program />} />
         <Route path="/program/:id" element={<ProgramDetail />} />
       </Routes>
     </>

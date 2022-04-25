@@ -14,7 +14,6 @@ import ApplicationFormView from "components/dashboard/single/overview/Applicatio
 import AdminMain from "../pages/Admin";
 import MyPage from "../pages/MyPage";
 import Application from "../pages/Application";
-import Program from "../pages/Program";
 import ProgramDetail from "../pages/ProgramDetail";
 
 function Admin() {
@@ -34,7 +33,6 @@ function Admin() {
       <Route path="/main" element={<Main />} />
       <Route path="/mypage" element={<MyPage />} />
       <Route path="/program/:id/application" element={<Application />} />
-      <Route path="/program" element={<Program />} />
       <Route path="/program/:id" element={<ProgramDetail />} />
     </Routes>
   );
