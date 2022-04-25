@@ -71,7 +71,7 @@ const Program = () => {
                       </div>
                       <div className="d-flex justify-content-end">
                         <div>
-                          <Link to="/program/application" className="btn btn-success">
+                          <Link to={"/program/" + programInfo.id.toString() + "/application"} className="btn btn-success">
                             신청하기
                           </Link>
                         </div>
