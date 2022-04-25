@@ -25,11 +25,17 @@ const AddNewCourse = () => {
     program_img: "img",
     start_date: "",
     end_date: "",
+    Applystart_date: "",
+    Applyend_date: "",
+    manager_name: "",
+    manager_contact: "",
     application_form: "",
   });
 
   const [start_date, setStart_date] = useState(new Date());
   const [end_date, setEnd_date] = useState(new Date());
+  const [Applystart_date, setApplyStart_date] = useState(new Date());
+  const [Applyend_date, setApplyEnd_date] = useState(new Date());
   const [validated, setValidated] = useState(false);
 
   const handleChange = (event) => {
@@ -72,6 +78,8 @@ const AddNewCourse = () => {
     var params = new URLSearchParams();
     var formattedStartDate = getFormatDate(start_date);
     var formattedEndDate = getFormatDate(end_date);
+    var formattedApplyStartDate = getFormatDate(Applystart_date);
+    var formattedApplyEndDate = getFormatDate(Applyend_date);
 
     params.append("admin_id", "8");
     params.append("category_id", formData.program_category);
@@ -81,6 +89,10 @@ const AddNewCourse = () => {
     params.append("information", formData.program_description);
     params.append("start_date", formattedStartDate);
     params.append("end_date", formattedEndDate);
+    params.append("Applystart_date", formattedApplyStartDate);
+    params.append("Applyend_date", formattedApplyEndDate);
+    params.append("manager_name", formData.manager_name);
+    params.append("manager_name", formData.manager_contact);
     if (window.confirm("프로그램을 추가하시겠습니까?")) {
       const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "program/add", params);
       alert(formData.program_title + " 프로그램이 추가 되었습니다.");
@@ -92,7 +104,19 @@ const AddNewCourse = () => {
     {
       id: 1,
       title: "프로그램 기본 정보 작성",
-      content: <BasicInformation data={formData} handleChange={handleChange} setStart_date={setStart_date} setEnd_date={setEnd_date} next={next} validated={validated} setValidated={setValidated} />,
+      content: (
+        <BasicInformation
+          data={formData}
+          handleChange={handleChange}
+          setStart_date={setStart_date}
+          setEnd_date={setEnd_date}
+          setApplyStart_date={setApplyStart_date}
+          setApplynd_date={setApplyEnd_date}
+          next={next}
+          validated={validated}
+          setValidated={setValidated}
+        />
+      ),
     },
     {
       id: 2,

@@ -18,7 +18,37 @@ public class ProgramDTO {
 	Date end_date;
 	Date regdate;
 	Date deldate;
+	Date Applystart_date;
+	Date Applyend_date;
+	String manager_name;
+	String manager_contact;
 	
+	
+	public Date getApplystart_date() {
+		return Applystart_date;
+	}
+	public void setApplystart_date(Date applystart_date) {
+		Applystart_date = applystart_date;
+	}
+	public Date getApplyend_date() {
+		return Applyend_date;
+	}
+	public void setApplyend_date(Date applyend_date) {
+		Applyend_date = applyend_date;
+	}
+	public String getManager_name() {
+		return manager_name;
+	}
+	public void setManager_name(String manager_name) {
+		this.manager_name = manager_name;
+	}
+	
+	public String getManager_contact() {
+		return manager_contact;
+	}
+	public void setManager_contact(String manager_contact) {
+		this.manager_contact = manager_contact;
+	}
 	public int getId() {
 		return id;
 	}

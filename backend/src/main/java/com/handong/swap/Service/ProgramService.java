@@ -23,6 +23,8 @@ public interface ProgramService {
 	public void updateStatus(int program_id, int status);
 
 	public void edit(ProgramDTO program);
+	
+	public void updateApplicantNum(int program_id);
 
 
 }

@@ -14,7 +14,46 @@ public class ProgramReadDTO {
 	int status;
 	String start_date;
 	String end_date;
+	String Applystart_date;
+	String Applyend_date;
+	String manager_name;
+	String manager_contact;
+    int applicants_num;
+    
+    
 	
+	
+	
+	public int getApplicants_num() {
+		return applicants_num;
+	}
+	public void setApplicants_num(int applicants_num) {
+		this.applicants_num = applicants_num;
+	}
+	public String getApplystart_date() {
+		return Applystart_date;
+	}
+	public void setApplystart_date(String applystart_date) {
+		Applystart_date = applystart_date;
+	}
+	public String getApplyend_date() {
+		return Applyend_date;
+	}
+	public void setApplyend_date(String applyend_date) {
+		Applyend_date = applyend_date;
+	}
+	public String getManager_name() {
+		return manager_name;
+	}
+	public void setManager_name(String manager_name) {
+		this.manager_name = manager_name;
+	}
+	public String getManager_contact() {
+		return manager_contact;
+	}
+	public void setManager_contact(String manager_contact) {
+		this.manager_contact = manager_contact;
+	}
 	public String getName() {
 		return name;
 	}

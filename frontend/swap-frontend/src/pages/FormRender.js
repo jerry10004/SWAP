@@ -37,12 +37,14 @@ const FormRender = (props) => {
     const fbRender = document.getElementById("fb-render");
     const formData = JSON.stringify(originalFormData);
 
+    var count = 0;
+
     formRenderInstance = $(fbRender).formRender({ formData });
     getUserDataBtn.addEventListener(
       "click",
       () => {
         formInformation = formRenderInstance.userData;
-        addFormData();
+        addFormData(count);
       },
       false
     );
@@ -56,14 +58,15 @@ const FormRender = (props) => {
     setoriginalFormData(arr);
   };
 
-  const addFormData = async () => {
+  const addFormData = async (count) => {
     var params = new URLSearchParams();
     params.append("program_id", programID);
     params.append("user_id", userID);
     params.append("content", JSON.stringify(formInformation));
     console.log("length!! ", formInformation.length);
-    if (formInformation.length > 0) {
+    if (formInformation.length > 0 && count == 0) {
       const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "applicant/apply", params);
+      count++;
       alert(" 프로그램이 신청 되었습니다.");
       navigate("/mypage");
     }

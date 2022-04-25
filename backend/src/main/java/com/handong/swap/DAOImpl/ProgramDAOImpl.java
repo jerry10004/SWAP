@@ -63,5 +63,12 @@ public class ProgramDAOImpl implements ProgramDAO {
 	public List<ProgramReadDTO> readByCategory(int category_id) {
 		return sqlSession.selectList("Program.readByCategory",category_id);
 	}
+	
+	@Override
+	public void updateApplicantNum(int program_id) {
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("program_id", program_id);
+	    sqlSession.update("Program.updateApplicantNum", param);
+	}
 
 }
