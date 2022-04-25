@@ -5,7 +5,7 @@
 
    	
    	<select id="readProgram" resultType="ProgramRead">
-	   select P.id, A.name as name, C.category_name as category_name, P.program_name, P.status, P.start_date, P.end_date , P.Applystart_date, P.Applyend_date , P.manager_name, P.manager_contact
+	   select P.id, A.name as name, C.category_name as category_name, P.program_name, P.status, P.start_date, P.end_date , P.Applystart_date, P.Applyend_date , P.manager_name, P.manager_contact, P.applicants_num
 		FROM swap.Program as P
 		LEFT JOIN swap.Category as C  
 		ON P.category_id = C.id
@@ -17,7 +17,7 @@
    	
    	
    	<select id="readByCategory" parameterType="Integer" resultType="ProgramRead">
-		 select P.id, A.name as name, P.program_name, P.category_id, P.quota, P.information, P.status, P.start_date, P.end_date, P.Applystart_date, P.Applyend_date , P.manager_name, P.manager_contact
+		 select P.id, A.name as name, P.program_name, P.category_id, P.quota, P.information, P.status, P.start_date, P.end_date, P.Applystart_date, P.Applyend_date , P.manager_name, P.manager_contact, P.applicants_num
 		FROM Program AS P
 		LEFT JOIN Category as C
 		ON P.category_id = C.id
@@ -29,7 +29,7 @@
    	
    	
    	<select id="readProgramInformationByProgramId" parameterType="Integer" resultType="ProgramReadById">
-	   select P.id, P.program_name,P.category_id, P.quota, P.information, P.start_date, P.end_date, P.Applystart_date, P.Applyend_date, P.manager_name, P.manager_contact
+	   select P.id, P.program_name,P.category_id, C.category_name as category_name, P.quota, P.information, P.start_date, P.end_date, P.Applystart_date, P.Applyend_date, P.manager_name, P.manager_contact, P.applicants_num
 		FROM Program AS P
 		LEFT JOIN Category as C  
 		ON P.category_id = C.id
@@ -63,6 +63,11 @@
 		WHERE id = #{id}
 
    	</update>
+   	
+   	<update id="updateApplicantNum" parameterType="hashmap">
+   		UPDATE Program SET applicants_num= applicants_num + 1
+   		WHERE id = #{program_id}
+	</update>
    	
    	
 </mapper>

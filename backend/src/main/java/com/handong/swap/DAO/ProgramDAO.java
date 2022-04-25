@@ -15,4 +15,5 @@ public interface ProgramDAO {
 	List<ProgramReadNameDTO> readProgramName(int id);
 	public void edit(ProgramDTO program);
 	List<ProgramReadDTO> readByCategory(int category_id);
+	public void updateApplicantNum(int program_id);
 }

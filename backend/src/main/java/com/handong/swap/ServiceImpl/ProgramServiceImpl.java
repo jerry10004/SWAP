@@ -74,6 +74,10 @@ public class ProgramServiceImpl implements ProgramService{
 		return jsonString;
 	}
 	
+	@Override
+	public void updateApplicantNum(int program_id) {
+		programDAO.updateApplicantNum(program_id);
+	}
 	
 
 }

@@ -22,6 +22,7 @@ import com.google.gson.reflect.TypeToken;
 import com.handong.swap.DTO.ApplicantDTO;
 import com.handong.swap.DTO.ApplicationDTO;
 import com.handong.swap.Service.ApplicantService;
+import com.handong.swap.Service.ProgramService;
 
 import net.sf.json.JSONArray;
 
@@ -33,6 +34,8 @@ public class ApplicantController {
 	
 	@Autowired
 	ApplicantService applicantService;
+	@Autowired
+	ProgramService programService;
 	
 	@RequestMapping(value = "/applicants/{id}", method = RequestMethod.GET, produces = "application/json; charset=utf8")
 	@ResponseBody
@@ -70,10 +73,12 @@ public class ApplicantController {
 		
 		int result = applicantService.applyApplication(applicant);
 		
+		
 		if(result ==0 ) {
 			System.out.println("신청서 추가 실패");
 		}
 		else {
+			programService.updateApplicantNum(Integer.parseInt(httpServletRequest.getParameter("program_id")));
 			System.out.println("신청서 추가 성공");
 		}
 		

@@ -18,9 +18,18 @@ public class ProgramReadDTO {
 	String Applyend_date;
 	String manager_name;
 	String manager_contact;
+    int applicants_num;
+    
+    
 	
 	
 	
+	public int getApplicants_num() {
+		return applicants_num;
+	}
+	public void setApplicants_num(int applicants_num) {
+		this.applicants_num = applicants_num;
+	}
 	public String getApplystart_date() {
 		return Applystart_date;
 	}
