@@ -191,23 +191,27 @@ const Application = () => {
                       </ListGroup>
                     </div>
                     <hr className="m-0" />
-                    <div className="p-5">
-                      <div className=" fw-bold text-dark mb-2">문의</div>
-                      <ListGroup as="ul" className="mb-0" bsPrefix="list-unstyled">
-                        <ListGroup.Item as="li" className="mb-1" bsPrefix=" ">
-                          <span className="text-success me-1">
-                            <i className="fe fe-user"></i>
-                          </span>
-                          <span>{programInfo.manager_name}</span>
-                        </ListGroup.Item>
-                        <ListGroup.Item as="li" className="mb-1" bsPrefix=" ">
-                          <span className="text-success me-1">
-                            <i className="fe fe-phone"></i>
-                          </span>
-                          <span>{programInfo.manager_contact}</span>
-                        </ListGroup.Item>
-                      </ListGroup>
-                    </div>
+                    {programInfo.manager_name != null ? (
+                      <div className="p-5">
+                        <div className=" fw-bold text-dark mb-2">문의</div>
+                        <ListGroup as="ul" className="mb-0" bsPrefix="list-unstyled">
+                          <ListGroup.Item as="li" className="mb-1" bsPrefix=" ">
+                            <span className="text-success me-1">
+                              <i className="fe fe-user"></i>
+                            </span>
+                            <span>{programInfo.manager_name}</span>
+                          </ListGroup.Item>
+                          <ListGroup.Item as="li" className="mb-1" bsPrefix=" ">
+                            <span className="text-success me-1">
+                              <i className="fe fe-phone"></i>
+                            </span>
+                            <span>{programInfo.manager_contact}</span>
+                          </ListGroup.Item>
+                        </ListGroup>
+                      </div>
+                    ) : (
+                      ""
+                    )}
                     <hr className="m-0" />
                     <div className="p-4">
                       <Link to="" className="btn btn-outline-primary" onClick={() => navigate(-1)}>
