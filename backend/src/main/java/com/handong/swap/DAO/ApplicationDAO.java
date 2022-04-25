@@ -18,6 +18,7 @@ public interface ApplicationDAO {
 	public void delete(int id);
 	public int deleteConfirm(int id);
 	List<ApplicationDTO> readApplicationById(int id);
+	List<String> readProgramName(int id);
 	
 	List<ApplicationDTO> readApplicationFormByProgramId(int id);
 }

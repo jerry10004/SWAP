@@ -97,6 +97,16 @@ public class ApplicationController {
 		System.out.println("result is "+result);
 		return result;
 	}
+	
+	@RequestMapping(value = "/readProgramName", method = RequestMethod.POST, produces = "application/json; charset=utf8")
+	@ResponseBody
+	public String readProgramName(HttpServletRequest httpServletRequest) throws IOException, ParseException {
+		System.out.println("사용중인 신청서의 프로그램 이름 읽기");
+		Integer id = Integer.parseInt(httpServletRequest.getParameter("id"));
+		String result = applicationService.readProgramName(id);
+		System.out.println("result is "+result);
+		return result;
+	}
 		
 		
 	@RequestMapping(value = "/readApplicationForm/{id}", method = RequestMethod.GET, produces = "application/json; charset=utf8")
