@@ -1,4 +1,4 @@
-import $ from "jquery";
+import $, { map } from "jquery";
 import { useNavigate } from "react-router-dom";
 import React, { Component, createRef, useState, useEffect, useLayoutEffect, useContext } from "react";
 import { Button } from "react-bootstrap";
@@ -18,26 +18,31 @@ const FormRender = (props) => {
   const [test, setTest] = useState(0);
   const [originalFormData, setoriginalFormData] = useState([]);
   const [readyFormContent, setReadyFormContent] = useState([]);
+  const [applicantData, setapplicantData] = useState();
+
   var programID = parseInt(props.param.programid);
   var userID = parseInt(props.param.userid);
   var formRenderInstance = "";
   var formInformation = "";
+
+  var count = 0;
+
   useLayoutEffect(() => {
     readFormData(programID);
+    readApplicantData(programID, userID);
   }, []);
 
   var params = new URLSearchParams();
 
   useEffect(() => {
     componentDidMount();
-  }, [originalFormData]);
+  }, [originalFormData, applicantData]);
 
-  const componentDidMount = async () => {
+  const componentDidMount = () => {
+    console.log("initial count", count);
     const getUserDataBtn = document.getElementById("get-user-data");
     const fbRender = document.getElementById("fb-render");
     const formData = JSON.stringify(originalFormData);
-
-    var count = 0;
 
     formRenderInstance = $(fbRender).formRender({ formData });
     getUserDataBtn.addEventListener(
@@ -58,17 +63,29 @@ const FormRender = (props) => {
     setoriginalFormData(arr);
   };
 
+  const readApplicantData = async (programID, userID) => {
+    const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "applicant/" + programID + "/applicants/" + userID);
+    setapplicantData(response.data);
+  };
+
   const addFormData = async (count) => {
     var params = new URLSearchParams();
     params.append("program_id", programID);
     params.append("user_id", userID);
     params.append("content", JSON.stringify(formInformation));
-    console.log("length!! ", formInformation.length);
-    if (formInformation.length > 0 && count == 0) {
-      const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "applicant/apply", params);
+    console.log(count, "count");
+
+    if (applicantData.length > 0 && count === 0) {
+      alert("이미 신청된 프로그램입니다.");
+      navigate("/main");
       count++;
-      alert(" 프로그램이 신청 되었습니다.");
-      navigate("/mypage");
+    } else {
+      if (formInformation.length > 0 && count === 0) {
+        const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "applicant/apply", params);
+        alert(" 프로그램이 신청 되었습니다.");
+        navigate("/mypage");
+        count++;
+      }
     }
   };
 
@@ -76,7 +93,7 @@ const FormRender = (props) => {
     <div>
       <form id="fb-render"></form>
       <div className="d-flex justify-content-end">
-        <Button className="btn btn-success" id="get-user-data" onClick={addFormData}>
+        <Button className="btn btn-success" id="get-user-data">
           신청하기
         </Button>
       </div>

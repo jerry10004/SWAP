@@ -12,5 +12,6 @@ public interface ApplicantDAO {
 	List<ApplicantReadDTO> readApplicantInformationByProgramId(int id);
 	String updateApplicantStatus(int id,int status);
 	public int applyApplication(ApplicantDTO applicant);
+	List<ApplicantReadDTO> readApplicantByUserId(int programID, int userID);
 	
 }
