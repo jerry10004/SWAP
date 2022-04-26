@@ -96,6 +96,8 @@ const FormRender = (props) => {
         }
       }
     }
+
+    console.log("***formInfo***", formInformation);
   };
 
   return (
