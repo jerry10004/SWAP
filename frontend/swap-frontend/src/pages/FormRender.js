@@ -14,7 +14,7 @@ require("formBuilder/dist/form-render.min.js");
 
 const FormRender = (props) => {
   const navigate = useNavigate();
-  console.log("props id", props.param.programid, props.param.userid);
+  console.log("props id", props.param.programid, props.param.userid, props.param.daysleft, props.param.quotaleft);
   const [test, setTest] = useState(0);
   const [originalFormData, setoriginalFormData] = useState([]);
   const [readyFormContent, setReadyFormContent] = useState([]);
@@ -24,8 +24,6 @@ const FormRender = (props) => {
   var userID = parseInt(props.param.userid);
   var formRenderInstance = "";
   var formInformation = "";
-
-  var count = 0;
 
   useLayoutEffect(() => {
     readFormData(programID);
@@ -39,17 +37,17 @@ const FormRender = (props) => {
   }, [originalFormData, applicantData]);
 
   const componentDidMount = () => {
-    console.log("initial count", count);
     const getUserDataBtn = document.getElementById("get-user-data");
     const fbRender = document.getElementById("fb-render");
     const formData = JSON.stringify(originalFormData);
 
     formRenderInstance = $(fbRender).formRender({ formData });
+
     getUserDataBtn.addEventListener(
       "click",
       () => {
         formInformation = formRenderInstance.userData;
-        addFormData(count);
+        addFormData();
       },
       false
     );
@@ -68,23 +66,34 @@ const FormRender = (props) => {
     setapplicantData(response.data);
   };
 
-  const addFormData = async (count) => {
+  const addFormData = async () => {
     var params = new URLSearchParams();
     params.append("program_id", programID);
     params.append("user_id", userID);
     params.append("content", JSON.stringify(formInformation));
-    console.log(count, "count");
 
-    if (applicantData.length > 0 && count === 0) {
-      alert("이미 신청된 프로그램입니다.");
+    if (props.param.daysleft === false && props.param.count === 0) {
+      alert("신청기간이 마감되어서 신청 하실 수 없습니다.");
       navigate("/main");
-      count++;
+      props.param.count++;
+    } else if (props.param.quotaleft == false && props.param.count === 0) {
+      alert("신청인원이 꽉 차서 신청 하실 수 없습니다.");
+      navigate("/main");
+      props.param.count++;
     } else {
-      if (formInformation.length > 0 && count === 0) {
-        const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "applicant/apply", params);
-        alert(" 프로그램이 신청 되었습니다.");
-        navigate("/mypage");
-        count++;
+      console.log(props.param.count);
+      if (applicantData.length > 0 && props.param.count === 0) {
+        alert("이미 신청된 프로그램입니다.");
+        navigate("/main");
+        props.param.count++;
+        console.log(props.param.count);
+      } else {
+        if (formInformation.length > 0 && props.param.count === 0) {
+          const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "applicant/apply", params);
+          alert(" 프로그램이 신청 되었습니다.");
+          navigate("/mypage");
+          props.param.count = props.param.count + 1;
+        }
       }
     }
   };
