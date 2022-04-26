@@ -15,16 +15,20 @@ import Pagination from "components/elements/advance-table/Pagination";
 import DotBadge from "components/elements/bootstrap/DotBadge";
 import programImage from "assets/images/CSEE.png";
 import Avatar1 from "assets/images/avatar/avatar-1.jpg";
+import { DivideSquare } from "react-feather";
 
 const AllProgramsData = (props) => {
   const [programInfo, setProgramInfo] = useState([]);
   const [applyLoading, setApplyLoading] = useState(false);
   const [ddayLoading, setDdayLoading] = useState(false);
-  const [startdate, setStartDate] = useState([]);
-  const [enddate, setEndDate] = useState([]);
-  const [Applystartdate, setApplyStartDate] = useState([]);
-  const [Applyenddate, setApplyEndDate] = useState([]);
-  const [dday, setDday] = useState([]);
+
+  const [applyStartDate, setApplyStartDate] = useState([]);
+  const [applyEndDate, setApplyEndDate] = useState([]);
+  // const [dDay, setDday] = useState([]);
+  const [Dday, setDday] = useState();
+  const Applystartdate = [];
+  const Applyenddate = [];
+  const dday = [];
 
   const columns = useMemo(
     () => [
@@ -92,6 +96,7 @@ const AllProgramsData = (props) => {
   const readTotal = async () => {
     const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "program");
     setProgramInfo(response.data);
+
     console.log("!!!!!!! ");
     console.log(response.data);
 
@@ -99,36 +104,53 @@ const AllProgramsData = (props) => {
       // setStartDate( (startDate) => [...startDate, moment(response.data.start_date).format("YY.MM.DD HH:mm")]);
       // setEndDate((endDate) => [...startDate, moment(response.data.end_date).format("YY.MM.DD HH:mm"));
       console.log("ssssss ", response.data[1].applystart_date);
-      setApplyStartDate([...Applystartdate, moment(response.data[index].applystart_date).format("YY.MM.DD HH:mm")]);
-      setApplyEndDate([...Applyenddate, moment(response.data[index].applyend_date).format("YY.MM.DD HH:mm")]);
+      Applystartdate.push(moment(response.data[index].applystart_date).format("YY.MM.DD HH:mm"));
+      Applyenddate.push(moment(response.data[index].applyend_date).format("YY.MM.DD HH:mm"));
+      // dday.push(Dday(apply))
+      Dday2(response.data[index].applyend_date);
     });
 
     setApplyLoading(true);
-    if (applyLoading) {
-      response.data.map((item, index) => {
-        Dday((dday) => [...dday, response.data[index].dday]);
-      });
-    }
+    // if (applyLoading) {
+    //   response.data.map((item, index) => {
+    //     Dday((dday) => [...dday, response.data[index].dday]);
+    //   });
+    // }
 
+    // if (applyLoading) {
+    //   Applystartdate.map((item) => {
+    //     console.log("item is: ", item);
+    //     setApplyStartDate(applyStartDate.concat(item));
+    //     console.log("now is : ", applyStartDate);
+    //   });
+    //   Applyenddate.map((item2) => {
+    //     setApplyEndDate(applyEndDate.concat(item2));
+    //   });
+    //   dday.map((item3) => {
+    //     setDday(dDay.concat(item3));
+    //   });
+    // }
     setDdayLoading(true);
   };
 
-  const Dday = (Applyenddate) => {
-    var date1 = moment(Applyenddate);
-    console.log(date1);
+  const Dday2 = (applyenddate) => {
+    var date1 = moment(applyenddate);
+    // console.log(date1);
     var date2 = moment();
-    console.log(date2);
+    // console.log(date2);
     //var duration = moment.duration(date2.diff(date1, 'days'));
     var days = date1.diff(date2, "days");
-    // console.log("hihiih");
-    // console.log(Applystartdate[0]);
-    // console.log(Applyenddate[0]);
+
     if (date2 > date1) {
       setDday("마감");
+      // dday.push("마감");
     } else {
       setDday("D-" + days);
+      // dday.push("D-" + days);
     }
-    console.log(dday[0]);
+    // console.log("start: ", Applystartdate);
+    // console.log("end: ", Applyenddate);
+    // console.log("dday: ", dday[1]);
   };
 
   const readByCategory = async (category_id) => {
@@ -141,9 +163,10 @@ const AllProgramsData = (props) => {
   return (
     <>
       <Row>
-        {setDdayLoading
+        {ddayLoading
           ? programInfo.map((item, index) => {
               var address = "/program/" + item.id.toString();
+              console.log("hehere: ", applyEndDate[0]);
 
               return (
                 <Col lg={3} md={6} sm={12} key={index}>
@@ -153,8 +176,8 @@ const AllProgramsData = (props) => {
                       {/* <Image src={item.image} alt="" className="card-img-top rounded-top-md" /> */}
                       <Image src={programImage} alt="" className="card-img-top rounded-top-md programImage" width="100px" height="170px" />
                     </Link>
-                    <Card.Body>
-                      <h3 className="h4 mb-2 text-truncate-line-2 ">
+                    <Card.Body style={{ height: "10rem" }}>
+                      <h3 className="h4 mb-2 text-truncate-line-2 " style={{ height: "2.5rem" }}>
                         <Link to={address} className="text-inherit">
                           {item.program_name}
                         </Link>
@@ -171,14 +194,16 @@ const AllProgramsData = (props) => {
                         <span className="text-dark fw-bold">
                           <Badge bg="warning" className="me-3">
                             {" "}
-                            {dday[index]}{" "}
+                            {Dday}{" "}
                           </Badge>
                         </span>
-                        <span>
-                          {Applystartdate[index]} ~ {Applyenddate[index]}
-                          {Applystartdate[1]} ~ {Applyenddate[1]}
-                          {Applystartdate[2]} ~ {Applyenddate[2]}
-                        </span>
+                      </div>
+                      <div className={`lh-1 mt-2 "d-none"`}>
+                        <div className="fw-bold">
+                          신청마감일자 {/* {Applystartdate[1]} ~ {Applyenddate[1]} */}
+                          {/* {Applystartdate[2]} ~ {Applyenddate[2]} */}
+                        </div>
+                        <div className={` mt-1 `}>2022-03-28 14:22:00</div>
                       </div>
                     </Card.Body>
                     <Card.Footer>

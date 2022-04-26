@@ -3,7 +3,8 @@ import React, { Fragment, useState, useLayoutEffect } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import InputMask from "react-input-mask";
 import { Col, Row, Container, Card, Form, Button, ListGroup, Badge } from "react-bootstrap";
-import imgA from "assets/images/application/application-01.png";
+// import imgA from "assets/images/application/application-01.png";
+import imgA from "assets/images/CSEE.png";
 import FormRender from "./FormRender";
 import moment from "moment";
 
@@ -65,9 +66,9 @@ const Application = () => {
       console.log(response.data[0]);
       setStartDate(moment(response.data[0].start_date).format("YY.MM.DD HH:mm"));
       setEndDate(moment(response.data[0].end_date).format("YY.MM.DD HH:mm"));
-      setApplyStartDate(moment(response.data[0].start_date).format("YY.MM.DD HH:mm"));
-      setApplyEndDate(moment(response.data[0].end_date).format("YY.MM.DD HH:mm"));
-      Dday(response.data[0].end_date);
+      setApplyStartDate(moment(response.data[0].applystart_date).format("YY.MM.DD HH:mm"));
+      setApplyEndDate(moment(response.data[0].applyend_date).format("YY.MM.DD HH:mm"));
+      Dday(response.data[0].applyend_date);
     }
   };
 
