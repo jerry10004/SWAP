@@ -67,7 +67,7 @@ const Program = () => {
                       <div>
                         <Icon path={mdiCalendarBlank} size={0.7} />
                         <span>
-                          신청기간 : {programInfo.start_date} ~ {programInfo.end_date}
+                          신청기간 : {programInfo.applystart_date} ~ {programInfo.applyend_date}
                         </span>
                         <br />
                         <Icon path={mdiAccountMultipleOutline} size={0.7} />

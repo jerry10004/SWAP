@@ -3,7 +3,8 @@ import React, { Fragment, useState, useLayoutEffect } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import InputMask from "react-input-mask";
 import { Col, Row, Container, Card, Form, Button, ListGroup, Badge } from "react-bootstrap";
-import imgA from "assets/images/application/application-01.png";
+// import imgA from "assets/images/application/application-01.png";
+import imgA from "assets/images/CSEE.png";
 import FormRender from "./FormRender";
 import moment from "moment";
 
