@@ -3,11 +3,14 @@ import React, { Fragment, useState, useLayoutEffect } from "react";
 import { Col, Row, Container, Card, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
+import moment from "moment";
 
 // import MDI icons
 import Icon from "@mdi/react";
 import { mdiAccountMultipleOutline } from "@mdi/js";
-import { mdiCalendarBlank } from "@mdi/js";
+import { mdiCalendarClock } from "@mdi/js";
+import { mdiCalendarRange } from "@mdi/js";
+import { mdiEmailMultipleOutline } from "@mdi/js";
 import CSEE from "assets/images/CSEE.png";
 
 import NavbarDefault from "layouts/marketing/navbars/NavbarDefault";
@@ -31,6 +34,10 @@ const Program = () => {
     if (id["id"] != null) {
       params.append("id", id["id"]);
       const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "program/information/" + id["id"]);
+      response.data[0].start_date = moment(response.data[0].start_date).format("YYYY-MM-DD HH:mm");
+      response.data[0].end_date = moment(response.data[0].end_date).format("YYYY-MM-DD HH:mm");
+      response.data[0].applystart_date = moment(response.data[0].applystart_date).format("YYYY-MM-DD HH:mm");
+      response.data[0].applyend_date = moment(response.data[0].applyend_date).format("YYYY-MM-DD HH:mm");
       setProgramInfo(response.data[0]);
       console.log(response.data[0]);
       setProgramInfoLoading(true);
@@ -65,9 +72,14 @@ const Program = () => {
                     </div>
                     <div className="d-flex justify-content-between">
                       <div>
-                        <Icon path={mdiCalendarBlank} size={0.7} />
+                        <Icon path={mdiCalendarClock} size={0.7} />
                         <span>
-                          신청기간 : {programInfo.start_date} ~ {programInfo.end_date}
+                          신청기간 : {programInfo.applystart_date} ~ {programInfo.applyend_date}
+                        </span>
+                        <br />
+                        <Icon path={mdiCalendarRange} size={0.7} />
+                        <span>
+                          진행기간 : {programInfo.start_date} ~ {programInfo.end_date}
                         </span>
                         <br />
                         <Icon path={mdiAccountMultipleOutline} size={0.7} />
@@ -84,7 +96,16 @@ const Program = () => {
                       </div>
                     </div>
                     <hr className="" />
-                    <div className="fs-4 p-3 ">{programInfo.information}</div>
+                    <div className="fs-4 p-3 ">
+                      {programInfo.information.split("\n").map((line) => {
+                        return (
+                          <span>
+                            {line}
+                            <br />
+                          </span>
+                        );
+                      })}
+                    </div>
                   </Card.Body>
                 </Card>
               </Col>
@@ -95,16 +116,20 @@ const Program = () => {
                     <img src={CSEE} width="100%" object-fit="contain" />
                   </Card.Body>
                 </Card>
-                <Card className="border-0 mb-3 mb-lg-0">
-                  {/*  Card body */}
-                  <Card.Body>
-                    <h3 className="mb-0">SW중심대학 지원사업단</h3>
-                    <div className="mb-2">김선영</div>
-                    <hr className="m-0 mb-2" />
-                    <div>T.260-1492</div>
-                    <div>E-Mail : pooh8276@handong.edu</div>
-                  </Card.Body>
-                </Card>
+                {programInfo.manager_name ? (
+                  <Card className="border-0 mb-3 mb-lg-0">
+                    {/*  Card body */}
+                    <Card.Body>
+                      <h3 className="mb-0">SW중심대학 지원사업단</h3>
+                      <div className="mb-2">{programInfo.manager_name}</div>
+                      <hr className="m-0 mb-2" />
+                      <Icon path={mdiEmailMultipleOutline} size={0.7} />
+                      <span> {programInfo.manager_contact}</span>
+                    </Card.Body>
+                  </Card>
+                ) : (
+                  ""
+                )}
               </Col>
             </Row>
           </Container>
