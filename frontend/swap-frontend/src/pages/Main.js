@@ -1,7 +1,7 @@
 // import node module libraries
 import React from "react";
 import { Fragment } from "react";
-import { Col, Row, Container, Nav, Tab } from "react-bootstrap";
+import { Col, Row, Container, Nav, Tab, Form } from "react-bootstrap";
 
 // import custom components
 import CourseSlider from "components/marketing/pages/courses/CourseSlider";

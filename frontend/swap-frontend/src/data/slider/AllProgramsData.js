@@ -4,18 +4,15 @@ import { useTable, useFilters, useGlobalFilter, usePagination, useRowSelect } fr
 import { Link } from "react-router-dom";
 import { Row, Col, Table, Button } from "react-bootstrap";
 import axios from "axios";
-import { Image, Card, ProgressBar, ListGroup, Badge } from "react-bootstrap";
+import { Image, Card, ProgressBar, ListGroup, Badge, Form } from "react-bootstrap";
 import Tippy from "@tippyjs/react";
 import moment from "moment";
 
 import "tippy.js/animations/scale.css";
 // import custom components
-import GlobalFilter from "components/elements/advance-table/GlobalFilter";
-import Pagination from "components/elements/advance-table/Pagination";
 import DotBadge from "components/elements/bootstrap/DotBadge";
 import programImage from "assets/images/CSEE.png";
-import Avatar1 from "assets/images/avatar/avatar-1.jpg";
-import { DivideSquare } from "react-feather";
+import { FormSelect } from "components/elements/form-select/FormSelect";
 
 const AllProgramsData = (props) => {
   const [programInfo, setProgramInfo] = useState([]);
@@ -24,10 +21,7 @@ const AllProgramsData = (props) => {
 
   const [applyStartDate, setApplyStartDate] = useState([]);
   const [applyEndDate, setApplyEndDate] = useState([]);
-  // const [dDay, setDday] = useState([]);
-  const [Dday, setDday] = useState();
-  const Applystartdate = [];
-  const Applyenddate = [];
+  const [Dday, setDday] = useState([]);
   const dday = [];
 
   const columns = useMemo(
@@ -96,137 +90,122 @@ const AllProgramsData = (props) => {
   const readTotal = async () => {
     const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "program");
     setProgramInfo(response.data);
-
-    console.log("!!!!!!! ");
-    console.log(response.data);
-
     response.data.map((item, index) => {
-      // setStartDate( (startDate) => [...startDate, moment(response.data.start_date).format("YY.MM.DD HH:mm")]);
-      // setEndDate((endDate) => [...startDate, moment(response.data.end_date).format("YY.MM.DD HH:mm"));
-      console.log("ssssss ", response.data[1].applystart_date);
-      Applystartdate.push(moment(response.data[index].applystart_date).format("YY.MM.DD HH:mm"));
-      Applyenddate.push(moment(response.data[index].applyend_date).format("YY.MM.DD HH:mm"));
-      // dday.push(Dday(apply))
-      Dday2(response.data[index].applyend_date);
+      setApplyStartDate((applyStartDate) => [...applyStartDate, moment(response.data[index].applystart_date).format("YY.MM.DD HH:mm")]);
+      setApplyEndDate((applyEndDate) => [...applyEndDate, moment(response.data[index].applyend_date).format("YY.MM.DD HH:mm")]);
     });
 
+    response.data.map((item, index) => {
+      setApplyStartDate((applyStartDate) => [...applyStartDate, moment(response.data[index].applystart_date).format("YY.MM.DD HH:mm")]);
+      setApplyEndDate((applyEndDate) => [...applyEndDate, moment(response.data[index].applyend_date).format("YY.MM.DD HH:mm")]);
+      createDday(response.data[index].applyend_date);
+    });
     setApplyLoading(true);
-    // if (applyLoading) {
-    //   response.data.map((item, index) => {
-    //     Dday((dday) => [...dday, response.data[index].dday]);
-    //   });
-    // }
-
-    // if (applyLoading) {
-    //   Applystartdate.map((item) => {
-    //     console.log("item is: ", item);
-    //     setApplyStartDate(applyStartDate.concat(item));
-    //     console.log("now is : ", applyStartDate);
-    //   });
-    //   Applyenddate.map((item2) => {
-    //     setApplyEndDate(applyEndDate.concat(item2));
-    //   });
-    //   dday.map((item3) => {
-    //     setDday(dDay.concat(item3));
-    //   });
-    // }
     setDdayLoading(true);
   };
 
-  const Dday2 = (applyenddate) => {
+  const createDday = (applyenddate) => {
     var date1 = moment(applyenddate);
-    // console.log(date1);
     var date2 = moment();
-    // console.log(date2);
-    //var duration = moment.duration(date2.diff(date1, 'days'));
+
     var days = date1.diff(date2, "days");
 
     if (date2 > date1) {
-      setDday("마감");
-      // dday.push("마감");
+      setDday((Dday) => [...Dday, "마감"]);
     } else {
-      setDday("D-" + days);
-      // dday.push("D-" + days);
+      setDday((Dday) => [...Dday, "D-" + days]);
     }
-    // console.log("start: ", Applystartdate);
-    // console.log("end: ", Applyenddate);
-    // console.log("dday: ", dday[1]);
   };
 
   const readByCategory = async (category_id) => {
+    console.log("======: ", category_id);
     var params = new URLSearchParams();
     params.append("category_id", category_id);
     const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "program/read/category", params);
     setProgramInfo(response.data);
   };
 
+  const filterOptions = [
+    // { value: "전체", label: "전체" },
+    { value: "시작전", label: "시작전" },
+    { value: "진행중", label: "진행중" },
+    { value: "마감", label: "마감" },
+  ];
+
+  const getFilterTerm = (event) => {
+    let filterTerm = event.target.value;
+    console.log("filter", filterTerm);
+    if (filterTerm !== "") {
+      const newProjectsList = programInfo.filter((project) => {
+        console.log("project", project);
+        return Object.values(project).join(" ").toLowerCase().includes(filterTerm.toLowerCase());
+      });
+      setProgramInfo(newProjectsList);
+    } else {
+      setProgramInfo(programInfo);
+    }
+  };
+
   return (
     <>
       <Row>
-        {ddayLoading
-          ? programInfo.map((item, index) => {
-              var address = "/program/" + item.id.toString();
-              console.log("hehere: ", applyEndDate[0]);
-
-              return (
-                <Col lg={3} md={6} sm={12} key={index}>
-                  {/* <CourseCard item={item} /> */}
-                  <Card className={`mb-4 card-hover mx-2`}>
-                    <Link to="/program">
-                      {/* <Image src={item.image} alt="" className="card-img-top rounded-top-md" /> */}
-                      <Image src={programImage} alt="" className="card-img-top rounded-top-md programImage" width="100px" height="170px" />
-                    </Link>
-                    <Card.Body style={{ height: "10rem" }}>
-                      <h3 className="h4 mb-2 text-truncate-line-2 " style={{ height: "2.5rem" }}>
-                        <Link to={address} className="text-inherit">
-                          {item.program_name}
-                        </Link>
-                        {/* const id = "detail/" + row.original.id.toString(); return (
-                  <Link className="text-inherit" to={id}>
-                    <div className="d-flex align-items-center">
-                      <h5 className="mb-1 text-primary-hover">{value}</h5>
-                    </div>
-                  </Link>
-                  ); */}
-                      </h3>
-                      <ListGroup as="ul" bsPrefix="list-inline" className="mb-3"></ListGroup>
-                      <div className={`lh-1 mt-3 "d-none"`}>
-                        <span className="text-dark fw-bold">
-                          <Badge bg="warning" className="me-3">
-                            {" "}
-                            {Dday}{" "}
-                          </Badge>
-                        </span>
-                      </div>
-                      <div className={`lh-1 mt-2 "d-none"`}>
-                        <div className="fw-bold">
-                          신청마감일자 {/* {Applystartdate[1]} ~ {Applyenddate[1]} */}
-                          {/* {Applystartdate[2]} ~ {Applyenddate[2]} */}
+        <Row className="justify-content-md-end  ms-2 mb-xl-0">
+          <Col xxl={2} lg={2} md={6} xs={12}>
+            <Form.Control as={FormSelect} placeholder="전체" options={filterOptions} onChange={getFilterTerm} />
+          </Col>
+        </Row>
+        <Row className="mt-4 m-3">
+          {ddayLoading && applyLoading
+            ? programInfo.map((item, index) => {
+                var address = "/program/" + item.id.toString();
+                return (
+                  <Col lg={3} md={6} sm={12} key={index}>
+                    <Card className={`mb-4 card-hover mx-2`}>
+                      <Link to={address}>
+                        <Image src={programImage} alt="" className="card-img-top rounded-top-md programImage" width="100px" height="170px" />
+                      </Link>
+                      <Card.Body style={{ height: "10rem" }}>
+                        <h3 className="h4 mb-2 text-truncate-line-2 " style={{ height: "2.5rem" }}>
+                          <Link to={address} className="text-inherit">
+                            {item.program_name}
+                          </Link>
+                        </h3>
+                        <ListGroup as="ul" bsPrefix="list-inline" className="mb-3"></ListGroup>
+                        <div className={`lh-1 mt-3 "d-none"`}>
+                          <span className="text-dark fw-bold">
+                            <Badge bg="warning" className="me-3">
+                              {" "}
+                              {Dday[index]}{" "}
+                            </Badge>
+                          </span>
                         </div>
-                        <div className={` mt-1 `}>2022-03-28 14:22:00</div>
-                      </div>
-                    </Card.Body>
-                    <Card.Footer>
-                      <Row className="align-items-center g-0">
-                        <Col className="col-auto">
-                          {/* <Image src={item.instructor_image} className="rounded-circle avatar-xs" alt="" /> */}
-                          {/* <Image src={Avatar1} className="rounded-circle avatar-xs" alt="" /> */}
-                        </Col>
-                        <Col className="col ms-2">{/* <span>{item.name}</span> */}</Col>
-                        <Col className="col-auto">
-                          <Tippy content="Add to Bookmarks" animation={"scale"}>
-                            <Link to="#" className="text-muted bookmark">
-                              <i className="fe fe-bookmark"></i>
-                            </Link>
-                          </Tippy>
-                        </Col>
-                      </Row>
-                    </Card.Footer>
-                  </Card>
-                </Col>
-              );
-            })
-          : ""}
+                        <div className={`lh-1 mt-2 "d-none"`}>
+                          <div className="fw-bold">신청마감일자</div>
+                          <div className={` mt-1 `}>{applyEndDate[index]}</div>
+                        </div>
+                      </Card.Body>
+                      <Card.Footer>
+                        <Row className="align-items-center g-0">
+                          <Col className="col-auto">
+                            {/* <Image src={item.instructor_image} className="rounded-circle avatar-xs" alt="" /> */}
+                            {/* <Image src={Avatar1} className="rounded-circle avatar-xs" alt="" /> */}
+                          </Col>
+                          <Col className="col ms-2">{/* <span>{item.name}</span> */}</Col>
+                          <Col className="col-auto">
+                            <Tippy content="Add to Bookmarks" animation={"scale"}>
+                              <Link to="#" className="text-muted bookmark">
+                                <i className="fe fe-bookmark"></i>
+                              </Link>
+                            </Tippy>
+                          </Col>
+                        </Row>
+                      </Card.Footer>
+                    </Card>
+                  </Col>
+                );
+              })
+            : ""}
+        </Row>
       </Row>
     </>
   );
