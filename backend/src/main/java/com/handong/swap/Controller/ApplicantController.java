@@ -84,6 +84,17 @@ public class ApplicantController {
 		
 	}
 	
+	@RequestMapping(value = "/{programID}/applicants/{userID}", method = RequestMethod.GET, produces = "application/json; charset=utf8")
+	@ResponseBody
+	public String readApplicantByUserId(@PathVariable int programID, @PathVariable int userID) throws IOException, ParseException {
+		System.out.println("프로그램 별 신청자 정보 읽기");
+		System.out.println(programID);
+		System.out.println(userID);
+		String result = applicantService.readApplicantByUserId(programID, userID);
+		System.out.println("result is "+result);
+		return result;
+	}
+	
 	
 	
 }

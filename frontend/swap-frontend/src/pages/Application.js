@@ -3,7 +3,8 @@ import React, { Fragment, useState, useLayoutEffect } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import InputMask from "react-input-mask";
 import { Col, Row, Container, Card, Form, Button, ListGroup, Badge } from "react-bootstrap";
-import imgA from "assets/images/application/application-01.png";
+// import imgA from "assets/images/application/application-01.png";
+import imgA from "assets/images/CSEE.png";
 import FormRender from "./FormRender";
 import moment from "moment";
 
@@ -30,10 +31,11 @@ const Application = () => {
   const [Applystartdate, setApplyStartDate] = useState();
   const [Applyenddate, setApplyEndDate] = useState();
   const [dday, setDday] = useState();
-
+  const [daysLeft, setdaysLeft] = useState(true);
+  const [quotaLeft, setquotaLeft] = useState(true);
   var ID = parseInt(window.sessionStorage.getItem("id"));
   var programID = parseInt(id["id"]);
-  const props = { userid: ID, programid: programID };
+
   const infinite = "무제한";
 
   const navigate = useNavigate();
@@ -59,7 +61,7 @@ const Application = () => {
     if (id["id"] != null) {
       params.append("id", id["id"]);
       const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "program/information/" + id["id"]);
-      // console.log("333333 ", response.data[0]);
+      console.log("333333 ", response.data[0]);
       setProgramInfo(response.data[0]);
       setProgramInfoLoading(true);
       console.log(response.data[0]);
@@ -68,6 +70,12 @@ const Application = () => {
       setApplyStartDate(moment(response.data[0].start_date).format("YY.MM.DD HH:mm"));
       setApplyEndDate(moment(response.data[0].end_date).format("YY.MM.DD HH:mm"));
       Dday(response.data[0].end_date);
+
+      if (response.data[0].applicants_num >= response.data[0].quota && response.data[0].quota != 0) {
+        setquotaLeft(false);
+      } else {
+        setquotaLeft(true);
+      }
     }
   };
 
@@ -80,11 +88,15 @@ const Application = () => {
     var days = date1.diff(date2, "days");
 
     if (date2 > date1) {
+      setdaysLeft(false);
       setDday("마감");
     } else {
+      setdaysLeft(true);
       setDday("D-" + days);
     }
   };
+
+  const props = { userid: ID, programid: programID, daysleft: daysLeft, quotaleft: quotaLeft, count: 0 };
 
   return (
     <Fragment>
