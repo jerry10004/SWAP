@@ -38,6 +38,13 @@ public class ApplicantServiceImpl implements ApplicantService{
 
 	}
 	
+	@Override
+	public String readApplicantByUserId(int programID, int userID) throws JsonProcessingException{
+		List<ApplicantReadDTO> applicantDATA = applicantDAO.readApplicantByUserId(programID, userID);
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonString = mapper.writeValueAsString(applicantDATA);
+		return jsonString;
+	}
 	
 
 	

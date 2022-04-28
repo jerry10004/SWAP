@@ -41,7 +41,14 @@ public class ApplicantDAOImpl implements ApplicantDAO {
 		return result;
 	}
 	
-
+	@Override
+	public List<ApplicantReadDTO> readApplicantByUserId(int programID, int userID){
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("programID", programID);
+	    param.put("userID", userID);
+		return sqlSession.selectList("Applicant.readApplicantByUserId",param);
+	}
+	
 
 
 }

@@ -23,6 +23,14 @@
 		VALUES (#{user_id}, #{program_id}, #{application_form})
    	</insert>
    	
+   	<select id="readApplicantByUserId" parameterType="Integer" resultType="ApplicantRead">
+	   SELECT A.id, A.user_id, A.program_id, U.name
+		FROM swap.Applicant as A
+		JOIN swap.User as U
+		ON A.user_id = U.id
+		where U.deldate is null and A.program_id  = #{programID} and A.user_id = #{userID}
+		order by U.name
+   	</select>
    	
    	
 </mapper>
