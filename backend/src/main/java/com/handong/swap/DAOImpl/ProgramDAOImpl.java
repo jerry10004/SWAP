@@ -59,10 +59,12 @@ public class ProgramDAOImpl implements ProgramDAO {
 	    sqlSession.update("Program.edit", program);
 	}
 
+
 	@Override
 	public List<ProgramReadDTO> readByCategory(int category_id) {
 		return sqlSession.selectList("Program.readByCategory",category_id);
 	}
+
 	
 	@Override
 	public void updateApplicantNum(int program_id) {

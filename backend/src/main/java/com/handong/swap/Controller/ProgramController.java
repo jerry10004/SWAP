@@ -96,6 +96,7 @@ public class ProgramController {
 	    return result;
 	}
 	
+	
 	@RequestMapping(value = "/read/category", method = RequestMethod.POST, produces = "application/json; charset=utf8")
 	@ResponseBody
 	public String readprogramByCategory(HttpServletRequest httpServletRequest) throws IOException, ParseException {

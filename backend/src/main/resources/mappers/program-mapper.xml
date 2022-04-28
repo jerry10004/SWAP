@@ -16,7 +16,7 @@
    	</select>
    	
    	
-   	<select id="readByCategory" parameterType="Integer" resultType="ProgramRead">
+   	  <select id="readByCategory" parameterType="Integer" resultType="ProgramRead">
 		 select P.id, A.name as name, P.program_name, P.category_id, P.quota, P.information, P.status, P.start_date, P.end_date, P.Applystart_date, P.Applyend_date , P.manager_name, P.manager_contact, P.applicants_num
 		FROM Program AS P
 		LEFT JOIN Category as C
