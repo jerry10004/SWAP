@@ -67,9 +67,9 @@ const Application = () => {
       console.log(response.data[0]);
       setStartDate(moment(response.data[0].start_date).format("YY.MM.DD HH:mm"));
       setEndDate(moment(response.data[0].end_date).format("YY.MM.DD HH:mm"));
-      setApplyStartDate(moment(response.data[0].start_date).format("YY.MM.DD HH:mm"));
-      setApplyEndDate(moment(response.data[0].end_date).format("YY.MM.DD HH:mm"));
-      Dday(response.data[0].end_date);
+      setApplyStartDate(moment(response.data[0].applystart_date).format("YY.MM.DD HH:mm"));
+      setApplyEndDate(moment(response.data[0].applyend_date).format("YY.MM.DD HH:mm"));
+      Dday(response.data[0].applyend_date);
 
       if (response.data[0].applicants_num >= response.data[0].quota && response.data[0].quota != 0) {
         setquotaLeft(false);
@@ -84,8 +84,9 @@ const Application = () => {
     console.log(date1);
     var date2 = moment();
     console.log(date2);
-    //var duration = moment.duration(date2.diff(date1, 'days'));
-    var days = date1.diff(date2, "days");
+
+    var days = date1.diff(date2, "days") + 1;
+    console.log(days);
 
     if (date2 > date1) {
       setdaysLeft(false);

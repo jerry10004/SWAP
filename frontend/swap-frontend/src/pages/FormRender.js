@@ -67,10 +67,13 @@ const FormRender = (props) => {
   };
 
   const addFormData = async () => {
+    var isFilled = true;
     var params = new URLSearchParams();
     params.append("program_id", programID);
     params.append("user_id", userID);
     params.append("content", JSON.stringify(formInformation));
+
+    console.log("*******", formInformation);
 
     if (props.param.daysleft === false && props.param.count === 0) {
       alert("신청기간이 마감되어서 신청 하실 수 없습니다.");
@@ -81,23 +84,32 @@ const FormRender = (props) => {
       navigate("/main");
       props.param.count++;
     } else {
-      console.log(props.param.count);
       if (applicantData.length > 0 && props.param.count === 0) {
         alert("이미 신청된 프로그램입니다.");
         navigate("/main");
         props.param.count++;
         console.log(props.param.count);
       } else {
-        if (formInformation.length > 0 && props.param.count === 0) {
-          const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "applicant/apply", params);
-          alert(" 프로그램이 신청 되었습니다.");
-          navigate("/mypage");
-          props.param.count = props.param.count + 1;
+        for (var i = 0; i < formInformation.length; i++) {
+          if (formInformation[i].userData[0] === "" && formInformation[i].required === true && props.param.count === 0) {
+            isFilled = false;
+            alert("필수 항목을 입력하세요! : " + formInformation[i].label);
+            break;
+          }
+        }
+
+        console.log(isFilled);
+
+        if (isFilled && props.param.count === 0) {
+          if (formInformation.length > 0 && props.param.count === 0) {
+            const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "applicant/apply", params);
+            alert(" 프로그램이 신청 되었습니다.");
+            navigate("/mypage");
+            props.param.count = props.param.count + 1;
+          }
         }
       }
     }
-
-    console.log("***formInfo***", formInformation);
   };
 
   return (
