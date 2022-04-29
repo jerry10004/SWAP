@@ -23,20 +23,37 @@ const CoursesTable = ({ program_data }) => {
     { value: "대회", label: "대회" },
     { value: "봉사", label: "봉사" },
     { value: "캠프", label: "캠프" },
-    { value: "동아리", label: "동아리" },
     { value: "행사", label: "행사" },
+    { value: "맥북", label: "맥북" },
+    { value: "프로젝트/스터디", label: "프로젝트/스터디" },
+    { value: "인턴/현장실습", label: "인턴/현장실습" },
+    { value: "특강", label: "특강" },
     { value: "기타", label: "기타" },
   ];
 
   useLayoutEffect(() => {
-    readCategory();
+    readProgram();
+    // readCategory();
   }, []);
 
-  const readCategory = async () => {
-    const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "category");
-    setCategory(response.data);
-    console.log(response.data);
-  };
+  // const readCategory = async () => {
+  //   const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "category");
+  //   setCategory(response.data);
+  //   console.log(response.data);
+
+  //   if (response.data.length > 0 && response.data[0].id != null) {
+  //     response.data.map((item) => {
+  //       setCategory((oldArray) => [
+  //         ...oldArray,
+  //         {
+  //           value: item.category_name,
+  //           label: item.category_name,
+  //         },
+  //       ]);
+  //       console.log(item);
+  //     });
+  //   }
+  // };
 
   const columns = useMemo(
     () => [
@@ -182,22 +199,21 @@ const CoursesTable = ({ program_data }) => {
   const getFilterTerm = (event) => {
     let filterTerm = event.target.value;
     console.log("filter", filterTerm);
+    // programList.map((item) => {
     if (filterTerm !== "") {
       const newProjectsList = programList.filter((project) => {
-        console.log("project", project);
-        return Object.values(project).join(" ").toLowerCase().includes(filterTerm.toLowerCase());
+        console.log("project", project.category_name);
+        if (project.category_name === filterTerm) return project;
       });
       setProgramInfo(newProjectsList);
     } else {
       setProgramInfo(programList);
     }
+
+    // });
   };
 
   const { pageIndex, globalFilter } = state;
-
-  useLayoutEffect(() => {
-    readProgram();
-  }, []);
 
   const readProgram = async () => {
     const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "program");
@@ -266,6 +282,7 @@ const CoursesTable = ({ program_data }) => {
           </Col>
         </Row>
       </div>
+
       <div className="table-responsive border-0 overflow-y-hidden">
         <Table {...getTableProps()} className="text-nowrap">
           <thead className="table-light">
