@@ -1,7 +1,7 @@
 // import node module libraries
 import React, { Fragment, useState, useLayoutEffect } from "react";
-import { Col, Row, Container, Card, OverlayTrigger, Tooltip } from "react-bootstrap";
-import { Link, useParams } from "react-router-dom";
+import { Col, Row, Container, Card, OverlayTrigger, Tooltip, Button, Badge } from "react-bootstrap";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import moment from "moment";
 
@@ -17,14 +17,24 @@ import NavbarDefault from "layouts/marketing/navbars/NavbarDefault";
 import "../assets/scss/programDetail.scss";
 
 const Program = () => {
+  const navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(true);
   const [programInfo, setProgramInfo] = useState();
   const [programInfoLoading, setProgramInfoLoading] = useState(false);
-
+  const [daysLeft, setdaysLeft] = useState(true);
+  const [quotaLeft, setquotaLeft] = useState(true);
+  const [dday, setDday] = useState();
+  const [applicantData, setapplicantData] = useState();
   const id = useParams();
+
+  var ID = parseInt(window.sessionStorage.getItem("id"));
+  var programID = parseInt(id["id"]);
+
+  const infinite = "무제한";
 
   useLayoutEffect(() => {
     readProgramInformation();
+    readApplicantData(programID, ID);
   }, []);
 
   const readProgramInformation = async () => {
@@ -34,13 +44,60 @@ const Program = () => {
     if (id["id"] != null) {
       params.append("id", id["id"]);
       const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "program/information/" + id["id"]);
+
+      Dday(response.data[0].applyend_date);
+
       response.data[0].start_date = moment(response.data[0].start_date).format("YY-MM-DD HH:mm");
       response.data[0].end_date = moment(response.data[0].end_date).format("YY-MM-DD HH:mm");
       response.data[0].applystart_date = moment(response.data[0].applystart_date).format("YY-MM-DD HH:mm");
       response.data[0].applyend_date = moment(response.data[0].applyend_date).format("YY-MM-DD HH:mm");
+
       setProgramInfo(response.data[0]);
       console.log(response.data[0]);
       setProgramInfoLoading(true);
+
+      if (response.data[0].applicants_num >= response.data[0].quota && response.data[0].quota != 0) {
+        setquotaLeft(false);
+      } else {
+        setquotaLeft(true);
+      }
+    }
+  };
+
+  const Dday = async (Applyenddate) => {
+    var date1 = moment(Applyenddate);
+    console.log(date1);
+    var date2 = moment();
+    console.log(date2);
+
+    var days = date1.diff(date2, "days") + 1;
+    console.log(days);
+
+    if (date2 > date1) {
+      setdaysLeft(false);
+      setDday("마감");
+    } else {
+      setdaysLeft(true);
+      setDday("D-" + days);
+    }
+  };
+
+  const readApplicantData = async (programID, userID) => {
+    const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "applicant/" + programID + "/applicants/" + userID);
+    setapplicantData(response.data);
+  };
+
+  const checkApply = async () => {
+    console.log(daysLeft);
+    console.log(quotaLeft);
+    if (daysLeft === false) {
+      alert("신청기간이 마감되어서 신청 하실 수 없습니다.");
+    } else if (quotaLeft == false) {
+      alert("신청인원이 꽉 차서 신청 하실 수 없습니다.");
+    } else if (applicantData.length > 0) {
+      alert("이미 신청된 프로그램입니다.");
+    } else {
+      navigate("/program/" + programInfo.id.toString() + "/application");
     }
   };
 
@@ -62,6 +119,10 @@ const Program = () => {
                 <Card className="mb-3 contentCard">
                   {/*  Card body  */}
                   <Card.Body>
+                    <Badge bg="warning" className="me-3">
+                      {" "}
+                      {dday}{" "}
+                    </Badge>
                     <div className="d-flex justify-content-between align-items-center">
                       <h1 className="fw-semi-bold mb-2">{programInfo.program_name}</h1>
                       <OverlayTrigger key="top" placement="top" overlay={<Tooltip id="tooltip-top">Add to Bookmarks</Tooltip>}>
@@ -86,15 +147,22 @@ const Program = () => {
                         <br />
                         <Icon path={mdiAccountMultipleOutline} size={0.7} />
                         <span>
-                          {" "}
-                          신청현황 : {programInfo.applicants_num}명 / {programInfo.quota}명{" "}
+                          신청현황 :{" "}
+                          <span>
+                            {" "}
+                            {programInfo.applicants_num + "명"} / {programInfo.quota == null || programInfo.quota === 0 || programInfo.qutoa === "무제한" ? infinite : programInfo.quota + "명"}{" "}
+                          </span>
                         </span>
                       </div>
+
                       <div className="d-flex justify-content-end">
                         <div>
-                          <Link to={"/program/" + programInfo.id.toString() + "/application"} className="btn btn-success">
+                          {/* <Link to={"/program/" + programInfo.id.toString() + "/application"} className="btn btn-success">
                             신청하기
-                          </Link>
+                          </Link> */}
+                          <Button className="btn btn-success" onClick={checkApply}>
+                            신청하기
+                          </Button>
                         </div>
                       </div>
                     </div>
