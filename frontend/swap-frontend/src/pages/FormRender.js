@@ -19,15 +19,17 @@ const FormRender = (props) => {
   const [originalFormData, setoriginalFormData] = useState([]);
   const [readyFormContent, setReadyFormContent] = useState([]);
   const [applicantData, setapplicantData] = useState();
-
+  const [applicantInformation, setApplicantInformation] = useState(null);
   var programID = parseInt(props.param.programid);
   var userID = parseInt(props.param.userid);
+  var status = parseInt(props.param.Status);
   var formRenderInstance = "";
   var formInformation = "";
 
   useLayoutEffect(() => {
     readFormData(programID);
     readApplicantData(programID, userID);
+    readApplicantInformation(userID);
   }, []);
 
   var params = new URLSearchParams();
@@ -66,6 +68,12 @@ const FormRender = (props) => {
     setapplicantData(response.data);
   };
 
+  const readApplicantInformation = async (id) => {
+    const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "user/loggedinUser/" + id);
+    setApplicantInformation(response.data);
+    console.log("사용자 정보: ", response.data);
+  };
+
   const addFormData = async () => {
     var isFilled = true;
     var params = new URLSearchParams();
@@ -74,13 +82,11 @@ const FormRender = (props) => {
     params.append("content", JSON.stringify(formInformation));
 
     console.log("*******", formInformation);
+    console.log(status);
 
-    if (props.param.daysleft === false && props.param.count === 0) {
-      alert("신청기간이 마감되어서 신청 하실 수 없습니다.");
-      navigate("/main");
+    if (status === 0 && props.param.count === 0) {
       props.param.count++;
-    } else if (props.param.quotaleft == false && props.param.count === 0) {
-      alert("신청인원이 꽉 차서 신청 하실 수 없습니다.");
+      alert("관리자는 프로그램을 신청하실 수 없습니다.");
       navigate("/main");
       props.param.count++;
     } else {
@@ -98,7 +104,7 @@ const FormRender = (props) => {
         }
 
         if (isFilled && props.param.count === 0) {
-          if (formInformation.length > 0 && props.param.count === 0) {
+          if (!formInformation.length > 0 && props.param.count === 0) {
             const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "applicant/apply", params);
             alert(" 프로그램이 신청 되었습니다.");
             navigate("/mypage");

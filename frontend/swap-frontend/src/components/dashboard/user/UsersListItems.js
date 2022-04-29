@@ -28,8 +28,7 @@ const UsersListItems = () => {
           );
         },
       },
-      { accessor: "phone", Header: "연락처" },
-      { accessor: "email", Header: "이메일" },
+
       {
         accessor: "student_id",
         Header: "학번",
@@ -40,6 +39,20 @@ const UsersListItems = () => {
             </Fragment>
           );
         },
+      },
+      { accessor: "email", Header: "이메일" },
+      { accessor: "phone", Header: "연락처" },
+      {
+        accessor: "department",
+        Header: "학부",
+      },
+      {
+        accessor: "major1",
+        Header: "1전공",
+      },
+      {
+        accessor: "major2",
+        Header: "2전공",
       },
       {
         accessor: "student_class",
@@ -62,18 +75,6 @@ const UsersListItems = () => {
             </Fragment>
           );
         },
-      },
-      {
-        accessor: "department",
-        Header: "학부",
-      },
-      {
-        accessor: "major1",
-        Header: "1전공",
-      },
-      {
-        accessor: "major2",
-        Header: "2전공",
       },
     ],
     []

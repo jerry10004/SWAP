@@ -92,7 +92,7 @@ const AddNewCourse = () => {
     params.append("Applystart_date", formattedApplyStartDate);
     params.append("Applyend_date", formattedApplyEndDate);
     params.append("manager_name", formData.manager_name);
-    params.append("manager_name", formData.manager_contact);
+    params.append("manager_contact", formData.manager_contact);
     if (window.confirm("프로그램을 추가하시겠습니까?")) {
       const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "program/add", params);
       alert(formData.program_title + " 프로그램이 추가 되었습니다.");

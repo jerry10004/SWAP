@@ -25,6 +25,7 @@ const Program = () => {
   const [quotaLeft, setquotaLeft] = useState(true);
   const [dday, setDday] = useState();
   const [applicantData, setapplicantData] = useState();
+
   const id = useParams();
 
   var ID = parseInt(window.sessionStorage.getItem("id"));
@@ -53,7 +54,6 @@ const Program = () => {
       response.data[0].applyend_date = moment(response.data[0].applyend_date).format("YY-MM-DD HH:mm");
 
       setProgramInfo(response.data[0]);
-      console.log(response.data[0]);
       setProgramInfoLoading(true);
 
       if (response.data[0].applicants_num >= response.data[0].quota && response.data[0].quota != 0) {
@@ -66,12 +66,9 @@ const Program = () => {
 
   const Dday = async (Applyenddate) => {
     var date1 = moment(Applyenddate);
-    console.log(date1);
     var date2 = moment();
-    console.log(date2);
 
     var days = date1.diff(date2, "days") + 1;
-    console.log(days);
 
     if (date2 > date1) {
       setdaysLeft(false);
@@ -88,8 +85,6 @@ const Program = () => {
   };
 
   const checkApply = async () => {
-    console.log(daysLeft);
-    console.log(quotaLeft);
     if (daysLeft === false) {
       alert("신청기간이 마감되어서 신청 하실 수 없습니다.");
     } else if (quotaLeft == false) {
