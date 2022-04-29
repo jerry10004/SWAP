@@ -27,8 +27,8 @@ const WaitInstructorsListItems = () => {
           );
         },
       },
-      { accessor: "phone", Header: "연락처" },
       { accessor: "email", Header: "이메일" },
+      { accessor: "phone", Header: "연락처" },
     ],
     []
   );
