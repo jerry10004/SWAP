@@ -136,7 +136,7 @@ const Program = () => {
                       {/*  Card body */}
                       <Card.Body>
                         <h3 className="mb-0">문의</h3>
-                        <hr className="m-0 mb-2" />
+                        <hr className="m-0 m-2" />
                         <div className="mb-2">담당자: {programInfo.manager_name}</div>
                       </Card.Body>
                     </Card>
