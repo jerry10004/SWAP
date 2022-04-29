@@ -135,11 +135,13 @@ const Program = () => {
                       <div>
                         <Icon path={mdiCalendarClock} size={0.7} />
                         <span>
+                          {" "}
                           신청기간 : {programInfo.applystart_date} ~ {programInfo.applyend_date}
                         </span>
                         <br />
                         <Icon path={mdiCalendarRange} size={0.7} />
                         <span>
+                          {" "}
                           진행기간 : {programInfo.start_date} ~ {programInfo.end_date}
                         </span>
                         <br />
@@ -186,16 +188,27 @@ const Program = () => {
                   </Card.Body>
                 </Card>
                 {programInfo.manager_name ? (
-                  <Card className="border-0 mb-3 mb-lg-0">
-                    {/*  Card body */}
-                    <Card.Body>
-                      <h3 className="mb-0">SW중심대학 지원사업단</h3>
-                      <div className="mb-2">{programInfo.manager_name}</div>
-                      <hr className="m-0 mb-2" />
-                      <Icon path={mdiEmailMultipleOutline} size={0.7} />
-                      <span> {programInfo.manager_contact}</span>
-                    </Card.Body>
-                  </Card>
+                  programInfo.manager_contact ? (
+                    <Card className="border-0 mb-3 mb-lg-0">
+                      {/*  Card body */}
+                      <Card.Body>
+                        <h3 className="mb-0">문의</h3>
+                        <hr className="m-0 mb-2" />
+                        <div className="mb-2"> 담당자: {programInfo.manager_name}</div>
+                        <Icon path={mdiEmailMultipleOutline} size={0.7} />
+                        <span>연락: {programInfo.manager_contact}</span>
+                      </Card.Body>
+                    </Card>
+                  ) : (
+                    <Card className="border-0 mb-3 mb-lg-0">
+                      {/*  Card body */}
+                      <Card.Body>
+                        <h3 className="mb-0">문의</h3>
+                        <hr className="m-0 m-2" />
+                        <div className="mb-2">담당자: {programInfo.manager_name}</div>
+                      </Card.Body>
+                    </Card>
+                  )
                 ) : (
                   ""
                 )}
