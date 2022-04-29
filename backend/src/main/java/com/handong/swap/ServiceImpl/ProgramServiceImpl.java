@@ -86,6 +86,14 @@ public class ProgramServiceImpl implements ProgramService{
 		programDAO.updateApplicantNum(program_id);
 	}
 
+	@Override
+	public String readByStatusByUser(int status, int user_id) throws JsonProcessingException {
+		List<ProgramReadDTO> programDATA = programDAO.readByStatusByUser(status, user_id);
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonString = mapper.writeValueAsString(programDATA);
+		return jsonString;
+	}
+
 	
 
 }

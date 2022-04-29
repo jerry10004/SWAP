@@ -1,5 +1,5 @@
 // import node module libraries
-import React, { Fragment, useMemo } from "react";
+import React, { Fragment, useMemo, useLayoutEffect } from "react";
 import { useTable, useFilters, useGlobalFilter, usePagination, useRowSelect } from "react-table";
 import { Link } from "react-router-dom";
 import { Col, Row, Table, Button } from "react-bootstrap";
@@ -10,12 +10,17 @@ import Pagination from "components/elements/advance-table/Pagination";
 // import Checkbox from "components/elements/advance-table/Checkbox";
 import DotBadge from "components/elements/bootstrap/DotBadge";
 
-const PostsTable = ({ table_data }) => {
+const ReadyProgramTable = ({ table_data }) => {
+  useLayoutEffect(() => {
+    console.log("ready!!");
+    console.log(table_data);
+  }, []);
+
   const columns = useMemo(
     () => [
       { accessor: "_id", Header: "ID", show: false },
       {
-        accessor: "id",
+        accessor: "applicant_id",
         Header: "번호",
         Cell: ({ value }) => {
           return (
@@ -29,12 +34,13 @@ const PostsTable = ({ table_data }) => {
       },
 
       {
-        accessor: "title",
+        accessor: "program_name",
         Header: "프로그램명",
-        Cell: ({ value }) => {
+        Cell: ({ value, row }) => {
+          const id = "/program/" + row.original.program_id.toString();
           return (
             <h5 className="mb-0">
-              <Link to="#" className="text-inherit">
+              <Link to="#" className="text-inherit" to={id}>
                 {value}
               </Link>
             </h5>
@@ -43,8 +49,8 @@ const PostsTable = ({ table_data }) => {
       },
 
       {
-        accessor: "date",
-        Header: "일시 및 장소",
+        accessor: "start_date",
+        Header: "시작일자",
         Cell: ({ value }) => {
           return (
             <Link to="#" className="text-inherit">
@@ -53,17 +59,28 @@ const PostsTable = ({ table_data }) => {
           );
         },
       },
-      // { accessor: "date", Header: "Date" },
 
       {
-        accessor: "status",
+        accessor: "end_date",
+        Header: "종료일자",
+        Cell: ({ value }) => {
+          return (
+            <Link to="#" className="text-inherit">
+              {value}
+            </Link>
+          );
+        },
+      },
+
+      {
+        accessor: "status_name",
         Header: "상태",
         Cell: ({ value }) => {
           value = value.toLowerCase();
           return (
             <Fragment>
               <DotBadge
-                bg={value === "참여대기" ? "warning" : value === "참여승인" ? "success" : value === "수료" ? "info" : value === "미수료" ? "danger" : value === "참여불가" ? "danger" : ""}
+                bg={value === "참여보류" ? "warning" : value === "참여승인" ? "success" : value === "수료" ? "info" : value === "미수료" ? "danger" : value === "참여불가" ? "danger" : ""}
               ></DotBadge>
               {value.charAt(0).toUpperCase() + value.slice(1)}
             </Fragment>
@@ -71,16 +88,11 @@ const PostsTable = ({ table_data }) => {
         },
       },
       {
-        accessor: "instructor_name",
+        accessor: "a",
         Header: "비고",
         Cell: ({ value, row }) => {
           return (
-            <div className="d-grid gap-2 d-md-block">
-              <Link to="../program/application">
-                <Button variant="outline-secondary" className="me-1">
-                  신청서수정
-                </Button>
-              </Link>
+            <div className="d-grid d-md-block">
               <Link to="#">
                 <Button variant="outline-danger" className="me-1">
                   신청취소
@@ -158,4 +170,4 @@ const PostsTable = ({ table_data }) => {
   );
 };
 
-export default PostsTable;
+export default ReadyProgramTable;

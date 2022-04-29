@@ -221,7 +221,7 @@ const ApplicationFormPractice = (props) => {
         </Card.Header>
         <Card.Body>
           {/* <ApplicationFormPractice /> */}
-          {readyJson && formContent ? <FormBuilder content={formContent} /> : ""}
+          {readyJson && formContent ? <FormBuilder content={formContent} /> : <h4>신청서 템플릿을 선택해주세요 :)</h4>}
         </Card.Body>
       </Card>
 

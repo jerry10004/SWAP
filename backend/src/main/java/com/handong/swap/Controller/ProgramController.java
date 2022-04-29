@@ -140,6 +140,19 @@ public class ProgramController {
 	    return result;
 	}
 	
+	@RequestMapping(value = "/read/status", method = RequestMethod.POST, produces = "application/json; charset=utf8")
+	@ResponseBody
+	public String readprogramByStatusByUser(HttpServletRequest httpServletRequest) throws IOException, ParseException {
+		System.out.println("사용자가 참여한 상태 별 프로그램 읽기 시도");
+		Integer user_id = Integer.parseInt(httpServletRequest.getParameter("user_id"));
+		Integer status = Integer.parseInt(httpServletRequest.getParameter("status"));
+		System.out.println("===========");
+		System.out.println(user_id);
+		String result = programService.readByStatusByUser(status, user_id);		
+		System.out.println(" result is "+result);
+	    return result;
+	}
+	
 	@RequestMapping(value = "/information/{id}", method = RequestMethod.GET, produces = "application/json; charset=utf8")
 	@ResponseBody
 	public String readProgramInformationByProgramId(@PathVariable int id) throws IOException, ParseException {
