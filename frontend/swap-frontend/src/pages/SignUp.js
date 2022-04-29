@@ -13,7 +13,6 @@ const SignUp = () => {
   const location = useLocation();
   const [registerForm, setRegisterForm] = useState("student");
   const onChangeValue = (event) => {
-    console.log(location.state.tokenObj.expires_at);
     setRegisterForm(event.target.value);
   };
 

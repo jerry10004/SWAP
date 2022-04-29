@@ -34,10 +34,10 @@ const Program = () => {
     if (id["id"] != null) {
       params.append("id", id["id"]);
       const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "program/information/" + id["id"]);
-      response.data[0].start_date = moment(response.data[0].start_date).format("YYYY-MM-DD HH:mm");
-      response.data[0].end_date = moment(response.data[0].end_date).format("YYYY-MM-DD HH:mm");
-      response.data[0].applystart_date = moment(response.data[0].applystart_date).format("YYYY-MM-DD HH:mm");
-      response.data[0].applyend_date = moment(response.data[0].applyend_date).format("YYYY-MM-DD HH:mm");
+      response.data[0].start_date = moment(response.data[0].start_date).format("YY-MM-DD HH:mm");
+      response.data[0].end_date = moment(response.data[0].end_date).format("YY-MM-DD HH:mm");
+      response.data[0].applystart_date = moment(response.data[0].applystart_date).format("YY-MM-DD HH:mm");
+      response.data[0].applyend_date = moment(response.data[0].applyend_date).format("YY-MM-DD HH:mm");
       setProgramInfo(response.data[0]);
       console.log(response.data[0]);
       setProgramInfoLoading(true);
@@ -74,16 +74,19 @@ const Program = () => {
                       <div>
                         <Icon path={mdiCalendarClock} size={0.7} />
                         <span>
+                          {" "}
                           신청기간 : {programInfo.applystart_date} ~ {programInfo.applyend_date}
                         </span>
                         <br />
                         <Icon path={mdiCalendarRange} size={0.7} />
                         <span>
+                          {" "}
                           진행기간 : {programInfo.start_date} ~ {programInfo.end_date}
                         </span>
                         <br />
                         <Icon path={mdiAccountMultipleOutline} size={0.7} />
                         <span>
+                          {" "}
                           신청현황 : {programInfo.applicants_num}명 / {programInfo.quota}명{" "}
                         </span>
                       </div>
@@ -117,16 +120,27 @@ const Program = () => {
                   </Card.Body>
                 </Card>
                 {programInfo.manager_name ? (
-                  <Card className="border-0 mb-3 mb-lg-0">
-                    {/*  Card body */}
-                    <Card.Body>
-                      <h3 className="mb-0">SW중심대학 지원사업단</h3>
-                      <div className="mb-2">{programInfo.manager_name}</div>
-                      <hr className="m-0 mb-2" />
-                      <Icon path={mdiEmailMultipleOutline} size={0.7} />
-                      <span> {programInfo.manager_contact}</span>
-                    </Card.Body>
-                  </Card>
+                  programInfo.manager_contact ? (
+                    <Card className="border-0 mb-3 mb-lg-0">
+                      {/*  Card body */}
+                      <Card.Body>
+                        <h3 className="mb-0">문의</h3>
+                        <hr className="m-0 mb-2" />
+                        <div className="mb-2"> 담당자: {programInfo.manager_name}</div>
+                        <Icon path={mdiEmailMultipleOutline} size={0.7} />
+                        <span>연락: {programInfo.manager_contact}</span>
+                      </Card.Body>
+                    </Card>
+                  ) : (
+                    <Card className="border-0 mb-3 mb-lg-0">
+                      {/*  Card body */}
+                      <Card.Body>
+                        <h3 className="mb-0">문의</h3>
+                        <hr className="m-0 mb-2" />
+                        <div className="mb-2">담당자: {programInfo.manager_name}</div>
+                      </Card.Body>
+                    </Card>
+                  )
                 ) : (
                   ""
                 )}
