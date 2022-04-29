@@ -14,14 +14,11 @@ require("formBuilder/dist/form-render.min.js");
 
 const FormRender = (props) => {
   const navigate = useNavigate();
-  console.log("props id", props.param.programid, props.param.userid, props.param.daysleft, props.param.quotaleft);
-  const [test, setTest] = useState(0);
   const [originalFormData, setoriginalFormData] = useState([]);
-  const [readyFormContent, setReadyFormContent] = useState([]);
   const [applicantData, setapplicantData] = useState();
-
   var programID = parseInt(props.param.programid);
   var userID = parseInt(props.param.userid);
+  var status = parseInt(props.param.Status);
   var formRenderInstance = "";
   var formInformation = "";
 
@@ -29,8 +26,6 @@ const FormRender = (props) => {
     readFormData(programID);
     readApplicantData(programID, userID);
   }, []);
-
-  var params = new URLSearchParams();
 
   useEffect(() => {
     componentDidMount();
@@ -73,14 +68,8 @@ const FormRender = (props) => {
     params.append("user_id", userID);
     params.append("content", JSON.stringify(formInformation));
 
-    console.log("*******", formInformation);
-
-    if (props.param.daysleft === false && props.param.count === 0) {
-      alert("신청기간이 마감되어서 신청 하실 수 없습니다.");
-      navigate("/main");
-      props.param.count++;
-    } else if (props.param.quotaleft == false && props.param.count === 0) {
-      alert("신청인원이 꽉 차서 신청 하실 수 없습니다.");
+    if (status === 0 && props.param.count === 0) {
+      alert("관리자는 프로그램을 신청하실 수 없습니다.");
       navigate("/main");
       props.param.count++;
     } else {
