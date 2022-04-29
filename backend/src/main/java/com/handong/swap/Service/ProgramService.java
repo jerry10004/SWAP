@@ -14,6 +14,8 @@ public interface ProgramService {
 	
 	public String readByCategory(int category_id) throws JsonProcessingException;
 	
+	public String readByStatusByUser(int status, int user_id) throws JsonProcessingException;
+	
 	public String readProgramInformationByProgramId(int id) throws JsonProcessingException;
 	
 	public String readProgramName(int id) throws JsonProcessingException;
@@ -21,6 +23,8 @@ public interface ProgramService {
 	public void delete(int id);
 	
 	public void updateStatus(int program_id, int status);
+	
+	public void updateApplyStatus(int program_id, int apply_status);
 
 	public void edit(ProgramDTO program);
 	

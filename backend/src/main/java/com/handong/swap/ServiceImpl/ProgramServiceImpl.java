@@ -59,6 +59,12 @@ public class ProgramServiceImpl implements ProgramService{
 	public void updateStatus(int program_id, int status) {
 		programDAO.updateStatus(program_id, status);
 	}
+	
+	@Override
+	public void updateApplyStatus(int program_id, int apply_status) {
+		programDAO.updateApplyStatus(program_id, apply_status);
+	}
+
 
 
 	@Override
@@ -79,6 +85,15 @@ public class ProgramServiceImpl implements ProgramService{
 	public void updateApplicantNum(int program_id) {
 		programDAO.updateApplicantNum(program_id);
 	}
+
+	@Override
+	public String readByStatusByUser(int status, int user_id) throws JsonProcessingException {
+		List<ProgramReadDTO> programDATA = programDAO.readByStatusByUser(status, user_id);
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonString = mapper.writeValueAsString(programDATA);
+		return jsonString;
+	}
+
 	
 
 }

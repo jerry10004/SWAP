@@ -5,7 +5,11 @@
 
    	
    	<select id="readProgram" resultType="ProgramRead">
-	   select P.id, A.name as name, C.category_name as category_name, P.program_name, P.status, P.start_date, P.end_date , P.Applystart_date, P.Applyend_date , P.manager_name, P.manager_contact, P.applicants_num
+	   select P.id, A.name as name, C.category_name as category_name, P.program_name, P.status, P.apply_status, P.start_date, P.end_date , P.Applystart_date, P.Applyend_date , P.manager_name, P.manager_contact, P.applicants_num,P.apply_status,case
+            when (P.apply_status = 0) then '대기'
+            when (P.apply_status =1) then '진행'
+        	else '마감'
+			end as status_name
 		FROM swap.Program as P
 		LEFT JOIN swap.Category as C  
 		ON P.category_id = C.id
@@ -17,14 +21,34 @@
    	
    	
    	  <select id="readByCategory" parameterType="Integer" resultType="ProgramRead">
-		 select P.id, A.name as name, P.program_name, P.category_id, P.quota, P.information, P.status, P.start_date, P.end_date, P.Applystart_date, P.Applyend_date , P.manager_name, P.manager_contact, P.applicants_num
+   	  select P.id, A.name as name, P.program_name, C.category_name, P.category_id, P.quota, P.information, P.status,  P.apply_status, P.start_date, P.end_date, P.Applystart_date, P.Applyend_date , P.manager_name, P.manager_contact, P.applicants_num,case
+            when (P.apply_status = 0) then '대기'
+            when (P.apply_status=1) then '진행'
+        	else '마감'
+			end as status_name
 		FROM Program AS P
 		LEFT JOIN Category as C
 		ON P.category_id = C.id
 		LEFT JOIN swap.Admin as A
 		ON P.admin_id = A.id
-		where  P.deldate is null AND C.id = #{category_id}
+		where  P.deldate is null AND C.id =  #{category_id}
 		order by P.regdate desc;
+	
+   	</select>
+   	
+   	 <select id="readByStatusByUser" parameterType="hashmap" resultType="ProgramReadByUser">
+   	  select  A.id as applicant_id, P.id as program_id, P.program_name,P.start_date, P.end_date,case
+            when (A.status = 0) then '참여보류'
+            when (A.status=1) then '참여승인'
+            when (A.status=2) then '참여불가'
+            when (A.status=3) then '미수료'
+        else '수료'
+	end as status_name
+	FROM Applicant AS A
+	LEFT JOIN Program P on P.id = A.program_id
+	where P.deldate is null AND P.status = #{status} AND A.user_id=#{user_id}
+	order by A.regdate desc;
+	
    	</select>
    	
    	
@@ -61,6 +85,11 @@
 
    	<update id="updateStatus" parameterType="hashmap">
    		UPDATE Program SET status=#{status}
+		WHERE id = #{program_id}
+	</update>
+	
+	<update id="updateApplyStatus" parameterType="hashmap">
+   		UPDATE Program SET apply_status=#{apply_status}
 		WHERE id = #{program_id}
 	</update>
 

@@ -57,11 +57,6 @@ const Main = ({ login }) => {
                         </Nav.Link>
                       </Nav.Item>
                       <Nav.Item>
-                        <Nav.Link eventKey="club" className="mb-sm-3 mb-md-0">
-                          학회/동아리
-                        </Nav.Link>
-                      </Nav.Item>
-                      <Nav.Item>
                         <Nav.Link eventKey="macbook" className="mb-sm-3 mb-md-0">
                           맥북
                         </Nav.Link>

@@ -236,14 +236,14 @@ const ProgramInformation = (props) => {
                     </Col>
 
                     <Col md={6} xs={12} className="mb-4">
-                      <Form.Group controlId="manager_name">
+                      <Form.Group>
                         <Form.Label>담당자</Form.Label>
                         <Form.Control type="text" placeholder="담당자 이름을 입력하세요." name="manager_name" value={programInformation[0].manager_name} disabled />
                       </Form.Group>
                     </Col>
 
                     <Col md={6} xs={12} className="mb-4">
-                      <Form.Group controlId="manager_contact">
+                      <Form.Group>
                         <Form.Label>담당자 연락처</Form.Label>
                         <Form.Control type="text" placeholder="담당자 연락처를 입력하세요." name="manager_contact" value={programInformation[0].manager_contact} disabled />
                       </Form.Group>
@@ -396,16 +396,16 @@ const ProgramInformation = (props) => {
                     </Col>
 
                     <Col md={6} xs={12} className="mb-4">
-                      <Form.Group controlId="manager_name">
+                      <Form.Group>
                         <Form.Label>담당자</Form.Label>
-                        <Form.Control type="text" placeholder="담당자 이름을 입력하세요." name="manager_name" value={programInformation[0].manager_name} onChange={onEdit} />
+                        <Form.Control type="text" placeholder="담당자 이름을 입력하세요." name="manager_name" onChange={onEdit} />
                       </Form.Group>
                     </Col>
 
                     <Col md={6} xs={12} className="mb-4">
-                      <Form.Group controlId="manager_contact">
+                      <Form.Group>
                         <Form.Label>담당자 연락처</Form.Label>
-                        <Form.Control type="text" placeholder="담당자 연락처를 입력하세요." name="manager_contact" value={programInformation[0].manager_contact} onChange={onEdit} />
+                        <Form.Control type="text" placeholder="담당자 연락처를 입력하세요." name="manager_contact" onChange={onEdit} />
                       </Form.Group>
                     </Col>
                   </Row>

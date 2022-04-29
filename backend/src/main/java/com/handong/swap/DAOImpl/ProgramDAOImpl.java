@@ -49,6 +49,14 @@ public class ProgramDAOImpl implements ProgramDAO {
 		param.put("status", status);
 	    sqlSession.update("Program.updateStatus", param);
 	}
+	
+	@Override
+	public void updateApplyStatus(int program_id, int apply_status) {
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("program_id", program_id);
+		param.put("apply_status", apply_status);
+	    sqlSession.update("Program.updateApplyStatus", param);
+	}
 
 	@Override
 	public List<ProgramReadNameDTO> readProgramName(int id) {
@@ -72,6 +80,14 @@ public class ProgramDAOImpl implements ProgramDAO {
 		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("program_id", program_id);
 	    sqlSession.update("Program.updateApplicantNum", param);
+	}
+
+	@Override
+	public List<ProgramReadDTO> readByStatusByUser(int status, int user_id) {
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("user_id", user_id);
+		param.put("status", status);
+		return sqlSession.selectList("Program.readByStatusByUser",param);
 	}
 
 }

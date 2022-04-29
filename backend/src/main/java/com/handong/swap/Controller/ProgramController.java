@@ -43,9 +43,12 @@ public class ProgramController {
 	
 	@Autowired
 	ProgramService programService;
+	String applyStartDate;
+	String applyEndDate;
 	String startDate;
 	String endDate;
 	String status;
+	String apply_status;
 	String programId;
 	
 	@RequestMapping(value = "", method = RequestMethod.GET, produces = "application/json; charset=utf8")
@@ -54,8 +57,12 @@ public class ProgramController {
 		System.out.println("읽기 시도");
 		String result = programService.read();
 		
+		System.out.println("~~~~");
+		System.out.println(result);
+		
 		LocalDateTime now = LocalDateTime.now();
 		String currentDate = now.format(DateTimeFormatter.ofPattern("yy-MM-dd HH:mm (EE)",Locale.KOREA));
+		String currentApplyDate = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss (EE)",Locale.KOREA));
 		
 		JSONParser parser = new JSONParser();
 		Object obj;
@@ -69,8 +76,16 @@ public class ProgramController {
 					
 					startDate = (String)jsonObj.get("start_date");
 					endDate = (String)jsonObj.get("end_date");
+					applyStartDate = (String)jsonObj.get("applystart_date");
+					applyEndDate = (String)jsonObj.get("applyend_date");
+					apply_status = jsonObj.get("apply_status").toString();
 					status =  jsonObj.get("status").toString();
 					programId = jsonObj.get("id").toString();
+					
+					System.out.println("now: "+currentApplyDate);
+					System.out.println("apply 시작: "+applyStartDate);
+					System.out.println("apply  종료: "+applyEndDate);
+					
 		
 			            
 			            if(currentDate.compareTo(startDate)<0) {//대기 
@@ -86,6 +101,22 @@ public class ProgramController {
 			            else if(currentDate.compareTo(endDate)>0) {//종료
 							if(status.equals("2") == false) {
 								programService.updateStatus(Integer.parseInt(programId), 2);
+							}		            	
+			            }
+			            
+			            if(currentApplyDate.compareTo(applyStartDate) < 0) {//접수대기
+			            	if(apply_status.equals("0") == false) {
+			            		programService.updateApplyStatus(Integer.parseInt(programId), 0);
+			            	}
+			            }
+			            else if(currentApplyDate.compareTo(applyStartDate)>0 && currentApplyDate.compareTo(applyEndDate)<0) {//접수진행
+							if(apply_status.equals("1") == false) {
+								programService.updateApplyStatus(Integer.parseInt(programId), 1);
+							}
+			            }
+			            else if(currentApplyDate.compareTo(applyEndDate)>0) {//접수종료
+							if(apply_status.equals("2") == false) {
+								programService.updateApplyStatus(Integer.parseInt(programId), 2);
 							}		            	
 			            }
 					
@@ -108,9 +139,23 @@ public class ProgramController {
 	public String readprogramByCategory(HttpServletRequest httpServletRequest) throws IOException, ParseException {
 		System.out.println("카테고리 별 프로그램 읽기 시도");
 		Integer category_id = Integer.parseInt(httpServletRequest.getParameter("category_id"));
+		System.out.println("===========");
 		System.out.println(category_id);
 		String result = programService.readByCategory(category_id);		
-		System.out.println("result is "+result);
+		System.out.println(" result is "+result);
+	    return result;
+	}
+	
+	@RequestMapping(value = "/read/status", method = RequestMethod.POST, produces = "application/json; charset=utf8")
+	@ResponseBody
+	public String readprogramByStatusByUser(HttpServletRequest httpServletRequest) throws IOException, ParseException {
+		System.out.println("사용자가 참여한 상태 별 프로그램 읽기 시도");
+		Integer user_id = Integer.parseInt(httpServletRequest.getParameter("user_id"));
+		Integer status = Integer.parseInt(httpServletRequest.getParameter("status"));
+		System.out.println("===========");
+		System.out.println(user_id);
+		String result = programService.readByStatusByUser(status, user_id);		
+		System.out.println(" result is "+result);
 	    return result;
 	}
 	

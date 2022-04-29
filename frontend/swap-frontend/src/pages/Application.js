@@ -33,6 +33,7 @@ const Application = () => {
   const [dday, setDday] = useState();
   const [daysLeft, setdaysLeft] = useState(true);
   const [quotaLeft, setquotaLeft] = useState(true);
+  const [status, setStatus] = useState();
   var ID = parseInt(window.sessionStorage.getItem("id"));
   var programID = parseInt(id["id"]);
 
@@ -46,12 +47,11 @@ const Application = () => {
   }, []);
 
   const readApplicantInformation = async (id) => {
-    // console.log("111111 ", id);
     setApplicantInformationLoading(false);
     const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "user/loggedinUser/" + id);
     setApplicantInformation(response.data);
     setApplicantInformationLoading(true);
-    // console.log("222222 ", applicantInformation);
+    setStatus(response.data[0].status);
   };
 
   const readProgramInformation = async () => {
@@ -61,10 +61,10 @@ const Application = () => {
     if (id["id"] != null) {
       params.append("id", id["id"]);
       const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "program/information/" + id["id"]);
-      console.log("333333 ", response.data[0]);
+
       setProgramInfo(response.data[0]);
       setProgramInfoLoading(true);
-      console.log(response.data[0]);
+
       setStartDate(moment(response.data[0].start_date).format("YY-MM-DD HH:mm"));
       setEndDate(moment(response.data[0].end_date).format("YY-MM-DD HH:mm"));
       setApplyStartDate(moment(response.data[0].applystart_date).format("YY-MM-DD HH:mm"));
@@ -81,12 +81,9 @@ const Application = () => {
 
   const Dday = async (Applyenddate) => {
     var date1 = moment(Applyenddate);
-    console.log(date1);
     var date2 = moment();
-    console.log(date2);
 
     var days = date1.diff(date2, "days") + 1;
-    console.log(days);
 
     if (date2 > date1) {
       setdaysLeft(false);
@@ -97,7 +94,7 @@ const Application = () => {
     }
   };
 
-  const props = { userid: ID, programid: programID, daysleft: daysLeft, quotaleft: quotaLeft, count: 0 };
+  const props = { userid: ID, programid: programID, daysleft: daysLeft, quotaleft: quotaLeft, count: 0, Status: status };
 
   return (
     <Fragment>
@@ -187,7 +184,6 @@ const Application = () => {
                             <span className="fw-bold text-dark"> 날짜 - </span>
                             <span>
                               {" "}
-                              {console.log("startdate", startdate)}
                               {startdate} ~ {enddate}{" "}
                             </span>
                           </span>
