@@ -1,13 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Card, Row, Form, Button, Col, InputGroup } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "assets/scss/addProgram.scss";
 import { ko } from "date-fns/esm/locale";
-import { DropFiles } from "components/elements/dropfiles/DropFiles";
+import PreviewDefault from "assets/images/previewDefault.png";
 
 const BasicInformation = (props) => {
-  const { validated, next, handleChange } = props;
+  const { validated, next, handleChange, preview, onLoadPoster } = props;
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
   const [ApplystartDate, setApplyStartDate] = useState();
@@ -183,11 +183,14 @@ const BasicInformation = (props) => {
             </Col>
 
             {/* Project Cover Image */}
-            <Col xs={12} className="mb-4">
+            <Col xs={4} className="mb-4">
               <h5 className="mb-3">프로그램 이미지(포스터) </h5>
-              <div className="dropzone p-4 border-dashed text-center">
-                <DropFiles />
+              <div className="img_wrap dropzone p-2 border-dashed mb-3 d-flex justify-content-center">
+                {preview ? <img src={preview} alt="" width="200px" /> : <img src={PreviewDefault} alt="" width="200px" />}
               </div>
+              <form className="upload_input">
+                <input type="file" id="image" accept="img" onChange={onLoadPoster} />
+              </form>
             </Col>
           </Row>
         </Card.Body>

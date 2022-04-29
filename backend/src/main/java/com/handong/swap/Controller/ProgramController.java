@@ -1,11 +1,12 @@
 package com.handong.swap.Controller;
 
 
+import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.text.ParseException;
-
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.text.ParseException;
@@ -20,13 +21,18 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+
 import com.handong.swap.Service.ProgramService;
 import com.mysql.cj.xdevapi.JsonArray;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.handong.swap.DTO.ProgramDTO;
+import com.handong.swap.DTO.ProgramPosterDTO;
 import com.handong.swap.DTO.ProgramReadNameDTO;
 
 @Controller
@@ -132,7 +138,7 @@ public class ProgramController {
 	
 	@RequestMapping(value = "/add", method = RequestMethod.POST, produces = "application/json; charset=utf8")
 	@ResponseBody
-	public void addProgram(HttpServletRequest httpServletRequest) throws ParseException {
+	public int addProgram(HttpServletRequest httpServletRequest) throws ParseException {
 		ProgramDTO program = new ProgramDTO();
 		
 		System.out.println("프로그램 추가하기 -----"+httpServletRequest.getParameter("application_form"));
@@ -158,13 +164,55 @@ public class ProgramController {
 		
 		int result = programService.add(program);
 		
-		if(result ==0 ) {
-			System.out.println("프로그램 추가 실패");
-		}
-		else {
-			System.out.println("프로그램 추가 성공");
-		}
+//		if(result ==0 ) {
+//			System.out.println("프로그램 추가 실패");
+//		}
+//		else {
+//			System.out.println("프로그램 추가 성공");
+//		}
 		
+		return result;
+		
+	}
+	
+	
+	@RequestMapping(value = "addPoster", method = RequestMethod.POST, produces = "application/json; charset=utf8")
+	@ResponseBody
+	public String addPoster(HttpServletRequest httpServletRequest, MultipartHttpServletRequest multi) {
+		ProgramPosterDTO programPoster = new ProgramPosterDTO();
+		MultipartFile file = multi.getFile("img");
+		String posterName = file.getOriginalFilename();
+		System.out.println(posterName);
+		
+		Calendar calendar = Calendar.getInstance();
+		String path = "";
+		String filePath = httpServletRequest.getSession().getServletContext().getRealPath("/") + "resources/upload/"+calendar.get(calendar.YEAR)+"/"+(calendar.get(calendar.MONTH)+1)+"/"; //파일 저장 경로, 설정파일로 따로 관리한다.
+	    if(file != null) {
+	    	File dir = new File(filePath); //파일 저장 경로 확인, 없으면 만든다.
+		    if (!dir.exists()) {
+		        dir.mkdirs();
+		    }
+		    try {
+	    		int count = 1;
+	    		File newFile = new File(filePath+posterName);
+//	    		path = calendar.get(calendar.YEAR)+"/"+(calendar.get(calendar.MONTH)+1)+"/"+calendar.getTimeInMillis();
+	    		path = calendar.get(calendar.YEAR)+"/"+(calendar.get(calendar.MONTH)+1)+"/"+posterName;
+	    		while(newFile.exists()) {
+	    			newFile = new File(filePath+posterName+"("+count+")");
+	    			path = calendar.get(calendar.YEAR)+"/"+(calendar.get(calendar.MONTH)+1)+"/"+posterName+"("+count+")";
+	    			count++;
+	    		}
+	    		if (!newFile.exists()) {
+	    			newFile.mkdirs();
+	    	    }
+				file.transferTo(newFile);
+			} catch (Exception e) {
+				int count = 1;
+	            e.printStackTrace();
+			}
+	    }
+	    
+		return "uploadEnd";
 	}
 	
 	@RequestMapping(value = "/delete", method = RequestMethod.POST, produces = "application/json; charset=utf8")

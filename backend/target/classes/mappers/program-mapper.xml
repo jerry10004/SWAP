@@ -42,6 +42,12 @@
 		where P.id = #{id};
    	</select>
    	
+   	<select id="readProgramLastId" resultType="Integer">
+	    SELECT P.id
+		FROM Program AS P
+		ORDER BY regdate DESC LIMIT 1
+   	</select>
+   	
    	<insert id = "insertProgram" parameterType="Program">	
    		INSERT INTO Program (admin_id, category_id, application_form, program_name, information, start_date, end_date, quota, Applystart_date, Applyend_date, manager_name, manager_contact)
 		VALUES (#{admin_id}, #{category_id}, #{application_form}, #{program_name}, #{information}, #{start_date}, #{end_date},#{quota}, #{Applystart_date}, #{Applyend_date},#{manager_name}, #{manager_contact})

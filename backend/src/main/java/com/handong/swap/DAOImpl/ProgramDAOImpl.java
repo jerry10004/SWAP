@@ -26,7 +26,8 @@ public class ProgramDAOImpl implements ProgramDAO {
 
 	public int add(ProgramDTO program) {
 		int result = sqlSession.insert("Program.insertProgram", program);
-		return result;
+		int program_id = sqlSession.selectOne("Program.readProgramLastId", program);
+		return program_id;
 	}
 	
 	@Override
