@@ -14,8 +14,12 @@ require("formBuilder/dist/form-render.min.js");
 
 const FormRender = (props) => {
   const navigate = useNavigate();
+  console.log("props id", props.param.programid, props.param.userid, props.param.daysleft, props.param.quotaleft);
+  const [test, setTest] = useState(0);
   const [originalFormData, setoriginalFormData] = useState([]);
+  const [readyFormContent, setReadyFormContent] = useState([]);
   const [applicantData, setapplicantData] = useState();
+  const [applicantInformation, setApplicantInformation] = useState(null);
   var programID = parseInt(props.param.programid);
   var userID = parseInt(props.param.userid);
   var status = parseInt(props.param.Status);
@@ -25,7 +29,10 @@ const FormRender = (props) => {
   useLayoutEffect(() => {
     readFormData(programID);
     readApplicantData(programID, userID);
+    readApplicantInformation(userID);
   }, []);
+
+  var params = new URLSearchParams();
 
   useEffect(() => {
     componentDidMount();
@@ -61,6 +68,12 @@ const FormRender = (props) => {
     setapplicantData(response.data);
   };
 
+  const readApplicantInformation = async (id) => {
+    const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "user/loggedinUser/" + id);
+    setApplicantInformation(response.data);
+    console.log("사용자 정보: ", response.data);
+  };
+
   const addFormData = async () => {
     var isFilled = true;
     var params = new URLSearchParams();
@@ -68,7 +81,11 @@ const FormRender = (props) => {
     params.append("user_id", userID);
     params.append("content", JSON.stringify(formInformation));
 
-    if (status === 0 && props.param.count === 0) {
+    console.log("*******", formInformation);
+    console.log(status);
+
+    if (status === 1 && props.param.count === 0) {
+      props.param.count++;
       alert("관리자는 프로그램을 신청하실 수 없습니다.");
       navigate("/main");
       props.param.count++;
@@ -87,7 +104,7 @@ const FormRender = (props) => {
         }
 
         if (isFilled && props.param.count === 0) {
-          if (formInformation.length > 0 && props.param.count === 0) {
+          if (!formInformation.length > 0 && props.param.count === 0) {
             const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "applicant/apply", params);
             alert(" 프로그램이 신청 되었습니다.");
             navigate("/mypage");
