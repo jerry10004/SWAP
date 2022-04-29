@@ -26,6 +26,8 @@ const ApplicationFormView = (props) => {
   const [applicantClick, setApplicantClick] = useState(false);
   const [applicationNameLoading, setApplicationNameLoading] = useState(false);
 
+  const [applicantNum, setApplicantNum] = useState(0);
+
   useLayoutEffect(() => {
     //console.log(props.param2);
     readApplicantInformation(props.param2.id);
@@ -40,6 +42,7 @@ const ApplicationFormView = (props) => {
     setApplicantInformationLoading(false);
     const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "applicant/applicants/" + id);
     setApplicantInformation(response.data);
+    setApplicantNum(response.data.length);
     setApplicantInformationLoading(true);
   };
 
@@ -90,7 +93,7 @@ const ApplicationFormView = (props) => {
           data-bs-toggle="collapse"
           aria-controls="courseTwo"
         >
-          <div className="me-auto">신청한 학생들</div>
+          <div className="me-auto">신청한 학생들 ({applicantNum})</div>
           <span className="chevron-arrow ms-4">
             <i className="fe fe-chevron-down fs-4"></i>
           </span>
@@ -160,33 +163,6 @@ const ApplicationFormView = (props) => {
                         <Form.Control type="text" placeholder="Handong123@handong.ac.kr" value={userInfo.email} readOnly />
                       </Form.Group>
                     </Col>
-
-                    {/* 신청동기 */}
-                    {/* <Col md={12} sm={12} className="mb-4">
-                      <Form.Group controlId="ApplyingReason">
-                        <Form.Label>신청동기</Form.Label>
-                        <Form.Control type="text" placeholder="신청동기를 입력해주세요" required />
-                      </Form.Group>
-                    </Col> */}
-
-                    {/*  개인정보활용동의 */}
-                    {/* <Col md={12} sm={12} className="mb-4">
-                      <Form.Group controlId="postalcode">
-                        <Form.Label>개인정보활용동의</Form.Label>
-                        <div className="agreement">
-                          법령에 따라 개인을 고유하게 구별하기 위하여 부여된 모든 식별정보(성명, 소속, 휴대폰, 이메일 등)의 수집, 이용에 대한 동의를 받고 있습니다. 신청시 기재되는 모든 개인정보는
-                          사업진행을 위하여 수집 및 이용될 수 있습니다. 또한 대학평가관련 자료 요청시 교내 관련부서에 자료가 제공될 수 있으며, 철저하게 관리될 예정입니다. 수집된 개인정보는 5년
-                          경과(대학 평가 관련 자료 요청 기간) 후 즉시 파기됩니다. 위와 관련하여 본인의 개인고유식별정보 수집, 이용에 관한 내용을 숙지하였고 이에 동의한다면 해당란에 체크해 주십시오.
-                        </div>
-                      </Form.Group>
-                    </Col>
-
-                    <Col md={12} sm={12} className="mb-5">
-                    
-                      <Form.Group controlId="customCheck1">
-                        <Form.Check type="checkbox" label="개인정보 활용에 동의합니다." />
-                      </Form.Group>
-                    </Col> */}
                     <form id="fb-render"></form>
                   </Form>
                 </Card.Body>
@@ -253,32 +229,6 @@ const ApplicationFormView = (props) => {
                     </Form.Group>
                   </Col>
 
-                  {/* 신청동기 */}
-                  {/* <Col md={12} sm={12} className="mb-4">
-                    <Form.Group controlId="ApplyingReason">
-                      <Form.Label>신청동기</Form.Label>
-                      <Form.Control type="text" placeholder="신청동기를 입력해주세요" />
-                    </Form.Group>
-                  </Col> */}
-
-                  {/*  개인정보활용동의 */}
-                  {/* <Col md={12} sm={12} className="mb-4">
-                    <Form.Group controlId="postalcode">
-                      <Form.Label>개인정보활용동의</Form.Label>
-                      <div className="agreement">
-                        법령에 따라 개인을 고유하게 구별하기 위하여 부여된 모든 식별정보(성명, 소속, 휴대폰, 이메일 등)의 수집, 이용에 대한 동의를 받고 있습니다. 신청시 기재되는 모든 개인정보는
-                        사업진행을 위하여 수집 및 이용될 수 있습니다. 또한 대학평가관련 자료 요청시 교내 관련부서에 자료가 제공될 수 있으며, 철저하게 관리될 예정입니다. 수집된 개인정보는 5년 경과(대학
-                        평가 관련 자료 요청 기간) 후 즉시 파기됩니다. 위와 관련하여 본인의 개인고유식별정보 수집, 이용에 관한 내용을 숙지하였고 이에 동의한다면 해당란에 체크해 주십시오.
-                      </div>
-                    </Form.Group>
-                  </Col>
-                  {/*  CheckBox */}
-                  {/* <Col md={12} sm={12} className="mb-5">
-      
-                    <Form.Group controlId="customCheck1">
-                      <Form.Check type="checkbox" label="개인정보 활용에 동의합니다." />
-                    </Form.Group>
-                  </Col> */}
                   <form id="fb-render"></form>
                 </Form>
               </Card.Body>
@@ -313,15 +263,6 @@ const ApplicationFormView = (props) => {
                                   </div>
                                   {applicantInformation.map((subitem, subindex) => (
                                     <ListGroup.Item key={subindex} as="li" className="px-0 py-1 border-0">
-                                      {/* <Link to="#" onClick={() => getUserInfo(subitem)} className={`d-flex justify-content-between align-items-center text-inherit text-decoration-none border-bottom`}>
-                                        <div className="text-truncate mb-2">
-                                          <span className="fs-5">{subitem.name}</span>
-                                        </div>
-                                        <div className="text-truncate">
-                                          <span>({subitem.student_id})</span>
-                                        </div>
-                                      </Link> */}
-
                                       <div className="d-grid">
                                         <Button
                                           variant="transparent"
