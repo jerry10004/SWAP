@@ -73,6 +73,8 @@ const FormRender = (props) => {
     params.append("user_id", userID);
     params.append("content", JSON.stringify(formInformation));
 
+    console.log("*******", formInformation);
+
     if (props.param.daysleft === false && props.param.count === 0) {
       alert("신청기간이 마감되어서 신청 하실 수 없습니다.");
       navigate("/main");
