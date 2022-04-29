@@ -17,7 +17,7 @@
 			<typeAlias alias="ApplicationName" type="com.handong.swap.DTO.ApplicationNameDTO"/>
 			<typeAlias alias="ApplicationDeleteConfirm" type="com.handong.swap.DTO.ApplicationDeleteConfirmDTO"/>
 			<typeAlias alias="Applicant" type="com.handong.swap.DTO.ApplicantDTO"/>
-		
+		    <typeAlias alias="Category" type="com.handong.swap.DTO.CategoryDTO"/>
 	</typeAliases>
 		
 	</configuration>

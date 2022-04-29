@@ -17,6 +17,7 @@ const CoursesTable = ({ program_data }) => {
   const [waitProgram, setWaitProgram] = useState([]);
   const [progressProgram, setProgressProgram] = useState([]);
   const [finishProgram, setFinishProgram] = useState([]);
+  const [category, setCategory] = useState([]);
 
   const filterOptions = [
     { value: "대회", label: "대회" },
@@ -26,6 +27,16 @@ const CoursesTable = ({ program_data }) => {
     { value: "행사", label: "행사" },
     { value: "기타", label: "기타" },
   ];
+
+  useLayoutEffect(() => {
+    readCategory();
+  }, []);
+
+  const readCategory = async () => {
+    const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "category");
+    setCategory(response.data);
+    console.log(response.data);
+  };
 
   const columns = useMemo(
     () => [
