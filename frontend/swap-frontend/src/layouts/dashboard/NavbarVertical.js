@@ -11,22 +11,9 @@ import "simplebar/dist/simplebar.min.css";
 // import media files
 import InverseLogo from "assets/images/SWAPInverted.png";
 
-// import routes file
-//import { DashboardMenu } from "./DashboardRoutes";
-
 import { v4 as uuid } from "uuid";
 
 export const DashboardMenu = [
-  {
-    id: uuid(),
-    title: "User",
-    icon: "home",
-    link: "/admin/user",
-    // children: [
-    //   { id: uuid(), link: "/admin/instructor", name: "관리자" },
-    //   { id: uuid(), link: "/admin/student", name: "사용자" },
-    // ],
-  },
   {
     id: uuid(),
     title: "Program",
@@ -36,8 +23,18 @@ export const DashboardMenu = [
   {
     id: uuid(),
     title: "Application",
-    icon: "clipboard",
+    icon: "book",
     link: "/admin/application",
+  },
+  {
+    id: uuid(),
+    title: "User",
+    icon: "user",
+    link: "/admin/user",
+    // children: [
+    //   { id: uuid(), link: "/admin/instructor", name: "관리자" },
+    //   { id: uuid(), link: "/admin/student", name: "사용자" },
+    // ],
   },
 ];
 
@@ -105,7 +102,7 @@ const NavbarVertical = (props) => {
     <Fragment>
       <SimpleBar style={{ maxHeight: "100vh" }}>
         <div className="nav-scroller">
-          <Link className="navbar-brand" to="/dashboard/overview">
+          <Link className="navbar-brand" to="/">
             <Image src={InverseLogo} alt="" />
           </Link>
         </div>

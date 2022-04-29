@@ -37,34 +37,31 @@ const NavbarTop = (props) => {
             <Dropdown as={Nav.Item}>
               <Dropdown.Toggle as={Nav.Link} bsPrefix="dt" className="rounded-circle border-bottom-0" id="dropdownUser">
                 <div className="avatar avatar-md avatar-indicators avatar-online">
-                  <Image alt="avatar" src={Avatar1} className="rounded-circle" />
+                  <Image src={window.sessionStorage.getItem("profileImg")} className="rounded-circle" />
                 </div>
               </Dropdown.Toggle>
               <Dropdown.Menu className="dashboard-dropdown dropdown-menu-end mt-4 py-0" aria-labelledby="dropdownUser" align="end">
                 <Dropdown.Item className="mt-3">
                   <div className="d-flex">
                     <div className="avatar avatar-md avatar-indicators avatar-online">
-                      <Image alt="avatar" src={Avatar1} className="rounded-circle" />
+                      <Image src={window.sessionStorage.getItem("profileImg")} className="rounded-circle" />
                     </div>
                     <div className="ms-3 lh-1">
-                      <h5 className="mb-1">Annette Black</h5>
-                      <p className="mb-0 text-muted">annette@geeksui.com</p>
+                      <h5 className="mb-1">{window.sessionStorage.getItem("name")}</h5>
+                      <p className="mb-0 text-muted">{window.sessionStorage.getItem("email")}</p>
                     </div>
                   </div>
                 </Dropdown.Item>
                 <Dropdown.Divider />
                 <Dropdown.Item eventKey="2">
-                  <i className="fe fe-user me-2"></i> Profile
-                </Dropdown.Item>
-                <Dropdown.Item eventKey="3">
-                  <i className="fe fe-star me-2"></i> Subscription
+                  <i className="fe fe-user me-2"></i> 프로필
                 </Dropdown.Item>
                 <Dropdown.Item>
-                  <i className="fe fe-settings me-2"></i> Settings
+                  <i className="fe fe-settings me-2"></i> 세팅
                 </Dropdown.Item>
                 <Dropdown.Divider />
                 <Dropdown.Item className="mb-3">
-                  <i className="fe fe-power me-2"></i> Sign Out
+                  <i className="fe fe-power me-2"></i> 로그아웃
                 </Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>

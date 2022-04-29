@@ -4,6 +4,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "assets/scss/addProgram.scss";
 import { ko } from "date-fns/esm/locale";
+import { DropFiles } from "components/elements/dropfiles/DropFiles";
 
 const BasicInformation = (props) => {
   const { validated, next, handleChange } = props;
@@ -182,12 +183,12 @@ const BasicInformation = (props) => {
             </Col>
 
             {/* Project Cover Image */}
-            {/* <Col xs={12} className="mb-4">
-                <h5 className="mb-3">프로그램 이미지(포스터) </h5>
-                <div className="dropzone p-4 border-dashed text-center">
-                  <DropFiles />
-                </div>
-              </Col> */}
+            <Col xs={12} className="mb-4">
+              <h5 className="mb-3">프로그램 이미지(포스터) </h5>
+              <div className="dropzone p-4 border-dashed text-center">
+                <DropFiles />
+              </div>
+            </Col>
           </Row>
         </Card.Body>
       </Card>
