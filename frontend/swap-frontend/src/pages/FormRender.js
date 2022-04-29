@@ -84,7 +84,7 @@ const FormRender = (props) => {
     console.log("*******", formInformation);
     console.log(status);
 
-    if (status === 1 && props.param.count === 0) {
+    if (status === 0 && props.param.count === 0) {
       props.param.count++;
       alert("관리자는 프로그램을 신청하실 수 없습니다.");
       navigate("/main");
