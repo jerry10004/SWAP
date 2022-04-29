@@ -65,13 +65,13 @@ const Application = () => {
       setProgramInfo(response.data[0]);
       setProgramInfoLoading(true);
       console.log(response.data[0]);
-      setStartDate(moment(response.data[0].start_date).format("YY.MM.DD HH:mm"));
-      setEndDate(moment(response.data[0].end_date).format("YY.MM.DD HH:mm"));
-      setApplyStartDate(moment(response.data[0].applystart_date).format("YY.MM.DD HH:mm"));
-      setApplyEndDate(moment(response.data[0].applyend_date).format("YY.MM.DD HH:mm"));
+      setStartDate(moment(response.data[0].start_date).format("YY-MM-DD HH:mm"));
+      setEndDate(moment(response.data[0].end_date).format("YY-MM-DD HH:mm"));
+      setApplyStartDate(moment(response.data[0].applystart_date).format("YY-MM-DD HH:mm"));
+      setApplyEndDate(moment(response.data[0].applyend_date).format("YY-MM-DD HH:mm"));
       Dday(response.data[0].applyend_date);
 
-      if (response.data[0].applicants_num >= response.data[0].quota && response.data[0].quota != 0) {
+      if (response.data[0].applicants_num >= response.data[0].quota && (response.data[0].quota != 0 || response.data[0].quota != "무제한")) {
         setquotaLeft(false);
       } else {
         setquotaLeft(true);

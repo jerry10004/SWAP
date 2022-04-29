@@ -88,7 +88,6 @@ const FormRender = (props) => {
         alert("이미 신청된 프로그램입니다.");
         navigate("/main");
         props.param.count++;
-        console.log(props.param.count);
       } else {
         for (var i = 0; i < formInformation.length; i++) {
           if (formInformation[i].userData[0] === "" && formInformation[i].required === true && props.param.count === 0) {
@@ -97,8 +96,6 @@ const FormRender = (props) => {
             break;
           }
         }
-
-        console.log(isFilled);
 
         if (isFilled && props.param.count === 0) {
           if (formInformation.length > 0 && props.param.count === 0) {
