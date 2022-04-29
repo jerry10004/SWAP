@@ -73,8 +73,6 @@ const FormRender = (props) => {
     params.append("user_id", userID);
     params.append("content", JSON.stringify(formInformation));
 
-    console.log("*******", formInformation);
-
     if (props.param.daysleft === false && props.param.count === 0) {
       alert("신청기간이 마감되어서 신청 하실 수 없습니다.");
       navigate("/main");
@@ -88,7 +86,6 @@ const FormRender = (props) => {
         alert("이미 신청된 프로그램입니다.");
         navigate("/main");
         props.param.count++;
-        console.log(props.param.count);
       } else {
         for (var i = 0; i < formInformation.length; i++) {
           if (formInformation[i].userData[0] === "" && formInformation[i].required === true && props.param.count === 0) {
@@ -97,8 +94,6 @@ const FormRender = (props) => {
             break;
           }
         }
-
-        console.log(isFilled);
 
         if (isFilled && props.param.count === 0) {
           if (formInformation.length > 0 && props.param.count === 0) {
