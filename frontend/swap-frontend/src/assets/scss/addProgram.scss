@@ -12,3 +12,13 @@
   object-fit: cover;
   object-position: top;
 }
+
+.main-program-card {
+  position: relative;
+}
+
+.main-program-badge {
+  position: absolute;
+  top: 0px;
+  right: -15px;
+}

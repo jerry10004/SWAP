@@ -6,6 +6,7 @@ public class ProgramDTO {
 	int id;
 	int quota;
 	int status;
+	int apply_status;
 	int admin_id;
 	int category_id;
 	int applicants_num;
@@ -96,6 +97,12 @@ public class ProgramDTO {
 	}
 	public void setInformation(String information) {
 		this.information = information;
+	}
+	public int getApply_status() {
+		return apply_status;
+	}
+	public void setApply_status(int apply_status) {
+		this.apply_status = apply_status;
 	}
 	public int getStatus() {
 		return status;

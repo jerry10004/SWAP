@@ -21,6 +21,8 @@ public interface ProgramService {
 	public void delete(int id);
 	
 	public void updateStatus(int program_id, int status);
+	
+	public void updateApplyStatus(int program_id, int apply_status);
 
 	public void edit(ProgramDTO program);
 	

@@ -12,6 +12,8 @@ public class ProgramReadDTO {
 	String category_name;
 	String program_name;
 	int status;
+	int apply_status;
+	String status_name;
 	String start_date;
 	String end_date;
 	String Applystart_date;
@@ -77,6 +79,18 @@ public class ProgramReadDTO {
 	}
 	public void setStatus(int status) {
 		this.status = status;
+	}
+	public int getApply_status() {
+		return apply_status;
+	}
+	public void setApply_status(int apply_status) {
+		this.apply_status = apply_status;
+	}
+	public String getStatus_name() {
+		return status_name;
+	}
+	public void setStatus_name(String status_name) {
+		this.status_name = status_name;
 	}
 	public String getStart_date() {
 		return start_date;

@@ -16,6 +16,8 @@ import { FormSelect } from "components/elements/form-select/FormSelect";
 
 const AllProgramsData = (props) => {
   const [programInfo, setProgramInfo] = useState([]);
+  const [firstProgramInfo, setFirstProgramInfo] = useState([]);
+
   const [applyLoading, setApplyLoading] = useState(false);
   const [ddayLoading, setDdayLoading] = useState(false);
 
@@ -88,16 +90,41 @@ const AllProgramsData = (props) => {
   }, []);
 
   const readTotal = async () => {
+    setApplyLoading(false);
+    setDdayLoading(false);
     const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "program");
     setProgramInfo(response.data);
+    setFirstProgramInfo(response.data);
     response.data.map((item, index) => {
-      setApplyStartDate((applyStartDate) => [...applyStartDate, moment(response.data[index].applystart_date).format("YY.MM.DD HH:mm")]);
-      setApplyEndDate((applyEndDate) => [...applyEndDate, moment(response.data[index].applyend_date).format("YY.MM.DD HH:mm")]);
+      setApplyStartDate((applyStartDate) => [...applyStartDate, moment(response.data[index].applystart_date).format("YY-MM-DD HH:mm")]);
+      setApplyEndDate((applyEndDate) => [...applyEndDate, moment(response.data[index].applyend_date).format("YY-MM-DD HH:mm")]);
     });
 
     response.data.map((item, index) => {
-      setApplyStartDate((applyStartDate) => [...applyStartDate, moment(response.data[index].applystart_date).format("YY.MM.DD HH:mm")]);
-      setApplyEndDate((applyEndDate) => [...applyEndDate, moment(response.data[index].applyend_date).format("YY.MM.DD HH:mm")]);
+      setApplyStartDate((applyStartDate) => [...applyStartDate, moment(response.data[index].applystart_date).format("YY-MM-DD HH:mm")]);
+      setApplyEndDate((applyEndDate) => [...applyEndDate, moment(response.data[index].applyend_date).format("YY-MM-DD HH:mm")]);
+      createDday(response.data[index].applyend_date);
+    });
+    setApplyLoading(true);
+    setDdayLoading(true);
+  };
+
+  const readByCategory = async (category_id) => {
+    setApplyLoading(false);
+    setDdayLoading(false);
+    var params = new URLSearchParams();
+    params.append("category_id", category_id);
+    const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "program/read/category", params);
+    setProgramInfo(response.data);
+    setFirstProgramInfo(response.data);
+    response.data.map((item, index) => {
+      setApplyStartDate((applyStartDate) => [...applyStartDate, moment(response.data[index].applystart_date).format("YY-MM-DD HH:mm")]);
+      setApplyEndDate((applyEndDate) => [...applyEndDate, moment(response.data[index].applyend_date).format("YY-MM-DD HH:mm")]);
+    });
+
+    response.data.map((item, index) => {
+      setApplyStartDate((applyStartDate) => [...applyStartDate, moment(response.data[index].applystart_date).format("YY-MM-DD HH:mm")]);
+      setApplyEndDate((applyEndDate) => [...applyEndDate, moment(response.data[index].applyend_date).format("YY-MM-DD HH:mm")]);
       createDday(response.data[index].applyend_date);
     });
     setApplyLoading(true);
@@ -108,7 +135,7 @@ const AllProgramsData = (props) => {
     var date1 = moment(applyenddate);
     var date2 = moment();
 
-    var days = date1.diff(date2, "days");
+    var days = date1.diff(date2, "days") + 1;
 
     if (date2 > date1) {
       setDday((Dday) => [...Dday, "마감"]);
@@ -117,32 +144,26 @@ const AllProgramsData = (props) => {
     }
   };
 
-  const readByCategory = async (category_id) => {
-    console.log("======: ", category_id);
-    var params = new URLSearchParams();
-    params.append("category_id", category_id);
-    const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "program/read/category", params);
-    setProgramInfo(response.data);
-  };
-
   const filterOptions = [
-    // { value: "전체", label: "전체" },
-    { value: "시작전", label: "시작전" },
-    { value: "진행중", label: "진행중" },
+    { value: "진행", label: "진행" },
+    { value: "전체", label: "전체" },
+    { value: "대기", label: "대기" },
     { value: "마감", label: "마감" },
   ];
 
   const getFilterTerm = (event) => {
-    let filterTerm = event.target.value;
-    console.log("filter", filterTerm);
-    if (filterTerm !== "") {
-      const newProjectsList = programInfo.filter((project) => {
-        console.log("project", project);
-        return Object.values(project).join(" ").toLowerCase().includes(filterTerm.toLowerCase());
-      });
-      setProgramInfo(newProjectsList);
-    } else {
-      setProgramInfo(programInfo);
+    if (applyLoading && ddayLoading) {
+      let filterTerm = event.target.value;
+      if (filterTerm !== "전체") {
+        const newProjectsList = firstProgramInfo.filter((project) => {
+          return Object.values(project).join(" ").toLowerCase().includes(filterTerm.toLowerCase());
+        });
+        console.log("00: ", newProjectsList);
+        setProgramInfo(newProjectsList);
+      } else {
+        setProgramInfo(programInfo);
+        console.log("11: ", programInfo);
+      }
     }
   };
 
@@ -151,7 +172,7 @@ const AllProgramsData = (props) => {
       <Row>
         <Row className="justify-content-md-end  ms-2 mb-xl-0">
           <Col xxl={2} lg={2} md={6} xs={12}>
-            <Form.Control as={FormSelect} placeholder="전체" options={filterOptions} onChange={getFilterTerm} />
+            <Form.Control as={FormSelect} options={filterOptions} onChange={getFilterTerm} />
           </Col>
         </Row>
         <Row className="mt-4 m-3">
@@ -160,35 +181,34 @@ const AllProgramsData = (props) => {
                 var address = "/program/" + item.id.toString();
                 return (
                   <Col lg={3} md={6} sm={12} key={index}>
-                    <Card className={`mb-4 card-hover mx-2`}>
+                    <Card className={`mb-4 card-hover mx-2 main-program-card`}>
                       <Link to={address}>
                         <Image src={programImage} alt="" className="card-img-top rounded-top-md programImage" width="100px" height="170px" />
                       </Link>
-                      <Card.Body style={{ height: "10rem" }}>
-                        <h3 className="h4 mb-2 text-truncate-line-2 " style={{ height: "2.5rem" }}>
+                      <Card.Body style={{ height: "6rem" }}>
+                        {/* <div className={`lh-1 mb-2 "d-none" `}> */}
+                        <span className="text-dark fw-bold">
+                          <Badge bg="primary" className="me-3 main-program-badge">
+                            {" "}
+                            {Dday[index]}{" "}
+                          </Badge>
+                        </span>
+                        {/* </div> */}
+                        <h3 className="h4 text-truncate-line-2 " style={{ height: "2.7rem" }}>
                           <Link to={address} className="text-inherit">
                             {item.program_name}
                           </Link>
                         </h3>
-                        <ListGroup as="ul" bsPrefix="list-inline" className="mb-3"></ListGroup>
-                        <div className={`lh-1 mt-3 "d-none"`}>
-                          <span className="text-dark fw-bold">
-                            <Badge bg="warning" className="me-3">
-                              {" "}
-                              {Dday[index]}{" "}
-                            </Badge>
-                          </span>
-                        </div>
-                        <div className={`lh-1 mt-2 "d-none"`}>
-                          <div className="fw-bold">신청마감일자</div>
-                          <div className={` mt-1 `}>{applyEndDate[index]}</div>
-                        </div>
                       </Card.Body>
                       <Card.Footer>
                         <Row className="align-items-center g-0">
                           <Col className="col-auto">
                             {/* <Image src={item.instructor_image} className="rounded-circle avatar-xs" alt="" /> */}
                             {/* <Image src={Avatar1} className="rounded-circle avatar-xs" alt="" /> */}
+                            <div className={`lh-1  "d-none"`}>
+                              <div className="fw-bold">신청마감일자</div>
+                              <div className={` mt-1 `}>{applyEndDate[index]}</div>
+                            </div>
                           </Col>
                           <Col className="col ms-2">{/* <span>{item.name}</span> */}</Col>
                           <Col className="col-auto">
