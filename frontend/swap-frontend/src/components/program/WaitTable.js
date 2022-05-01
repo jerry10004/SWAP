@@ -36,25 +36,6 @@ const CoursesTable = ({ program_data }) => {
     // readCategory();
   }, []);
 
-  // const readCategory = async () => {
-  //   const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "category");
-  //   setCategory(response.data);
-  //   console.log(response.data);
-
-  //   if (response.data.length > 0 && response.data[0].id != null) {
-  //     response.data.map((item) => {
-  //       setCategory((oldArray) => [
-  //         ...oldArray,
-  //         {
-  //           value: item.category_name,
-  //           label: item.category_name,
-  //         },
-  //       ]);
-  //       console.log(item);
-  //     });
-  //   }
-  // };
-
   const columns = useMemo(
     () => [
       { accessor: "id", Header: "ID", show: false },
@@ -103,6 +84,18 @@ const CoursesTable = ({ program_data }) => {
             <div className="d-flex align-items-center">
               <h5 className="mb-0">{value}</h5>
             </div>
+          );
+        },
+      },
+      {
+        accessor: "apply_status",
+        Header: "신청 상태",
+        Cell: ({ value, row }) => {
+          return (
+            <Fragment>
+              <DotBadge bg={value === "대기" ? "warning" : value === "진행" ? "success" : value === "마감" ? "danger" : ""}></DotBadge>
+              {value}
+            </Fragment>
           );
         },
       },

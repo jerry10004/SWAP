@@ -5,6 +5,7 @@ import { Col, Row, Tab, Card, Nav, Breadcrumb } from "react-bootstrap";
 
 // import sub custom components
 import CoursesTable from "components/program/CoursesTable";
+import WaitTable from "components/program/WaitTable";
 
 // import sub components
 import NavbarVertical from "layouts/dashboard/NavbarVertical";
@@ -85,7 +86,7 @@ const AllCourses = () => {
                           <CoursesTable program_data={3} />
                         </Tab.Pane>
                         <Tab.Pane eventKey="waiting" className="pb-4">
-                          <CoursesTable program_data={0} />
+                          <WaitTable program_data={0} />
                         </Tab.Pane>
                         <Tab.Pane eventKey="progress" className="pb-4">
                           <CoursesTable program_data={1} />
