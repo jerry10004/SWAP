@@ -112,6 +112,7 @@ const AllProgramsData = (props) => {
   const readByCategory = async (category_id) => {
     setApplyLoading(false);
     setDdayLoading(false);
+    getFilterTerm2();
     var params = new URLSearchParams();
     params.append("category_id", category_id);
     const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "program/read/category", params);
@@ -138,9 +139,9 @@ const AllProgramsData = (props) => {
     var days = date1.diff(date2, "days") + 1;
 
     if (date2 > date1) {
-      setDday((Dday) => [...Dday, "마감"]);
+      return "마감";
     } else {
-      setDday((Dday) => [...Dday, "D-" + days]);
+      return "D-" + days;
     }
   };
 
@@ -151,7 +152,25 @@ const AllProgramsData = (props) => {
     { value: "마감", label: "마감" },
   ];
 
+  const getFilterTerm2 = () => {
+    // if (applyLoading && ddayLoading) {
+    console.log("here");
+    let filterTerm = "진행";
+    if (filterTerm !== "전체") {
+      const newProjectsList = firstProgramInfo.filter((project) => {
+        return Object.values(project).join(" ").toLowerCase().includes(filterTerm.toLowerCase());
+      });
+      setProgramInfo(newProjectsList);
+    } else {
+      setProgramInfo(programInfo);
+    }
+    // }
+  };
+
   const getFilterTerm = (event) => {
+    console.log("event is ", event);
+    console.log("event.target is ", event.target);
+    console.log("event.target.value is ", event.target.value);
     if (applyLoading && ddayLoading) {
       let filterTerm = event.target.value;
       if (filterTerm !== "전체") {
@@ -190,7 +209,8 @@ const AllProgramsData = (props) => {
                         <span className="text-dark fw-bold">
                           <Badge bg="primary" className="me-3 main-program-badge">
                             {" "}
-                            {Dday[index]}{" "}
+                            {/* {Dday[index]}  */}
+                            {createDday(item.applyend_date)}
                           </Badge>
                         </span>
                         {/* </div> */}
@@ -207,7 +227,7 @@ const AllProgramsData = (props) => {
                             {/* <Image src={Avatar1} className="rounded-circle avatar-xs" alt="" /> */}
                             <div className={`lh-1  "d-none"`}>
                               <div className="fw-bold">신청마감일자</div>
-                              <div className={` mt-1 `}>{applyEndDate[index]}</div>
+                              <div className={` mt-1 `}>{item.applyend_date}</div>
                             </div>
                           </Col>
                           <Col className="col ms-2">{/* <span>{item.name}</span> */}</Col>
