@@ -32,7 +32,7 @@ import com.handong.swap.Service.ProgramService;
 import com.mysql.cj.xdevapi.JsonArray;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.handong.swap.DTO.ProgramDTO;
-import com.handong.swap.DTO.ProgramPosterDTO;
+import com.handong.swap.DTO.ProgramFileDTO;
 import com.handong.swap.DTO.ProgramReadNameDTO;
 
 @Controller
@@ -208,14 +208,6 @@ public class ProgramController {
 		program.setApplyend_date(Applyend_date);
 		
 		int result = programService.add(program);
-		
-//		if(result ==0 ) {
-//			System.out.println("프로그램 추가 실패");
-//		}
-//		else {
-//			System.out.println("프로그램 추가 성공");
-//		}
-		
 		return result;
 		
 	}
@@ -224,10 +216,9 @@ public class ProgramController {
 	@RequestMapping(value = "addPoster", method = RequestMethod.POST, produces = "application/json; charset=utf8")
 	@ResponseBody
 	public String addPoster(HttpServletRequest httpServletRequest, MultipartHttpServletRequest multi) {
-		ProgramPosterDTO programPoster = new ProgramPosterDTO();
+		ProgramFileDTO programPoster = new ProgramFileDTO();
 		MultipartFile file = multi.getFile("img");
 		String posterName = file.getOriginalFilename();
-		System.out.println(posterName);
 		
 		Calendar calendar = Calendar.getInstance();
 		String path = "";
@@ -240,7 +231,6 @@ public class ProgramController {
 		    try {
 	    		int count = 1;
 	    		File newFile = new File(filePath+posterName);
-//	    		path = calendar.get(calendar.YEAR)+"/"+(calendar.get(calendar.MONTH)+1)+"/"+calendar.getTimeInMillis();
 	    		path = calendar.get(calendar.YEAR)+"/"+(calendar.get(calendar.MONTH)+1)+"/"+posterName;
 	    		while(newFile.exists()) {
 	    			newFile = new File(filePath+posterName+"("+count+")");
@@ -256,6 +246,14 @@ public class ProgramController {
 	            e.printStackTrace();
 			}
 	    }
+	    
+	    
+	    programPoster.setProgram_id(Integer.parseInt(httpServletRequest.getParameter("program_id")));
+	    programPoster.setFile_name(path);
+	    // 0: 파일, 1: 이미지
+	    programPoster.setFile_type(1);
+	    
+	    int result = programService.insertPoster(programPoster);
 	    
 		return "uploadEnd";
 	}

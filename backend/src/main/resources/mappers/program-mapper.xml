@@ -77,6 +77,11 @@
 		VALUES (#{admin_id}, #{category_id}, #{application_form}, #{program_name}, #{information}, #{start_date}, #{end_date},#{quota}, #{Applystart_date}, #{Applyend_date},#{manager_name}, #{manager_contact})
    	</insert>
    	
+   	<insert id = "insertPoster" parameterType="Program">	
+   		INSERT INTO Program_File (program_id, file_name, file_type)
+		VALUES (#{program_id}, #{file_name}, #{file_type})
+   	</insert>
+   	
    	<update id="updateDelDate" parameterType="hashmap">
    		UPDATE Program SET deldate=now(), status = -1
 		WHERE id = #{id}

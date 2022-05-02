@@ -89,9 +89,8 @@ const AddNewCourse = () => {
     var formattedApplyEndDate = getFormatDate(Applyend_date);
 
     // 포스터 업로드
-    const formData = new FormData();
-    formData.append("img", poster);
-    formData.append("program_id", poster);
+    const imgFormData = new FormData();
+    imgFormData.append("img", poster);
 
     params.append("admin_id", "8");
     params.append("category_id", formData.program_category);
@@ -107,29 +106,34 @@ const AddNewCourse = () => {
     params.append("manager_contact", formData.manager_contact);
     if (window.confirm("프로그램을 추가하시겠습니까?")) {
       const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "program/add", params).then((response) => {
-        console.log("응답: " + response);
+        console.log("응답: " + response.data);
         // 포스터 업로드
-        // console.log("폼 데이터: " + formData);
-        // const posterRes = await axios({
-        //   url: process.env.REACT_APP_RESTAPI_HOST + "program/addPoster",
-        //   cache: false,
-        //   contentType: false,
-        //   processData: false,
-        //   data: formData,
-        //   type: "POST",
-        //   method: "post",
-        //   headers: { "Content-Type": "multipart/form-data" },
-        //   success: function (response) {
-        //     console.log(response);
-        //   },
-        //   error: function (error) {
-        //     console.log(error);
-        //   },
-        // });
+        console.log("폼 데이터: " + formData);
+        imgFormData.append("program_id", response.data);
+        imgFormData.append("file_name", poster.name);
+        // 0: 파일 1: 이미지
+        imgFormData.append("file_type", "1");
+
+        const posterRes = axios({
+          url: process.env.REACT_APP_RESTAPI_HOST + "program/addPoster",
+          cache: false,
+          contentType: false,
+          processData: false,
+          data: imgFormData,
+          method: "post",
+          headers: { "Content-Type": "multipart/form-data" },
+          success: function (posterRes) {
+            console.log(posterRes);
+          },
+          error: function (error) {
+            console.log(error);
+          },
+        });
+        alert("포스터 업로드 완료.");
       });
 
-      // alert(formData.program_title + " 프로그램이 추가 되었습니다.");
-      // alert("포스터 업로드 완료.");
+      alert(formData.program_title + " 프로그램이 추가 되었습니다.");
+
       navigate("/admin/program");
     }
   };

@@ -101,13 +101,13 @@ const NavbarVertical = (props) => {
   return (
     <Fragment>
       <SimpleBar style={{ maxHeight: "100vh" }}>
-        <div className="nav-scroller">
+        <div className="nav-scroller ">
           <Link className="navbar-brand" to="/">
             <Image src={InverseLogo} alt="" />
           </Link>
         </div>
         {/* Dashboard Menu */}
-        <Accordion defaultActiveKey="0" as="ul" className="navbar-nav flex-column">
+        <Accordion defaultActiveKey="0" as="ul" className="navbar-nav flex-column fs-4">
           {DashboardMenu.map(function (menu, index) {
             if (menu.grouptitle) {
               return (

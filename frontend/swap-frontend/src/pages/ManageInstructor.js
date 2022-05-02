@@ -42,11 +42,6 @@ const ManageInstructor = () => {
                         Instructors
                         {/* <span className="fs-5 text-muted">(12,105)</span> */}
                       </h1>
-                      <Breadcrumb>
-                        <Breadcrumb.Item href="#">Dashboard</Breadcrumb.Item>
-                        <Breadcrumb.Item href="#">User</Breadcrumb.Item>
-                        <Breadcrumb.Item active>Instructors</Breadcrumb.Item>
-                      </Breadcrumb>
                     </div>
                   </div>
                 </Col>

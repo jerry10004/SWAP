@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.handong.swap.DAO.ProgramDAO;
 import com.handong.swap.DTO.ProgramDTO;
+import com.handong.swap.DTO.ProgramFileDTO;
 import com.handong.swap.DTO.ProgramReadDTO;
 import com.handong.swap.DTO.ProgramReadNameDTO;
 import com.handong.swap.Service.ProgramService;
@@ -33,6 +34,10 @@ public class ProgramServiceImpl implements ProgramService{
 	public int add(ProgramDTO program) {
 		return programDAO.add(program);
 
+	}
+	
+	public int insertPoster(ProgramFileDTO program) {
+		return programDAO.insertPoster(program);
 	}
 
 	@Override

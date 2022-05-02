@@ -30,12 +30,18 @@ const StudentsListItems = (props) => {
           );
         },
       },
-
-      { accessor: "email", Header: "이메일" },
-
       {
         accessor: "student_id",
         Header: "학번",
+      },
+      { accessor: "email", Header: "이메일" },
+      {
+        accessor: "department",
+        Header: "학부",
+      },
+      {
+        accessor: "major1",
+        Header: "1전공",
       },
       {
         accessor: "student_class",
@@ -50,14 +56,6 @@ const StudentsListItems = (props) => {
         Cell: ({ value }) => {
           return value + " 학기";
         },
-      },
-      {
-        accessor: "department",
-        Header: "학부",
-      },
-      {
-        accessor: "major1",
-        Header: "1전공",
       },
 
       {
@@ -179,12 +177,9 @@ const StudentsListItems = (props) => {
 
   const readApplicantInformation = async (id) => {
     setApplicantInformationLoading(false);
-    console.log("id is", id);
-    const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "applicant/applicants/" + id);
-    console.log("~이거를보자~~~~`");
-    console.log(response.data);
 
-    console.log("id 입니다. ", applicant_id);
+    const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "applicant/applicants/" + id);
+
     setApplicantInformationLoading(true);
     setUserInfo(response.data);
   };
@@ -192,17 +187,18 @@ const StudentsListItems = (props) => {
   return (
     <Fragment>
       <div className=" overflow-hidden">
-        <Row>
+        <Row className="pe-3">
           <Col xl={6} lg={12} md={6} sm={12} className="mb-lg-0 mb-2 px-5 py-4">
             <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} placeholder="Search Students" />
           </Col>
-          <Col xl={3} lg={12} md={3} sm={12} className="mb-lg-0 mb-2 px-5 py-4">
+          <Col xl={3} lg={12} md={3} sm={12} />
+          <Col xl={2} lg={12} md={3} sm={12} className="mb-lg-0 mb-2 px-3 py-4 ">
             <Form.Select onChange={handleChangeSelect}>
               <option value="1">참여승인</option>
               <option value="2">승인보류</option>
             </Form.Select>
           </Col>
-          <Col xl={3} lg={12} md={3} sm={12} className="mb-lg-0 mb-2 px-5 py-4">
+          <Col xl={1} lg={12} md={3} sm={12} className="mb-lg-0 mb-2 py-4 d-flex justify-content-evenly">
             <Button
               variant="primary"
               onClick={() => {
