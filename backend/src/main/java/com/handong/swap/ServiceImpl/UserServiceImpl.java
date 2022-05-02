@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.handong.swap.DAO.UserDAO;
+import com.handong.swap.DTO.ProgramDTO;
 import com.handong.swap.DTO.ProgramReadDTO;
 import com.handong.swap.DTO.UserDTO;
 import com.handong.swap.Service.UserService;
@@ -57,6 +58,11 @@ public class UserServiceImpl implements UserService{
 		ObjectMapper mapper = new ObjectMapper();
 		String jsonString = mapper.writeValueAsString(userDATA);
 		return jsonString;
+	}
+	
+	@Override
+	public void updateUserInfo(UserDTO user) {
+		userDAO.updateUserInfo(user);
 	}
 }
 	

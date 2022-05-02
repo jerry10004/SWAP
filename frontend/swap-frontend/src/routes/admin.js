@@ -15,6 +15,7 @@ import AdminMain from "../pages/ManageProgram";
 import MyPage from "../pages/MyPage";
 import Application from "../pages/Application";
 import ProgramDetail from "../pages/ProgramDetail";
+import MyPageLayout from "../pages/MyPageLayout";
 
 function Admin() {
   return (
@@ -31,9 +32,10 @@ function Admin() {
       <Route path="/admin/program/detail/:id/:applicantid" element={<ApplicationFormView />} />
       <Route path="/" element={<Main />} />
       <Route path="/main" element={<Main />} />
-      <Route path="/mypage" element={<MyPage />} />
+      {/* <Route path="/mypage" element={<MyPage />} /> */}
       <Route path="/program/:id/application" element={<Application />} />
       <Route path="/program/:id" element={<ProgramDetail />} />
+      <Route path="/mypage" element={<MyPageLayout />} />
     </Routes>
   );
 }

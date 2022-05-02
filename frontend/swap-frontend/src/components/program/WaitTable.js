@@ -36,25 +36,6 @@ const CoursesTable = ({ program_data }) => {
     // readCategory();
   }, []);
 
-  // const readCategory = async () => {
-  //   const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "category");
-  //   setCategory(response.data);
-  //   console.log(response.data);
-
-  //   if (response.data.length > 0 && response.data[0].id != null) {
-  //     response.data.map((item) => {
-  //       setCategory((oldArray) => [
-  //         ...oldArray,
-  //         {
-  //           value: item.category_name,
-  //           label: item.category_name,
-  //         },
-  //       ]);
-  //       console.log(item);
-  //     });
-  //   }
-  // };
-
   const columns = useMemo(
     () => [
       { accessor: "id", Header: "ID", show: false },
@@ -103,6 +84,18 @@ const CoursesTable = ({ program_data }) => {
             <div className="d-flex align-items-center">
               <h5 className="mb-0">{value}</h5>
             </div>
+          );
+        },
+      },
+      {
+        accessor: "apply_status",
+        Header: "신청 상태",
+        Cell: ({ value, row }) => {
+          return (
+            <Fragment>
+              <DotBadge bg={value === "대기" ? "warning" : value === "진행" ? "success" : value === "마감" ? "danger" : ""}></DotBadge>
+              {value}
+            </Fragment>
           );
         },
       },
@@ -248,22 +241,8 @@ const CoursesTable = ({ program_data }) => {
     params.append("id", removeProgramId);
 
     if (window.confirm("삭제 하시겠습니까?")) {
-      const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "program/deleteConfirm", params);
-      console.log("delete result: ", response.data);
-      if (response.data === 0) {
-        if (window.confirm("현재 진행중인 프로그램 입니다. 그래도 삭제 하시겠습니까?")) {
-          const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "program/delete", params);
-          alert("삭제 되었습니다.");
-        }
-      } else if (response.data === 2) {
-        if (window.confirm("신청한 학생이 있습니다. 그래도 삭제 하시겠습니까?")) {
-          const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "program/delete", params);
-          alert("삭제 되었습니다.");
-        }
-      } else {
-        const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "program/delete", params);
-        alert("삭제 되었습니다.");
-      }
+      const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "program/delete", params);
+      alert("삭제 되었습니다.");
       readProgram();
       window.location.reload();
     }

@@ -16,4 +16,5 @@ public interface UserDAO {
 	public void updateUser(int id);
 	public void updateDelDate(int id);
 	public void restore(int id);
+	public void updateUserInfo(UserDTO user);
 }
