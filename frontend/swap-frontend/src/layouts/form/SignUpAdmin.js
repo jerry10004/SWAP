@@ -25,7 +25,7 @@ const SignUpAdmin = (props) => {
     params.append("phone", formData.phone);
     params.append("token", tokenObj.id_token);
     params.append("expire", tokenObj.expires_at);
-    params.append("status", "2");
+    params.append("status", "0");
 
     if (window.confirm("관리자로 등록하시겠습니꺼?")) {
       const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "login/signUp", params);

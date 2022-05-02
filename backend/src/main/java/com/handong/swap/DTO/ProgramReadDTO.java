@@ -21,11 +21,22 @@ public class ProgramReadDTO {
 	String manager_name;
 	String manager_contact;
     int applicants_num;
+    String file_name;
+    int file_type;
     
-    
 	
-	
-	
+	public String getFile_name() {
+		return file_name;
+	}
+	public void setFile_name(String file_name) {
+		this.file_name = file_name;
+	}
+	public int getFile_type() {
+		return file_type;
+	}
+	public void setFile_type(int file_type) {
+		this.file_type = file_type;
+	}
 	public int getApplicants_num() {
 		return applicants_num;
 	}

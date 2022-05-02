@@ -10,7 +10,7 @@ import moment from "moment";
 
 import "tippy.js/animations/scale.css";
 // import custom components
-import programImage from "assets/images/CSEE.png";
+import programImage from "assets/images/Default_img.png";
 import { FormSelect } from "components/elements/form-select/FormSelect";
 
 const AllProgramsData = (props) => {

@@ -11,7 +11,9 @@ public interface ProgramDAO {
 	List<ProgramReadDTO> read();
 	public int add(ProgramDTO program);
 	public int insertPoster(ProgramFileDTO program);
+	public int insertFile(ProgramFileDTO program);
 	List<ProgramReadDTO> readProgramInformationByProgramId(int id);
+	List<ProgramFileDTO> readProgramFileByProgramId(int id);
 	public void updateDelDate(int id);
 	public void updateStatus(int program_id, int status);
 	public void updateApplyStatus(int program_id, int apply_status);

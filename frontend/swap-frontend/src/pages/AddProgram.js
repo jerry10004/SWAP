@@ -16,6 +16,7 @@ const AddNewCourse = () => {
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
   const [poster, setPoster] = useState();
+  const [files, setFiles] = useState();
 
   const [formData, setFormData] = useState({
     program_title: "Title",
@@ -43,6 +44,10 @@ const AddNewCourse = () => {
   const onLoadPoster = async (e) => {
     setPoster(e.target.files[0]);
     setPreview(URL.createObjectURL(e.target.files[0]));
+  };
+
+  const onLoadFile = async (e) => {
+    setFiles(e.target.files);
   };
 
   const handleChange = (event) => {
@@ -90,7 +95,17 @@ const AddNewCourse = () => {
 
     // 포스터 업로드
     const imgFormData = new FormData();
-    imgFormData.append("img", poster);
+    if (poster != null) {
+      imgFormData.append("img", poster);
+    }
+
+    //파일 업로드
+    const fileFormData = new FormData();
+    if (files != null) {
+      for (var i = 0; i < files.length; i++) {
+        fileFormData.append("attach_file", files[i]);
+      }
+    }
 
     params.append("admin_id", "8");
     params.append("category_id", formData.program_category);
@@ -108,28 +123,54 @@ const AddNewCourse = () => {
       const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "program/add", params).then((response) => {
         console.log("응답: " + response.data);
         // 포스터 업로드
-        console.log("폼 데이터: " + formData);
-        imgFormData.append("program_id", response.data);
-        imgFormData.append("file_name", poster.name);
-        // 0: 파일 1: 이미지
-        imgFormData.append("file_type", "1");
+        if (poster != null) {
+          imgFormData.append("program_id", response.data);
+          imgFormData.append("file_name", poster.name);
+          // 0: 파일 1: 이미지
+          imgFormData.append("file_type", "1");
 
-        const posterRes = axios({
-          url: process.env.REACT_APP_RESTAPI_HOST + "program/addPoster",
-          cache: false,
-          contentType: false,
-          processData: false,
-          data: imgFormData,
-          method: "post",
-          headers: { "Content-Type": "multipart/form-data" },
-          success: function (posterRes) {
-            console.log(posterRes);
-          },
-          error: function (error) {
-            console.log(error);
-          },
-        });
-        alert("포스터 업로드 완료.");
+          const posterRes = axios({
+            url: process.env.REACT_APP_RESTAPI_HOST + "program/addPoster",
+            cache: false,
+            contentType: false,
+            processData: false,
+            data: imgFormData,
+            method: "post",
+            headers: { "Content-Type": "multipart/form-data" },
+            success: function (posterRes) {
+              console.log(posterRes);
+            },
+            error: function (error) {
+              console.log(error);
+            },
+          });
+        }
+
+        if (files != null) {
+          fileFormData.append("program_id", response.data);
+          for (var i = 0; i < files.length; i++) {
+            fileFormData.append("file_name", files[i].name);
+          }
+          // 0: 파일 1: 이미지
+          fileFormData.append("file_type", "0");
+          const filesRes = axios({
+            url: process.env.REACT_APP_RESTAPI_HOST + "program/addFiles",
+            cache: false,
+            contentType: false,
+            processData: false,
+            data: fileFormData,
+            method: "post",
+            headers: { "Content-Type": "multipart/form-data" },
+            success: function (filesRes) {
+              console.log(filesRes);
+            },
+            error: function (error) {
+              console.log(error);
+            },
+          });
+        }
+
+        alert("파일 업로드 완료.");
       });
 
       alert(formData.program_title + " 프로그램이 추가 되었습니다.");
@@ -155,6 +196,7 @@ const AddNewCourse = () => {
           setValidated={setValidated}
           preview={preview}
           onLoadPoster={onLoadPoster}
+          onLoadFile={onLoadFile}
         />
       ),
     },

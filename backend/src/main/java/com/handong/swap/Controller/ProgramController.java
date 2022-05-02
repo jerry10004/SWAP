@@ -54,11 +54,7 @@ public class ProgramController {
 	@RequestMapping(value = "", method = RequestMethod.GET, produces = "application/json; charset=utf8")
 	@ResponseBody
 	public String readprogram(HttpServletRequest httpServletRequest) throws IOException, ParseException {
-		System.out.println("읽기 시도");
 		String result = programService.read();
-		
-		System.out.println("~~~~");
-		System.out.println(result);
 		
 		LocalDateTime now = LocalDateTime.now();
 		String currentDate = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss (EE)",Locale.KOREA));
@@ -135,36 +131,35 @@ public class ProgramController {
 	@RequestMapping(value = "/read/category", method = RequestMethod.POST, produces = "application/json; charset=utf8")
 	@ResponseBody
 	public String readprogramByCategory(HttpServletRequest httpServletRequest) throws IOException, ParseException {
-		System.out.println("카테고리 별 프로그램 읽기 시도");
 		Integer category_id = Integer.parseInt(httpServletRequest.getParameter("category_id"));
-		System.out.println("===========");
-		System.out.println(category_id);
-		String result = programService.readByCategory(category_id);		
-		System.out.println(" result is "+result);
+		String result = programService.readByCategory(category_id);	
+		System.out.println("=====카테고리별 프로그램 읽기ㅣ======");
+		System.out.println(result);
 	    return result;
 	}
 	
 	@RequestMapping(value = "/read/status", method = RequestMethod.POST, produces = "application/json; charset=utf8")
 	@ResponseBody
 	public String readprogramByStatusByUser(HttpServletRequest httpServletRequest) throws IOException, ParseException {
-		System.out.println("사용자가 참여한 상태 별 프로그램 읽기 시도");
 		Integer user_id = Integer.parseInt(httpServletRequest.getParameter("user_id"));
 		Integer status = Integer.parseInt(httpServletRequest.getParameter("status"));
-		System.out.println("===========");
-		System.out.println(user_id);
 		String result = programService.readByStatusByUser(status, user_id);		
-		System.out.println(" result is "+result);
 	    return result;
 	}
 	
 	@RequestMapping(value = "/information/{id}", method = RequestMethod.GET, produces = "application/json; charset=utf8")
 	@ResponseBody
 	public String readProgramInformationByProgramId(@PathVariable int id) throws IOException, ParseException {
-		System.out.println("프로그램 별 프로그램 정보 읽기");
-		System.out.println(id);
-
 		String result = programService.readProgramInformationByProgramId(id);
 		System.out.println("result is "+result);
+		return result;
+	}
+	
+	@RequestMapping(value = "/programFile/{id}", method = RequestMethod.GET, produces = "application/json; charset=utf8")
+	@ResponseBody
+	public String readProgramFileByProgramId(@PathVariable int id) throws IOException, ParseException {
+		String result = programService.readProgramFileByProgramId(id);
+		System.out.println("readProgramFileByProgramId result is "+result);
 		return result;
 	}
 	
@@ -210,7 +205,6 @@ public class ProgramController {
 		
 	}
 	
-	
 	@RequestMapping(value = "addPoster", method = RequestMethod.POST, produces = "application/json; charset=utf8")
 	@ResponseBody
 	public String addPoster(HttpServletRequest httpServletRequest, MultipartHttpServletRequest multi) {
@@ -252,6 +246,55 @@ public class ProgramController {
 	    programPoster.setFile_type(1);
 	    
 	    int result = programService.insertPoster(programPoster);
+	    
+		return "uploadEnd";
+	}
+	
+
+	@RequestMapping(value = "addFiles", method = RequestMethod.POST, produces = "application/json; charset=utf8")
+	@ResponseBody
+	public String addFiles(HttpServletRequest httpServletRequest, MultipartHttpServletRequest multi) {
+		ProgramFileDTO programFiles = new ProgramFileDTO();
+		MultipartFile files = multi.getFile("attach_file");
+		String fileName = files.getOriginalFilename();
+		
+		Calendar calendar = Calendar.getInstance();
+		String path = "";
+		
+		String filePath = httpServletRequest.getSession().getServletContext().getRealPath("/") + "resources/upload/"+calendar.get(calendar.YEAR)+"/"+(calendar.get(calendar.MONTH)+1)+"/"; //파일 저장 경로, 설정파일로 따로 관리한다.
+	    if(files != null) {
+	    	File dir = new File(filePath); //파일 저장 경로 확인, 없으면 만든다.
+		    if (!dir.exists()) {
+		        dir.mkdirs();
+		    }
+		    try {
+	    		int count = 1;
+	    		File newFile = new File(filePath+fileName);
+	    		path = calendar.get(calendar.YEAR)+"/"+(calendar.get(calendar.MONTH)+1)+"/"+fileName;
+	    		while(newFile.exists()) {
+	    			newFile = new File(filePath+fileName+"("+count+")");
+	    			path = calendar.get(calendar.YEAR)+"/"+(calendar.get(calendar.MONTH)+1)+"/"+fileName+"("+count+")";
+	    			count++;
+	    		}
+	    		if (!newFile.exists()) {
+	    			newFile.mkdirs();
+	    	    }
+	    		files.transferTo(newFile);
+			} catch (Exception e) {
+				int count = 1;
+	            e.printStackTrace();
+			}
+	    }
+	    
+	    
+	    programFiles.setProgram_id(Integer.parseInt(httpServletRequest.getParameter("program_id")));
+	    programFiles.setFile_name(path);
+	    // 0: 파일, 1: 이미지
+	    programFiles.setFile_type(1);
+	    
+	    int result = programService.insertFile(programFiles);
+	    System.out.println("!!!!!!!!!!!!!!!!!!!파일 업로드 성공!!!!!!!!!!!!!!!!!!!!");
+	    
 	    
 		return "uploadEnd";
 	}

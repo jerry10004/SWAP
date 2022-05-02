@@ -38,7 +38,7 @@ const SignUpStudent = (props) => {
     params.append("major2", formData.major2);
     params.append("token", tokenObj.id_token);
     params.append("expire", tokenObj.expires_at);
-    params.append("status", "0");
+    params.append("status", "1");
 
     if (window.confirm("학생으로 등록하시겠습니까?")) {
       const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "login/signUp", params);

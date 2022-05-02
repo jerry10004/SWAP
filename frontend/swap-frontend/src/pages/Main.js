@@ -30,6 +30,7 @@ const Main = ({ login }) => {
   const [lectureInfo, setLectureInfo] = useState([]);
   const [etcInfo, setEtcInfo] = useState([]);
   const [totalLoading, setTotalLoading] = useState(false);
+  const [fileInfo, setFileInfo] = useState([]);
 
   useLayoutEffect(() => {
     setTotalLoading(false);
@@ -51,6 +52,11 @@ const Main = ({ login }) => {
   const readTotal = async () => {
     const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "program");
     setTotalInfo(response.data);
+  };
+
+  const readFile = async () => {
+    const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "");
+    setFileInfo(response.data);
   };
 
   const props = {

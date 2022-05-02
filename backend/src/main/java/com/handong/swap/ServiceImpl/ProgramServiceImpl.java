@@ -39,6 +39,10 @@ public class ProgramServiceImpl implements ProgramService{
 	public int insertPoster(ProgramFileDTO program) {
 		return programDAO.insertPoster(program);
 	}
+	
+	public int insertFile(ProgramFileDTO program) {
+		return programDAO.insertPoster(program);
+	}
 
 	@Override
 	public String readProgramInformationByProgramId(int id) throws JsonProcessingException{
@@ -47,6 +51,14 @@ public class ProgramServiceImpl implements ProgramService{
 		String jsonString = mapper.writeValueAsString(programDATA);
 		return jsonString;
 	}
+	
+	public String readProgramFileByProgramId(int id) throws JsonProcessingException{
+		List<ProgramFileDTO> programFileDATA = programDAO.readProgramFileByProgramId(id);
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonString = mapper.writeValueAsString(programFileDATA);
+		return jsonString;
+	}
+
 	@Override
 	public String readProgramName(int id) throws JsonProcessingException{
 		List<ProgramReadNameDTO> programDATA = programDAO.readProgramName(id);

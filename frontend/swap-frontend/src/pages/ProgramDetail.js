@@ -11,7 +11,7 @@ import { mdiAccountMultipleOutline } from "@mdi/js";
 import { mdiCalendarClock } from "@mdi/js";
 import { mdiCalendarRange } from "@mdi/js";
 import { mdiEmailMultipleOutline } from "@mdi/js";
-import CSEE from "assets/images/CSEE.png";
+import DefaultImg from "assets/images/Default_img.png";
 
 import NavbarDefault from "layouts/marketing/navbars/NavbarDefault";
 import "../assets/scss/programDetail.scss";
@@ -178,8 +178,8 @@ const Program = () => {
               <Col xl={4} lg={12} md={12} sm={12}>
                 <Card className="mb-3">
                   <Card.Body>
-                    {/* <img src={CSEE} width="100%" object-fit="contain" /> */}
-                    <img className="profile-img-content" object-fit="contain" width="100%" src={process.env.REACT_APP_RESTAPI_HOST + "resources/upload/2022/5/test_poster.png"} alt="profile_image" />
+                    <img src={DefaultImg} width="100%" object-fit="contain" />
+                    {/* <img className="profile-img-content" object-fit="contain" width="100%" src={process.env.REACT_APP_RESTAPI_HOST + "resources/upload/2022/5/test_poster.png"} alt="profile_image" /> */}
                   </Card.Body>
                 </Card>
                 {programInfo.manager_name ? (
@@ -190,7 +190,6 @@ const Program = () => {
                         <h3 className="mb-0">문의</h3>
                         <hr className="m-0 mb-2" />
                         <div className="mb-2"> 담당자: {programInfo.manager_name}</div>
-                        <Icon path={mdiEmailMultipleOutline} size={0.7} />
                         <span>연락: {programInfo.manager_contact}</span>
                       </Card.Body>
                     </Card>

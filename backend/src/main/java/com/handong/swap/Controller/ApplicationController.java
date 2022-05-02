@@ -44,9 +44,7 @@ public class ApplicationController {
 	@RequestMapping(value = "", method = RequestMethod.GET, produces = "application/json; charset=utf8")
 	@ResponseBody
 	public String readAdministrator(HttpServletRequest httpServletRequest) throws IOException, ParseException {
-		System.out.println("신청서 읽기 시도");
 		String result = applicationService.read();
-		System.out.println(result);
 	    return result;
 	}
 
@@ -55,7 +53,6 @@ public class ApplicationController {
 	@ResponseBody
 	public String readJson(HttpServletRequest httpServletRequest) throws IOException, ParseException, org.json.simple.parser.ParseException {
 		Integer id = Integer.parseInt(httpServletRequest.getParameter("category_id"));
-		System.out.println("Json 읽기 시도, category_id is "+id);
 		String result = applicationService.readJson(id);
 	    return result;
 	}
@@ -82,29 +79,23 @@ public class ApplicationController {
 	@RequestMapping(value = "/name", method = RequestMethod.GET, produces = "application/json; charset=utf8")
 	@ResponseBody
 	public String readApplicationName(HttpServletRequest httpServletRequest) throws IOException, ParseException {
-		System.out.println("신청서 이름 읽기");
 		String result = applicationService.readName();
-		System.out.println(result);
 	    return result;
 	}
 	
 	@RequestMapping(value = "/readApplicationById", method = RequestMethod.POST, produces = "application/json; charset=utf8")
 	@ResponseBody
 	public String readApplicationById(HttpServletRequest httpServletRequest) throws IOException, ParseException {
-		System.out.println("신청서 아이디 별 읽기");
 		Integer id = Integer.parseInt(httpServletRequest.getParameter("id"));
 		String result = applicationService.readApplicationById(id);
-		System.out.println("result is "+result);
 		return result;
 	}
 	
 	@RequestMapping(value = "/readProgramName", method = RequestMethod.POST, produces = "application/json; charset=utf8")
 	@ResponseBody
 	public String readProgramName(HttpServletRequest httpServletRequest) throws IOException, ParseException {
-		System.out.println("사용중인 신청서의 프로그램 이름 읽기");
 		Integer id = Integer.parseInt(httpServletRequest.getParameter("id"));
 		String result = applicationService.readProgramName(id);
-		System.out.println("result is "+result);
 		return result;
 	}
 		
@@ -113,7 +104,6 @@ public class ApplicationController {
 	@ResponseBody
 	public String readApplicationFormByProgramId(@PathVariable int id) throws IOException, ParseException, org.json.simple.parser.ParseException {
 		String result = applicationService.readApplicationFormByProgramId(id);
-	    System.out.println(result);
 		return result;
 	}
 	
@@ -127,8 +117,6 @@ public class ApplicationController {
 		String[] ids = param_ids[0].split(",");
 		
 		for (int i = 0; i < ids.length; i++) {
-			System.out.println("신청서 삭제 시도");
-			System.out.println("삭제 하려는 아이디 번호: "+ids[i]);
 			result = applicationService.deleteConfirm(Integer.parseInt(ids[i]));
 			if(result == 0) return result;
 		}
@@ -144,8 +132,6 @@ public class ApplicationController {
 		String[] ids = param_ids[0].split(",");
 		
 		for (int i = 0; i < ids.length; i++) {
-			System.out.println("신청서 삭제 시도");
-			System.out.println("삭제 하려는 아이디 번호: "+ids[i]);
 			applicationService.delete(Integer.parseInt(ids[i]));
 		}
 	}

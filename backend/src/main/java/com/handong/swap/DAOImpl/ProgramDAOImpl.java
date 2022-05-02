@@ -36,6 +36,11 @@ public class ProgramDAOImpl implements ProgramDAO {
 		return result;
 	}
 	
+	public int insertFile(ProgramFileDTO program) {
+		int result = sqlSession.insert("Program.insertFile", program);
+		return result;
+	}
+	
 	@Override
 	public void updateDelDate(int id) {
 	    sqlSession.update("Program.updateDelDate", id);
@@ -44,6 +49,11 @@ public class ProgramDAOImpl implements ProgramDAO {
 	@Override
 	public List<ProgramReadDTO> readProgramInformationByProgramId(int id) {
 		return sqlSession.selectList("Program.readProgramInformationByProgramId",id);
+	}
+	
+	@Override
+	public List<ProgramFileDTO> readProgramFileByProgramId(int id) {
+		return sqlSession.selectList("Program.readProgramFileByProgramId",id);
 	}
 	
 	@Override

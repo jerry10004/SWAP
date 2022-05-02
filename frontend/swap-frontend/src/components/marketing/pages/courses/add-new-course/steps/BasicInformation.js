@@ -7,7 +7,7 @@ import { ko } from "date-fns/esm/locale";
 import PreviewDefault from "assets/images/previewDefault.png";
 
 const BasicInformation = (props) => {
-  const { validated, next, handleChange, preview, onLoadPoster } = props;
+  const { validated, next, handleChange, preview, onLoadPoster, onLoadFile } = props;
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
   const [ApplystartDate, setApplyStartDate] = useState();
@@ -43,6 +43,16 @@ const BasicInformation = (props) => {
                 </Form.Label>
                 <Form.Control as="textarea" rows={10} name="program_description" onChange={handleChange} placeholder="프로그램에 관한 정보를 입력하세요." required />
                 <Form.Control.Feedback type="invalid">프로그램 설명을 입력해주세요.</Form.Control.Feedback>
+              </Form.Group>
+            </Col>
+
+            {/* file */}
+            <Col xs={12} className="mb-4">
+              <Form.Group controlId="program_description">
+                <Form.Label>첨부 파일</Form.Label>
+                <form className="upload_input">
+                  <input type="file" id="file" onChange={onLoadFile} />
+                </form>
               </Form.Group>
             </Col>
 
@@ -142,8 +152,8 @@ const BasicInformation = (props) => {
             {/* 프로그램 정원 */}
             <Col md={6} xs={12} className="mb-4">
               <Form.Group>
-                <Form.Label>프로그램 정원</Form.Label>
-                <Form.Control type="number" placeholder="무제한 *숫자로 입력해주세요." id="program_quota" name="program_quota" onChange={handleChange} />
+                <Form.Label>프로그램 정원 (입력 값이 없다면 정원은 무제한이 됩니다.)</Form.Label>
+                <Form.Control type="number" placeholder="" id="program_quota" name="program_quota" onChange={handleChange} />
               </Form.Group>
             </Col>
 
@@ -160,9 +170,12 @@ const BasicInformation = (props) => {
                   <option value="1">대회</option>
                   <option value="2">봉사</option>
                   <option value="3">캠프</option>
-                  <option value="4">동아리</option>
-                  <option value="5">행사</option>
-                  <option value="6">기타</option>
+                  <option value="4">행사</option>
+                  <option value="5">맥북</option>
+                  <option value="6">프로젝트/스터디</option>
+                  <option value="7">인턴/현장실습</option>
+                  <option value="8">특강</option>
+                  <option value="9">기타</option>
                 </select>
                 <Form.Control.Feedback type="invalid">카테고리를 선택해주세요.</Form.Control.Feedback>
               </Form.Group>
@@ -189,7 +202,7 @@ const BasicInformation = (props) => {
                 {preview ? <img src={preview} alt="" width="250px" /> : <img src={PreviewDefault} alt="" width="250px" />}
               </div>
               <form className="upload_input">
-                <input type="file" id="image" accept="img" onChange={onLoadPoster} />
+                <input type="file" id="image" accept="image/jpeg, image/png" onChange={onLoadPoster} />
               </form>
             </Col>
           </Row>
