@@ -27,11 +27,22 @@ const NavbarDefault = ({ headerstyle }, { props }) => {
   const QuickMenu = () => {
     return (
       <Fragment>
-        <Nav>
-          <Nav.Link className="h4" href="mypage">
-            마이페이지
-          </Nav.Link>
-        </Nav>
+        {window.sessionStorage.getItem("status") == 0 ? (
+          <Nav>
+            <Nav.Link className="h4" href="admin/program">
+              관리자 페이지
+            </Nav.Link>
+            <Nav.Link className="h4" href="mypage">
+              마이페이지
+            </Nav.Link>
+          </Nav>
+        ) : (
+          <Nav>
+            <Nav.Link className="h4" href="mypage">
+              마이페이지
+            </Nav.Link>
+          </Nav>
+        )}
 
         <Dropdown as={Nav.Item}>
           <Dropdown.Toggle as={Nav.Link} bsPrefix="dt" className="rounded-circle border-bottom-0" id="dropdownUser">

@@ -178,8 +178,8 @@ const Program = () => {
               <Col xl={4} lg={12} md={12} sm={12}>
                 <Card className="mb-3">
                   <Card.Body>
-                    {/* <GKAccordionProgress accordionItems={CourseIndex} /> */}
-                    <img src={CSEE} width="100%" object-fit="contain" />
+                    {/* <img src={CSEE} width="100%" object-fit="contain" /> */}
+                    <img className="profile-img-content" object-fit="contain" width="100%" src={process.env.REACT_APP_RESTAPI_HOST + "resources/upload/2022/5/test_poster.png"} alt="profile_image" />
                   </Card.Body>
                 </Card>
                 {programInfo.manager_name ? (

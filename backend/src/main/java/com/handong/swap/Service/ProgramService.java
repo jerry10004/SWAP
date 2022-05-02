@@ -4,6 +4,7 @@ package com.handong.swap.Service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.handong.swap.DTO.ProgramDTO;
+import com.handong.swap.DTO.ProgramFileDTO;
 
 public interface ProgramService {
 	
@@ -11,6 +12,8 @@ public interface ProgramService {
 	public String read() throws JsonProcessingException;
 
 	public int add(ProgramDTO program);
+	
+	public int insertPoster(ProgramFileDTO program);
 	
 	public String readByCategory(int category_id) throws JsonProcessingException;
 	

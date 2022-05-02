@@ -15,7 +15,7 @@ import ApplicationForm from "components/marketing/pages/courses/add-new-course/s
 const AddNewCourse = () => {
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
-  // const [application_form, setApplication_form] = useState(1);
+  const [poster, setPoster] = useState();
 
   const [formData, setFormData] = useState({
     program_title: "Title",
@@ -30,6 +30,7 @@ const AddNewCourse = () => {
     manager_name: "",
     manager_contact: "",
     application_form: "",
+    poster: "",
   });
 
   const [start_date, setStart_date] = useState(new Date());
@@ -37,6 +38,12 @@ const AddNewCourse = () => {
   const [Applystart_date, setApplyStart_date] = useState(new Date());
   const [Applyend_date, setApplyEnd_date] = useState(new Date());
   const [validated, setValidated] = useState(false);
+  const [preview, setPreview] = useState();
+
+  const onLoadPoster = async (e) => {
+    setPoster(e.target.files[0]);
+    setPreview(URL.createObjectURL(e.target.files[0]));
+  };
 
   const handleChange = (event) => {
     setFormData({
@@ -81,6 +88,10 @@ const AddNewCourse = () => {
     var formattedApplyStartDate = getFormatDate(Applystart_date);
     var formattedApplyEndDate = getFormatDate(Applyend_date);
 
+    // 포스터 업로드
+    const imgFormData = new FormData();
+    imgFormData.append("img", poster);
+
     params.append("admin_id", "8");
     params.append("category_id", formData.program_category);
     params.append("application_form", formData.application_form);
@@ -94,8 +105,35 @@ const AddNewCourse = () => {
     params.append("manager_name", formData.manager_name);
     params.append("manager_contact", formData.manager_contact);
     if (window.confirm("프로그램을 추가하시겠습니까?")) {
-      const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "program/add", params);
+      const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "program/add", params).then((response) => {
+        console.log("응답: " + response.data);
+        // 포스터 업로드
+        console.log("폼 데이터: " + formData);
+        imgFormData.append("program_id", response.data);
+        imgFormData.append("file_name", poster.name);
+        // 0: 파일 1: 이미지
+        imgFormData.append("file_type", "1");
+
+        const posterRes = axios({
+          url: process.env.REACT_APP_RESTAPI_HOST + "program/addPoster",
+          cache: false,
+          contentType: false,
+          processData: false,
+          data: imgFormData,
+          method: "post",
+          headers: { "Content-Type": "multipart/form-data" },
+          success: function (posterRes) {
+            console.log(posterRes);
+          },
+          error: function (error) {
+            console.log(error);
+          },
+        });
+        alert("포스터 업로드 완료.");
+      });
+
       alert(formData.program_title + " 프로그램이 추가 되었습니다.");
+
       navigate("/admin/program");
     }
   };
@@ -115,6 +153,8 @@ const AddNewCourse = () => {
           next={next}
           validated={validated}
           setValidated={setValidated}
+          preview={preview}
+          onLoadPoster={onLoadPoster}
         />
       ),
     },

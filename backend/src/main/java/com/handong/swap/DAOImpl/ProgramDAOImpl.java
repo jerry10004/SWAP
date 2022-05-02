@@ -11,6 +11,7 @@ import com.handong.swap.DAO.ProgramDAO;
 import com.handong.swap.DTO.ProgramReadNameDTO;
 import com.handong.swap.DTO.ProgramReadDTO;
 import com.handong.swap.DTO.ProgramDTO;
+import com.handong.swap.DTO.ProgramFileDTO;
 
 @Repository
 public class ProgramDAOImpl implements ProgramDAO {
@@ -26,6 +27,12 @@ public class ProgramDAOImpl implements ProgramDAO {
 
 	public int add(ProgramDTO program) {
 		int result = sqlSession.insert("Program.insertProgram", program);
+		int program_id = sqlSession.selectOne("Program.readProgramLastId", program);
+		return program_id;
+	}
+	
+	public int insertPoster(ProgramFileDTO program) {
+		int result = sqlSession.insert("Program.insertPoster", program);
 		return result;
 	}
 	
