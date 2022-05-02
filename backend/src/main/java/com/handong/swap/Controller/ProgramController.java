@@ -1,11 +1,12 @@
 package com.handong.swap.Controller;
 
 
+import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.text.ParseException;
-
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.text.ParseException;
@@ -20,13 +21,18 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+
 import com.handong.swap.Service.ProgramService;
 import com.mysql.cj.xdevapi.JsonArray;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.handong.swap.DTO.ProgramDTO;
+import com.handong.swap.DTO.ProgramFileDTO;
 import com.handong.swap.DTO.ProgramReadNameDTO;
 
 @Controller
@@ -55,7 +61,7 @@ public class ProgramController {
 		System.out.println(result);
 		
 		LocalDateTime now = LocalDateTime.now();
-		String currentDate = now.format(DateTimeFormatter.ofPattern("yy-MM-dd HH:mm (EE)",Locale.KOREA));
+		String currentDate = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss (EE)",Locale.KOREA));
 		String currentApplyDate = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss (EE)",Locale.KOREA));
 		
 		JSONParser parser = new JSONParser();
@@ -76,10 +82,6 @@ public class ProgramController {
 					status =  jsonObj.get("status").toString();
 					programId = jsonObj.get("id").toString();
 					
-					System.out.println("now: "+currentApplyDate);
-					System.out.println("apply 시작: "+applyStartDate);
-					System.out.println("apply  종료: "+applyEndDate);
-					
 		
 			            
 			            if(currentDate.compareTo(startDate)<0) {//대기 
@@ -90,11 +92,13 @@ public class ProgramController {
 			            else if(currentDate.compareTo(startDate)>0 && currentDate.compareTo(endDate)<0) {//진행
 							if(status.equals("1") == false) {
 								programService.updateStatus(Integer.parseInt(programId), 1);
+								// 상태변경
 							}
 			            }
 			            else if(currentDate.compareTo(endDate)>0) {//종료
 							if(status.equals("2") == false) {
 								programService.updateStatus(Integer.parseInt(programId), 2);
+								//학생들 상태 수료로 변경
 							}		            	
 			            }
 			            
@@ -177,7 +181,7 @@ public class ProgramController {
 	
 	@RequestMapping(value = "/add", method = RequestMethod.POST, produces = "application/json; charset=utf8")
 	@ResponseBody
-	public void addProgram(HttpServletRequest httpServletRequest) throws ParseException {
+	public int addProgram(HttpServletRequest httpServletRequest) throws ParseException {
 		ProgramDTO program = new ProgramDTO();
 		
 		System.out.println("프로그램 추가하기 -----"+httpServletRequest.getParameter("application_form"));
@@ -202,15 +206,74 @@ public class ProgramController {
 		program.setApplyend_date(Applyend_date);
 		
 		int result = programService.add(program);
-		
-		if(result ==0 ) {
-			System.out.println("프로그램 추가 실패");
-		}
-		else {
-			System.out.println("프로그램 추가 성공");
-		}
+		return result;
 		
 	}
+	
+	
+	@RequestMapping(value = "addPoster", method = RequestMethod.POST, produces = "application/json; charset=utf8")
+	@ResponseBody
+	public String addPoster(HttpServletRequest httpServletRequest, MultipartHttpServletRequest multi) {
+		ProgramFileDTO programPoster = new ProgramFileDTO();
+		MultipartFile file = multi.getFile("img");
+		String posterName = file.getOriginalFilename();
+		
+		Calendar calendar = Calendar.getInstance();
+		String path = "";
+		String filePath = httpServletRequest.getSession().getServletContext().getRealPath("/") + "resources/upload/"+calendar.get(calendar.YEAR)+"/"+(calendar.get(calendar.MONTH)+1)+"/"; //파일 저장 경로, 설정파일로 따로 관리한다.
+	    if(file != null) {
+	    	File dir = new File(filePath); //파일 저장 경로 확인, 없으면 만든다.
+		    if (!dir.exists()) {
+		        dir.mkdirs();
+		    }
+		    try {
+	    		int count = 1;
+	    		File newFile = new File(filePath+posterName);
+	    		path = calendar.get(calendar.YEAR)+"/"+(calendar.get(calendar.MONTH)+1)+"/"+posterName;
+	    		while(newFile.exists()) {
+	    			newFile = new File(filePath+posterName+"("+count+")");
+	    			path = calendar.get(calendar.YEAR)+"/"+(calendar.get(calendar.MONTH)+1)+"/"+posterName+"("+count+")";
+	    			count++;
+	    		}
+	    		if (!newFile.exists()) {
+	    			newFile.mkdirs();
+	    	    }
+				file.transferTo(newFile);
+			} catch (Exception e) {
+				int count = 1;
+	            e.printStackTrace();
+			}
+	    }
+	    
+	    
+	    programPoster.setProgram_id(Integer.parseInt(httpServletRequest.getParameter("program_id")));
+	    programPoster.setFile_name(path);
+	    // 0: 파일, 1: 이미지
+	    programPoster.setFile_type(1);
+	    
+	    int result = programService.insertPoster(programPoster);
+	    
+		return "uploadEnd";
+	}
+	
+	@RequestMapping(value = "deleteConfirm", method = RequestMethod.POST, produces = "application/json; charset=utf8")
+	@ResponseBody
+	public int deleteConfirmProgram(HttpServletRequest httpServletRequest)throws IOException, ParseException  {
+		String[] param_ids = httpServletRequest.getParameterValues("id");
+		int result = 1;
+		
+		String[] ids = param_ids[0].split(",");
+		
+		for (int i = 0; i < ids.length; i++) {
+			System.out.println("프로그램 삭제 시도");
+			System.out.println("삭제 하려는 아이디 번호: "+ids[i]);
+			result = programService.deleteConfirm(Integer.parseInt(ids[i]));
+			if(result == 0) return result;
+		}
+		if(result==1) return result;
+		else return result;
+	}
+	
 	
 	@RequestMapping(value = "/delete", method = RequestMethod.POST, produces = "application/json; charset=utf8")
 	@ResponseBody

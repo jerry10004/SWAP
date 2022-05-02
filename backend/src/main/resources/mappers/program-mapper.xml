@@ -51,6 +51,22 @@
 	
    	</select>
    	
+   		<select id="selectConfirmOngoing" parameterType="Integer" resultType="Integer">
+	   select case when(P.status = 1) then 1
+		else 0
+		end
+		from Program as P
+		where P.id =#{id};
+   	</select>
+   	
+   	 <select id="selectConfirmApply" parameterType="Integer" resultType="Integer">
+   	select case when (P.applicants_num > 0) then 1
+	else 0
+	end
+	from Program as P
+	where P.id = #{id};
+		</select>
+   	
    	
    	<select id="readProgramInformationByProgramId" parameterType="Integer" resultType="ProgramReadById">
 	   select P.id, P.program_name,P.category_id, C.category_name as category_name, P.quota, P.information, P.start_date, P.end_date, P.Applystart_date, P.Applyend_date, P.manager_name, P.manager_contact, P.applicants_num
@@ -66,12 +82,23 @@
 		where P.id = #{id};
    	</select>
    	
+   	<select id="readProgramLastId" resultType="Integer">
+	    SELECT P.id
+		FROM Program AS P
+		ORDER BY regdate DESC LIMIT 1
+   	</select>
+   	
    	<insert id = "insertProgram" parameterType="Program">	
    		INSERT INTO Program (admin_id, category_id, application_form, program_name, information, start_date, end_date, quota, Applystart_date, Applyend_date, manager_name, manager_contact)
 		VALUES (#{admin_id}, #{category_id}, #{application_form}, #{program_name}, #{information}, #{start_date}, #{end_date},#{quota}, #{Applystart_date}, #{Applyend_date},#{manager_name}, #{manager_contact})
    	</insert>
    	
-   	<update id="updateDelDate" parameterType="hashmap">
+   	<insert id = "insertPoster" parameterType="Program">	
+   		INSERT INTO Program_File (program_id, file_name, file_type)
+		VALUES (#{program_id}, #{file_name}, #{file_type})
+   	</insert>
+   	
+   	<update id="updateDelDate" parameterType="Integer">
    		UPDATE Program SET deldate=now(), status = -1
 		WHERE id = #{id}
    	</update>

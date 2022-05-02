@@ -104,13 +104,7 @@ const ManageApplicationDetail = () => {
               <Row>
                 <Col lg={12} md={12} sm={12}>
                   <div className="border-bottom pb-4 mb-4 d-flex align-items-center justify-content-between">
-                    <div className="mb-3 mb-md-0">
-                      {formDataLoading ? <h1 className="mb-1 h2 fw-bold">{applicationName}</h1> : ""}
-                      <Breadcrumb>
-                        <Breadcrumb.Item href="#">Application</Breadcrumb.Item>
-                        <Breadcrumb.Item active>Detail</Breadcrumb.Item>
-                      </Breadcrumb>
-                    </div>
+                    <div className="mb-3 mb-md-0">{formDataLoading ? <h1 className="mb-1 h2 fw-bold">{applicationName}</h1> : ""}</div>
                     <div>
                       <Link to="../admin/application" className="btn btn-success ">
                         신청서 목록 보기

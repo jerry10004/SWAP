@@ -11,7 +11,7 @@ import ManageInstructor from "../pages/ManageInstructor";
 import ManageProgram from "../pages/ManageProgram";
 import AdminProgramDetail from "../pages/AdminProgramDetail";
 import ApplicationFormView from "components/dashboard/single/overview/ApplicationFormView";
-import AdminMain from "../pages/Admin";
+import AdminMain from "../pages/ManageProgram";
 import MyPage from "../pages/MyPage";
 import Application from "../pages/Application";
 import ProgramDetail from "../pages/ProgramDetail";

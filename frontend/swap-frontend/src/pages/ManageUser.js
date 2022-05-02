@@ -47,10 +47,6 @@ const ManageUser = () => {
                         User
                         {/* <span className="fs-5 text-muted">(12,105)</span> */}
                       </h1>
-                      <Breadcrumb>
-                        <Breadcrumb.Item href="#">Dashboard</Breadcrumb.Item>
-                        <Breadcrumb.Item active>User</Breadcrumb.Item>
-                      </Breadcrumb>
                     </div>
                   </div>
                 </Col>

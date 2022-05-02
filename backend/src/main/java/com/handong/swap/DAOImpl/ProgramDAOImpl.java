@@ -11,6 +11,7 @@ import com.handong.swap.DAO.ProgramDAO;
 import com.handong.swap.DTO.ProgramReadNameDTO;
 import com.handong.swap.DTO.ProgramReadDTO;
 import com.handong.swap.DTO.ProgramDTO;
+import com.handong.swap.DTO.ProgramFileDTO;
 
 @Repository
 public class ProgramDAOImpl implements ProgramDAO {
@@ -26,14 +27,18 @@ public class ProgramDAOImpl implements ProgramDAO {
 
 	public int add(ProgramDTO program) {
 		int result = sqlSession.insert("Program.insertProgram", program);
+		int program_id = sqlSession.selectOne("Program.readProgramLastId", program);
+		return program_id;
+	}
+	
+	public int insertPoster(ProgramFileDTO program) {
+		int result = sqlSession.insert("Program.insertPoster", program);
 		return result;
 	}
 	
 	@Override
 	public void updateDelDate(int id) {
-		Map<String, Object> param = new HashMap<String, Object>();
-		param.put("id", id);
-	    sqlSession.update("Program.updateDelDate", param);
+	    sqlSession.update("Program.updateDelDate", id);
 	}
 
 	@Override
@@ -87,6 +92,18 @@ public class ProgramDAOImpl implements ProgramDAO {
 		param.put("user_id", user_id);
 		param.put("status", status);
 		return sqlSession.selectList("Program.readByStatusByUser",param);
+	}
+	
+	@Override
+	public int deleteConfirm(int id) {
+		int ongoing = sqlSession.selectOne("Program.selectConfirmOngoing", id);
+		if(ongoing==1) return 0;
+		else {
+			int apply = sqlSession.selectOne("Program.selectConfirmApply", id);
+			if(apply == 1) return 2;
+		}
+	    sqlSession.selectOne("Program.updateDelDate", id);
+	    return 1;
 	}
 
 }

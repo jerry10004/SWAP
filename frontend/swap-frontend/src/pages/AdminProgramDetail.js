@@ -64,10 +64,6 @@ const AdminProgramDetail = () => {
                     <div className="mb-3 mb-md-0">
                       {programNameLoading ? <h1 className="mb-1 h2 fw-bold">{programName}</h1> : ""}
                       {/* <h1 className="mb-1 h2 fw-bold">~~맥북신청</h1> */}
-                      <Breadcrumb>
-                        <Breadcrumb.Item href="#">Program</Breadcrumb.Item>
-                        <Breadcrumb.Item active>Detail</Breadcrumb.Item>
-                      </Breadcrumb>
                     </div>
                     <div>
                       <Link to="../admin/program" className="btn btn-success ">

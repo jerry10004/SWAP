@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.handong.swap.DAO.ProgramDAO;
 import com.handong.swap.DTO.ProgramDTO;
+import com.handong.swap.DTO.ProgramFileDTO;
 import com.handong.swap.DTO.ProgramReadDTO;
 import com.handong.swap.DTO.ProgramReadNameDTO;
 import com.handong.swap.Service.ProgramService;
@@ -34,6 +35,10 @@ public class ProgramServiceImpl implements ProgramService{
 		return programDAO.add(program);
 
 	}
+	
+	public int insertPoster(ProgramFileDTO program) {
+		return programDAO.insertPoster(program);
+	}
 
 	@Override
 	public String readProgramInformationByProgramId(int id) throws JsonProcessingException{
@@ -53,6 +58,12 @@ public class ProgramServiceImpl implements ProgramService{
 	@Override
 	public void delete(int id) {
 		programDAO.updateDelDate(id);
+	}
+	
+	@Override
+	public int deleteConfirm(int id) throws JsonProcessingException {
+		int programDATA = programDAO.deleteConfirm(id);
+		return programDATA;
 	}
 	
 	@Override
