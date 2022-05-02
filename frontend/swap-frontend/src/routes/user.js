@@ -12,11 +12,11 @@ function Admin() {
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/main" element={<Main />} />
-        <Route path="/mypage" element={<MyPage />} />
+        {/* <Route path="/mypage" element={<MyPage />} /> */}
         <Route path="/admin/*" element={<Navigate replace to="/" />} />
         <Route path="/program/:id/application" element={<Application />} />
         <Route path="/program/:id" element={<ProgramDetail />} />
-        <Route path="/mypagelayout" element={<MyPageLayout />} />
+        <Route path="/mypage" element={<MyPageLayout />} />
       </Routes>
     </>
   );
