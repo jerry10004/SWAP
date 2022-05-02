@@ -56,6 +56,12 @@ public class ProgramServiceImpl implements ProgramService{
 	}
 	
 	@Override
+	public int deleteConfirm(int id) throws JsonProcessingException {
+		int programDATA = programDAO.deleteConfirm(id);
+		return programDATA;
+	}
+	
+	@Override
 	public void updateStatus(int program_id, int status) {
 		programDAO.updateStatus(program_id, status);
 	}

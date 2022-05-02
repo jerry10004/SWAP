@@ -156,7 +156,7 @@ const ApplicationsListItems = ({ application_data }) => {
 
     if (window.confirm("삭제 하시겠습니까?")) {
       const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "application/deleteConfirm", params);
-      if (response.data == 0) {
+      if (response.data === 0) {
         alert("사용중인 프로그램이 있어 삭제할 수 없습니다.");
       } else {
         const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "application/delete", params);
