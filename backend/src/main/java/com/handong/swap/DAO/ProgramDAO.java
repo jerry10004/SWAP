@@ -20,4 +20,5 @@ public interface ProgramDAO {
 	List<ProgramReadDTO> readByCategory(int category_id);
 	List<ProgramReadDTO> readByStatusByUser(int status, int user_id);
 	public void updateApplicantNum(int program_id);
+	public int deleteConfirm(int id);
 }
