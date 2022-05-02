@@ -80,7 +80,7 @@ const AllProgramsData = (props) => {
                           <Col className="col-auto">
                             <div className={`lh-1  "d-none"`}>
                               <div className="fw-bold">신청마감일자</div>
-                              <div className={` mt-1 `}>{item.applyend_date}</div>
+                              <div className={` mt-1 `}>{moment(item.applyend_date).format("YY-MM-DD HH:mm")}</div>
                             </div>
                           </Col>
                           <Col className="col ms-2">{/* <span>{item.name}</span> */}</Col>
@@ -126,7 +126,7 @@ const AllProgramsData = (props) => {
                             <Col className="col-auto">
                               <div className={`lh-1  "d-none"`}>
                                 <div className="fw-bold">신청마감일자</div>
-                                <div className={` mt-1 `}>{item.applyend_date}</div>
+                                <div className={` mt-1 `}>{moment(item.applyend_date).format("YY-MM-DD HH:mm")}</div>
                               </div>
                             </Col>
                             <Col className="col ms-2">{/* <span>{item.name}</span> */}</Col>
