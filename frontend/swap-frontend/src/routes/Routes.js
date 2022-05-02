@@ -23,6 +23,7 @@ import Admin from "../pages/Admin";
 import SignIn from "../pages/SignIn";
 import SignUp from "../pages/SignUp";
 import ProgramPractice from "../pages/ProgramPractice";
+import MyPageLayout from "../pages/MyPageLayout";
 
 function Router() {
   return (
@@ -48,6 +49,7 @@ function Router() {
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/programPractice" element={<ProgramPractice />} />
+        <Route path="/mypagelayout" element={<MyPageLayout />} />
       </Routes>
     </BrowserRouter>
   );

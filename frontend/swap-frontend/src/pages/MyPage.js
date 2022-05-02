@@ -59,9 +59,9 @@ const MyPage = () => {
     <Fragment>
       {programLoading ? (
         <>
-          <NavbarDefault login />
-          <div className="container-fluid p-4">
-            <Row>
+          {/* <NavbarDefault login /> */}
+          {/* <div className="container-fluid p-4"> */}
+          {/* <Row>
               <Col lg={12} md={12} sm={12}>
                 <div className="border-bottom pb-4 mb-4 d-md-flex align-items-center justify-content-between">
                   <div className="mb-3 mb-md-0">
@@ -69,50 +69,49 @@ const MyPage = () => {
                   </div>
                 </div>
               </Col>
-            </Row>
+            </Row> */}
 
-            <Row>
-              <Col lg={12} md={12} sm={12}>
-                <Tab.Container defaultActiveKey="all">
-                  <Card>
-                    <Card.Header className="border-bottom-0 p-0 bg-white">
-                      <Nav className="nav-lb-tab  fs-4">
-                        <Nav.Item>
-                          <Nav.Link eventKey="all" className="mb-sm-3 mb-md-0">
-                            대기
-                          </Nav.Link>
-                        </Nav.Item>
-                        <Nav.Item>
-                          <Nav.Link eventKey="published" className="mb-sm-3 mb-md-0">
-                            진행
-                          </Nav.Link>
-                        </Nav.Item>
-                        <Nav.Item>
-                          <Nav.Link eventKey="scheduled" className="mb-sm-3 mb-md-0">
-                            종료
-                          </Nav.Link>
-                        </Nav.Item>
-                      </Nav>
-                    </Card.Header>
-                    <Card.Body className="p-0">
-                      <Tab.Content>
-                        <Tab.Pane eventKey="all" className="pb-0">
-                          <ReadyProgramTable table_data={readyProgram} />
-                        </Tab.Pane>
-                        <Tab.Pane eventKey="published" className="pb-0">
-                          <OngoingProgramTable table_data={ongoingProgram} />
-                        </Tab.Pane>
-                        <Tab.Pane eventKey="scheduled" className="pb-4">
-                          <CompleteProgramTable table_data={completeProgram} />
-                        </Tab.Pane>
-                      </Tab.Content>
-                    </Card.Body>
-                  </Card>
-                </Tab.Container>
-              </Col>
-            </Row>
-          </div>
-          <Footer />
+          <Row>
+            <Col lg={12} md={12} sm={12}>
+              <Tab.Container defaultActiveKey="all">
+                <Card>
+                  <Card.Header className="border-bottom-0 p-0 bg-white">
+                    <Nav className="nav-lb-tab  fs-4">
+                      <Nav.Item>
+                        <Nav.Link eventKey="all" className="mb-sm-3 mb-md-0">
+                          대기
+                        </Nav.Link>
+                      </Nav.Item>
+                      <Nav.Item>
+                        <Nav.Link eventKey="published" className="mb-sm-3 mb-md-0">
+                          진행
+                        </Nav.Link>
+                      </Nav.Item>
+                      <Nav.Item>
+                        <Nav.Link eventKey="scheduled" className="mb-sm-3 mb-md-0">
+                          종료
+                        </Nav.Link>
+                      </Nav.Item>
+                    </Nav>
+                  </Card.Header>
+                  <Card.Body className="p-0">
+                    <Tab.Content>
+                      <Tab.Pane eventKey="all" className="pb-0">
+                        <ReadyProgramTable table_data={readyProgram} />
+                      </Tab.Pane>
+                      <Tab.Pane eventKey="published" className="pb-0">
+                        <OngoingProgramTable table_data={ongoingProgram} />
+                      </Tab.Pane>
+                      <Tab.Pane eventKey="scheduled" className="pb-4">
+                        <CompleteProgramTable table_data={completeProgram} />
+                      </Tab.Pane>
+                    </Tab.Content>
+                  </Card.Body>
+                </Card>
+              </Tab.Container>
+            </Col>
+          </Row>
+          {/* </div> */}
         </>
       ) : (
         ""
