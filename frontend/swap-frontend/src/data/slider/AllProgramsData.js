@@ -52,8 +52,53 @@ const AllProgramsData = (props) => {
           </Col>
         </Row>
         <Row className="mt-4 m-3">
-          {termLoading
-            ? props.category_data
+          {termLoading ? (
+            term === "전체" ? (
+              props.category_data.map((item, index) => {
+                var address = "/program/" + item.id.toString();
+                return (
+                  <Col lg={3} md={6} sm={12} key={index}>
+                    <Card className={`mb-4 card-hover mx-2 main-program-card`}>
+                      <Link to={address}>
+                        <Image src={programImage} alt="" className="card-img-top rounded-top-md programImage" width="100px" height="170px" />
+                      </Link>
+                      <Card.Body style={{ height: "6rem" }}>
+                        <span className="text-dark fw-bold">
+                          <Badge bg="primary" className="me-3 main-program-badge">
+                            {" "}
+                            {createDday(item.applyend_date)}
+                          </Badge>
+                        </span>
+                        <h3 className="h4 text-truncate-line-2 " style={{ height: "2.7rem" }}>
+                          <Link to={address} className="text-inherit">
+                            {item.program_name}
+                          </Link>
+                        </h3>
+                      </Card.Body>
+                      <Card.Footer>
+                        <Row className="align-items-center g-0">
+                          <Col className="col-auto">
+                            <div className={`lh-1  "d-none"`}>
+                              <div className="fw-bold">신청마감일자</div>
+                              <div className={` mt-1 `}>{item.applyend_date}</div>
+                            </div>
+                          </Col>
+                          <Col className="col ms-2">{/* <span>{item.name}</span> */}</Col>
+                          <Col className="col-auto">
+                            <Tippy content="Add to Bookmarks" animation={"scale"}>
+                              <Link to="#" className="text-muted bookmark">
+                                <i className="fe fe-bookmark"></i>
+                              </Link>
+                            </Tippy>
+                          </Col>
+                        </Row>
+                      </Card.Footer>
+                    </Card>
+                  </Col>
+                );
+              })
+            ) : (
+              props.category_data
                 .filter((project) => Object.values(project).join(" ").toLowerCase().includes(term.toLowerCase()))
                 .map((item, index) => {
                   var address = "/program/" + item.id.toString();
@@ -98,7 +143,10 @@ const AllProgramsData = (props) => {
                     </Col>
                   );
                 })
-            : ""}
+            )
+          ) : (
+            <></>
+          )}
         </Row>
       </Row>
     </>
