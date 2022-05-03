@@ -140,7 +140,7 @@ const AllProgramsData = (props) => {
                           <Col className="col ms-2">{/* <span>{item.name}</span> */}</Col>
                           <Col className="col-auto">
                             <Tippy content="프로그램 찜하기" animation={"scale"}>
-                              <Button onClick={() => onToggle(item.id)} type="button" className="p-0 bg-transparent border-0 text-dark">
+                              <Button onClick={() => onToggle(item.id)} type="button" className="p-0 bg-transparent border-0 text-primary">
                                 {alllikeData.includes(item.id) ? <i className="fas fa-bookmark"></i> : <i className="far fa-bookmark"></i>}
                               </Button>
                             </Tippy>
@@ -186,7 +186,7 @@ const AllProgramsData = (props) => {
                             <Col className="col ms-2">{/* <span>{item.name}</span> */}</Col>
                             <Col className="col-auto">
                               <Tippy content="프로그램 찜하기" animation={"scale"}>
-                                <Button onClick={() => onToggle(item.id)} type="button" className="p-0 bg-transparent border-0 text-dark">
+                                <Button onClick={() => onToggle(item.id)} type="button" className="p-0 bg-transparent border-0 text-primary">
                                   {alllikeData.includes(item.id) ? <i className="fas fa-bookmark"></i> : <i className="far fa-bookmark"></i>}
                                 </Button>
                               </Tippy>

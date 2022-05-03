@@ -94,7 +94,7 @@ const Bookmark = () => {
                         <Col className="col ms-2"></Col>
                         <Col className="col-auto">
                           <Tippy content="찜 삭제하기" animation={"scale"}>
-                            <Button onClick={() => deleteLike(item.id)} type="button" className="p-0 bg-transparent border-0 text-dark">
+                            <Button onClick={() => deleteLike(item.id)} type="button" className="p-0 bg-transparent border-0 text-primary">
                               <i className="fe fe-trash"></i>
                             </Button>
                           </Tippy>

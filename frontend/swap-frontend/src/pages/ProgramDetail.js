@@ -172,7 +172,7 @@ const Program = () => {
                     <div className="d-flex justify-content-between align-items-center">
                       <h1 className="fw-semi-bold mb-2">{programInfo.program_name}</h1>
                       <OverlayTrigger key="top" placement="top" overlay={<Tooltip id="tooltip-top">프로그램 찜 하기</Tooltip>}>
-                        <Button onClick={onToggle} type="button" className="p-0 bg-transparent border-0 text-dark fs-3 mb-3 text-inherit">
+                        <Button onClick={onToggle} type="button" className="p-0 bg-transparent border-0 text-primary fs-3 mb-3 ">
                           {toggleBookmark ? <i class="fas fa-bookmark"></i> : <i class="far fa-bookmark"></i>}
                         </Button>
                       </OverlayTrigger>
