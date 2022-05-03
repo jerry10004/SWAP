@@ -371,4 +371,13 @@ public class ProgramController {
 		programService.edit(program);
 		
 	}
+	
+	@RequestMapping(value = "/read/bookmark", method = RequestMethod.POST, produces = "application/json; charset=utf8")
+	@ResponseBody
+	public String readLikedPrograms(HttpServletRequest httpServletRequest) throws IOException, ParseException {
+		Integer user_id = Integer.parseInt(httpServletRequest.getParameter("user_id"));
+		String result = programService.readLikedPrograms(user_id);	
+		System.out.println(result);
+	    return result;
+	}
 }

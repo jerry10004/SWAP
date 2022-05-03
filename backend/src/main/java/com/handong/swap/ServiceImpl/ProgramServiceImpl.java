@@ -116,6 +116,14 @@ public class ProgramServiceImpl implements ProgramService{
 		String jsonString = mapper.writeValueAsString(programDATA);
 		return jsonString;
 	}
+	
+	@Override
+	public String readLikedPrograms(int user_id) throws JsonProcessingException {
+		List<ProgramReadDTO> programDATA = programDAO.readLikedPrograms(user_id);
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonString = mapper.writeValueAsString(programDATA);
+		return jsonString;
+	}
 
 	
 

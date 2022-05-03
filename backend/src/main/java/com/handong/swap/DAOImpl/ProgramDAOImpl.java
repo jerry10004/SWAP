@@ -115,5 +115,10 @@ public class ProgramDAOImpl implements ProgramDAO {
 	    sqlSession.selectOne("Program.updateDelDate", id);
 	    return 1;
 	}
+	
+	@Override
+	public List<ProgramReadDTO> readLikedPrograms(int user_id){
+		return sqlSession.selectList("Program.readLikedPrograms", user_id);
+	}
 
 }
