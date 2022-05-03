@@ -16,6 +16,16 @@ import { FormSelect } from "components/elements/form-select/FormSelect";
 const AllProgramsData = (props) => {
   const [term, setTerm] = useState("진행");
   const [termLoading, setTermLoading] = useState(true);
+  const [toggleBookmark, setToggleBookmark] = useState(false);
+  const [alllikeData, setAllLikeData] = useState([]);
+  const [userInfo, setUserInfo] = useState();
+
+  var ID = parseInt(window.sessionStorage.getItem("id"));
+
+  useLayoutEffect(() => {
+    readAllLike(ID);
+    readApplicantInformation(ID);
+  }, []);
 
   const getFilterTerm = (event) => {
     setTermLoading(false);
@@ -42,6 +52,50 @@ const AllProgramsData = (props) => {
     { value: "대기", label: "대기" },
     { value: "마감", label: "마감" },
   ];
+
+  const readAllLike = async (userID) => {
+    var params = new URLSearchParams();
+    params.append("user_id", userID);
+    const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "like/readAllLike", params);
+    response.data.map((item) => {
+      if (!alllikeData.includes(item)) {
+        setAllLikeData((prevState) => [...prevState, item.program_id]);
+      }
+    });
+  };
+
+  const deleteLike = async (userID, programID) => {
+    setAllLikeData(alllikeData.filter((item) => item !== programID));
+    var params = new URLSearchParams();
+    params.append("user_id", userID);
+    params.append("program_id", programID);
+    const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "like/delete", params);
+  };
+
+  const addLike = async (userID, programID) => {
+    setAllLikeData((prevState) => [...prevState, programID]);
+    var params = new URLSearchParams();
+    params.append("user_id", userID);
+    params.append("program_id", programID);
+    const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "like/add", params);
+  };
+
+  const readApplicantInformation = async (id) => {
+    const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "user/loggedinUser/" + id);
+    setUserInfo(response.data[0]);
+  };
+
+  const onToggle = (programID) => {
+    if (userInfo.status === 0) {
+      alert("관리자는 찜 기능을 사용하실 수 없습니다. ");
+    } else {
+      if (alllikeData.includes(programID)) {
+        deleteLike(ID, programID);
+      } else {
+        addLike(ID, programID);
+      }
+    }
+  };
 
   return (
     <>
@@ -85,10 +139,10 @@ const AllProgramsData = (props) => {
                           </Col>
                           <Col className="col ms-2">{/* <span>{item.name}</span> */}</Col>
                           <Col className="col-auto">
-                            <Tippy content="Add to Bookmarks" animation={"scale"}>
-                              <Link to="#" className="text-muted bookmark">
-                                <i className="fe fe-bookmark"></i>
-                              </Link>
+                            <Tippy content="프로그램 찜하기" animation={"scale"}>
+                              <Button onClick={() => onToggle(item.id)} type="button" className="p-0 bg-transparent border-0 text-dark">
+                                {alllikeData.includes(item.id) ? <i className="fas fa-bookmark"></i> : <i className="far fa-bookmark"></i>}
+                              </Button>
                             </Tippy>
                           </Col>
                         </Row>
@@ -131,10 +185,10 @@ const AllProgramsData = (props) => {
                             </Col>
                             <Col className="col ms-2">{/* <span>{item.name}</span> */}</Col>
                             <Col className="col-auto">
-                              <Tippy content="Add to Bookmarks" animation={"scale"}>
-                                <Link to="#" className="text-muted bookmark">
-                                  <i className="fe fe-bookmark"></i>
-                                </Link>
+                              <Tippy content="프로그램 찜하기" animation={"scale"}>
+                                <Button onClick={() => onToggle(item.id)} type="button" className="p-0 bg-transparent border-0 text-dark">
+                                  {alllikeData.includes(item.id) ? <i className="fas fa-bookmark"></i> : <i className="far fa-bookmark"></i>}
+                                </Button>
                               </Tippy>
                             </Col>
                           </Row>
