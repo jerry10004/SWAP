@@ -35,7 +35,8 @@ const MyPage = () => {
     params.append("user_id", user_id);
     params.append("status", 0);
     const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "program/read/status", params);
-    setOngoingProgram(response.data);
+    setReadyProgram(response.data);
+    console.log("whow", response.data);
   };
 
   const readOnGoingProgram = async () => {
@@ -44,7 +45,7 @@ const MyPage = () => {
     params.append("user_id", user_id);
     params.append("status", 1);
     const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "program/read/status", params);
-    setReadyProgram(response.data);
+    setOngoingProgram(response.data);
   };
   const readCompleteProgram = async () => {
     setProgramLoading(false);

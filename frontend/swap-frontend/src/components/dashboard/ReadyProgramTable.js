@@ -1,7 +1,7 @@
 // import node module libraries
 import React, { Fragment, useMemo, useLayoutEffect } from "react";
 import { useTable, useFilters, useGlobalFilter, usePagination, useRowSelect } from "react-table";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Col, Row, Table, Button } from "react-bootstrap";
 
 // Import required custom components
@@ -9,13 +9,24 @@ import GlobalFilter from "components/elements/advance-table/GlobalFilter";
 import Pagination from "components/elements/advance-table/Pagination";
 // import Checkbox from "components/elements/advance-table/Checkbox";
 import DotBadge from "components/elements/bootstrap/DotBadge";
+import moment from "moment";
+import axios from "axios";
 
 const ReadyProgramTable = ({ table_data }) => {
-  useLayoutEffect(() => {
-    console.log("ready!!");
-    console.log(table_data);
-  }, []);
+  useLayoutEffect(() => {}, []);
 
+  const cancelApply = async (applicant_id, program_id) => {
+    var params = new URLSearchParams();
+    params.append("applicant_id", applicant_id);
+    params.append("program_id", program_id);
+    if (window.confirm("정말 신청을 취소하시겠습니까?")) {
+      const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "applicant/delete", params);
+      alert("신청이 취소되었습니다.");
+      window.location.reload();
+    }
+  };
+  // program의 applicants num --
+  // applicant에서 삭제
   const columns = useMemo(
     () => [
       { accessor: "_id", Header: "ID", show: false },
@@ -54,7 +65,7 @@ const ReadyProgramTable = ({ table_data }) => {
         Cell: ({ value }) => {
           return (
             <Link to="#" className="text-inherit">
-              {value}
+              {moment(value).format("YY-MM-DD HH:mm")}
             </Link>
           );
         },
@@ -66,7 +77,7 @@ const ReadyProgramTable = ({ table_data }) => {
         Cell: ({ value }) => {
           return (
             <Link to="#" className="text-inherit">
-              {value}
+              {moment(value).format("YY-MM-DD HH:mm")}
             </Link>
           );
         },
@@ -94,7 +105,7 @@ const ReadyProgramTable = ({ table_data }) => {
           return (
             <div className="d-grid d-md-block">
               <Link to="#">
-                <Button variant="outline-danger" className="me-1">
+                <Button variant="outline-danger" className="me-1" onClick={() => cancelApply(row.original.applicant_id, row.original.program_id)}>
                   신청취소
                 </Button>
               </Link>

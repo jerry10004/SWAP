@@ -9,6 +9,7 @@ import GlobalFilter from "components/elements/advance-table/GlobalFilter";
 import Pagination from "components/elements/advance-table/Pagination";
 // import Checkbox from "components/elements/advance-table/Checkbox";
 import DotBadge from "components/elements/bootstrap/DotBadge";
+import moment from "moment";
 
 const CompleteProgramTable = ({ table_data }) => {
   useLayoutEffect(() => {
@@ -22,7 +23,7 @@ const CompleteProgramTable = ({ table_data }) => {
       {
         accessor: "applicant_id",
         Header: "번호",
-        Cell: ({ value }) => {
+        Cell: ({ value, row }) => {
           return (
             <h5 className="mb-0">
               <Link to="#" className="text-inherit">
@@ -54,7 +55,7 @@ const CompleteProgramTable = ({ table_data }) => {
         Cell: ({ value }) => {
           return (
             <Link to="#" className="text-inherit">
-              {value}
+              {moment(value).format("YY-MM-DD HH:mm")}
             </Link>
           );
         },
@@ -66,7 +67,7 @@ const CompleteProgramTable = ({ table_data }) => {
         Cell: ({ value }) => {
           return (
             <Link to="#" className="text-inherit">
-              {value}
+              {moment(value).format("YY-MM-DD HH:mm")}
             </Link>
           );
         },
@@ -79,7 +80,7 @@ const CompleteProgramTable = ({ table_data }) => {
           value = value.toLowerCase();
           return (
             <Fragment>
-              <DotBadge bg={value === "미수료" ? "warning" : value === "수료" ? "success" : ""}></DotBadge>
+              <DotBadge bg={value === "미수료" ? "secondary" : value === "수료" ? "primrary" : ""}></DotBadge>
               {value.charAt(0).toUpperCase() + value.slice(1)}
             </Fragment>
           );

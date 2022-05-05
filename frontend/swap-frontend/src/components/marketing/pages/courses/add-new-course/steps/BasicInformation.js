@@ -5,6 +5,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import "assets/scss/addProgram.scss";
 import { ko } from "date-fns/esm/locale";
 import PreviewDefault from "assets/images/previewDefault.png";
+import { Input } from "reactstrap";
 
 const BasicInformation = (props) => {
   const { validated, next, handleChange, preview, onLoadPoster, onLoadFile } = props;
@@ -50,9 +51,12 @@ const BasicInformation = (props) => {
             <Col xs={12} className="mb-4">
               <Form.Group controlId="program_description">
                 <Form.Label>첨부 파일</Form.Label>
-                <form className="upload_input">
+                {/* <form className="upload_input">
                   <input type="file" id="file" onChange={onLoadFile} />
-                </form>
+                </form> */}
+                <Form className="upload_input">
+                  <Input id="file" name="file" type="file" onChange={onLoadFile} />
+                </Form>
               </Form.Group>
             </Col>
 
@@ -201,9 +205,13 @@ const BasicInformation = (props) => {
               <div className="img_wrap dropzone py-2 border-dashed mb-3 d-flex justify-content-center">
                 {preview ? <img src={preview} alt="" width="250px" /> : <img src={PreviewDefault} alt="" width="250px" />}
               </div>
-              <form className="upload_input">
+              {/* <form className="upload_input">
                 <input type="file" id="image" accept="image/jpeg, image/png" onChange={onLoadPoster} />
-              </form>
+              </form> */}
+
+              <Form className="upload_input">
+                <Input id="image" name="file" accept="image/jpeg, image/png, image/jpg" type="file" onChange={onLoadPoster} />
+              </Form>
             </Col>
           </Row>
         </Card.Body>

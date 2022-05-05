@@ -11,4 +11,5 @@ public interface AdminDAO {
 	public void delete(int id);
 	AdminDTO readAdminByUserId(int user_id);
 	List<AdminDTO> readWaitAdmin();
+	public void updateAdmin(AdminDTO admin);
 }

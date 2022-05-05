@@ -9,6 +9,7 @@ import GlobalFilter from "components/elements/advance-table/GlobalFilter";
 import Pagination from "components/elements/advance-table/Pagination";
 // import Checkbox from "components/elements/advance-table/Checkbox";
 import DotBadge from "components/elements/bootstrap/DotBadge";
+import moment from "moment";
 
 const OngoingProgramTable = ({ table_data }) => {
   // useLayoutEffect(() => {
@@ -53,7 +54,7 @@ const OngoingProgramTable = ({ table_data }) => {
         Cell: ({ value }) => {
           return (
             <Link to="#" className="text-inherit">
-              {value}
+              {moment(value).format("YY-MM-DD HH:mm")}
             </Link>
           );
         },
@@ -65,7 +66,7 @@ const OngoingProgramTable = ({ table_data }) => {
         Cell: ({ value }) => {
           return (
             <Link to="#" className="text-inherit">
-              {value}
+              {moment(value).format("YY-MM-DD HH:mm")}
             </Link>
           );
         },

@@ -10,6 +10,7 @@ import GlobalFilter from "components/elements/advance-table/GlobalFilter";
 import Pagination from "components/elements/advance-table/Pagination";
 import DotBadge from "components/elements/bootstrap/DotBadge";
 import { FormSelect } from "components/elements/form-select/FormSelect";
+import moment from "moment";
 
 const CoursesTable = ({ program_data }) => {
   const [programInfo, setProgramInfo] = useState([]);
@@ -85,27 +86,33 @@ const CoursesTable = ({ program_data }) => {
         },
       },
       {
-        accessor: "start_date",
-        Header: "프로그램 시작일자",
+        accessor: "applystart_date",
+        Header: "프로그램 신청일자",
         Cell: ({ value, row }) => {
           return (
             <div className="d-flex align-items-center">
-              <h5 className="mb-0">{value}</h5>
+              <h5 className="mb-0">
+                {" "}
+                {moment(value).format("YY-MM-DD HH:mm")} ~ {moment(row.original.applyend_date).format("YY-MM-DD HH:mm")}
+              </h5>
             </div>
           );
         },
       },
       {
-        accessor: "end_date",
-        Header: "프로그램 종료일자",
+        accessor: "start_date",
+        Header: "프로그램 진행일자",
         Cell: ({ value, row }) => {
           return (
             <div className="d-flex align-items-center">
-              <h5 className="mb-0">{value}</h5>
+              <h5 className="mb-0">
+                {moment(value).format("YY-MM-DD HH:mm")} ~ {moment(row.original.end_date).format("YY-MM-DD HH:mm")}
+              </h5>
             </div>
           );
         },
       },
+
       {
         accessor: "name",
         Header: "작성자",
@@ -217,6 +224,16 @@ const CoursesTable = ({ program_data }) => {
 
   const readProgram = async () => {
     const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "program");
+    console.log("~~~~~");
+    console.log(response.data);
+
+    // for (var i = 0; i <= response.data.length; i++) {
+    //   response.data[i].applystart_date = moment(response.data[i].applystart_date).format("YY-MM-DD HH:mm");
+    //   response.data[i].applyend_date = moment(response.data[i].applystart_date).format("YY-MM-DD HH:mm");
+    //   response.data[i].start_date = moment(response.data[i].start_date).format("YY-MM-DD HH:mm");
+    //   response.data[i].end_date = moment(response.data[i].end_date).format("YY-MM-DD HH:mm");
+    // }
+
     response.data.map((item, i) =>
       item.status === 0
         ? setWaitProgram(waitProgram.push(item))

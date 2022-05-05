@@ -30,6 +30,8 @@ const MyPageLayout = () => {
     const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "user/loggedinUser/" + id);
     setApplicantInformation(response.data);
     setApplicantInformationLoading(true);
+    console.log("=====");
+    console.log(response.data);
   };
 
   return (

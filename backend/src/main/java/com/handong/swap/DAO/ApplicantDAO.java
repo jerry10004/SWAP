@@ -13,5 +13,6 @@ public interface ApplicantDAO {
 	String updateApplicantStatus(int id,int status);
 	public int applyApplication(ApplicantDTO applicant);
 	List<ApplicantReadDTO> readApplicantByUserId(int programID, int userID);
-	
+	public void updateOngoingStatus(int program_id, int status);
+	public void deleteApplicant(int id);
 }

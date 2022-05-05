@@ -39,6 +39,8 @@ public interface ProgramService {
 	
 	public void updateApplicantNum(int program_id);
 	
+	public void decreaseApplicantNum(int program_id);
+
 	public String readLikedPrograms(int user_id) throws JsonProcessingException;
 
 

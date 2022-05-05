@@ -58,6 +58,28 @@ public class AdminController{
 		}
 	}
 	
+	@RequestMapping(value = "/update", method = RequestMethod.POST, produces = "application/json; charset=utf8")
+	@ResponseBody
+	public void updateAdministrator(HttpServletRequest httpServletRequest) throws ParseException {
+		AdminDTO admin = new AdminDTO();
+		System.out.println("update admin Profile!!!");
+		
+		admin.setId(Integer.parseInt(httpServletRequest.getParameter("id")));
+		
+		admin.setName(httpServletRequest.getParameter("name"));
+		admin.setEmail(httpServletRequest.getParameter("email"));
+		admin.setPhone(httpServletRequest.getParameter("phone"));
+		
+		System.out.println("id: "+ httpServletRequest.getParameter("id"));
+		System.out.println("name: "+ httpServletRequest.getParameter("name"));
+		System.out.println("email: "+ httpServletRequest.getParameter("email"));
+		System.out.println("phone: "+ httpServletRequest.getParameter("phone"));
+
+
+		adminService.update(admin);
+		
+	}
+	
 	@RequestMapping(value = "delete", method = RequestMethod.POST, produces = "application/json; charset=utf8")
 	@ResponseBody
 	public void deleteAdministrator(HttpServletRequest httpServletRequest) {

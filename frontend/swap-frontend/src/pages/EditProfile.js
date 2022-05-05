@@ -35,24 +35,36 @@ const EditProfile = (props) => {
   };
 
   const updateInfo = async () => {
+    console.log("~~~~~");
     console.log(editInfo);
-    var params = new URLSearchParams();
+    var params_user = new URLSearchParams();
+    var params_admin = new URLSearchParams();
 
-    params.append("id", props.userInfo[0].id);
-    params.append("status", props.userInfo[0].status);
-    params.append("name", editInfo.name);
-    params.append("phone", editInfo.phone);
-    params.append("email", editInfo.email);
-    params.append("student_id", editInfo.student_id);
-    params.append("student_class", editInfo.student_class);
-    params.append("department", editInfo.department);
-    params.append("semester", editInfo.semester);
-    params.append("major1", editInfo.major1);
-    params.append("major2", editInfo.major2);
+    params_user.append("id", props.userInfo[0].id);
+    params_user.append("status", props.userInfo[0].status);
+    params_user.append("name", editInfo.name);
+    params_user.append("phone", editInfo.phone);
+    params_user.append("email", editInfo.email);
+    params_user.append("student_id", editInfo.student_id);
+    params_user.append("student_class", editInfo.student_class);
+    params_user.append("department", editInfo.department);
+    params_user.append("semester", editInfo.semester);
+    params_user.append("major1", editInfo.major1);
+    params_user.append("major2", editInfo.major2);
+
+    params_admin.append("id", props.userInfo[0].id);
+    params_admin.append("name", editInfo.name);
+    params_admin.append("phone", editInfo.phone);
+    params_admin.append("email", editInfo.email);
 
     if (window.confirm("프로필 정보를 수정하시겠습니까?") && editInfo) {
-      console.log(editInfo);
-      const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "user/update", params);
+      if (editInfo.status === 0) {
+        const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "user/update", params_user);
+        const response1 = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "admin/update", params_admin);
+      } else {
+        const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "user/update", params_user);
+      }
+
       alert("프로필 정보가 수정 되었습니다.");
       window.location.reload();
     }
