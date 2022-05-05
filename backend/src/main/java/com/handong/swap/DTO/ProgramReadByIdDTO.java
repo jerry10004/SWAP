@@ -6,6 +6,7 @@ public class ProgramReadByIdDTO {
 	String category_name;
 	int quota;
 	int category_id;
+	int status;
 	String information;
 	String start_date;
 	String end_date;
@@ -47,6 +48,12 @@ public class ProgramReadByIdDTO {
 	}
 	public void setManager_contact(String manager_contact) {
 		this.manager_contact = manager_contact;
+	}
+	public Integer getStatus() {
+		return status;
+	}
+	public void setStatus(Integer status) {
+		this.status = status;
 	}
 	public Integer getId() {
 		return id;

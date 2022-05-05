@@ -13,6 +13,10 @@ public interface ApplicantService {
 	public String updateApplicantStatus(int id,int status);
 	public int applyApplication(ApplicantDTO applicant);
 	public String readApplicantByUserId(int programID, int userID) throws JsonProcessingException;
+	public void updateOngoingStatus(int program_id, int status);
+	public void deleteApplicant(int id);
+
+
 
 
 

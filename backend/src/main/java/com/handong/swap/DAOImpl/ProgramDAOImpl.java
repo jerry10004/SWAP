@@ -115,5 +115,10 @@ public class ProgramDAOImpl implements ProgramDAO {
 	    sqlSession.selectOne("Program.updateDelDate", id);
 	    return 1;
 	}
+	
+	@Override
+	public void decreaseApplicantNum(int program_id) {
+		 sqlSession.update("Program.decreaseApplicantNum",program_id);
+	}
 
 }

@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.handong.swap.Service.ApplicantService;
 import com.handong.swap.Service.ProgramService;
 import com.mysql.cj.xdevapi.JsonArray;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -43,6 +44,8 @@ public class ProgramController {
 	
 	@Autowired
 	ProgramService programService;
+	@Autowired
+	ApplicantService applicantService;
 	String applyStartDate;
 	String applyEndDate;
 	String startDate;
@@ -50,6 +53,8 @@ public class ProgramController {
 	String status;
 	String apply_status;
 	String programId;
+	String program_status;
+	String applicant_status;
 	
 	@RequestMapping(value = "", method = RequestMethod.GET, produces = "application/json; charset=utf8")
 	@ResponseBody
@@ -88,13 +93,13 @@ public class ProgramController {
 			            else if(currentDate.compareTo(startDate)>0 && currentDate.compareTo(endDate)<0) {//진행
 							if(status.equals("1") == false) {
 								programService.updateStatus(Integer.parseInt(programId), 1);
+								applicantService.updateOngoingStatus(Integer.parseInt(programId), 3);
 								// 상태변경
 							}
 			            }
 			            else if(currentDate.compareTo(endDate)>0) {//종료
 							if(status.equals("2") == false) {
 								programService.updateStatus(Integer.parseInt(programId), 2);
-								//학생들 상태 수료로 변경
 							}		            	
 			            }
 			            
@@ -133,8 +138,6 @@ public class ProgramController {
 	public String readprogramByCategory(HttpServletRequest httpServletRequest) throws IOException, ParseException {
 		Integer category_id = Integer.parseInt(httpServletRequest.getParameter("category_id"));
 		String result = programService.readByCategory(category_id);	
-		System.out.println("=====카테고리별 프로그램 읽기ㅣ======");
-		System.out.println(result);
 	    return result;
 	}
 	
@@ -143,6 +146,47 @@ public class ProgramController {
 	public String readprogramByStatusByUser(HttpServletRequest httpServletRequest) throws IOException, ParseException {
 		Integer user_id = Integer.parseInt(httpServletRequest.getParameter("user_id"));
 		Integer status = Integer.parseInt(httpServletRequest.getParameter("status"));
+		
+		//프로그램이 진행이고 applicant 상태가 3이 아니면 바꿔라.
+		
+		
+		String applicant_result = programService.readByStatusByUser(status, user_id);		
+		
+		LocalDateTime now = LocalDateTime.now();
+		String currentDate = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss (EE)",Locale.KOREA));
+		
+		JSONParser parser = new JSONParser();
+		Object obj;
+		try {
+			obj = parser.parse(applicant_result);
+			JSONArray jsonArr = (JSONArray) obj;
+
+			if(jsonArr.size()>0) {
+				for(int i=0; i<jsonArr.size(); i++) {
+					JSONObject jsonObj = (JSONObject) jsonArr.get(i);
+					
+					startDate = (String)jsonObj.get("start_date");
+					endDate = (String)jsonObj.get("end_date");
+					program_status =  jsonObj.get("program_Status").toString();
+					programId = jsonObj.get("program_id").toString();
+					applicant_status = jsonObj.get("status").toString();
+					 
+			             if(currentDate.compareTo(startDate)>0 && currentDate.compareTo(endDate)<0) {//진행
+							if(applicant_status.equals("3") == false) {
+								applicantService.updateOngoingStatus(Integer.parseInt(programId), 3);
+								// 상태변경
+							}
+			             }  
+					
+				}
+			}
+		} catch (org.json.simple.parser.ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
 		String result = programService.readByStatusByUser(status, user_id);		
 	    return result;
 	}
@@ -151,7 +195,6 @@ public class ProgramController {
 	@ResponseBody
 	public String readProgramInformationByProgramId(@PathVariable int id) throws IOException, ParseException {
 		String result = programService.readProgramInformationByProgramId(id);
-		System.out.println("result is "+result);
 		return result;
 	}
 	
@@ -159,17 +202,14 @@ public class ProgramController {
 	@ResponseBody
 	public String readProgramFileByProgramId(@PathVariable int id) throws IOException, ParseException {
 		String result = programService.readProgramFileByProgramId(id);
-		System.out.println("readProgramFileByProgramId result is "+result);
 		return result;
 	}
 	
 	@RequestMapping(value = "/name", method = RequestMethod.POST, produces = "application/json; charset=utf8")
 	@ResponseBody
 	public String readProgramName(HttpServletRequest httpServletRequest) throws IOException, ParseException {
-		System.out.println("프로그램 이름 읽기");
 		Integer id = Integer.parseInt(httpServletRequest.getParameter("id"));
 		String result = programService.readProgramName(id);
-		System.out.println("result is "+result);
 		return result;
 	}
 	
@@ -178,9 +218,7 @@ public class ProgramController {
 	@ResponseBody
 	public int addProgram(HttpServletRequest httpServletRequest) throws ParseException {
 		ProgramDTO program = new ProgramDTO();
-		
-		System.out.println("프로그램 추가하기 -----"+httpServletRequest.getParameter("application_form"));
-		
+				
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		Date start_date = (Date) formatter.parse(httpServletRequest.getParameter("start_date"));
 		Date end_date = (Date) formatter.parse(httpServletRequest.getParameter("end_date"));
@@ -293,7 +331,6 @@ public class ProgramController {
 	    programFiles.setFile_type(1);
 	    
 	    int result = programService.insertFile(programFiles);
-	    System.out.println("!!!!!!!!!!!!!!!!!!!파일 업로드 성공!!!!!!!!!!!!!!!!!!!!");
 	    
 	    
 		return "uploadEnd";
@@ -308,8 +345,6 @@ public class ProgramController {
 		String[] ids = param_ids[0].split(",");
 		
 		for (int i = 0; i < ids.length; i++) {
-			System.out.println("프로그램 삭제 시도");
-			System.out.println("삭제 하려는 아이디 번호: "+ids[i]);
 			result = programService.deleteConfirm(Integer.parseInt(ids[i]));
 			if(result == 0) return result;
 		}
@@ -326,8 +361,6 @@ public class ProgramController {
 		String[] ids = param_ids[0].split(",");
 		
 		for (int i = 0; i < ids.length; i++) {
-			System.out.println("삭제 시도");
-			System.out.println("삭제 하려는 아이디 번호: "+ids[i]);
 			programService.delete(Integer.parseInt(ids[i]));
 		}
 	}
@@ -336,7 +369,6 @@ public class ProgramController {
 	@ResponseBody
 	public void editProgram(HttpServletRequest httpServletRequest) throws ParseException {
 		ProgramDTO program = new ProgramDTO();
-		System.out.println("edit!!!!!!!!");
 		
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		Date start_date = (Date) formatter.parse(httpServletRequest.getParameter("start_date"));

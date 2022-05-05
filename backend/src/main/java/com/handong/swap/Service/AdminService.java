@@ -9,4 +9,5 @@ public interface AdminService {
 	public String read() throws JsonProcessingException;
 	public String readWaitAdmin() throws JsonProcessingException;
 	public void delete(int id);
+	public void update(AdminDTO admin);
 }

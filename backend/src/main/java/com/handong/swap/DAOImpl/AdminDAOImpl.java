@@ -45,4 +45,9 @@ public class AdminDAOImpl implements AdminDAO {
 		return sqlSession.selectList("Admin.readWaitAdmin");
 	}
 
+	@Override
+	public void updateAdmin(AdminDTO admin) {
+		 sqlSession.update("Admin.updateAdmin", admin);
+	}
+
 }

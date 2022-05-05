@@ -117,6 +117,11 @@ public class ProgramServiceImpl implements ProgramService{
 		return jsonString;
 	}
 
+	@Override
+	public void decreaseApplicantNum(int program_id) {
+		programDAO.decreaseApplicantNum(program_id);
+	}
+
 	
 
 }

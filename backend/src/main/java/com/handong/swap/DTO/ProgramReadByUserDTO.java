@@ -9,10 +9,12 @@ import com.google.protobuf.TextFormat.ParseException;
 public class ProgramReadByUserDTO {
 	int applicant_id;
 	int program_id;
+	int program_status;
 	String program_name;
 	String start_date;
 	String end_date;
 	String status_name;
+	int status;
 	public int getApplicant_id() {
 		return applicant_id;
 	}
@@ -24,6 +26,18 @@ public class ProgramReadByUserDTO {
 	}
 	public void setProgram_id(int program_id) {
 		this.program_id = program_id;
+	}
+	public int getStatus() {
+		return status;
+	}
+	public void setStatus(int status) {
+		this.status = status;
+	}
+	public int getProgram_Status() {
+		return program_status;
+	}
+	public void setProgram_Status(int program_status) {
+		this.program_status = program_status;
 	}
 	public String getProgram_name() {
 		return program_name;

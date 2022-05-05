@@ -49,7 +49,7 @@
    	
    	<update id="updateUserInfo" parameterType="User">
 		Update User
-		set name = #{name}, email=#{email}, student_id = #{student_id}, phone=#{phone},department = #{department}, student_class= #{student_class}, semester= #{semester}, major1= #{major1}, major2=#{major2}
+		set edit_date=now(), name = #{name}, email=#{email}, student_id = #{student_id}, phone=#{phone},department = #{department}, student_class= #{student_class}, semester= #{semester}, major1= #{major1}, major2=#{major2}
 		where id = #{id};
 	</update>
 </mapper>

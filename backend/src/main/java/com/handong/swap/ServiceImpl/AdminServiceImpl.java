@@ -49,6 +49,11 @@ public class AdminServiceImpl implements AdminService{
 		String jsonString = mapper.writeValueAsString(adminDATA);
 		return jsonString;
 	}
+
+	@Override
+	public void update(AdminDTO admin) {
+		adminDAO.updateAdmin(admin);
+	}
 	
 	
 	

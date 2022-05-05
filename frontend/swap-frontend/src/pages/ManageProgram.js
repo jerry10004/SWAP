@@ -59,17 +59,17 @@ const AllCourses = () => {
                         </Nav.Item>
                         <Nav.Item>
                           <Nav.Link eventKey="waiting" className="mb-sm-3 mb-md-0">
-                            대기
+                            프로그램 대기
                           </Nav.Link>
                         </Nav.Item>
                         <Nav.Item>
                           <Nav.Link eventKey="progress" className="mb-sm-3 mb-md-0">
-                            진행
+                            프로그램 진행
                           </Nav.Link>
                         </Nav.Item>
                         <Nav.Item>
                           <Nav.Link eventKey="end" className="mb-sm-3 mb-md-0">
-                            종료
+                            프로그램 종료
                           </Nav.Link>
                         </Nav.Item>
                       </Nav>

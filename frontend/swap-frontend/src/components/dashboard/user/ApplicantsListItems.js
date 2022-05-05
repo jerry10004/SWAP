@@ -14,7 +14,8 @@ const StudentsListItems = (props) => {
   const [applicantInformationLoading, setApplicantInformationLoading] = useState(null);
   const [program_id, setProgram_id] = useState();
   const [applicant_id, setApplicant_id] = useState([]);
-  const [applicant_status, setApplicant_status] = useState("1");
+  const [program_status, setProgram_status] = useState();
+  const [applicant_status, setApplicant_status] = useState("0");
 
   const columns = useMemo(
     () => [
@@ -64,8 +65,22 @@ const StudentsListItems = (props) => {
         Cell: ({ value, row }) => {
           return (
             <div className="d-flex align-items-center">
-              <DotBadge bg={row.original.status === 2 ? "warning" : "success"}></DotBadge>
-              {value === 2 ? "참여보류" : "참여승인"}
+              <DotBadge
+                bg={
+                  row.original.status === 0
+                    ? "warning"
+                    : row.original.status === 1
+                    ? "success"
+                    : row.original.status === 2
+                    ? "danger"
+                    : row.original.status === 3
+                    ? "secondary"
+                    : row.original.status === 4
+                    ? "primary"
+                    : ""
+                }
+              ></DotBadge>
+              {value === 0 ? "참여보류" : value === 1 ? "참여승인" : value === 2 ? "참여불가" : value === 3 ? "미수료" : value === 4 ? "수료" : ""}
             </div>
           );
         },
@@ -86,6 +101,7 @@ const StudentsListItems = (props) => {
 
     params.append("id", updateApplicantId);
     params.append("status", updateApplicantStatus);
+    params.append("program_id", program_id);
 
     if (updateApplicantId != "") {
       if (window.confirm("사용자 상태를 수정하시겠습니까?")) {
@@ -171,9 +187,17 @@ const StudentsListItems = (props) => {
 
   useLayoutEffect(() => {
     console.log(props.param4.id);
+    readProgramStatus(props.param4.id);
     readApplicantInformation(props.param4.id);
     setProgram_id(props.param4.id);
+    console.log("%%%%%%%%%%%");
+    console.log(props.param4.id);
   }, []);
+
+  const readProgramStatus = async (id) => {
+    const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "program/information/" + id);
+    setProgram_status(response.data[0].status);
+  };
 
   const readApplicantInformation = async (id) => {
     setApplicantInformationLoading(false);
@@ -193,20 +217,34 @@ const StudentsListItems = (props) => {
           </Col>
           <Col xl={3} lg={12} md={3} sm={12} />
           <Col xl={2} lg={12} md={3} sm={12} className="mb-lg-0 mb-2 px-3 py-4 ">
-            <Form.Select onChange={handleChangeSelect}>
-              <option value="1">참여승인</option>
-              <option value="2">승인보류</option>
-            </Form.Select>
+            {program_status === 0 ? (
+              <Form.Select onChange={handleChangeSelect}>
+                <option value="0">참여보류</option>
+                <option value="1">참여승인</option>
+                <option value="2">참여불가</option>
+              </Form.Select>
+            ) : program_status === 2 ? (
+              <Form.Select onChange={handleChangeSelect}>
+                <option value="3">미수료</option>
+                <option value="4">수료</option>
+              </Form.Select>
+            ) : (
+              ""
+            )}
           </Col>
           <Col xl={1} lg={12} md={3} sm={12} className="mb-lg-0 mb-2 py-4 d-flex justify-content-evenly">
-            <Button
-              variant="primary"
-              onClick={() => {
-                update(selectedFlatRows);
-              }}
-            >
-              저장
-            </Button>
+            {program_status !== 1 ? (
+              <Button
+                variant="primary"
+                onClick={() => {
+                  update(selectedFlatRows);
+                }}
+              >
+                저장
+              </Button>
+            ) : (
+              ""
+            )}
           </Col>
           {/* <Form.Group className="mb-3 w-26 ">
             <FormSelect options={templateOptions} id="application-template" name="application_form" onChange={handleChange} placeholder="신청서 템플릿 선택" />

@@ -56,8 +56,14 @@ public class ApplicantController {
 		String[] param_status = httpServletRequest.getParameterValues("status");
 		String[] status = param_status[0].split(",");
 		
+		int program_id = Integer.parseInt(httpServletRequest.getParameter("program_id"));
+		
 		for (int i = 0; i < ids.length; i++) {
 			applicantService.updateApplicantStatus(Integer.parseInt(ids[i]),Integer.parseInt(status[i]));
+			if(Integer.parseInt(status[i]) == 2) {
+				System.out.println("here! program id is "+program_id);
+				programService.decreaseApplicantNum(program_id);
+			}
 		}
 		
 	}
@@ -93,6 +99,18 @@ public class ApplicantController {
 		String result = applicantService.readApplicantByUserId(programID, userID);
 		System.out.println("result is "+result);
 		return result;
+	}
+	
+	@RequestMapping(value = "/delete", method = RequestMethod.POST, produces = "application/json; charset=utf8")
+	@ResponseBody
+	public void deleteApplicant(HttpServletRequest httpServletRequest) throws ParseException {
+		
+		int program_id = Integer.parseInt(httpServletRequest.getParameter("program_id"));
+		int applicant_id = Integer.parseInt(httpServletRequest.getParameter("applicant_id"));	
+		
+		programService.decreaseApplicantNum(program_id);
+		applicantService.deleteApplicant(applicant_id);
+		
 	}
 	
 	

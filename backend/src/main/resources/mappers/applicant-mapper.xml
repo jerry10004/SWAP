@@ -18,6 +18,12 @@
    		WHERE id=#{id}
    	</update>
    	
+   		<update id="updateOngoingStatus" parameterType="hashmap">
+   		UPDATE Applicant
+		SET status = 3
+		WHERE program_id=#{program_id}
+   	</update>
+   	
    	<insert id = "applyApplication" parameterType="Applicant">	
    		INSERT INTO Applicant (user_id, program_id, application_form)
 		VALUES (#{user_id}, #{program_id}, #{application_form})
@@ -31,6 +37,13 @@
 		where U.deldate is null and A.program_id  = #{programID} and A.user_id = #{userID}
 		order by U.name
    	</select>
+   	
+   	<delete id="deleteApplicant" parameterType="Integer">
+   		DELETE FROM Applicant WHERE id=#{id};
+   	</delete>
+ 
+   	
+   	
    	
    	
 </mapper>

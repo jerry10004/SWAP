@@ -26,5 +26,10 @@
 	   	delete from Admin
 	   	where id = #{id}
    	</delete>
+   	<update id="updateAdmin" parameterType="Admin">
+		Update Admin
+		set name = #{name}, email=#{email}, phone=#{phone}, edit_date=now()
+		where user_id = #{id};
+	</update>
 
 </mapper>

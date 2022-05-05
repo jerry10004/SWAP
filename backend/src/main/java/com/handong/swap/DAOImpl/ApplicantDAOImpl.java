@@ -48,6 +48,22 @@ public class ApplicantDAOImpl implements ApplicantDAO {
 	    param.put("userID", userID);
 		return sqlSession.selectList("Applicant.readApplicantByUserId",param);
 	}
+
+	@Override
+	public void updateOngoingStatus(int program_id, int status) {
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("program_id", program_id);
+		param.put("status", status);
+	    sqlSession.update("Applicant.updateOngoingStatus", param);
+		
+	}
+
+	@Override
+	public void deleteApplicant(int id) {
+		sqlSession.delete("Applicant.deleteApplicant", id);
+	}
+
+	
 	
 
 
