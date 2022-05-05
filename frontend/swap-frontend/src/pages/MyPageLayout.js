@@ -9,7 +9,7 @@ import { Container, Row, Col, Nav, Navbar, Card, Tab } from "react-bootstrap";
 import ProfileCover from "components/marketing/common/headers/ProfileCover";
 import EditProfile from "../pages/EditProfile";
 import MyPage from "../pages/MyPage";
-
+import Bookmark from "../pages/Bookmark";
 // import media files
 import NavbarDefault from "layouts/marketing/navbars/NavbarDefault";
 import Footer from "layouts/marketing/Footer";
@@ -72,7 +72,7 @@ const MyPageLayout = () => {
                         <MyPage></MyPage>
                       </Tab.Pane>
                       <Tab.Pane eventKey="liked_programs">
-                        <MyPage></MyPage>
+                        <Bookmark></Bookmark>
                       </Tab.Pane>
                       <Tab.Pane eventKey="profile">
                         <EditProfile userInfo={applicantInformation}></EditProfile>

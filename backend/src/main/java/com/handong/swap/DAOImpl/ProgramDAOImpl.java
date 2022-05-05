@@ -121,4 +121,8 @@ public class ProgramDAOImpl implements ProgramDAO {
 		 sqlSession.update("Program.decreaseApplicantNum",program_id);
 	}
 
+	public List<ProgramReadDTO> readLikedPrograms(int user_id){
+		return sqlSession.selectList("Program.readLikedPrograms", user_id);
+	}
+
 }

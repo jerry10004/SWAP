@@ -25,6 +25,9 @@ const Program = () => {
   const [quotaLeft, setquotaLeft] = useState(true);
   const [dday, setDday] = useState();
   const [applicantData, setapplicantData] = useState();
+  const [toggleBookmark, setToggleBookmark] = useState(false);
+  const [likeData, setLikeData] = useState();
+  const [userInfo, setUserInfo] = useState();
 
   const id = useParams();
 
@@ -36,6 +39,8 @@ const Program = () => {
   useLayoutEffect(() => {
     readProgramInformation();
     readApplicantData(programID, ID);
+    readLike(ID, programID);
+    readApplicantInformation(ID);
   }, []);
 
   const readProgramInformation = async () => {
@@ -96,6 +101,52 @@ const Program = () => {
     }
   };
 
+  const readLike = async (userID, programID) => {
+    var params = new URLSearchParams();
+    params.append("user_id", userID);
+    params.append("program_id", programID);
+    const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "like/read", params);
+    console.log("응답: " + response.data);
+    setLikeData(response.data);
+
+    if (response.data.length > 0) {
+      setToggleBookmark(true);
+    }
+  };
+
+  const deleteLike = async (userID, programID) => {
+    setToggleBookmark(false);
+    var params = new URLSearchParams();
+    params.append("user_id", userID);
+    params.append("program_id", programID);
+    const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "like/delete", params);
+  };
+
+  const addLike = async (userID, programID) => {
+    setToggleBookmark(true);
+    var params = new URLSearchParams();
+    params.append("user_id", userID);
+    params.append("program_id", programID);
+    const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "like/add", params);
+  };
+
+  const readApplicantInformation = async (id) => {
+    const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "user/loggedinUser/" + id);
+    setUserInfo(response.data[0]);
+  };
+
+  const onToggle = (e) => {
+    if (userInfo.status === 0) {
+      alert("관리자는 찜 기능을 사용하실 수 없습니다. ");
+    } else {
+      if (toggleBookmark) {
+        deleteLike(ID, programID);
+      } else {
+        addLike(ID, programID);
+      }
+    }
+  };
+
   return (
     <Fragment>
       <NavbarDefault login />
@@ -120,10 +171,10 @@ const Program = () => {
                     </Badge>
                     <div className="d-flex justify-content-between align-items-center">
                       <h1 className="fw-semi-bold mb-2">{programInfo.program_name}</h1>
-                      <OverlayTrigger key="top" placement="top" overlay={<Tooltip id="tooltip-top">Add to Bookmarks</Tooltip>}>
-                        <Link to="#">
-                          <i className="fe fe-bookmark fs-3 text-inherit"></i>
-                        </Link>
+                      <OverlayTrigger key="top" placement="top" overlay={<Tooltip id="tooltip-top">프로그램 찜 하기</Tooltip>}>
+                        <Button onClick={onToggle} type="button" className="p-0 bg-transparent border-0 text-primary fs-3 mb-3 ">
+                          {toggleBookmark ? <i class="fas fa-bookmark"></i> : <i class="far fa-bookmark"></i>}
+                        </Button>
                       </OverlayTrigger>
                     </div>
                     <div className="d-flex justify-content-between">

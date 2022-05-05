@@ -24,5 +24,5 @@ public interface ProgramDAO {
 	public void updateApplicantNum(int program_id);
 	public int deleteConfirm(int id);
 	public void decreaseApplicantNum(int program_id);
-
+	List<ProgramReadDTO> readLikedPrograms(int user_id);
 }
