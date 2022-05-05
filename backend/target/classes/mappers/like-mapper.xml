@@ -21,6 +21,7 @@
 	<select id="readAllLike" resultType="Like" parameterType="hashmap">
    		SELECT user_id, program_id
    		from swap.Bookmark 
+   		where user_id = #{user_id}
    	</select>
    	
 

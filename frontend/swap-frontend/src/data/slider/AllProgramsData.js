@@ -23,7 +23,6 @@ const AllProgramsData = (props) => {
   var ID = parseInt(window.sessionStorage.getItem("id"));
 
   useLayoutEffect(() => {
-    readAllLike(ID);
     readApplicantInformation(ID);
   }, []);
 
@@ -83,6 +82,9 @@ const AllProgramsData = (props) => {
   const readApplicantInformation = async (id) => {
     const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "user/loggedinUser/" + id);
     setUserInfo(response.data[0]);
+    if (response.data[0].status === 1) {
+      readAllLike(ID);
+    }
   };
 
   const onToggle = (programID) => {
