@@ -144,9 +144,13 @@ const Application = () => {
                         <Col sm={12} md={12} className="mb-4 ">
                           <Form.Group controlId="nameoncard">
                             <Form.Label>신청자 정보</Form.Label>
-                            <div>
-                              {applicantInformation[0].name}/ {applicantInformation[0].student_id} / {applicantInformation[0].department}/{applicantInformation[0].major1}
-                            </div>
+                            {applicantInformation[0].status === 0 ? (
+                              <div>{applicantInformation[0].name}</div>
+                            ) : (
+                              <div>
+                                {applicantInformation[0].name}/ {applicantInformation[0].student_id} / {applicantInformation[0].department}/{applicantInformation[0].major1}
+                              </div>
+                            )}
                           </Form.Group>
                         </Col>
                       </Form>

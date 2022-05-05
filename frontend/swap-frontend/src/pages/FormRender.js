@@ -17,14 +17,18 @@ const FormRender = (props) => {
   console.log("props id", props.param.programid, props.param.userid, props.param.daysleft, props.param.quotaleft);
   const [test, setTest] = useState(0);
   const [originalFormData, setoriginalFormData] = useState([]);
+  const [isformRender, setisFormRender] = useState(false);
   const [readyFormContent, setReadyFormContent] = useState([]);
-  const [applicantData, setapplicantData] = useState();
+  const [applicantData, setapplicantData] = useState([]);
+  const [canApply, setcanApply] = useState(true);
   const [applicantInformation, setApplicantInformation] = useState(null);
+
   var programID = parseInt(props.param.programid);
   var userID = parseInt(props.param.userid);
   var status = parseInt(props.param.Status);
   var formRenderInstance = "";
   var formInformation = "";
+  var Componentvar = 0;
 
   useLayoutEffect(() => {
     readFormData(programID);
@@ -32,17 +36,17 @@ const FormRender = (props) => {
     readApplicantInformation(userID);
   }, []);
 
-  var params = new URLSearchParams();
-
   useEffect(() => {
     componentDidMount();
-  }, [originalFormData, applicantData]);
+  }, [originalFormData]);
+
+  var params = new URLSearchParams();
 
   const componentDidMount = () => {
+    console.log(">>>>>", originalFormData);
     const getUserDataBtn = document.getElementById("get-user-data");
     const fbRender = document.getElementById("fb-render");
     const formData = JSON.stringify(originalFormData);
-
     formRenderInstance = $(fbRender).formRender({ formData });
 
     getUserDataBtn.addEventListener(
@@ -53,19 +57,28 @@ const FormRender = (props) => {
       },
       false
     );
+    console.log("component");
   };
 
   const readFormData = async (id) => {
     const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "application/readApplicationForm/" + id);
+    console.log(response.data[0]);
     var json_total = response.data[0].content;
     var json_sub = json_total.slice(1, json_total.length - 1);
     var arr = JSON.parse("[" + json_sub + "]");
     setoriginalFormData(arr);
+    setisFormRender(true);
+    //componentDidMount();
   };
 
   const readApplicantData = async (programID, userID) => {
     const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "applicant/" + programID + "/applicants/" + userID);
-    setapplicantData(response.data);
+    console.log(response.data);
+    if (response.data.length === 0) {
+      setcanApply(true);
+    } else {
+      setcanApply(false);
+    }
   };
 
   const readApplicantInformation = async (id) => {
@@ -74,31 +87,32 @@ const FormRender = (props) => {
     console.log("사용자 정보: ", response.data);
   };
 
+  const displayAlert = async (message) => {
+    alert(message);
+  };
+
   const addFormData = async () => {
+    console.log(props.param.count);
     var isFilled = true;
     var params = new URLSearchParams();
     params.append("program_id", programID);
     params.append("user_id", userID);
     params.append("content", JSON.stringify(formInformation));
-
-    console.log("*******", formInformation);
-    console.log(status);
-
-    if (status === 0 && props.param.count === 0) {
-      props.param.count++;
-      alert("관리자는 프로그램을 신청하실 수 없습니다.");
-      navigate("/main");
-      props.param.count++;
-    } else {
-      if (applicantData.length > 0 && props.param.count === 0) {
-        alert("이미 신청된 프로그램입니다.");
+    if (props.param.count === 0) {
+      if (status === 0) {
+        props.param.count = props.param.count + 1;
+        displayAlert("관리자는 프로그램을 신청하실 수 없습니다.");
         navigate("/main");
-        props.param.count++;
       } else {
+        // if (canApply === false && props.param.count === 0) {
+        //   displayAlert("이미 신청된 프로그램입니다.");
+        //   navigate("/main");
+        //   props.param.count++;
+        // } else {
         for (var i = 0; i < formInformation.length; i++) {
           if (formInformation[i].userData[0] === "" && formInformation[i].required === true && props.param.count === 0) {
             isFilled = false;
-            alert("필수 항목을 입력하세요! : " + formInformation[i].label);
+            displayAlert("필수 항목을 입력하세요! : " + formInformation[i].label);
             break;
           }
         }
@@ -106,24 +120,32 @@ const FormRender = (props) => {
         if (isFilled && props.param.count === 0) {
           if (!formInformation.length > 0 && props.param.count === 0) {
             const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "applicant/apply", params);
-            alert(" 프로그램이 신청 되었습니다.");
+            displayAlert(" 프로그램이 신청 되었습니다.");
             navigate("/mypage");
             props.param.count = props.param.count + 1;
           }
         }
+        // }
       }
     }
   };
 
   return (
-    <div>
-      <form id="fb-render"></form>
-      <div className="d-flex justify-content-end">
-        <Button className="btn btn-success" id="get-user-data">
-          신청하기
-        </Button>
+    <>
+      {/* {isformRender ? ( */}
+      <div>
+        <form id="fb-render"></form>
+        <div className="d-flex justify-content-end">
+          <Button className="btn btn-success" id="get-user-data">
+            신청하기
+          </Button>
+        </div>
       </div>
-    </div>
+      {/*
+      ) : (
+        <>""</>
+      )} */}
+    </>
   );
   // }
 };
