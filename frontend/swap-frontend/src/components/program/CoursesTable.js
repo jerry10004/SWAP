@@ -34,27 +34,7 @@ const CoursesTable = ({ program_data }) => {
 
   useLayoutEffect(() => {
     readProgram();
-    // readCategory();
   }, []);
-
-  // const readCategory = async () => {
-  //   const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "category");
-  //   setCategory(response.data);
-  //   console.log(response.data);
-
-  //   if (response.data.length > 0 && response.data[0].id != null) {
-  //     response.data.map((item) => {
-  //       setCategory((oldArray) => [
-  //         ...oldArray,
-  //         {
-  //           value: item.category_name,
-  //           label: item.category_name,
-  //         },
-  //       ]);
-  //       console.log(item);
-  //     });
-  //   }
-  // };
 
   const columns = useMemo(
     () => [
@@ -126,7 +106,7 @@ const CoursesTable = ({ program_data }) => {
       },
       {
         accessor: "status",
-        Header: "상태",
+        Header: "프로그램 상태",
 
         Cell: ({ value, row }) => {
           if (value === 0) {
@@ -205,11 +185,9 @@ const CoursesTable = ({ program_data }) => {
 
   const getFilterTerm = (event) => {
     let filterTerm = event.target.value;
-    console.log("filter", filterTerm);
     // programList.map((item) => {
     if (filterTerm !== "") {
       const newProjectsList = programList.filter((project) => {
-        console.log("project", project.category_name);
         if (project.category_name === filterTerm) return project;
       });
       setProgramInfo(newProjectsList);
@@ -224,15 +202,6 @@ const CoursesTable = ({ program_data }) => {
 
   const readProgram = async () => {
     const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "program");
-    console.log("~~~~~");
-    console.log(response.data);
-
-    // for (var i = 0; i <= response.data.length; i++) {
-    //   response.data[i].applystart_date = moment(response.data[i].applystart_date).format("YY-MM-DD HH:mm");
-    //   response.data[i].applyend_date = moment(response.data[i].applystart_date).format("YY-MM-DD HH:mm");
-    //   response.data[i].start_date = moment(response.data[i].start_date).format("YY-MM-DD HH:mm");
-    //   response.data[i].end_date = moment(response.data[i].end_date).format("YY-MM-DD HH:mm");
-    // }
 
     response.data.map((item, i) =>
       item.status === 0
@@ -266,7 +235,6 @@ const CoursesTable = ({ program_data }) => {
 
     if (window.confirm("삭제 하시겠습니까?")) {
       const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "program/deleteConfirm", params);
-      console.log("delete result: ", response.data);
       if (response.data === 0) {
         if (window.confirm("현재 진행중인 프로그램 입니다. 그래도 삭제 하시겠습니까?")) {
           const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "program/delete", params);

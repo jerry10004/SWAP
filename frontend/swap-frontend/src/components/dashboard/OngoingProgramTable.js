@@ -12,21 +12,19 @@ import DotBadge from "components/elements/bootstrap/DotBadge";
 import moment from "moment";
 
 const OngoingProgramTable = ({ table_data }) => {
-  // useLayoutEffect(() => {
-
-  // }, []);
+  var index;
 
   const columns = useMemo(
     () => [
       { accessor: "_id", Header: "ID", show: false },
       {
-        accessor: "applicant_id",
         Header: "번호",
-        Cell: ({ value }) => {
+        Cell: ({ value, row }) => {
+          index = Number(row.id) + 1;
           return (
             <h5 className="mb-0">
               <Link to="#" className="text-inherit">
-                {value}
+                {index}
               </Link>
             </h5>
           );

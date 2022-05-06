@@ -22,7 +22,7 @@ const UsersListItems = () => {
         Cell: ({ value, row }) => {
           return (
             <div className="d-flex align-items-center">
-              <DotBadge bg={row.original.status === 0 ? "warning" : row.original.status === 1 ? "success" : "secondary"}></DotBadge>
+              <DotBadge bg={row.original.status === 0 ? "success" : row.original.status === 1 ? "warning" : "secondary"}></DotBadge>
               <h5 className="mb-0">{value}</h5>
             </div>
           );

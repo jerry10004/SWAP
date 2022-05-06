@@ -55,7 +55,6 @@ const ProgramInformation = (props) => {
       }
     }
     setFilePath(filePathList);
-    console.log(response.data);
     seteditInfo(response.data[0]);
     setStart_date(response.data[0].start_date);
     setEnd_date(response.data[0].end_date);
@@ -318,7 +317,7 @@ const ProgramInformation = (props) => {
 
                           return (
                             <>
-                              <a href={process.env.REACT_APP_RESTAPI_HOST + "resources/upload/" + item} download target="_blank">
+                              <a href={process.env.REACT_APP_RESTAPI_HOST + "resources/upload/" + item} download target="_blank" rel="noreferrer">
                                 {name[2]}
                               </a>
                               <br />
@@ -335,11 +334,15 @@ const ProgramInformation = (props) => {
                 )}
               </Col>
             </Row>
-            <div className="d-flex justify-content-end me-4">
-              <Button variant="primary" onClick={edit}>
-                수정
-              </Button>
-            </div>
+            {programInformation[0].status === 0 && programInformation[0].applicants_num === 0 ? (
+              <div className="d-flex justify-content-end me-4">
+                <Button variant="primary" onClick={edit}>
+                  수정
+                </Button>
+              </div>
+            ) : (
+              ""
+            )}
           </>
         ) : (
           <>

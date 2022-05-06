@@ -35,7 +35,7 @@ const AdminProgramDetail = () => {
 
     if (id["id"] != null) {
       params.append("id", id["id"]);
-      const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "program/name", params);
+      const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "program/information/" + id["id"]);
       setProgramName(response.data[0].program_name);
       setProgramNameLoading(true);
     }

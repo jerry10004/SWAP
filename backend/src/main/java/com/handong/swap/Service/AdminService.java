@@ -2,6 +2,7 @@ package com.handong.swap.Service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.handong.swap.DTO.AdminDTO;
+import com.handong.swap.DTO.UserDTO;
 
 public interface AdminService {
 	

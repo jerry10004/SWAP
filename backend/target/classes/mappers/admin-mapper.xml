@@ -13,7 +13,7 @@
 		from Admin AS A
 		JOIN User AS U
 		ON U.id = A.user_id
-		WHERE U.status = 1
+		WHERE U.status = 0 AND U.id = A.user_id AND U.deldate is null
 		ORDER BY A.regdate desc;
    	</select>
    		<select id="readWaitAdmin" resultType="Admin">

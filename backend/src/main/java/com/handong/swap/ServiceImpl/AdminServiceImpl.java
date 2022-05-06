@@ -54,7 +54,5 @@ public class AdminServiceImpl implements AdminService{
 	public void update(AdminDTO admin) {
 		adminDAO.updateAdmin(admin);
 	}
-	
-	
-	
+
 }

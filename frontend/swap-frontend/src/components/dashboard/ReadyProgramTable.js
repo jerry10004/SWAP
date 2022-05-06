@@ -13,7 +13,7 @@ import moment from "moment";
 import axios from "axios";
 
 const ReadyProgramTable = ({ table_data }) => {
-  useLayoutEffect(() => {}, []);
+  var index;
 
   const cancelApply = async (applicant_id, program_id) => {
     var params = new URLSearchParams();
@@ -31,13 +31,13 @@ const ReadyProgramTable = ({ table_data }) => {
     () => [
       { accessor: "_id", Header: "ID", show: false },
       {
-        accessor: "applicant_id",
         Header: "번호",
-        Cell: ({ value }) => {
+        Cell: ({ value, row }) => {
+          index = Number(row.id) + 1;
           return (
             <h5 className="mb-0">
               <Link to="#" className="text-inherit">
-                {value}
+                {index}
               </Link>
             </h5>
           );

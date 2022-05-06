@@ -29,7 +29,7 @@ public class AdminController{
 	@RequestMapping(value = "", method = RequestMethod.GET, produces = "application/json; charset=utf8")
 	@ResponseBody
 	public String readAdministrator(HttpServletRequest httpServletRequest) throws IOException, ParseException {
-		System.out.println("읽기 시도");
+		System.out.println("관리자 읽기.");
 		String result = adminService.read();
 		System.out.println(result);
 	    return result;

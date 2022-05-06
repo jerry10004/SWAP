@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.handong.swap.DTO.AdminDTO;
 import com.handong.swap.DTO.ProgramDTO;
 import com.handong.swap.DTO.UserDTO;
+import com.handong.swap.Service.AdminService;
 import com.handong.swap.Service.UserService;
 
 
@@ -25,6 +27,8 @@ public class UserController {
 	
 	@Autowired
 	UserService userService;
+	@Autowired
+	AdminService adminService;
 	
 	@RequestMapping(value = "", method = RequestMethod.GET, produces = "application/json; charset=utf8")
 	@ResponseBody
@@ -93,10 +97,12 @@ public class UserController {
 	@ResponseBody
 	public void updateUserInfo(HttpServletRequest httpServletRequest) throws ParseException {
 		UserDTO user = new UserDTO();
+		AdminDTO admin = new AdminDTO();
 		System.out.println("update Profile!!!");
 		
 		int status = Integer.parseInt(httpServletRequest.getParameter("status"));
 		user.setId(Integer.parseInt(httpServletRequest.getParameter("id")));
+		admin.setUser_id(Integer.parseInt(httpServletRequest.getParameter("id")));
 		
 		if(status==1) {
 			user.setName(httpServletRequest.getParameter("name"));
@@ -117,7 +123,11 @@ public class UserController {
 			user.setName(httpServletRequest.getParameter("name"));
 			user.setEmail(httpServletRequest.getParameter("email"));
 			user.setPhone(httpServletRequest.getParameter("phone"));
+			admin.setName(httpServletRequest.getParameter("name"));
+			admin.setEmail(httpServletRequest.getParameter("email"));
+			admin.setPhone(httpServletRequest.getParameter("phone"));
 			System.out.println("userInfo: "+ user.toString());
+			adminService.update(admin);
 		}
 
 		userService.updateUserInfo(user);
