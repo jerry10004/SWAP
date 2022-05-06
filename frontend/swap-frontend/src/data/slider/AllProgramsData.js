@@ -112,11 +112,22 @@ const AllProgramsData = (props) => {
             term === "전체" ? (
               props.category_data.map((item, index) => {
                 var address = "/program/" + item.id.toString();
+
                 return (
                   <Col lg={3} md={6} sm={12} key={index}>
                     <Card className={`mb-4 card-hover mx-2 main-program-card`}>
                       <Link to={address}>
-                        <Image src={programImage} alt="" className="card-img-top rounded-top-md programImage" width="100px" height="170px" />
+                        {item.file_name ? (
+                          <Image
+                            src={process.env.REACT_APP_RESTAPI_HOST + "resources/upload/" + item.file_name}
+                            alt=""
+                            className="card-img-top rounded-top-md programImage"
+                            width="100px"
+                            height="170px"
+                          />
+                        ) : (
+                          <Image src={programImage} alt="" className="card-img-top rounded-top-md programImage" width="100px" height="170px" />
+                        )}
                       </Link>
                       <Card.Body style={{ height: "6rem" }}>
                         <span className="text-dark fw-bold">
@@ -162,7 +173,17 @@ const AllProgramsData = (props) => {
                     <Col lg={3} md={6} sm={12} key={index}>
                       <Card className={`mb-4 card-hover mx-2 main-program-card`}>
                         <Link to={address}>
-                          <Image src={programImage} alt="" className="card-img-top rounded-top-md programImage" width="100px" height="170px" />
+                          {item.file_name ? (
+                            <Image
+                              src={process.env.REACT_APP_RESTAPI_HOST + "resources/upload/" + item.file_name}
+                              alt=""
+                              className="card-img-top rounded-top-md programImage"
+                              width="100px"
+                              height="170px"
+                            />
+                          ) : (
+                            <Image src={programImage} alt="" className="card-img-top rounded-top-md programImage" width="100px" height="170px" />
+                          )}
                         </Link>
                         <Card.Body style={{ height: "6rem" }}>
                           <span className="text-dark fw-bold">

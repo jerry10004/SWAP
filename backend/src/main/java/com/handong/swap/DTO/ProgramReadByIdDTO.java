@@ -15,10 +15,36 @@ public class ProgramReadByIdDTO {
 	String manager_name;
 	String manager_contact;
 	int applicants_num;
+	int file_type;
+	String file_name;
 	
 	
 	
 	
+	public int getCategory_id() {
+		return category_id;
+	}
+	public void setCategory_id(int category_id) {
+		this.category_id = category_id;
+	}
+	public int getFile_type() {
+		return file_type;
+	}
+	public void setFile_type(int file_type) {
+		this.file_type = file_type;
+	}
+	public String getFile_name() {
+		return file_name;
+	}
+	public void setFile_name(String file_name) {
+		this.file_name = file_name;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public void setStatus(int status) {
+		this.status = status;
+	}
 	public int getApplicants_num() {
 		return applicants_num;
 	}

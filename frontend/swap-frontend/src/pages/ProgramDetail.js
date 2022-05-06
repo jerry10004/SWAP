@@ -1,6 +1,6 @@
 // import node module libraries
 import React, { Fragment, useState, useLayoutEffect } from "react";
-import { Col, Row, Container, Card, OverlayTrigger, Tooltip, Button, Badge } from "react-bootstrap";
+import { Col, Row, Container, Card, OverlayTrigger, Tooltip, Button, Badge, Image } from "react-bootstrap";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import moment from "moment";
@@ -28,6 +28,8 @@ const Program = () => {
   const [toggleBookmark, setToggleBookmark] = useState(false);
   const [likeData, setLikeData] = useState();
   const [userInfo, setUserInfo] = useState();
+  const [filePath, setFilePath] = useState([]);
+  const [poster, setPoster] = useState();
 
   const id = useParams();
 
@@ -59,6 +61,17 @@ const Program = () => {
       response.data[0].applyend_date = moment(response.data[0].applyend_date).format("YY-MM-DD HH:mm");
 
       setProgramInfo(response.data[0]);
+      var filePathList = [];
+
+      for (var i = 0; i < response.data.length; i++) {
+        if (response.data[i].file_type === 0) {
+          filePathList.push(response.data[i].file_name);
+        } else if (response.data[i].file_type === 1) {
+          setPoster(response.data[i].file_name);
+        }
+      }
+
+      setFilePath(filePathList);
       setProgramInfoLoading(true);
 
       if (response.data[0].applicants_num >= response.data[0].quota && response.data[0].quota != 0) {
@@ -222,6 +235,28 @@ const Program = () => {
                           </span>
                         );
                       })}
+
+                      {filePath[0] ? (
+                        <>
+                          <br />
+                          <br />
+                          <h4>첨부파일</h4>
+                          {filePath.map((item, i) => {
+                            var name = item.split("/");
+
+                            return (
+                              <>
+                                <a href={process.env.REACT_APP_RESTAPI_HOST + "resources/upload/" + item} download target="_blank">
+                                  {name[2]}
+                                </a>
+                                <br />
+                              </>
+                            );
+                          })}
+                        </>
+                      ) : (
+                        ""
+                      )}
                     </div>
                   </Card.Body>
                 </Card>
@@ -229,8 +264,11 @@ const Program = () => {
               <Col xl={4} lg={12} md={12} sm={12}>
                 <Card className="mb-3">
                   <Card.Body>
-                    <img src={DefaultImg} width="100%" object-fit="contain" />
-                    {/* <img className="profile-img-content" object-fit="contain" width="100%" src={process.env.REACT_APP_RESTAPI_HOST + "resources/upload/2022/5/test_poster.png"} alt="profile_image" /> */}
+                    {poster ? (
+                      <Image width="100%" object-fit="contain" src={process.env.REACT_APP_RESTAPI_HOST + "resources/upload/" + poster} alt="" />
+                    ) : (
+                      <Image width="100%" object-fit="contain" src={DefaultImg} alt="" />
+                    )}
                   </Card.Body>
                 </Card>
                 {programInfo.manager_name ? (

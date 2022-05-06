@@ -127,8 +127,7 @@ public class ProgramController {
 		}
 		
 		 result = programService.read();
-		
-      
+   
 	    return result;
 	}
 	
@@ -198,12 +197,12 @@ public class ProgramController {
 		return result;
 	}
 	
-	@RequestMapping(value = "/programFile/{id}", method = RequestMethod.GET, produces = "application/json; charset=utf8")
-	@ResponseBody
-	public String readProgramFileByProgramId(@PathVariable int id) throws IOException, ParseException {
-		String result = programService.readProgramFileByProgramId(id);
-		return result;
-	}
+//	@RequestMapping(value = "/programFile/{id}", method = RequestMethod.GET, produces = "application/json; charset=utf8")
+//	@ResponseBody
+//	public String readProgramFileByProgramId(@PathVariable int id) throws IOException, ParseException {
+//		String result = programService.readProgramFileByProgramId(id);
+//		return result;
+//	}
 	
 	@RequestMapping(value = "/name", method = RequestMethod.POST, produces = "application/json; charset=utf8")
 	@ResponseBody

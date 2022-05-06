@@ -46,17 +46,11 @@ const Main = ({ login }) => {
       console.log("@@ compeit: ", competitionInfo);
       console.log("@@ vol: ", volunteerInfo);
     }
-    console.log("555");
   }, []);
 
   const readTotal = async () => {
     const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "program");
     setTotalInfo(response.data);
-  };
-
-  const readFile = async () => {
-    const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "");
-    setFileInfo(response.data);
   };
 
   const props = {
@@ -71,6 +65,7 @@ const Main = ({ login }) => {
     params.append("category_id", category_id);
     const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "program/read/category", params);
     setCategoryInfo(response.data);
+
     if (category_id === 1) setCompetitionInfo(response.data);
     else if (category_id === 2) setVolunteerInfo(response.data);
     else if (category_id === 3) setCampInfo(response.data);
