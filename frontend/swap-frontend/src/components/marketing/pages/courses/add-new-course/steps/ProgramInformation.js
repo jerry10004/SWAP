@@ -127,7 +127,7 @@ const ProgramInformation = (props) => {
           <>
             <Row>
               <Col className="InformationCard">
-                <Card className="mt-2 ms-2 shadow p-3">
+                <Card className="mt-2 ms-2 shadow">
                   <Card.Header className="border-bottom px-4 py-3">
                     <h4 className="mb-0">프로그램 기본 정보</h4>
                   </Card.Header>
@@ -294,7 +294,7 @@ const ProgramInformation = (props) => {
                 </Card>
               </Col>
               <Col xl={4} className="ps-0">
-                <Card className="mb-3 me-2 mt-2 shadow p-3">
+                <Card className="mb-3 me-2 mt-2 shadow">
                   <Card.Header className="border-bottom px-4 py-3">
                     <h4 className="mb-0">프로그램 포스터</h4>
                   </Card.Header>
@@ -308,7 +308,7 @@ const ProgramInformation = (props) => {
                 </Card>
                 {filePath[0] ? (
                   <>
-                    <Card className="mb-3 me-2 shadow p-3">
+                    <Card className="mb-3 me-2 shadow">
                       <Card.Header className="border-bottom px-4 py-3">
                         <h4 className="mb-0">첨부파일</h4>
                       </Card.Header>
