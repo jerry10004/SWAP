@@ -20,8 +20,8 @@
 		LEFT JOIN swap.Admin as A
 		ON P.admin_id = A.id
 		LEFT JOIN swap.Program_File as PF
-        ON P.id = PF.program_id
-		where P.deldate is null AND PF.file_type != 0 OR PF.file_type IS NULL
+        ON P.id = PF.program_id AND PF.file_type != 0 OR PF.file_type IS NULL
+		where P.deldate is null 
 		order by P.regdate desc;
    	</select>
    	
@@ -41,8 +41,8 @@
 		LEFT JOIN swap.Admin as A
 		ON P.admin_id = A.id
 		LEFT JOIN swap.Program_File as PF
-        ON P.id = PF.program_id
-		where  P.deldate is null AND C.id =  #{category_id} AND PF.file_type != 0 OR PF.file_type IS NULL
+        ON P.id = PF.program_id AND PF.file_type != 0 OR PF.file_type IS NULL
+		where  P.deldate is null AND C.id =  #{category_id} 
 		order by P.regdate desc;
 	
    	</select>
@@ -91,9 +91,6 @@
 		where P.id = #{id};
    	</select>
    	
-   	<select id="readProgramFileByProgramId" parameterType="Integer" resultType="ProgramReadById">
-
-   	</select>
    	
    	<select id="readProgramName" parameterType="Integer" resultType="ProgramReadName">
 	   select P.program_name
@@ -164,6 +161,11 @@
 		SET applicants_num = applicants_num -1
 		WHERE id=#{program_id}  
    	</update>
+   	
+   	<delete id="deleteFiles"  parameterType="Integer">
+   		DELETE FROM Program_File
+   		WHERE program_id = #{program_id}
+   	</delete>
    	
 </mapper>
 

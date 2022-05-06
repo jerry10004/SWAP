@@ -13,7 +13,6 @@ public interface ProgramDAO {
 	public int insertPoster(ProgramFileDTO program);
 	public int insertFile(ProgramFileDTO program);
 	List<ProgramReadDTO> readProgramInformationByProgramId(int id);
-	List<ProgramFileDTO> readProgramFileByProgramId(int id);
 	public void updateDelDate(int id);
 	public void updateStatus(int program_id, int status);
 	public void updateApplyStatus(int program_id, int apply_status);
@@ -25,4 +24,5 @@ public interface ProgramDAO {
 	public int deleteConfirm(int id);
 	public void decreaseApplicantNum(int program_id);
 	List<ProgramReadDTO> readLikedPrograms(int user_id);
+	public void deleteFiles(int program_id);
 }

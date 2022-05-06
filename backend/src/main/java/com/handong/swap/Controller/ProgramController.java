@@ -197,12 +197,6 @@ public class ProgramController {
 		return result;
 	}
 	
-//	@RequestMapping(value = "/programFile/{id}", method = RequestMethod.GET, produces = "application/json; charset=utf8")
-//	@ResponseBody
-//	public String readProgramFileByProgramId(@PathVariable int id) throws IOException, ParseException {
-//		String result = programService.readProgramFileByProgramId(id);
-//		return result;
-//	}
 	
 	@RequestMapping(value = "/name", method = RequestMethod.POST, produces = "application/json; charset=utf8")
 	@ResponseBody
@@ -361,6 +355,18 @@ public class ProgramController {
 		
 		for (int i = 0; i < ids.length; i++) {
 			programService.delete(Integer.parseInt(ids[i]));
+		}
+	}
+	
+	@RequestMapping(value = "/delete/files", method = RequestMethod.POST, produces = "application/json; charset=utf8")
+	@ResponseBody
+	public void deleteProgramFiles(HttpServletRequest httpServletRequest) {
+		String[] param_ids = httpServletRequest.getParameterValues("id");
+		
+		String[] ids = param_ids[0].split(",");
+		
+		for (int i = 0; i < ids.length; i++) {
+			programService.deleteFiles(Integer.parseInt(ids[i]));
 		}
 	}
 	
