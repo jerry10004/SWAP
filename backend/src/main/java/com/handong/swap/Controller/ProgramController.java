@@ -327,7 +327,7 @@ public class ProgramController {
 	    programFiles.setProgram_id(Integer.parseInt(httpServletRequest.getParameter("program_id")));
 	    programFiles.setFile_name(path);
 	    // 0: 파일, 1: 이미지
-	    programFiles.setFile_type(1);
+	    programFiles.setFile_type(0);
 	    
 	    int result = programService.insertFile(programFiles);
 	    

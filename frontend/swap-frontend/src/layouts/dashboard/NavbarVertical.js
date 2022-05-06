@@ -16,19 +16,19 @@ import { v4 as uuid } from "uuid";
 export const DashboardMenu = [
   {
     id: uuid(),
-    title: "Program",
+    title: "프로그램",
     icon: "clipboard",
     link: "/admin/program",
   },
   {
     id: uuid(),
-    title: "Application",
+    title: "신청서 템플릿",
     icon: "book",
     link: "/admin/application",
   },
   {
     id: uuid(),
-    title: "User",
+    title: "사용자",
     icon: "user",
     link: "/admin/user",
     // children: [
