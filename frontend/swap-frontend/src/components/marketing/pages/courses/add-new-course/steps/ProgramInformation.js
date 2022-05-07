@@ -29,7 +29,7 @@ const ProgramInformation = (props) => {
   const [poster, setPoster] = useState();
   const [updatePoster, setUpdatePoster] = useState();
   const [preview, setPreview] = useState();
-  const [files, setFiles] = useState();
+  const [updateFiles, setUpdateFiles] = useState();
 
   useLayoutEffect(() => {
     readProgramInformation(props.param1.id);
@@ -102,6 +102,7 @@ const ProgramInformation = (props) => {
 
     // 포스터 업데이트
     const imgFormData = new FormData();
+
     if (updatePoster != null) {
       imgFormData.append("program_id", editInfo.id);
       imgFormData.append("img", updatePoster);
@@ -123,23 +124,72 @@ const ProgramInformation = (props) => {
 
     if (window.confirm("프로그램을 수정하시겠습니까?") && editInfo) {
       const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "program/edit", params);
+
+      //포스터 업데이트
       if (updatePoster != null) {
-        const posterRes = axios({
-          url: process.env.REACT_APP_RESTAPI_HOST + "program/editPoster",
-          cache: false,
-          contentType: false,
-          processData: false,
-          data: imgFormData,
-          method: "post",
-          headers: { "Content-Type": "multipart/form-data" },
-          success: function (posterRes) {
-            console.log(posterRes);
-          },
-          error: function (error) {
-            console.log(error);
-          },
-        });
+        if (poster != null) {
+          const posterRes = axios({
+            url: process.env.REACT_APP_RESTAPI_HOST + "program/editPoster",
+            cache: false,
+            contentType: false,
+            processData: false,
+            data: imgFormData,
+            method: "post",
+            headers: { "Content-Type": "multipart/form-data" },
+            success: function (posterRes) {
+              console.log(posterRes);
+            },
+            error: function (error) {
+              console.log(error);
+            },
+          });
+        } else {
+          const posterRes = axios({
+            url: process.env.REACT_APP_RESTAPI_HOST + "program/addPoster",
+            cache: false,
+            contentType: false,
+            processData: false,
+            data: imgFormData,
+            method: "post",
+            headers: { "Content-Type": "multipart/form-data" },
+            success: function (posterRes) {
+              console.log(posterRes);
+            },
+            error: function (error) {
+              console.log(error);
+            },
+          });
+        }
       }
+
+      // 파일 업데이트
+      if (updateFiles != null) {
+        for (var i = 0; updateFiles.length; i++) {
+          const filesFormData = new FormData();
+          filesFormData.append("program_id", editInfo.id);
+          filesFormData.append("attach_file", updateFiles[i]);
+          filesFormData.append("file_name", updateFiles[i].name);
+          filesFormData.append("file_type", "0");
+
+          const filesRes = axios({
+            url: process.env.REACT_APP_RESTAPI_HOST + "program/editFiles",
+            cache: false,
+            contentType: false,
+            processData: false,
+            data: filesFormData,
+            method: "post",
+            headers: { "Content-Type": "multipart/form-data" },
+            success: function (filesRes) {
+              console.log(filesRes);
+            },
+            error: function (error) {
+              console.log("파일 수정 에러");
+              console.log(error);
+            },
+          });
+        }
+      }
+
       alert(" 프로그램이 수정 되었습니다.");
       seteditStart(false);
       seteditEnd(false);
@@ -151,12 +201,24 @@ const ProgramInformation = (props) => {
   };
 
   const onLoadPoster = async (e) => {
+    const name = e.target.name;
+    const value = e.target.files[0];
     setUpdatePoster(e.target.files[0]);
     setPreview(URL.createObjectURL(e.target.files[0]));
+    seteditInfo({
+      ...editInfo,
+      [name]: value,
+    });
   };
 
   const onLoadFile = async (e) => {
-    setFiles(e.target.files);
+    const name = e.target.name;
+    const value = e.target.files[0];
+    setUpdateFiles(e.target.files);
+    seteditInfo({
+      ...editInfo,
+      [name]: value,
+    });
   };
 
   return (
@@ -165,7 +227,7 @@ const ProgramInformation = (props) => {
         isEdit === false ? (
           <>
             <Row>
-              <Col className="InformationCard">
+              <Col className="InformationCard" xl={8} lg={12} md={12} sm={12}>
                 <Card className="mt-2 ms-2 shadow">
                   <Card.Header className="border-bottom px-4 py-3">
                     <h4 className="mb-0">프로그램 기본 정보</h4>
@@ -277,7 +339,7 @@ const ProgramInformation = (props) => {
                             <Form.Label>
                               카테고리 <span className="text-danger">*</span>
                             </Form.Label>
-                            <select class="form-select" id="program_category" name="program_category" required disabled value={programInformation[0].category_Id}>
+                            <select className="form-select" id="program_category" name="program_category" required disabled value={programInformation[0].category_Id}>
                               <option value="1">대회</option>
                               <option value="2">봉사</option>
                               <option value="3">캠프</option>
@@ -332,7 +394,7 @@ const ProgramInformation = (props) => {
                   </Card.Body>
                 </Card>
               </Col>
-              <Col xl={4} className="ps-0">
+              <Col xl={4} lg={12} md={12} sm={12}>
                 <Card className="mb-3 me-2 mt-2 shadow">
                   <Card.Header className="border-bottom px-4 py-3">
                     <h4 className="mb-0">프로그램 포스터</h4>
@@ -387,7 +449,7 @@ const ProgramInformation = (props) => {
         ) : (
           <>
             <Row>
-              <Col className="InformationCard">
+              <Col className="InformationCard" xl={8} lg={12} md={12} sm={12}>
                 <Card className="mt-2 ms-2 shadow">
                   <Card.Header className="border-bottom px-4 py-3">
                     <h4 className="mb-0">프로그램 기본 정보</h4>
@@ -541,7 +603,7 @@ const ProgramInformation = (props) => {
                   </Card.Body>
                 </Card>
               </Col>
-              <Col xl={4} className="ps-0">
+              <Col xl={4} lg={12} md={12} sm={12}>
                 <Card className="mb-3 me-2 mt-2 shadow">
                   <Card.Header className="border-bottom px-4 py-3">
                     <h4 className="mb-0">프로그램 포스터</h4>
@@ -558,7 +620,7 @@ const ProgramInformation = (props) => {
                     </Col>
                     <Col>
                       <Form className="upload_input">
-                        <Input id="image" name="file" accept="image/jpeg, image/png, image/jpg" type="file" onChange={onLoadPoster} />
+                        <Input id="image" name="img" accept="image/jpeg, image/png, image/jpg" type="file" onChange={onLoadPoster} />
                       </Form>
                     </Col>
                   </Card.Body>
@@ -570,6 +632,7 @@ const ProgramInformation = (props) => {
                         <h4 className="mb-0">첨부파일</h4>
                       </Card.Header>
                       <Card.Body className="">
+                        <h4>기존 파일</h4>
                         {filePath.map((item, i) => {
                           var name = item.split("/");
 
@@ -583,10 +646,11 @@ const ProgramInformation = (props) => {
                           );
                         })}{" "}
                         <br />
+                        <h5>* 파일 선택 후 업데이트 시, 기존 파일은 사라집니다.</h5>
                         {/* file */}
                         <Col xs={12}>
                           <Form className="upload_input ">
-                            <Input id="file" name="file" type="file" onChange={onLoadFile} />
+                            <Input name="file" type="file" onChange={onLoadFile} multiple />
                           </Form>
                         </Col>
                       </Card.Body>
@@ -601,7 +665,7 @@ const ProgramInformation = (props) => {
                     </Card.Header>
                     <Card.Body className="px-2 py-2">
                       <Form className="upload_input">
-                        <Input id="file" name="file" type="file" onChange={onLoadFile} />
+                        <Input name="file" type="file" onChange={onLoadFile} multiple />
                       </Form>
                     </Card.Body>
                   </Card>

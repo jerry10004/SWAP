@@ -129,5 +129,10 @@ public class ProgramDAOImpl implements ProgramDAO {
 	public void deleteFiles(int program_id) {
 		 sqlSession.delete("Program.deleteFiles",program_id);
 	}
+	
+	@Override
+	public void deleteOnlyFile(int program_id) {
+		 sqlSession.delete("Program.deleteOnlyFile",program_id);
+	}
 
 }

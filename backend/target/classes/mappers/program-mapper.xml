@@ -171,5 +171,10 @@
    		WHERE program_id = #{program_id}
    	</delete>
    	
+   	<delete id="deleteOnlyFile"  parameterType="Integer">
+   		DELETE FROM Program_File
+   		WHERE program_id = #{program_id} AND file_type = 0
+   	</delete>
+   	
 </mapper>
 

@@ -26,4 +26,5 @@ public interface ProgramDAO {
 	public void decreaseApplicantNum(int program_id);
 	List<ProgramReadDTO> readLikedPrograms(int user_id);
 	public void deleteFiles(int program_id);
+	public void deleteOnlyFile(int program_id);
 }

@@ -144,6 +144,7 @@ const AddNewCourse = () => {
           });
         }
 
+        //파일 업로드
         if (files != null) {
           fileFormData.append("program_id", response.data);
           for (var i = 0; i < files.length; i++) {

@@ -453,6 +453,50 @@ public class ProgramController {
 	    
 	    programService.editPoster(programPoster);
 	}
+	
+	@RequestMapping(value = "/editFiles", method = RequestMethod.POST, produces = "application/json; charset=utf8")
+	@ResponseBody
+	public void editProgramFiles(HttpServletRequest httpServletRequest, MultipartHttpServletRequest multi) throws ParseException {
+		ProgramFileDTO programFile = new ProgramFileDTO();		
+		
+		MultipartFile file = multi.getFile("attach_file");
+		String fileName = file.getOriginalFilename();
+		
+		Calendar calendar = Calendar.getInstance();
+		String path = "";
+		String filePath = httpServletRequest.getSession().getServletContext().getRealPath("/") + "resources/upload/"+calendar.get(calendar.YEAR)+"/"+(calendar.get(calendar.MONTH)+1)+"/"; //파일 저장 경로, 설정파일로 따로 관리한다.
+	    if(file != null) {
+	    	File dir = new File(filePath); //파일 저장 경로 확인, 없으면 만든다.
+		    if (!dir.exists()) {
+		        dir.mkdirs();
+		    }
+		    try {
+	    		int count = 1;
+	    		File newFile = new File(filePath+fileName);
+	    		path = calendar.get(calendar.YEAR)+"/"+(calendar.get(calendar.MONTH)+1)+"/"+fileName;
+	    		while(newFile.exists()) {
+	    			newFile = new File(filePath+fileName+"("+count+")");
+	    			path = calendar.get(calendar.YEAR)+"/"+(calendar.get(calendar.MONTH)+1)+"/"+fileName+"("+count+")";
+	    			count++;
+	    		}
+	    		if (!newFile.exists()) {
+	    			newFile.mkdirs();
+	    	    }
+				file.transferTo(newFile);
+			} catch (Exception e) {
+				int count = 1;
+	            e.printStackTrace();
+			}
+	    }
+	    
+	    
+	    programFile.setProgram_id(Integer.parseInt(httpServletRequest.getParameter("program_id")));
+	    // 0: 파일, 1: 이미지
+	    programFile.setFile_type(Integer.parseInt(httpServletRequest.getParameter("file_type")));
+	    programFile.setFile_name(path);
+	    programService.deleteOnlyFile(Integer.parseInt(httpServletRequest.getParameter("program_id")));
+	    programService.insertFile(programFile);
+	}
 
 	
 	@RequestMapping(value = "/read/bookmark", method = RequestMethod.POST, produces = "application/json; charset=utf8")

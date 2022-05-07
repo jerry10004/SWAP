@@ -29,6 +29,8 @@ public interface ProgramService {
 	
 	public void deleteFiles(int id);
 	
+	public void deleteOnlyFile(int program_id);
+	
 	public int deleteConfirm(int id) throws JsonProcessingException;
 	
 	public void updateStatus(int program_id, int status);

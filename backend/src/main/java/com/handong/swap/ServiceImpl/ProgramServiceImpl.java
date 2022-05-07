@@ -72,6 +72,11 @@ public class ProgramServiceImpl implements ProgramService{
 	}
 	
 	@Override
+	public void deleteOnlyFile(int program_id) {
+		programDAO.deleteOnlyFile(program_id);
+	}
+	
+	@Override
 	public int deleteConfirm(int id) throws JsonProcessingException {
 		int programDATA = programDAO.deleteConfirm(id);
 		return programDATA;
