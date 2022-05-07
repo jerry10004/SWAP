@@ -77,7 +77,11 @@ public class ProgramDAOImpl implements ProgramDAO {
 	public void edit(ProgramDTO program) {
 	    sqlSession.update("Program.edit", program);
 	}
-
+	
+	@Override
+	public void editPoster(ProgramFileDTO programPoster) {
+	    sqlSession.update("Program.editPoster", programPoster);
+	}
 
 	@Override
 	public List<ProgramReadDTO> readByCategory(int category_id) {

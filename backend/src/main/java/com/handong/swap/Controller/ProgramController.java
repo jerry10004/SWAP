@@ -379,6 +379,7 @@ public class ProgramController {
 		Date start_date = (Date) formatter.parse(httpServletRequest.getParameter("start_date"));
 		Date end_date = (Date) formatter.parse(httpServletRequest.getParameter("end_date"));
 		Date Applystart_date = (Date) formatter.parse(httpServletRequest.getParameter("Applystart_date"));
+		System.out.println("신청일자 확인: "+Applystart_date);
 		Date Applyend_date = (Date) formatter.parse(httpServletRequest.getParameter("Applyend_date"));
 		
 		program.setId(Integer.parseInt(httpServletRequest.getParameter("id")));
@@ -408,6 +409,51 @@ public class ProgramController {
 		programService.edit(program);
 		
 	}
+	
+	@RequestMapping(value = "/editPoster", method = RequestMethod.POST, produces = "application/json; charset=utf8")
+	@ResponseBody
+	public void editProgramPoster(HttpServletRequest httpServletRequest, MultipartHttpServletRequest multi) throws ParseException {
+		ProgramFileDTO programPoster = new ProgramFileDTO();		
+		
+		MultipartFile file = multi.getFile("img");
+		String posterName = file.getOriginalFilename();
+		
+		Calendar calendar = Calendar.getInstance();
+		String path = "";
+		String filePath = httpServletRequest.getSession().getServletContext().getRealPath("/") + "resources/upload/"+calendar.get(calendar.YEAR)+"/"+(calendar.get(calendar.MONTH)+1)+"/"; //파일 저장 경로, 설정파일로 따로 관리한다.
+	    if(file != null) {
+	    	File dir = new File(filePath); //파일 저장 경로 확인, 없으면 만든다.
+		    if (!dir.exists()) {
+		        dir.mkdirs();
+		    }
+		    try {
+	    		int count = 1;
+	    		File newFile = new File(filePath+posterName);
+	    		path = calendar.get(calendar.YEAR)+"/"+(calendar.get(calendar.MONTH)+1)+"/"+posterName;
+	    		while(newFile.exists()) {
+	    			newFile = new File(filePath+posterName+"("+count+")");
+	    			path = calendar.get(calendar.YEAR)+"/"+(calendar.get(calendar.MONTH)+1)+"/"+posterName+"("+count+")";
+	    			count++;
+	    		}
+	    		if (!newFile.exists()) {
+	    			newFile.mkdirs();
+	    	    }
+				file.transferTo(newFile);
+			} catch (Exception e) {
+				int count = 1;
+	            e.printStackTrace();
+			}
+	    }
+	    
+	    
+	    programPoster.setProgram_id(Integer.parseInt(httpServletRequest.getParameter("program_id")));
+	    // 0: 파일, 1: 이미지
+	    programPoster.setFile_type(Integer.parseInt(httpServletRequest.getParameter("file_type")));
+	    programPoster.setFile_name(path);
+	    
+	    programService.editPoster(programPoster);
+	}
+
 	
 	@RequestMapping(value = "/read/bookmark", method = RequestMethod.POST, produces = "application/json; charset=utf8")
 	@ResponseBody

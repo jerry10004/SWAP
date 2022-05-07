@@ -35,7 +35,7 @@ const ManageApplication = () => {
               <Col lg={12} md={12} sm={12}>
                 <div className="border-bottom pb-4 mb-4 d-md-flex align-items-center justify-content-between">
                   <div className="mb-3 mb-md-0">
-                    <h1 className="mb-1 h2 fw-bold">Application </h1>
+                    <h1 className="mb-1 h2 fw-bold">신청서 템플릿</h1>
                   </div>
                   {/* <div>
                     <Link to="/admin/addprogram" className="btn btn-primary">

@@ -44,7 +44,7 @@ const ManageUser = () => {
                   <div className="border-bottom pb-4 mb-4 d-flex align-items-center justify-content-between">
                     <div className="mb-3 mb-md-0">
                       <h1 className="mb-1 h2 fw-bold">
-                        User
+                        사용자
                         {/* <span className="fs-5 text-muted">(12,105)</span> */}
                       </h1>
                     </div>

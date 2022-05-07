@@ -37,6 +37,8 @@ public interface ProgramService {
 
 	public void edit(ProgramDTO program);
 	
+	public void editPoster(ProgramFileDTO programPoster);
+	
 	public void updateApplicantNum(int program_id);
 	
 	public void decreaseApplicantNum(int program_id);

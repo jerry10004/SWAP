@@ -87,11 +87,14 @@ public class ProgramServiceImpl implements ProgramService{
 		programDAO.updateApplyStatus(program_id, apply_status);
 	}
 
-
-
 	@Override
 	public void edit(ProgramDTO program) {
 		programDAO.edit(program);
+	}
+	
+	@Override
+	public void editPoster(ProgramFileDTO programPoster) {
+		programDAO.editPoster(programPoster);
 	}
 
 	@Override

@@ -46,10 +46,10 @@ const AllProgramsData = (props) => {
   };
 
   const filterOptions = [
-    { value: "진행", label: "진행" },
+    { value: "진행", label: "신청 진행" },
     { value: "전체", label: "전체" },
-    { value: "대기", label: "대기" },
-    { value: "마감", label: "마감" },
+    { value: "대기", label: "신청 대기" },
+    { value: "마감", label: "신청 마감" },
   ];
 
   const readAllLike = async (userID) => {
