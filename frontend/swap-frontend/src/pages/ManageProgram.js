@@ -10,6 +10,7 @@ import WaitTable from "components/program/WaitTable";
 // import sub components
 import NavbarVertical from "layouts/dashboard/NavbarVertical";
 import NavbarTop from "layouts/dashboard/NavbarTop";
+import NavbarDefault from "layouts/marketing/navbars/NavbarDefault";
 
 const AllCourses = () => {
   const [showMenu, setShowMenu] = useState(true);

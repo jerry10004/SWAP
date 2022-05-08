@@ -4,6 +4,7 @@ import React, { useState } from "react";
 // import sub components
 import NavbarVertical from "layouts/dashboard/NavbarVertical";
 import NavbarTop from "layouts/dashboard/NavbarTop";
+import NavbarDefault from "layouts/marketing/navbars/NavbarDefault";
 
 const DashboardIndex = (props) => {
   const [showMenu, setShowMenu] = useState(true);
@@ -18,12 +19,13 @@ const DashboardIndex = (props) => {
       </div>
       <div id="page-content">
         <div className="header">
-          <NavbarTop
+          {/* <NavbarTop
             data={{
               showMenu: showMenu,
               SidebarToggleMenu: ToggleMenu,
             }}
-          />
+          /> */}
+          {/* <NavbarDefault login={true} /> */}
         </div>
         <div className="container-fluid p-4">{props.children}</div>
       </div>
