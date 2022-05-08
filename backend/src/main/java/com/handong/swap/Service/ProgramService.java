@@ -22,12 +22,14 @@ public interface ProgramService {
 	public String readByStatusByUser(int status, int user_id) throws JsonProcessingException;
 	
 	public String readProgramInformationByProgramId(int id) throws JsonProcessingException;
-	
-	public String readProgramFileByProgramId(int id) throws JsonProcessingException;
-	
+		
 	public String readProgramName(int id) throws JsonProcessingException;
 	
 	public void delete(int id);
+	
+	public void deleteFiles(int id);
+	
+	public void deleteOnlyFile(int program_id);
 	
 	public int deleteConfirm(int id) throws JsonProcessingException;
 	
@@ -36,6 +38,8 @@ public interface ProgramService {
 	public void updateApplyStatus(int program_id, int apply_status);
 
 	public void edit(ProgramDTO program);
+	
+	public void editPoster(ProgramFileDTO programPoster);
 	
 	public void updateApplicantNum(int program_id);
 	

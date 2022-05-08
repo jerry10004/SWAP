@@ -7,6 +7,7 @@
 			<typeAlias alias="Admin" type="com.handong.swap.DTO.AdminDTO"/>
 			<typeAlias alias="User" type="com.handong.swap.DTO.UserDTO"/>
 			<typeAlias alias="Program" type="com.handong.swap.DTO.ProgramDTO"/>
+			<typeAlias alias="ProgramFile" type="com.handong.swap.DTO.ProgramFileDTO"/>
 			<typeAlias alias="ProgramRead" type="com.handong.swap.DTO.ProgramReadDTO"/>
 			<typeAlias alias="ProgramReadById" type="com.handong.swap.DTO.ProgramReadByIdDTO"/>
 			<typeAlias alias="ProgramReadByUser" type="com.handong.swap.DTO.ProgramReadByUserDTO"/>

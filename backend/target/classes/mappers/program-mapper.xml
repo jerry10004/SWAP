@@ -20,8 +20,8 @@
 		LEFT JOIN swap.Admin as A
 		ON P.admin_id = A.id
 		LEFT JOIN swap.Program_File as PF
-        ON P.id = PF.program_id
-		where P.deldate is null AND PF.file_type != 0 OR PF.file_type IS NULL
+        ON P.id = PF.program_id AND PF.file_type != 0 OR PF.file_type IS NULL
+		where P.deldate is null 
 		order by P.regdate desc;
    	</select>
    	
@@ -41,8 +41,8 @@
 		LEFT JOIN swap.Admin as A
 		ON P.admin_id = A.id
 		LEFT JOIN swap.Program_File as PF
-        ON P.id = PF.program_id
-		where  P.deldate is null AND C.id =  #{category_id} AND PF.file_type != 0 OR PF.file_type IS NULL
+        ON P.id = PF.program_id AND PF.file_type != 0 OR PF.file_type IS NULL
+		where  P.deldate is null AND C.id =  #{category_id} 
 		order by P.regdate desc;
 	
    	</select>
@@ -91,9 +91,6 @@
 		where P.id = #{id};
    	</select>
    	
-   	<select id="readProgramFileByProgramId" parameterType="Integer" resultType="ProgramReadById">
-
-   	</select>
    	
    	<select id="readProgramName" parameterType="Integer" resultType="ProgramReadName">
 	   select P.program_name
@@ -112,12 +109,12 @@
 		VALUES (#{admin_id}, #{category_id}, #{application_form}, #{program_name}, #{information}, #{start_date}, #{end_date},#{quota}, #{Applystart_date}, #{Applyend_date},#{manager_name}, #{manager_contact})
    	</insert>
    	
-   	<insert id = "insertPoster" parameterType="Program">	
+   	<insert id = "insertPoster" parameterType="ProgramFile">	
    		INSERT INTO Program_File (program_id, file_name, file_type)
 		VALUES (#{program_id}, #{file_name}, #{file_type})
    	</insert>
    	
-   	<insert id = "insertFile" parameterType="Program">	
+   	<insert id = "insertFile" parameterType="ProgramFile">	
    		INSERT INTO Program_File (program_id, file_name, file_type)
 		VALUES (#{program_id}, #{file_name}, #{file_type})
    	</insert>
@@ -141,7 +138,11 @@
    	<update id="edit" parameterType="Program">
    		UPDATE Program SET edit_date=now(), program_name = #{program_name}, information = #{information}, quota = #{quota}, category_id=#{category_id}, start_date=#{start_date}, end_date=#{end_date}, Applystart_date=#{Applystart_date}, Applyend_date=#{Applyend_date}, manager_name = #{manager_name}, manager_contact = #{manager_contact} 
 		WHERE id = #{id}
-
+   	</update>
+   	
+   	<update id="editPoster" parameterType="ProgramFile">
+   		UPDATE Program_File SET file_name = #{file_name} 
+		WHERE program_id = #{program_id} AND file_type = 1
    	</update>
    	
    	<update id="updateApplicantNum" parameterType="hashmap">
@@ -164,6 +165,16 @@
 		SET applicants_num = applicants_num -1
 		WHERE id=#{program_id}  
    	</update>
+   	
+   	<delete id="deleteFiles"  parameterType="Integer">
+   		DELETE FROM Program_File
+   		WHERE program_id = #{program_id}
+   	</delete>
+   	
+   	<delete id="deleteOnlyFile"  parameterType="Integer">
+   		DELETE FROM Program_File
+   		WHERE program_id = #{program_id} AND file_type = 0
+   	</delete>
    	
 </mapper>
 

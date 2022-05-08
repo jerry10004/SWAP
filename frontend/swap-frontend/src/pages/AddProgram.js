@@ -17,7 +17,12 @@ const AddNewCourse = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [poster, setPoster] = useState();
   const [files, setFiles] = useState();
-
+  const [start_date, setStart_date] = useState(new Date());
+  const [end_date, setEnd_date] = useState(new Date());
+  const [Applystart_date, setApplyStart_date] = useState(new Date());
+  const [Applyend_date, setApplyEnd_date] = useState(new Date());
+  const [validated, setValidated] = useState(false);
+  const [preview, setPreview] = useState();
   const [formData, setFormData] = useState({
     program_title: "Title",
     program_category: "1",
@@ -33,13 +38,6 @@ const AddNewCourse = () => {
     application_form: "",
     poster: "",
   });
-
-  const [start_date, setStart_date] = useState(new Date());
-  const [end_date, setEnd_date] = useState(new Date());
-  const [Applystart_date, setApplyStart_date] = useState(new Date());
-  const [Applyend_date, setApplyEnd_date] = useState(new Date());
-  const [validated, setValidated] = useState(false);
-  const [preview, setPreview] = useState();
 
   const onLoadPoster = async (e) => {
     setPoster(e.target.files[0]);
@@ -146,6 +144,7 @@ const AddNewCourse = () => {
           });
         }
 
+        //파일 업로드
         if (files != null) {
           fileFormData.append("program_id", response.data);
           for (var i = 0; i < files.length; i++) {

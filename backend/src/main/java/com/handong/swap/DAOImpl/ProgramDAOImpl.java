@@ -50,11 +50,7 @@ public class ProgramDAOImpl implements ProgramDAO {
 	public List<ProgramReadDTO> readProgramInformationByProgramId(int id) {
 		return sqlSession.selectList("Program.readProgramInformationByProgramId",id);
 	}
-	
-	@Override
-	public List<ProgramFileDTO> readProgramFileByProgramId(int id) {
-		return sqlSession.selectList("Program.readProgramFileByProgramId",id);
-	}
+
 	
 	@Override
 	public void updateStatus(int program_id, int status) {
@@ -81,7 +77,11 @@ public class ProgramDAOImpl implements ProgramDAO {
 	public void edit(ProgramDTO program) {
 	    sqlSession.update("Program.edit", program);
 	}
-
+	
+	@Override
+	public void editPoster(ProgramFileDTO programPoster) {
+	    sqlSession.update("Program.editPoster", programPoster);
+	}
 
 	@Override
 	public List<ProgramReadDTO> readByCategory(int category_id) {
@@ -123,6 +123,16 @@ public class ProgramDAOImpl implements ProgramDAO {
 
 	public List<ProgramReadDTO> readLikedPrograms(int user_id){
 		return sqlSession.selectList("Program.readLikedPrograms", user_id);
+	}
+	
+	@Override
+	public void deleteFiles(int program_id) {
+		 sqlSession.delete("Program.deleteFiles",program_id);
+	}
+	
+	@Override
+	public void deleteOnlyFile(int program_id) {
+		 sqlSession.delete("Program.deleteOnlyFile",program_id);
 	}
 
 }
