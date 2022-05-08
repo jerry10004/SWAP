@@ -14,7 +14,7 @@ require("formBuilder/dist/form-render.min.js");
 
 const FormRender = (props) => {
   const navigate = useNavigate();
-  console.log("props id", props.param.programid, props.param.userid, props.param.daysleft, props.param.quotaleft);
+
   const [test, setTest] = useState(0);
   const [originalFormData, setoriginalFormData] = useState([]);
   const [isformRender, setisFormRender] = useState(false);
@@ -43,7 +43,6 @@ const FormRender = (props) => {
   var params = new URLSearchParams();
 
   const componentDidMount = () => {
-    console.log(">>>>>", originalFormData);
     const getUserDataBtn = document.getElementById("get-user-data");
     const fbRender = document.getElementById("fb-render");
     const formData = JSON.stringify(originalFormData);
@@ -57,12 +56,10 @@ const FormRender = (props) => {
       },
       false
     );
-    console.log("component");
   };
 
   const readFormData = async (id) => {
     const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "application/readApplicationForm/" + id);
-    console.log(response.data[0]);
     var json_total = response.data[0].content;
     var json_sub = json_total.slice(1, json_total.length - 1);
     var arr = JSON.parse("[" + json_sub + "]");
@@ -73,7 +70,7 @@ const FormRender = (props) => {
 
   const readApplicantData = async (programID, userID) => {
     const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "applicant/" + programID + "/applicants/" + userID);
-    console.log(response.data);
+
     if (response.data.length === 0) {
       setcanApply(true);
     } else {
@@ -84,7 +81,6 @@ const FormRender = (props) => {
   const readApplicantInformation = async (id) => {
     const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "user/loggedinUser/" + id);
     setApplicantInformation(response.data);
-    console.log("사용자 정보: ", response.data);
   };
 
   const displayAlert = async (message) => {
@@ -92,12 +88,12 @@ const FormRender = (props) => {
   };
 
   const addFormData = async () => {
-    console.log(props.param.count);
     var isFilled = true;
     var params = new URLSearchParams();
     params.append("program_id", programID);
     params.append("user_id", userID);
     params.append("content", JSON.stringify(formInformation));
+
     if (props.param.count === 0) {
       if (status === 0) {
         props.param.count = props.param.count + 1;
@@ -118,8 +114,9 @@ const FormRender = (props) => {
         }
 
         if (isFilled && props.param.count === 0) {
-          if (!formInformation.length > 0 && props.param.count === 0) {
+          if (formInformation.length > 0 && props.param.count === 0) {
             const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "applicant/apply", params);
+
             displayAlert(" 프로그램이 신청 되었습니다.");
             navigate("/mypage");
             props.param.count = props.param.count + 1;
