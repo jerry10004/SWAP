@@ -7,6 +7,7 @@ import { ko } from "date-fns/esm/locale";
 import axios from "axios";
 import DefaultImg from "assets/images/Default_img.png";
 import { Input } from "reactstrap";
+import moment from "moment";
 
 const ProgramInformation = (props) => {
   const [programInformation, setProgramInformation] = useState(null);
@@ -45,29 +46,6 @@ const ProgramInformation = (props) => {
     });
   };
 
-  const readProgramInformation = async (id) => {
-    setProgramInformationLoading(false);
-    const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "program/information/" + id);
-    setProgramInformation(response.data);
-    var filePathList = [];
-
-    for (var i = 0; i < response.data.length; i++) {
-      if (response.data[i].file_type === 0) {
-        filePathList.push(response.data[i].file_name);
-      } else if (response.data[i].file_type === 1) {
-        setPoster(response.data[i].file_name);
-      }
-    }
-    // console.log("프로그램 시작 날짜 : " + response.data[0].start_date);
-    setFilePath(filePathList);
-    seteditInfo(response.data[0]);
-    setStart_date(response.data[0].start_date);
-    setEnd_date(response.data[0].end_date);
-    setApplyStart_date(response.data[0].Applystart_date);
-    setApplyEnd_date(response.data[0].Applyend_date);
-    setProgramInformationLoading(true);
-  };
-
   const getFormatDate = (date) => {
     var year = date.getFullYear(); //yyyy
     var month = 1 + date.getMonth(); //M
@@ -81,6 +59,34 @@ const ProgramInformation = (props) => {
     minute = minute >= 10 ? minute : "0" + minute; //minute 두자리로 저장
 
     return year + "-" + month + "-" + day + " " + hour + ":" + minute; //'-' 추가하여 yyyy-MM-dd HH:mm 형태 생성 가능
+  };
+
+  const readProgramInformation = async (id) => {
+    setProgramInformationLoading(false);
+    const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "program/information/" + id);
+    setProgramInformation(response.data);
+    var filePathList = [];
+
+    for (var i = 0; i < response.data.length; i++) {
+      if (response.data[i].file_type === 0) {
+        filePathList.push(response.data[i].file_name);
+      } else if (response.data[i].file_type === 1) {
+        setPoster(response.data[i].file_name);
+      }
+    }
+    response.data[0].start_date = moment(response.data[0].start_date).format("YY-MM-DD HH:mm");
+    response.data[0].end_date = moment(response.data[0].end_date).format("YY-MM-DD HH:mm");
+    response.data[0].Applystart_date = moment(response.data[0].Applystart_date).format("YY-MM-DD HH:mm");
+    response.data[0].Applyend_date = moment(response.data[0].Applyend_date).format("YY-MM-DD HH:mm");
+
+    console.log(response.data[0]);
+    setFilePath(filePathList);
+    seteditInfo(response.data[0]);
+    setStart_date(response.data[0].start_date);
+    setEnd_date(response.data[0].end_date);
+    setApplyStart_date(response.data[0].Applystart_date);
+    setApplyEnd_date(response.data[0].Applyend_date);
+    setProgramInformationLoading(true);
   };
 
   const edit = () => {
@@ -485,7 +491,7 @@ const ProgramInformation = (props) => {
                               dateFormat="yyyy-MM-dd HH:mm"
                               className="datePicker"
                               name="start_date"
-                              placeholderText={programInformation[0].start_date}
+                              placeholderText={startDate}
                               selected={startDate}
                               onChange={(date) => {
                                 setStartDate(date);
