@@ -1,5 +1,5 @@
 // import node module libraries
-import { Fragment, useContext } from "react";
+import { Fragment, useContext, useLayoutEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 import { ListGroup, Accordion, Card, Image, Badge, useAccordionButton, AccordionContext } from "react-bootstrap";
@@ -7,7 +7,8 @@ import { ListGroup, Accordion, Card, Image, Badge, useAccordionButton, Accordion
 // import simple bar scrolling used for notification item scrolling
 import SimpleBar from "simplebar-react";
 import "simplebar/dist/simplebar.min.css";
-
+// import custom components
+import axios from "axios";
 // import media files
 import InverseLogo from "assets/images/SWAPInverted.png";
 
@@ -26,20 +27,51 @@ export const DashboardMenu = [
     icon: "book",
     link: "/admin/application",
   },
+];
+
+export const DashboardSuperMenu = [
+  {
+    id: uuid(),
+    title: "프로그램",
+    icon: "clipboard",
+    link: "/admin/program",
+  },
+  {
+    id: uuid(),
+    title: "신청서 템플릿",
+    icon: "book",
+    link: "/admin/application",
+  },
   {
     id: uuid(),
     title: "사용자",
     icon: "user",
     link: "/admin/user",
-    // children: [
-    //   { id: uuid(), link: "/admin/instructor", name: "관리자" },
-    //   { id: uuid(), link: "/admin/student", name: "사용자" },
-    // ],
   },
 ];
 
 const NavbarVertical = (props) => {
+  const [Menu, setMenu] = useState([]);
+  var ID = parseInt(window.sessionStorage.getItem("id"));
+
+  useLayoutEffect(() => {
+    readApplicantInformation(ID);
+  }, []);
+
   const location = useLocation();
+
+  const [applicantInformation, setApplicantInformation] = useState(null);
+
+  const readApplicantInformation = async (id) => {
+    const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "user/loggedinUser/" + id);
+    setApplicantInformation(response.data);
+    if (response.data[0].status === 0) {
+      setMenu(DashboardMenu);
+    } else if (response.data[0].status === -2) {
+      setMenu(DashboardSuperMenu);
+    }
+    console.log(Menu);
+  };
 
   const CustomToggle = ({ children, eventKey, icon }) => {
     const { activeEventKey } = useContext(AccordionContext);
@@ -108,7 +140,7 @@ const NavbarVertical = (props) => {
         </div>
         {/* Dashboard Menu */}
         <Accordion defaultActiveKey="0" as="ul" className="navbar-nav flex-column fs-4">
-          {DashboardMenu.map(function (menu, index) {
+          {Menu.map(function (menu, index) {
             if (menu.grouptitle) {
               return (
                 <Card bsPrefix="nav-item" key={index}>

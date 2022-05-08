@@ -21,12 +21,14 @@ class FormBuilder extends Component {
   constructor(props) {
     super(props);
     formData = props.content;
+    props.propFunction(this.isSet);
     this.state = {
       modalOpen: 0,
       isOpen: false,
       opacity: 0,
       formResult: "",
       title: "",
+      isSet: false,
     };
   }
 
@@ -109,6 +111,7 @@ class FormBuilder extends Component {
     const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "application/add", params);
     alert(" 저장 되었습니다.");
     this.setState({ opacity: 1, isOpen: false });
+    this.setState({ isSet: true });
   };
 
   render() {

@@ -49,11 +49,11 @@ const StudentCard = () => {
         <Row>
           <Col lg={6} md={6} className="mb-3">
             <Form.Label>이름</Form.Label>
-            <Form.Control type="text" id="username" placeholder="이름을 입력하세요 " value="정수산나" readOnly />
+            <Form.Control type="text" id="username" placeholder="이름을 입력하세요 " required />
           </Col>
           <Col lg={6} md={6} className="mb-3">
             <Form.Label>이메일 </Form.Label>
-            <Form.Control type="email" id="email" placeholder="이메일을 입력하세요 " value="sanna422@handong.ac.kr" readOnly />
+            <Form.Control type="email" id="email" placeholder="이메일을 입력하세요 " readOnly />
           </Col>
           <Col lg={6} md={6} className="mb-3">
             <Form.Label>학번 </Form.Label>

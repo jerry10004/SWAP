@@ -17,7 +17,8 @@ const SignUpAdmin = (props) => {
     console.log(event.target.value);
   };
 
-  const addUser = async () => {
+  const addUser = async (e) => {
+    e.preventDefault();
     var params = new URLSearchParams();
 
     params.append("name", name);
@@ -35,11 +36,11 @@ const SignUpAdmin = (props) => {
   };
   return (
     <>
-      <Form>
+      <Form onSubmit={addUser}>
         <Row>
           <Col lg={12} md={12} className="mb-3">
             <Form.Label>이름</Form.Label>
-            <Form.Control type="text" id="username" placeholder="이름을 입력하세요 " value={name} />
+            <Form.Control type="text" id="username" placeholder="이름을 입력하세요 " value={name} required />
           </Col>
           <Col lg={12} md={12} className="mb-3">
             <Form.Label>이메일 </Form.Label>
@@ -62,7 +63,7 @@ const SignUpAdmin = (props) => {
           </Col>
           <Col lg={12} md={12} className="mb-0 d-grid gap-2">
             {/* Button */}
-            <Button variant="primary" onClick={addUser}>
+            <Button variant="primary" type="submit">
               회원가입
             </Button>
           </Col>

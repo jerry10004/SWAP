@@ -24,6 +24,10 @@ const ApplicationFormPractice = (props) => {
   const [readyFormContent, setReadyFormContent] = useState(false);
   const [readyElementOption, setReadyElementOption] = useState(false);
 
+  const highFunction = (isSet) => {
+    console.log("isSet", isSet);
+  };
+
   useLayoutEffect(() => {
     readApplication();
     readJson();
@@ -123,82 +127,6 @@ const ApplicationFormPractice = (props) => {
     setCreateElement(true);
   };
 
-  // const ApplicationFormPractice = () => {
-  //   return (
-  //     <Fragment>
-  //       <Form className="row" id="application">
-  //         {readyJson ? (
-  //           !createJson ? (
-  //             // 1~6번
-  //             <>
-  //               <div>
-  //                 {obj.fields.map((field, index) => (
-  //                   <>
-  //                     <Element key={index} field={field} />
-  //                   </>
-  //                 ))}
-  //               </div>
-  //               <Col md={12} sm={12} className="mb-4">
-  //                 <Form.Group controlId="postalcode">
-  //                   <Form.Label>개인정보활용동의</Form.Label>
-  //                   <div className="agreement">
-  //                     법령에 따라 개인을 고유하게 구별하기 위하여 부여된 모든 식별정보(성명, 소속, 휴대폰, 이메일 등)의 수집, 이용에 대한 동의를 받고 있습니다. 신청시 기재되는 모든 개인정보는
-  //                     사업진행을 위하여 수집 및 이용될 수 있습니다. 또한 대학평가관련 자료 요청시 교내 관련부서에 자료가 제공될 수 있으며, 철저하게 관리될 예정입니다. 수집된 개인정보는 5년 경과(대학
-  //                     평가 관련 자료 요청 기간) 후 즉시 파기됩니다. 위와 관련하여 본인의 개인고유식별정보 수집, 이용에 관한 내용을 숙지하였고 이에 동의한다면 해당란에 체크해 주십시오.
-  //                   </div>
-  //                 </Form.Group>
-  //               </Col>
-  //               <Col md={12} sm={12} className="mb-5">
-  //                 <Form.Group controlId="customCheck1">
-  //                   <Form.Check type="checkbox" label="개인정보 활용에 동의합니다." disabled="true" />
-  //                 </Form.Group>
-  //               </Col>
-  //             </>
-  //           ) : // 7번
-  //           individual ? (
-  //             <>
-  //               <Col md={12} sm={12} className="mb-4">
-  //                 <Form.Group controlId="postalcode">
-  //                   <Form.Label>개인정보활용동의</Form.Label>
-  //                   <div className="agreement">
-  //                     법령에 따라 개인을 고유하게 구별하기 위하여 부여된 모든 식별정보(성명, 소속, 휴대폰, 이메일 등)의 수집, 이용에 대한 동의를 받고 있습니다. 신청시 기재되는 모든 개인정보는
-  //                     사업진행을 위하여 수집 및 이용될 수 있습니다. 또한 대학평가관련 자료 요청시 교내 관련부서에 자료가 제공될 수 있으며, 철저하게 관리될 예정입니다. 수집된 개인정보는 5년 경과(대학
-  //                     평가 관련 자료 요청 기간) 후 즉시 파기됩니다. 위와 관련하여 본인의 개인고유식별정보 수집, 이용에 관한 내용을 숙지하였고 이에 동의한다면 해당란에 체크해 주십시오.
-  //                   </div>
-  //                 </Form.Group>
-  //               </Col>
-  //               <Col md={12} sm={12} className="mb-5">
-  //                 <Form.Group controlId="customCheck1">
-  //                   <Form.Check type="checkbox" label="개인정보 활용에 동의합니다." disabled="true" />
-  //                 </Form.Group>
-  //               </Col>
-  //             </>
-  //           ) : createElement ? (
-  //             // element 선택 후 추가버튼 눌렀을 때
-  //             <>
-  //               {jsonData.map((f, i) => (
-  //                 <>
-  //                   <ElementCreate key={i} field={json[f]} />
-  //                 </>
-  //               ))}
-  //             </>
-  //           ) : (
-  //             <h2 className="mb-6 mt-4">Form 요소를 추가하여 Form을 완성해보세요 😇</h2>
-  //           )
-  //         ) : (
-  //           ""
-  //         )}
-  //       </Form>
-  //       <Row className="d-flex justify-content-end">
-  //         <Button className="btn btn-success" type="submit" onClick={save}>
-  //           저장
-  //         </Button>
-  //       </Row>
-  //     </Fragment>
-  //   );
-  // };
-
-  // 큰 틀
   return (
     <Form>
       {readyJson && readyElementOption ? (
@@ -221,7 +149,7 @@ const ApplicationFormPractice = (props) => {
         </Card.Header>
         <Card.Body>
           {/* <ApplicationFormPractice /> */}
-          {readyJson && formContent ? <FormBuilder content={formContent} /> : <h4>신청서 템플릿을 선택해주세요 :)</h4>}
+          {readyJson && formContent ? <FormBuilder content={formContent} propFunction={highFunction} /> : <h4>신청서 템플릿을 선택해주세요 :)</h4>}
         </Card.Body>
       </Card>
 

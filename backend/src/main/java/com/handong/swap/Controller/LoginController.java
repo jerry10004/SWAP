@@ -101,7 +101,7 @@ public class LoginController {
 		LoginDTO user = new LoginDTO();
 		
 		if(email.equals(userInfo.get("email"))) {
-			if(status==0) {
+			if(status==1) {
 				user.setName(httpServletRequest.getParameter("name"));
 				user.setEmail(httpServletRequest.getParameter("email"));
 				user.setStudent_id(Integer.parseInt(httpServletRequest.getParameter("student_id")));
@@ -116,7 +116,7 @@ public class LoginController {
 				System.out.println("userInfo: "+ user.toString());
 			}
 			
-			if(status==2) {
+			if(status==0) {
 				user.setName(httpServletRequest.getParameter("name"));
 				user.setEmail(httpServletRequest.getParameter("email"));
 				user.setPhone(httpServletRequest.getParameter("phone"));
