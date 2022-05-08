@@ -76,16 +76,15 @@ const ProgramInformation = (props) => {
     }
     response.data[0].start_date = moment(response.data[0].start_date).format("YY-MM-DD HH:mm");
     response.data[0].end_date = moment(response.data[0].end_date).format("YY-MM-DD HH:mm");
-    response.data[0].Applystart_date = moment(response.data[0].Applystart_date).format("YY-MM-DD HH:mm");
-    response.data[0].Applyend_date = moment(response.data[0].Applyend_date).format("YY-MM-DD HH:mm");
+    response.data[0].applystart_date = moment(response.data[0].applystart_date).format("YY-MM-DD HH:mm");
+    response.data[0].applyend_date = moment(response.data[0].applyend_date).format("YY-MM-DD HH:mm");
 
-    console.log(response.data[0]);
     setFilePath(filePathList);
     seteditInfo(response.data[0]);
     setStart_date(response.data[0].start_date);
     setEnd_date(response.data[0].end_date);
-    setApplyStart_date(response.data[0].Applystart_date);
-    setApplyEnd_date(response.data[0].Applyend_date);
+    setApplyStart_date(response.data[0].applystart_date);
+    setApplyEnd_date(response.data[0].applyend_date);
     setProgramInformationLoading(true);
   };
 
@@ -103,8 +102,8 @@ const ProgramInformation = (props) => {
 
     if (editStart) editInfo.start_date = getFormatDate(startDate);
     if (editEnd) editInfo.end_date = getFormatDate(endDate);
-    if (editApplyStart) editInfo.Applystart_date = getFormatDate(ApplystartDate);
-    if (editApplyEnd) editInfo.Applyend_date = getFormatDate(ApplyendDate);
+    if (editApplyStart) editInfo.applystart_date = getFormatDate(ApplystartDate);
+    if (editApplyEnd) editInfo.applyend_date = getFormatDate(ApplyendDate);
 
     // 포스터 업데이트
     const imgFormData = new FormData();
@@ -123,8 +122,8 @@ const ProgramInformation = (props) => {
     params.append("category_id", editInfo.category_Id);
     params.append("start_date", editInfo.start_date);
     params.append("end_date", editInfo.end_date);
-    params.append("Applystart_date", editInfo.Applystart_date);
-    params.append("Applyend_date", editInfo.Applyend_date);
+    params.append("Applystart_date", editInfo.applystart_date);
+    params.append("Applyend_date", editInfo.applyend_date);
     params.append("manager_name", editInfo.manager_name);
     params.append("manager_contact", editInfo.manager_contact);
 
@@ -491,7 +490,7 @@ const ProgramInformation = (props) => {
                               dateFormat="yyyy-MM-dd HH:mm"
                               className="datePicker"
                               name="start_date"
-                              placeholderText={startDate}
+                              placeholderText={programInformation[0].start_date}
                               selected={startDate}
                               onChange={(date) => {
                                 setStartDate(date);

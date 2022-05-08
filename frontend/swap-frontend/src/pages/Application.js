@@ -2,9 +2,9 @@
 import React, { Fragment, useState, useLayoutEffect } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import InputMask from "react-input-mask";
-import { Col, Row, Container, Card, Form, Button, ListGroup, Badge } from "react-bootstrap";
+import { Col, Row, Container, Card, Form, Button, ListGroup, Badge, Image } from "react-bootstrap";
 // import imgA from "assets/images/application/application-01.png";
-import imgA from "assets/images/CSEE.png";
+import DefaultImg from "assets/images/Default_img.png";
 import FormRender from "./FormRender";
 import moment from "moment";
 
@@ -34,6 +34,8 @@ const Application = () => {
   const [daysLeft, setdaysLeft] = useState(true);
   const [quotaLeft, setquotaLeft] = useState(true);
   const [status, setStatus] = useState();
+  const [poster, setPoster] = useState();
+
   var ID = parseInt(window.sessionStorage.getItem("id"));
   var programID = parseInt(id["id"]);
 
@@ -64,6 +66,12 @@ const Application = () => {
 
       setProgramInfo(response.data[0]);
       setProgramInfoLoading(true);
+
+      for (var i = 0; i < response.data.length; i++) {
+        if (response.data[i].file_type === 1) {
+          setPoster(response.data[i].file_name);
+        }
+      }
 
       setStartDate(moment(response.data[0].start_date).format("YY-MM-DD HH:mm"));
       setEndDate(moment(response.data[0].end_date).format("YY-MM-DD HH:mm"));
@@ -162,9 +170,12 @@ const Application = () => {
                   {/*  Card */}
                   <Card className="border-0 mb-3">
                     {/*  Card body */}
-                    <div className="p-5 text-center">
-                      {/* <Badge bg="warning">개인 - 2시간/1회</Badge> */}
-                      <img src={imgA} width="100%" object-fit="contain" />
+                    <div className="p-3 text-center">
+                      {poster ? (
+                        <Image width="100%" object-fit="contain" src={process.env.REACT_APP_RESTAPI_HOST + "resources/upload/" + poster} alt="" />
+                      ) : (
+                        <Image width="100%" object-fit="contain" src={DefaultImg} alt="" />
+                      )}
                     </div>
                     <hr className="m-0" />
                     <div className="p-5">
