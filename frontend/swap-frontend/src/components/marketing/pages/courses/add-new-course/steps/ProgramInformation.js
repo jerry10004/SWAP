@@ -58,7 +58,7 @@ const ProgramInformation = (props) => {
         setPoster(response.data[i].file_name);
       }
     }
-
+    // console.log("프로그램 시작 날짜 : " + response.data[0].start_date);
     setFilePath(filePathList);
     seteditInfo(response.data[0]);
     setStart_date(response.data[0].start_date);

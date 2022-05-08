@@ -8,6 +8,8 @@ import axios from "axios";
 import GlobalFilter from "components/elements/advance-table/GlobalFilter";
 import Pagination from "components/elements/advance-table/Pagination";
 import DotBadge from "components/elements/bootstrap/DotBadge";
+import Icon from "@mdi/react";
+import { mdiAccountMultipleOutline } from "@mdi/js";
 
 const StudentsListItems = (props) => {
   const [userInfo, setUserInfo] = useState([]);
@@ -16,6 +18,10 @@ const StudentsListItems = (props) => {
   const [applicant_id, setApplicant_id] = useState([]);
   const [program_status, setProgram_status] = useState();
   const [applicant_status, setApplicant_status] = useState("0");
+  const [programQuota, setProgramQuota] = useState();
+  const [applicants_num, setApplicants_num] = useState();
+
+  const infinite = "무제한";
 
   const columns = useMemo(
     () => [
@@ -186,12 +192,10 @@ const StudentsListItems = (props) => {
   };
 
   useLayoutEffect(() => {
-    console.log(props.param4.id);
     readProgramStatus(props.param4.id);
     readApplicantInformation(props.param4.id);
     setProgram_id(props.param4.id);
-    console.log("%%%%%%%%%%%");
-    console.log(props.param4.id);
+    readProgramQuota(props.param4.id);
   }, []);
 
   const readProgramStatus = async (id) => {
@@ -208,6 +212,12 @@ const StudentsListItems = (props) => {
     setUserInfo(response.data);
   };
 
+  const readProgramQuota = async (id) => {
+    const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "program/information/" + id);
+    setProgramQuota(response.data[0].quota);
+    setApplicants_num(response.data[0].applicants_num);
+  };
+
   return (
     <Fragment>
       <div className=" overflow-hidden">
@@ -215,7 +225,16 @@ const StudentsListItems = (props) => {
           <Col xl={6} lg={12} md={6} sm={12} className="mb-lg-0 mb-2 px-5 py-4">
             <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} placeholder="Search Students" />
           </Col>
-          <Col xl={3} lg={12} md={3} sm={12} />
+          <Col xl={3} lg={12} md={3} sm={12} className="mb-lg-0 mb-2 px-5 py-4 ">
+            <div className="d-flex align-items-center text-primary fs-4 mt-2">
+              <Icon path={mdiAccountMultipleOutline} size={1} />
+              신청현황 :{" "}
+              <span>
+                {" "}
+                {applicants_num + "명"} / {programQuota == null || programQuota === 0 || programQuota === "무제한" ? infinite : programQuota + "명"}{" "}
+              </span>
+            </div>
+          </Col>
           <Col xl={2} lg={12} md={3} sm={12} className="mb-lg-0 mb-2 px-3 py-4 ">
             {program_status === 0 ? (
               <Form.Select onChange={handleChangeSelect}>

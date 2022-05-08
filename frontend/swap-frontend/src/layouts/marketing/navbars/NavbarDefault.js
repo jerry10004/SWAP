@@ -11,6 +11,8 @@ import "../../../assets/scss/navbar.scss";
 // import media files
 import Logo from "assets/images/SWAPLogo.png";
 import Avatar1 from "assets/images/avatar/avatar-1.jpg";
+import NavbarTop from "layouts/dashboard/NavbarTop";
+import NavbarProfile from "./NavbarProfile";
 
 const NavbarDefault = ({ headerstyle }, { props }) => {
   const navigate = useNavigate();
@@ -20,6 +22,11 @@ const NavbarDefault = ({ headerstyle }, { props }) => {
   const isLaptop = useMediaQuery({
     query: "(min-width: 1024px)",
   });
+
+  const [showMenu, setShowMenu] = useState(true);
+  const ToggleMenu = () => {
+    return setShowMenu(!showMenu);
+  };
 
   const [expandedMenu, setExpandedMenu] = useState(false);
   const today = new Date();
@@ -43,58 +50,15 @@ const NavbarDefault = ({ headerstyle }, { props }) => {
             </Nav.Link>
           </Nav>
         )}
-
-        <Dropdown as={Nav.Item}>
-          <Dropdown.Toggle as={Nav.Link} bsPrefix="dt" className="rounded-circle border-bottom-0" id="dropdownUser">
-            <div className="avatar avatar-md avatar-indicators avatar-online">
-              <Image src={window.sessionStorage.getItem("profileImg")} className="rounded-circle" />
-            </div>
-          </Dropdown.Toggle>
-          <Dropdown.Menu show={isDesktop ? true : false} className="dashboard-dropdown dropdown-menu-end mt-4 py-0" aria-labelledby="dropdownUser" align="end">
-            <Dropdown.Item className="mt-3">
-              <div className="d-flex">
-                <div className="avatar avatar-md">
-                  <Image src={window.sessionStorage.getItem("profileImg")} className="rounded-circle" />
-                </div>
-                <div className="ms-3 lh-1">
-                  <h5 className="mb-1">{window.sessionStorage.getItem("name")}</h5>
-                  <p className="mb-0 text-muted">{window.sessionStorage.getItem("email")}</p>
-                </div>
-              </div>
-            </Dropdown.Item>
-            <Dropdown.Divider />
-            <Dropdown.Item eventKey="2">
-              <i className="fe fe-user me-2"></i> 프로필
-            </Dropdown.Item>
-            <Dropdown.Item>
-              <i className="fe fe-settings me-2"></i> 세팅
-            </Dropdown.Item>
-            <Dropdown.Divider />
-            <Dropdown.Item className="mb-3">
-              {/* <i className="fe fe-power me-2"></i> 로그아웃 */}
-              <GoogleLogout
-                className="nav-title"
-                clientId={process.env.REACT_APP_GOOGLE_LOGIN}
-                buttonText="Logout"
-                render={(renderProps) => (
-                  <>
-                    <i className="fe fe-power me-2"></i>
-                    <span className="" onClick={renderProps.onClick} disabled={renderProps.disabled}>
-                      로그아웃
-                    </span>
-                  </>
-                )}
-                onLogoutSuccess={logout}
-              ></GoogleLogout>
-            </Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown>
+        <NavbarProfile />
       </Fragment>
     );
   };
 
   const [isLogin, setIsLogin] = useState(false);
+
   const onSuccess = async (response) => {
+    var login = 0;
     const params = new URLSearchParams();
     params.append("token", response.tokenObj.id_token);
     params.append("name", response.profileObj.name);
@@ -113,6 +77,7 @@ const NavbarDefault = ({ headerstyle }, { props }) => {
       window.sessionStorage.setItem("status", res.data.status);
       window.sessionStorage.setItem("id", res.data.id);
       setIsLogin(true);
+      login = 1;
 
       console.log("로그인 성공");
     } else if (res.data === "newUser") {
@@ -192,7 +157,6 @@ const NavbarDefault = ({ headerstyle }, { props }) => {
               </span>
               <Form.Control type="Search" id="formSearch" className="ps-6" placeholder="Search Courses" />
             </Form>
-            {/* Right side quick / shortcut menu  */}
 
             <Nav className="navbar-nav navbar-right-wrap ms-auto d-flex nav-top-wrap">
               {window.sessionStorage.getItem("token") !== null && window.sessionStorage.getItem("expires_at") >= today.getTime() ? (
@@ -216,12 +180,6 @@ const NavbarDefault = ({ headerstyle }, { props }) => {
                     )}
                   />
                 </span>
-                // <>
-                //   <Button className="btn btn-primary shadow-sm" onClick={openModal}>
-                //     로그인
-                //   </Button>
-                //   <LoginModal open={modalOpen} close={closeModal} />
-                // </>
               )}
             </Nav>
           </Navbar.Collapse>
