@@ -77,6 +77,7 @@ public class ApplicantController {
 		applicant.setUser_id(Integer.parseInt(httpServletRequest.getParameter("user_id")));	
 		applicant.setApplication_form(httpServletRequest.getParameter("content"));
 		
+		
 		int result = applicantService.applyApplication(applicant);
 		
 		
