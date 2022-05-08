@@ -7,9 +7,9 @@ import { useParams, Link } from "react-router-dom";
 // import sub components
 import ApplicationFormView from "components/dashboard/single/overview/ApplicationFormView";
 import ApplicantsListItems from "components/dashboard/user/ApplicantsListItems";
-import axios from "axios";
-
 import ProgramInformation from "components/marketing/pages/courses/add-new-course/steps/ProgramInformation";
+
+import axios from "axios";
 
 // import sub components
 import NavbarVertical from "layouts/dashboard/NavbarVertical";
