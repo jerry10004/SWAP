@@ -54,6 +54,7 @@ const MyPage = () => {
     params.append("status", 2);
     const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "program/read/status", params);
     setCompleteProgram(response.data);
+    console.log("이거봐!!!", response.data);
   };
 
   return (

@@ -1,9 +1,10 @@
 // import node module libraries
 import { Fragment, useLayoutEffect, useState } from "react";
 import { Menu, Search } from "react-feather";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Nav, Navbar, InputGroup, Dropdown, Form, ListGroup, Row, Col, OverlayTrigger, Tooltip, Image } from "react-bootstrap";
 import axios from "axios";
+import { GoogleLogin, GoogleLogout } from "react-google-login";
 
 // import custom components
 
@@ -12,10 +13,12 @@ import Avatar1 from "assets/images/avatar/avatar-1.jpg";
 
 // import data files
 
-const NavbarProfile = (props) => {
+const NavbarProfile = ({ logout }) => {
+  const navigate = useNavigate();
   const [userEmail, setUserEmail] = useState();
   const [userName, setUserName] = useState();
   const [userInformationLoading, setUserInformationLoading] = useState(false);
+  const [isLogin, setIsLogin] = useState(false);
 
   useLayoutEffect(() => {
     var ID = readUserInformation(window.sessionStorage.getItem("id"));
@@ -23,11 +26,8 @@ const NavbarProfile = (props) => {
   }, []);
 
   const readUserInformation = async (id) => {
-    console.log("####admin####");
     setUserInformationLoading(false);
-    console.log("****read사용자정보******");
     const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "user/loggedinUser/" + id);
-    console.log("#####admin result사용자정보####", response.data);
     setUserName(response.data[0].name);
     setUserEmail(response.data[0].email);
     setUserInformationLoading(true);
@@ -69,7 +69,21 @@ const NavbarProfile = (props) => {
           </Dropdown.Item>
           <Dropdown.Divider />
           <Dropdown.Item className="mb-3">
-            <i className="fe fe-power me-2"></i> 로그아웃
+            {/* <i className="fe fe-power me-2"></i> 로그아웃 */}
+            <GoogleLogout
+              className="nav-title"
+              clientId={process.env.REACT_APP_GOOGLE_LOGIN}
+              buttonText="Logout"
+              render={(renderProps) => (
+                <>
+                  <i className="fe fe-power me-2"></i>
+                  <span className="" onClick={renderProps.onClick} disabled={renderProps.disabled}>
+                    로그아웃
+                  </span>
+                </>
+              )}
+              onLogoutSuccess={logout}
+            ></GoogleLogout>
           </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>

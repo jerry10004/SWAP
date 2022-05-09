@@ -136,7 +136,7 @@ const SignUpStudent = (props) => {
         <Row>
           <Col lg={6} md={6} className="mb-3">
             <Form.Label>이름</Form.Label>
-            <Form.Control type="text" id="username" placeholder="이름을 입력하세요 " name="name" onChange={handleChange} required />
+            <Form.Control type="text" id="username" placeholder="이름을 입력하세요 " name="name" value={formData.name} onChange={handleChange} required />
             <span className="fs-6"> *실명을 입력해주세요.</span>
           </Col>
           <Col lg={6} md={6} className="mb-3">

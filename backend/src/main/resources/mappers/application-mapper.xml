@@ -17,8 +17,8 @@
    	</select>
 
 	<insert id = "insertApplication" parameterType="Application">	
-   		INSERT INTO Application (name, content)
-		VALUES (#{name}, #{content})
+   		INSERT INTO Application (name, content, admin_id)
+		VALUES (#{name}, #{content}, 56)
    	</insert>
    	
    	

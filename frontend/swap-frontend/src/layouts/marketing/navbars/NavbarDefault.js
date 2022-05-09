@@ -34,7 +34,7 @@ const NavbarDefault = ({ headerstyle }, { props }) => {
   const QuickMenu = () => {
     return (
       <Fragment>
-        {window.sessionStorage.getItem("status") == 0 ? (
+        {window.sessionStorage.getItem("status") === "0" || window.sessionStorage.getItem("status") === "-2" ? (
           <Nav>
             <Nav.Link className="h4" href="admin/program">
               관리자 페이지
@@ -50,7 +50,7 @@ const NavbarDefault = ({ headerstyle }, { props }) => {
             </Nav.Link>
           </Nav>
         )}
-        <NavbarProfile />
+        <NavbarProfile logout={logout} />
       </Fragment>
     );
   };
@@ -91,6 +91,7 @@ const NavbarDefault = ({ headerstyle }, { props }) => {
   };
 
   const logout = async () => {
+    console.log("logout gksek!!!!");
     setIsLogin(true);
     const params = new URLSearchParams();
     params.append("email", window.sessionStorage.getItem("email"));
