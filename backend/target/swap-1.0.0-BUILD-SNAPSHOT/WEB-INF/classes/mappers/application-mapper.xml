@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Application">  
+
+	<select id="read" resultType="ApplicationRead">
+	   select A.id, A.name, A2.name as admin, A.regdate
+		from Application AS A
+		join Admin A2 on A2.id = A.admin_id
+		order by A.regdate desc;
+   	</select> 
+
+   	<select id="readJson" resultType="Application">
+	   select A.id, A.content
+		from Application AS A
+		where A.id = #{id}
+   	</select>
+
+	<insert id = "insertApplication" parameterType="Application">	
+   		INSERT INTO Application (name, content)
+		VALUES (#{name}, #{content})
+   	</insert>
+   	
+   	
+   	<select id="readName" resultType="ApplicationName">
+	   select A.id as value, A.name as label
+		from Application AS A
+   	</select>
+   	
+   	<delete id="delete" parameterType="Integer">
+   		delete from Application
+		WHERE id = #{id}
+   	</delete>
+   	
+   	<select id="deleteConfirm" parameterType="Integer" resultType="Integer">
+   		SELECT IF(COUNT(P.ID) > 0, 0, 1) AS result
+		from Application AS A
+		JOIN Program P on A.id = P.application_form
+		WHERE A.id = #{id};
+   	</select>
+   	
+   	<select id="readApplicationById" parameterType="Integer" resultType="Application">
+	   select A.name, A.content
+		FROM Application AS A
+		where A.id = #{id};
+   	</select>
+
+   	<select id="readApplicationForm" resultType="Application">
+	   select A.id, A.content,A.name
+		from Application AS A
+		LEFT JOIN Program as P
+		ON P.application_form = A.id
+		where P.id = #{id}
+   	</select>
+   	
+   	
+   	 <select id="readProgramName" parameterType="Integer" resultType="String">
+	   select P.program_name
+		FROM Program AS P
+		where P.application_form = #{id}
+   	</select>
+   	
+   	
+</mapper>

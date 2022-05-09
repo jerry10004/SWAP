@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="User">   
+
+   	<select id="readUser" resultType="User">
+	   	select id, name, phone, email, student_id, student_class, semester, department,major1, major2, status
+		from User 
+		where deldate is null
+		ORDER BY regdate desc;
+   	</select>
+   	<select id="readStudents" resultType="User">
+	   	select id, name, phone, email, student_id, student_class, semester, department,major1, major2
+		from User 
+		where deldate is null AND status = 1
+		ORDER BY regdate desc;
+   	</select>
+   	<select id="readDeletedUsers" resultType="User">
+	   	select id, name, phone, email, student_id, student_class, semester, department,major1, major2
+		from User 
+		where status = -1 AND deldate is not null
+		ORDER BY regdate desc;
+   	</select>
+   	<update id="updateAdmin" parameterType="Integer">
+   		update User
+		set status = 1
+		where id = #{id};
+   	</update>
+   	<update id="updateUser" parameterType="Integer">	
+		update User As U
+		inner join Admin As A on A.user_id = U.id
+		set U.status = 2
+		where  A.id = #{id};
+   	</update>
+   	<update id="updateDelDate" parameterType="hashmap">
+   		UPDATE User SET deldate=now(), status = -1
+		WHERE id = #{id}
+   	</update>
+   	<update id="restoreUser" parameterType="Integer">
+   		update User
+		set deldate = null, status = 0
+		where id = #{id};
+   	</update>
+   		<select id="readLoggedInUser" resultType="User">
+	   	select id, name, phone, email, student_id, student_class, semester, department,major1, major2, status
+		from User 
+		where deldate is null and id = #{id};
+   	</select>
+   	
+   	<update id="updateUserInfo" parameterType="User">
+		Update User
+		set edit_date=now(), name = #{name}, email=#{email}, student_id = #{student_id}, phone=#{phone},department = #{department}, student_class= #{student_class}, semester= #{semester}, major1= #{major1}, major2=#{major2}
+		where id = #{id};
+	</update>
+</mapper>

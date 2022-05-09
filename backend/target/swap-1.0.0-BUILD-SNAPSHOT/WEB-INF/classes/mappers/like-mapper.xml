@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Like"> 
+
+	<insert id="insertLike" parameterType="Like">
+		INSERT INTO swap.Bookmark  (`user_id`, `program_id`) 
+		VALUES (#{user_id}, #{program_id})
+	</insert>
+
+ 	<select id="readLike" resultType="Like" parameterType="hashmap">
+   		SELECT user_id, program_id
+   		from swap.Bookmark 
+   		where user_id= #{user_id} and program_id = #{program_id}
+   	</select>
+   	
+   	 	 <delete id="deleteLike" parameterType="hashmap">
+		DELETE from swap.Bookmark where user_id= #{user_id} and program_id = #{program_id}
+	</delete> 
+	
+	<select id="readAllLike" resultType="Like" parameterType="hashmap">
+   		SELECT user_id, program_id
+   		from swap.Bookmark 
+   		where user_id = #{user_id}
+   	</select>
+   	
+
+</mapper>

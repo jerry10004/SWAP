@@ -77,7 +77,7 @@ const CompleteProgramTable = ({ table_data }) => {
           value = value.toLowerCase();
           return (
             <Fragment>
-              <DotBadge bg={value === "미수료" ? "secondary" : value === "수료" ? "primrary" : ""}></DotBadge>
+              <DotBadge bg={value === "미수료" ? "secondary" : value === "수료" ? "primary" : ""}></DotBadge>
               {value.charAt(0).toUpperCase() + value.slice(1)}
             </Fragment>
           );
