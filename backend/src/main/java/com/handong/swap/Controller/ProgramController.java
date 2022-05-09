@@ -152,7 +152,7 @@ public class ProgramController {
 		String applicant_result = programService.readByStatusByUser(status, user_id);		
 		
 		LocalDateTime now = LocalDateTime.now();
-		String currentDate = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss (EE)",Locale.KOREA));
+		String currentDate = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss",Locale.KOREA));
 		
 		JSONParser parser = new JSONParser();
 		Object obj;
@@ -169,9 +169,16 @@ public class ProgramController {
 					program_status =  jsonObj.get("program_Status").toString();
 					programId = jsonObj.get("program_id").toString();
 					applicant_status = jsonObj.get("status").toString();
+					
+				System.out.println("@@@@@@@@@@@");
+				System.out.println("current: "+currentDate);
+				System.out.println("current: "+startDate);
+				System.out.println("current: "+endDate);
 					 
 			             if(currentDate.compareTo(startDate)>0 && currentDate.compareTo(endDate)<0) {//진행
+			           
 							if(applicant_status.equals("3") == false) {
+								System.out.println("here!!!");
 								applicantService.updateOngoingStatus(Integer.parseInt(programId), 3);
 								// 상태변경
 							}
