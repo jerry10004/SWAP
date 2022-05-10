@@ -61,10 +61,7 @@ const AdminProgramDetail = () => {
               <Row>
                 <Col lg={12} md={12} sm={12}>
                   <div className="border-bottom pb-4 mb-4 d-flex align-items-center justify-content-between">
-                    <div className="mb-3 mb-md-0">
-                      {programNameLoading ? <h1 className="mb-1 h2 fw-bold">{programName}</h1> : ""}
-                      {/* <h1 className="mb-1 h2 fw-bold">~~맥북신청</h1> */}
-                    </div>
+                    <div className="mb-3 mb-md-0">{programNameLoading ? <h1 className="mb-1 h2 fw-bold">{programName}</h1> : ""}</div>
                     <div>
                       <Link to="../admin/program" className="btn btn-success ">
                         프로그램 목록 보기

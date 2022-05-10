@@ -35,32 +35,28 @@
   }
 }
 
-
 // .table.table-dark thead th {
 //   background-color: $gray-800;
 // }
 
+.table > tbody {
+  vertical-align: middle;
+}
 
 .table thead th {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 1px;
   font-size: 0.75rem;
-
 }
-
-
 
 // table light
 
 .table-light {
   th {
     color: $table-head-color;
-
   }
 }
-
-
 
 // table lg
 

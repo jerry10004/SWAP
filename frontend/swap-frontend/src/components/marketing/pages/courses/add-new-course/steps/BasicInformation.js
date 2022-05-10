@@ -200,10 +200,10 @@ const BasicInformation = (props) => {
             </Col>
 
             {/* Project Cover Image */}
-            <Col xs={4} className="mb-4">
+            <Col xs={5} className="mb-4">
               <h5 className="mb-3">프로그램 이미지(포스터) </h5>
-              <div className="img_wrap dropzone py-2 border-dashed mb-3 d-flex justify-content-center">
-                {preview ? <img src={preview} alt="" width="250px" /> : <img src={PreviewDefault} alt="" width="250px" />}
+              <div className="img_wrap dropzone p-2 border-dashed mb-3 d-flex justify-content-center">
+                {preview ? <img src={preview} alt="" width="100%" /> : <img src={PreviewDefault} alt="" width="100%" />}
               </div>
               {/* <form className="upload_input">
                 <input type="file" id="image" accept="image/jpeg, image/png" onChange={onLoadPoster} />

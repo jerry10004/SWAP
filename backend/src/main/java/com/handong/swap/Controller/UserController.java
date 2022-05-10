@@ -33,18 +33,14 @@ public class UserController {
 	@RequestMapping(value = "", method = RequestMethod.GET, produces = "application/json; charset=utf8")
 	@ResponseBody
 	public String readUser(HttpServletRequest httpServletRequest) throws IOException, ParseException {
-		System.out.println("읽기 시도");
 		String result = userService.read();
-		System.out.println(result);
 	    return result;
 	}
 	
 	@RequestMapping(value = "students", method = RequestMethod.GET, produces = "application/json; charset=utf8")
 	@ResponseBody
 	public String readStudents(HttpServletRequest httpServletRequest) throws IOException, ParseException {
-		System.out.println("읽기 시도");
 		String result = userService.readStudents();
-		System.out.println(result);
 	    return result;
 	}
 	
@@ -56,8 +52,6 @@ public class UserController {
 		String[] ids = param_ids[0].split(",");
 		
 		for (int i = 0; i < ids.length; i++) {
-			System.out.println("삭제 시도");
-			System.out.println("삭제 하려는 아이디 번호: "+ids[i]);
 			userService.delete(Integer.parseInt(ids[i]));
 		}
 	}
@@ -65,9 +59,7 @@ public class UserController {
 	@RequestMapping(value = "deletedusers", method = RequestMethod.GET, produces = "application/json; charset=utf8")
 	@ResponseBody
 	public String readDeletedUsers(HttpServletRequest httpServletRequest) throws IOException, ParseException {
-		System.out.println("읽기 시도");
 		String result = userService.readDeletedUsers();
-		System.out.println(result);
 	    return result;
 	}
 	
@@ -85,11 +77,7 @@ public class UserController {
 	@RequestMapping(value = "loggedinUser/{id}", method = RequestMethod.GET, produces = "application/json; charset=utf8")
 	@ResponseBody
 	public String readLoggedInUserById(@PathVariable int id) throws IOException, ParseException {
-		System.out.println("로그인 된 사용자 정보 읽기");
-		System.out.println(id);
-
 		String result = userService.readLoggedInUserById(id);
-		System.out.println("result is "+result);
 		return result;
 	}
 	

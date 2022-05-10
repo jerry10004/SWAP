@@ -165,6 +165,10 @@ const ProgramInformation = (props) => {
             },
           });
         }
+      } else {
+        var deletePosterParam = new URLSearchParams();
+        deletePosterParam.append("program_id", editInfo.id);
+        const responseFile = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "program/editFile/delete", deletePosterParam);
       }
 
       // 파일 업데이트
@@ -224,6 +228,11 @@ const ProgramInformation = (props) => {
       ...editInfo,
       [name]: value,
     });
+  };
+
+  const deletePoster = () => {
+    setPoster(null);
+    setUpdatePoster(null);
   };
 
   return (
@@ -622,6 +631,16 @@ const ProgramInformation = (props) => {
                       ) : (
                         <Image width="100%" object-fit="contain" src={DefaultImg} alt="" />
                       )}
+                      <button
+                        class="btn btn-primary btn-sm rounded-0 py-1 px-2 position-absolute end-0 me-3"
+                        type="button"
+                        data-toggle="포스터 삭제"
+                        data-placement="top"
+                        title="Delete"
+                        onClick={deletePoster}
+                      >
+                        <i class="fa fa-trash"></i>
+                      </button>
                     </Col>
                     <Col>
                       <Form className="upload_input">
