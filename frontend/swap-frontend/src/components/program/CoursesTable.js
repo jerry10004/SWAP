@@ -94,18 +94,6 @@ const CoursesTable = ({ program_data }) => {
           );
         },
       },
-
-      {
-        accessor: "name",
-        Header: "작성자",
-        Cell: ({ value, row }) => {
-          return (
-            <div className="d-flex align-items-center">
-              <h5 className="mb-0">{value}</h5>
-            </div>
-          );
-        },
-      },
       {
         accessor: "status",
         Header: "프로그램 상태",
@@ -125,6 +113,17 @@ const CoursesTable = ({ program_data }) => {
               <DotBadge bg={value === "대기" ? "warning" : value === "진행" ? "success" : value === "종료" ? "danger" : ""}></DotBadge>
               {value}
             </Fragment>
+          );
+        },
+      },
+      {
+        accessor: "name",
+        Header: "작성자",
+        Cell: ({ value, row }) => {
+          return (
+            <div className="d-flex align-items-center">
+              <h5 className="mb-0">{value}</h5>
+            </div>
           );
         },
       },
