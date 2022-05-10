@@ -73,7 +73,8 @@ const CoursesTable = ({ program_data }) => {
             <div className="d-flex align-items-center">
               <h5 className="mb-0">
                 {" "}
-                {moment(value).format("YY-MM-DD HH:mm")} ~ {moment(row.original.applyend_date).format("YY-MM-DD HH:mm")}
+                {moment(value).format("YY-MM-DD HH:mm")} ~ <br />
+                {moment(row.original.applyend_date).format("YY-MM-DD HH:mm")}
               </h5>
             </div>
           );
@@ -86,20 +87,9 @@ const CoursesTable = ({ program_data }) => {
           return (
             <div className="d-flex align-items-center">
               <h5 className="mb-0">
-                {moment(value).format("YY-MM-DD HH:mm")} ~ {moment(row.original.end_date).format("YY-MM-DD HH:mm")}
+                {moment(value).format("YY-MM-DD HH:mm")} ~ <br />
+                {moment(row.original.end_date).format("YY-MM-DD HH:mm")}
               </h5>
-            </div>
-          );
-        },
-      },
-
-      {
-        accessor: "name",
-        Header: "작성자",
-        Cell: ({ value, row }) => {
-          return (
-            <div className="d-flex align-items-center">
-              <h5 className="mb-0">{value}</h5>
             </div>
           );
         },
@@ -123,6 +113,17 @@ const CoursesTable = ({ program_data }) => {
               <DotBadge bg={value === "대기" ? "warning" : value === "진행" ? "success" : value === "종료" ? "danger" : ""}></DotBadge>
               {value}
             </Fragment>
+          );
+        },
+      },
+      {
+        accessor: "name",
+        Header: "작성자",
+        Cell: ({ value, row }) => {
+          return (
+            <div className="d-flex align-items-center">
+              <h5 className="mb-0">{value}</h5>
+            </div>
           );
         },
       },
@@ -194,8 +195,6 @@ const CoursesTable = ({ program_data }) => {
     } else {
       setProgramInfo(programList);
     }
-
-    // });
   };
 
   const { pageIndex, globalFilter } = state;

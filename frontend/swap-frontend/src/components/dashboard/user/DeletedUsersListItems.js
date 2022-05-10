@@ -179,7 +179,7 @@ const DeletedUsersListItems = () => {
         <Row className="justify-content-md-between m-3 mb-xl-0">
           <Col xl={8} lg={6} md={6} xs={12}>
             <div className="mb-2 mb-lg-4">
-              <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} placeholder="Search Users" />
+              <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} placeholder="삭제된 사용자를 검색하세요" />
             </div>
           </Col>
           <Col xxl={2} lg={6} md={6} xs={12} className="justify-content-between mb-2 mb-lg-4">

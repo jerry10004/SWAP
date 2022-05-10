@@ -10,6 +10,7 @@ import GlobalFilter from "components/elements/advance-table/GlobalFilter";
 import Pagination from "components/elements/advance-table/Pagination";
 import DotBadge from "components/elements/bootstrap/DotBadge";
 import { FormSelect } from "components/elements/form-select/FormSelect";
+import moment from "moment";
 
 const CoursesTable = ({ program_data }) => {
   const [programInfo, setProgramInfo] = useState([]);
@@ -18,6 +19,7 @@ const CoursesTable = ({ program_data }) => {
   const [progressProgram, setProgressProgram] = useState([]);
   const [finishProgram, setFinishProgram] = useState([]);
   const [category, setCategory] = useState([]);
+  const infinite = "무제한";
 
   const filterOptions = [
     { value: "대회", label: "대회" },
@@ -59,45 +61,53 @@ const CoursesTable = ({ program_data }) => {
         Header: "카테고리",
         Cell: ({ value, row }) => {
           return (
-            <div className="d-flex align-items-center">
+            <div className="d-flex align-items-center align-middle">
               <h5 className="mb-0">{value}</h5>
+            </div>
+          );
+        },
+      },
+      {
+        accessor: "applystart_date",
+        Header: "프로그램 신청일자",
+        Cell: ({ value, row }) => {
+          return (
+            <div className="d-flex align-items-center">
+              <h5 className="mb-0">
+                {" "}
+                {moment(row.original.applystart_date).format("YY-MM-DD HH:mm")} ~ <br />
+                {moment(row.original.applyend_date).format("YY-MM-DD HH:mm")}
+              </h5>
             </div>
           );
         },
       },
       {
         accessor: "start_date",
-        Header: "프로그램 시작일자",
+        Header: "프로그램 진행일자",
         Cell: ({ value, row }) => {
           return (
             <div className="d-flex align-items-center">
-              <h5 className="mb-0">{value}</h5>
+              <h5 className="mb-0">
+                {moment(row.original.start_date).format("YY-MM-DD HH:mm")} ~<br />
+                {moment(row.original.end_date).format("YY-MM-DD HH:mm")}
+              </h5>
             </div>
           );
         },
       },
       {
-        accessor: "end_date",
-        Header: "프로그램 종료일자",
+        accessor: "applicants_num",
+        Header: "신청 현황",
         Cell: ({ value, row }) => {
           return (
-            <div className="d-flex align-items-center">
-              <h5 className="mb-0">{value}</h5>
+            <div>
+              {value + "명"} / {row.original.quota == null || row.original.quota === 0 || row.original.quota === "무제한" ? infinite : row.original.quota + "명"}
             </div>
           );
         },
       },
-      {
-        accessor: "name",
-        Header: "작성자",
-        Cell: ({ value, row }) => {
-          return (
-            <div className="d-flex align-items-center">
-              <h5 className="mb-0">{value}</h5>
-            </div>
-          );
-        },
-      },
+
       {
         accessor: "status_name",
         Header: "신청 상태",
@@ -110,7 +120,6 @@ const CoursesTable = ({ program_data }) => {
           );
         },
       },
-
       {
         accessor: "status",
         Header: "프로그램 상태",
@@ -130,6 +139,17 @@ const CoursesTable = ({ program_data }) => {
               <DotBadge bg={value === "대기" ? "warning" : value === "진행" ? "success" : value === "종료" ? "danger" : ""}></DotBadge>
               {value}
             </Fragment>
+          );
+        },
+      },
+      {
+        accessor: "name",
+        Header: "작성자",
+        Cell: ({ value, row }) => {
+          return (
+            <div className="d-flex align-items-center">
+              <h5 className="mb-0">{value}</h5>
+            </div>
           );
         },
       },
@@ -203,8 +223,6 @@ const CoursesTable = ({ program_data }) => {
     } else {
       setProgramInfo(programList);
     }
-
-    // });
   };
 
   const { pageIndex, globalFilter } = state;
