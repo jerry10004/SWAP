@@ -15,6 +15,7 @@ import DefaultImg from "assets/images/Default_img.png";
 
 import NavbarDefault from "layouts/marketing/navbars/NavbarDefault";
 import "../assets/scss/programDetail.scss";
+import { Windows } from "react-bootstrap-icons";
 
 const Program = () => {
   const navigate = useNavigate();
@@ -103,14 +104,18 @@ const Program = () => {
   };
 
   const checkApply = async () => {
-    if (daysLeft === false) {
-      alert("신청기간이 마감되어서 신청 하실 수 없습니다.");
-    } else if (quotaLeft == false) {
-      alert("신청인원이 꽉 차서 신청 하실 수 없습니다.");
-    } else if (applicantData.length > 0) {
-      alert("이미 신청된 프로그램입니다.");
+    if (window.sessionStorage.getItem("id") === null) {
+      alert("로그인이 필요한 항목입니다. 로그인을 진행해 주세요.");
     } else {
-      navigate("/program/" + programInfo.id.toString() + "/application");
+      if (daysLeft === false) {
+        alert("신청기간이 마감되어서 신청 하실 수 없습니다.");
+      } else if (quotaLeft == false) {
+        alert("신청인원이 꽉 차서 신청 하실 수 없습니다.");
+      } else if (applicantData.length > 0) {
+        alert("이미 신청된 프로그램입니다.");
+      } else {
+        navigate("/program/" + programInfo.id.toString() + "/application");
+      }
     }
   };
 
