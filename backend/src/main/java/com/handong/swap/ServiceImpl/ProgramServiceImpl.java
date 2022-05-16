@@ -137,6 +137,19 @@ public class ProgramServiceImpl implements ProgramService{
 		programDAO.decreaseApplicantNum(program_id);
 	}
 
+	@Override
+	public String readApplicationByProgram(int program_id) throws JsonProcessingException {
+		List<ProgramReadDTO> programDATA = programDAO.readApplicationByProgram(program_id);
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonString = mapper.writeValueAsString(programDATA);
+		return jsonString;
+	}
+
+	@Override
+	public void updateApplicationByProgram(int program_id, String application_form) {
+		programDAO.updateApplicationByProgram(program_id,application_form);
+	}
+
 	
 
 }

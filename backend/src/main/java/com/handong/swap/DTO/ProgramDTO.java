@@ -11,7 +11,7 @@ public class ProgramDTO {
 	int category_id;
 	int applicants_num;
 	int recruitment_type;
-	int application_form;
+	String application_form;
 	String program_name;
 	String information;
 	Date start_date;
@@ -134,10 +134,10 @@ public class ProgramDTO {
 	public void setRegdate(Date regdate) {
 		this.regdate = regdate;
 	}
-	public int getApplication_form() {
+	public String getApplication_form() {
 		return application_form;
 	}
-	public void setApplication_form(int application_form) {
+	public void setApplication_form(String application_form) {
 		this.application_form = application_form;
 	}
 	public Date getDeldate() {

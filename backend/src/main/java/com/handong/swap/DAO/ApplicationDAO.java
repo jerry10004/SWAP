@@ -20,5 +20,5 @@ public interface ApplicationDAO {
 	List<ApplicationDTO> readApplicationById(int id);
 	List<String> readProgramName(int id);
 	
-	List<ApplicationDTO> readApplicationFormByProgramId(int id);
+	List<ProgramDTO> readApplicationFormByProgramId(int id);
 }

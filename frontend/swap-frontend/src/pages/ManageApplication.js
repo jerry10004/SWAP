@@ -37,11 +37,11 @@ const ManageApplication = () => {
                   <div className="mb-3 mb-md-0">
                     <h1 className="mb-1 h2 fw-bold">신청서 템플릿</h1>
                   </div>
-                  {/* <div>
-                    <Link to="/admin/addprogram" className="btn btn-primary">
-                      신청서 추가
+                  <div>
+                    <Link to="/admin/addtemplate" className="btn btn-primary">
+                      신청서 템플릿 추가
                     </Link>
-                  </div> */}
+                  </div>
                 </div>
               </Col>
             </Row>

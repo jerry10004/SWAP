@@ -31,8 +31,12 @@ const ProgramInformation = (props) => {
   const [updatePoster, setUpdatePoster] = useState();
   const [preview, setPreview] = useState();
   const [updateFiles, setUpdateFiles] = useState();
+  const [today, setToday] = useState();
 
   useLayoutEffect(() => {
+    var currDate = new Date();
+    setToday(currDate.setDate(currDate.getDate()));
+
     readProgramInformation(props.param1.id);
   }, []);
 
@@ -235,6 +239,16 @@ const ProgramInformation = (props) => {
     setUpdatePoster(null);
   };
 
+  const to_date2 = (date_str) => {
+    var yyyyMMdd = String(date_str);
+    var sYear = yyyyMMdd.substring(0, 4);
+    var sMonth = yyyyMMdd.substring(5, 7);
+    var sDate = yyyyMMdd.substring(8, 10);
+    var HH = yyyyMMdd.substring(11, 13);
+    var mm = yyyyMMdd.substring(14, 16);
+    return new Date(Number(sYear), Number(sMonth) - 1, Number(sDate), Number(HH), Number(mm));
+  };
+
   return (
     <Form>
       {programInformationLoading === true ? (
@@ -278,7 +292,6 @@ const ProgramInformation = (props) => {
                               dateFormat="yyyy-MM-dd HH:mm"
                               className="datePicker"
                               placeholderText="시작 날짜를 선택해주세요."
-                              // selected={startDate}
                               showTimeSelect
                               disabled
                             />
@@ -501,6 +514,8 @@ const ProgramInformation = (props) => {
                               name="start_date"
                               placeholderText={programInformation[0].start_date}
                               selected={startDate}
+                              minDate={today}
+                              //maxDate={}
                               onChange={(date) => {
                                 setStartDate(date);
                                 seteditStart(true);
@@ -522,6 +537,7 @@ const ProgramInformation = (props) => {
                               placeholderText={programInformation[0].end_date}
                               name="end_date"
                               selected={endDate}
+                              minDate={today}
                               onChange={(date) => {
                                 setEndDate(date);
                                 seteditEnd(true);

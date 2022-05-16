@@ -13,6 +13,7 @@ public class ProgramReadDTO {
 	String program_name;
 	int status;
 	int apply_status;
+	String application_form;
 	int quota;
 	String status_name;
 	String start_date;
@@ -45,6 +46,12 @@ public class ProgramReadDTO {
 	}
 	public void setFile_name(String file_name) {
 		this.file_name = file_name;
+	}
+	public String getApplication_form() {
+		return application_form;
+	}
+	public void setApplication_form(String application_form) {
+		this.application_form = application_form;
 	}
 	public int getFile_type() {
 		return file_type;

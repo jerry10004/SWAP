@@ -62,8 +62,8 @@ public class ProgramController {
 		String result = programService.read();
 		
 		LocalDateTime now = LocalDateTime.now();
-		String currentDate = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss (EE)",Locale.KOREA));
-		String currentApplyDate = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss (EE)",Locale.KOREA));
+		String currentDate = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss",Locale.KOREA));
+		String currentApplyDate = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss",Locale.KOREA));
 		
 		JSONParser parser = new JSONParser();
 		Object obj;
@@ -82,9 +82,7 @@ public class ProgramController {
 					apply_status = jsonObj.get("apply_status").toString();
 					status =  jsonObj.get("status").toString();
 					programId = jsonObj.get("id").toString();
-					
-		
-			            
+
 			            if(currentDate.compareTo(startDate)<0) {//대기 
 			            	if(status.equals("0") == false) {
 			            		programService.updateStatus(Integer.parseInt(programId), 0);
@@ -140,6 +138,29 @@ public class ProgramController {
 	    return result;
 	}
 	
+	
+	
+	@RequestMapping(value = "/read/application/{id}", method = RequestMethod.GET, produces = "application/json; charset=utf8")
+	@ResponseBody
+	public String readApplicationByProgram(@PathVariable int id) throws IOException, ParseException {
+		String result = programService.readApplicationByProgram(id);	
+	    return result;
+	}
+	
+	@RequestMapping(value = "/update/application", method = RequestMethod.POST, produces = "application/json; charset=utf8")
+	@ResponseBody
+	public void updateApplicationByProgram(HttpServletRequest httpServletRequest) throws IOException, ParseException {
+		
+		Integer program_id = Integer.parseInt(httpServletRequest.getParameter("program_id"));
+		String application_form = httpServletRequest.getParameter("application_form");
+		
+		programService.updateApplicationByProgram(program_id, application_form);	
+	}
+	
+ 
+ 
+	
+	
 	@RequestMapping(value = "/read/status", method = RequestMethod.POST, produces = "application/json; charset=utf8")
 	@ResponseBody
 	public String readprogramByStatusByUser(HttpServletRequest httpServletRequest) throws IOException, ParseException {
@@ -173,7 +194,6 @@ public class ProgramController {
 			             if(currentDate.compareTo(startDate)>0 && currentDate.compareTo(endDate)<0) {//진행
 			           
 							if(applicant_status.equals("3") == false) {
-								System.out.println("here!!!");
 								applicantService.updateOngoingStatus(Integer.parseInt(programId), 3);
 								// 상태변경
 							}
@@ -219,10 +239,12 @@ public class ProgramController {
 		Date end_date = (Date) formatter.parse(httpServletRequest.getParameter("end_date"));
 		Date Applystart_date = (Date) formatter.parse(httpServletRequest.getParameter("Applystart_date"));
 		Date Applyend_date = (Date) formatter.parse(httpServletRequest.getParameter("Applyend_date"));
+
 		
 		program.setAdmin_id(Integer.parseInt(httpServletRequest.getParameter("admin_id")));
 		program.setCategory_id(Integer.parseInt(httpServletRequest.getParameter("category_id")));
-		program.setApplication_form(Integer.parseInt(httpServletRequest.getParameter("application_form")));
+//		program.setApplication_form(Integer.parseInt(httpServletRequest.getParameter("application_form")));
+		program.setApplication_form(httpServletRequest.getParameter("application_form"));
 		program.setQuota(Integer.parseInt(httpServletRequest.getParameter("program_quota")));
 		program.setProgram_name(httpServletRequest.getParameter("program_name"));
 		program.setInformation(httpServletRequest.getParameter("information"));
@@ -232,6 +254,7 @@ public class ProgramController {
 		program.setManager_contact(httpServletRequest.getParameter("manager_contact"));
 		program.setApplystart_date(Applystart_date);
 		program.setApplyend_date(Applyend_date);
+
 		
 		int result = programService.add(program);
 		return result;
@@ -388,7 +411,6 @@ public class ProgramController {
 		Date start_date = (Date) formatter.parse(httpServletRequest.getParameter("start_date"));
 		Date end_date = (Date) formatter.parse(httpServletRequest.getParameter("end_date"));
 		Date Applystart_date = (Date) formatter.parse(httpServletRequest.getParameter("Applystart_date"));
-		System.out.println("@@@@@@@@@신청일자 확인: "+Applystart_date);
 		Date Applyend_date = (Date) formatter.parse(httpServletRequest.getParameter("Applyend_date"));
 		
 		program.setId(Integer.parseInt(httpServletRequest.getParameter("id")));
@@ -512,7 +534,6 @@ public class ProgramController {
 	public String readLikedPrograms(HttpServletRequest httpServletRequest) throws IOException, ParseException {
 		Integer user_id = Integer.parseInt(httpServletRequest.getParameter("user_id"));
 		String result = programService.readLikedPrograms(user_id);	
-		System.out.println(result);
 	    return result;
 	}
 }

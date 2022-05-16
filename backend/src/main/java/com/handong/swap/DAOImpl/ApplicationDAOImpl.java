@@ -11,6 +11,7 @@ import com.handong.swap.DAO.ApplicationDAO;
 import com.handong.swap.DTO.ApplicationDTO;
 import com.handong.swap.DTO.ApplicationDeleteConfirmDTO;
 import com.handong.swap.DTO.ApplicationNameDTO;
+import com.handong.swap.DTO.ProgramDTO;
 import com.handong.swap.DTO.ProgramReadNameDTO;
 
 @Repository
@@ -28,7 +29,14 @@ public class ApplicationDAOImpl implements ApplicationDAO {
 
 	@Override
 	public int add(ApplicationDTO application) {
-		int result = sqlSession.insert("Application.insertApplication", application);
+		int result;
+		int exist = sqlSession.selectOne("Application.insertConfirmApplication",application);
+		
+		if(exist == 0) result = sqlSession.insert("Application.insertApplication", application);
+		else result = -2;
+		System.out.println("=======");
+		System.out.println(exist);
+		System.out.println(result);
 		return result;
 	}
 
@@ -63,7 +71,7 @@ public class ApplicationDAOImpl implements ApplicationDAO {
 	}
 	
 	@Override
-	public List<ApplicationDTO> readApplicationFormByProgramId(int id) {
+	public List<ProgramDTO> readApplicationFormByProgramId(int id) {
 		return sqlSession.selectList("Application.readApplicationForm", id);
 	}
 

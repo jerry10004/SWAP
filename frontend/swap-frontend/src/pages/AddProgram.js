@@ -84,20 +84,18 @@ const AddNewCourse = () => {
     setCurrentStep(currentStep === 1 ? 1 : currentStep - 1);
   };
 
-  const addProgram = async () => {
+  const addProgram = async (form) => {
     var params = new URLSearchParams();
     var formattedStartDate = getFormatDate(start_date);
     var formattedEndDate = getFormatDate(end_date);
     var formattedApplyStartDate = getFormatDate(Applystart_date);
     var formattedApplyEndDate = getFormatDate(Applyend_date);
 
-    // 포스터 업로드
     const imgFormData = new FormData();
     if (poster != null) {
       imgFormData.append("img", poster);
     }
 
-    //파일 업로드
     const fileFormData = new FormData();
     if (files != null) {
       for (var i = 0; i < files.length; i++) {
@@ -107,7 +105,7 @@ const AddNewCourse = () => {
 
     params.append("admin_id", "8");
     params.append("category_id", formData.program_category);
-    params.append("application_form", formData.application_form);
+    // params.append("application_form", formData.application_form);
     params.append("program_quota", formData.program_quota);
     params.append("program_name", formData.program_title);
     params.append("information", formData.program_description);
@@ -117,7 +115,7 @@ const AddNewCourse = () => {
     params.append("Applyend_date", formattedApplyEndDate);
     params.append("manager_name", formData.manager_name);
     params.append("manager_contact", formData.manager_contact);
-    console.log(formattedStartDate);
+    params.append("application_form", form);
     if (window.confirm("프로그램을 추가하시겠습니까?")) {
       const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "program/add", params).then((response) => {
         console.log("응답: " + response.data);
@@ -202,7 +200,7 @@ const AddNewCourse = () => {
       id: 2,
       title: "프로그램 신청서 Form 선택",
       // content: <CoursesMedia data={formData} handleChange={handleChange} setStart_date={setStart_date} setEnd_date={setEnd_date} submit={addProgram} previous={previous} />,
-      content: <ApplicationFormPractice data={formData} handleChange={handleChange} setEnd_date={setEnd_date} submit={addProgram} previous={previous} />,
+      content: <ApplicationFormPractice data={formData} handleChange={handleChange} setEnd_date={setEnd_date} previous={previous} submit={addProgram} />,
       // content: <FormBuilder />,
       // content: <ApplicationForm data={formData} handleChange={handleChange} setStart_date={setStart_date} setEnd_date={setEnd_date} submit={addProgram} previous={previous} />,
     },

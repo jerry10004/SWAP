@@ -59,20 +59,16 @@ public class ApplicationController {
 	
 	@RequestMapping(value = "/add", method = RequestMethod.POST, produces = "application/json; charset=utf8")
 	@ResponseBody
-	public void addApplication(HttpServletRequest httpServletRequest) throws ParseException {
+	public int addApplication(HttpServletRequest httpServletRequest) throws ParseException {
 		ApplicationDTO application = new ApplicationDTO();
 		
 		application.setName(httpServletRequest.getParameter("name"));
 		application.setContent(httpServletRequest.getParameter("content"));		
+		application.setAdmin_id(Integer.parseInt(httpServletRequest.getParameter("admin_id")));		
 		
 		int result = applicationService.add(application);
 		
-		if(result ==0 ) {
-			System.out.println("신청서 추가 실패");
-		}
-		else {
-			System.out.println("신청서 추가 성공");
-		}
+		return result;
 		
 	}
 	
