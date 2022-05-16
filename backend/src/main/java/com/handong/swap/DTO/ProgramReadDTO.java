@@ -13,11 +13,8 @@ public class ProgramReadDTO {
 	String program_name;
 	int status;
 	int apply_status;
-<<<<<<< HEAD
 	String application_form;
-=======
 	int quota;
->>>>>>> refs/remotes/origin/main
 	String status_name;
 	String start_date;
 	String end_date;
