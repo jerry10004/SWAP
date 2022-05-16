@@ -113,6 +113,7 @@ const StudentsListItems = (props) => {
       if (window.confirm("사용자 상태를 수정하시겠습니까?")) {
         const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "applicant/applicants/" + program_id + "/update", params);
         readApplicantInformation(props.param4.id);
+        readProgramQuota(props.param4.id);
         alert("사용자 상태가 수정되었습니다.");
       }
     }
@@ -222,11 +223,8 @@ const StudentsListItems = (props) => {
     <Fragment>
       <div className=" overflow-hidden">
         <Row className="pe-3">
-          <Col xl={6} lg={12} md={6} sm={12} className="mb-lg-0 mb-2 px-5 py-4">
-            <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} placeholder="Search Students" />
-          </Col>
           <Col xl={3} lg={12} md={3} sm={12} className="mb-lg-0 mb-2 px-5 py-4 ">
-            <div className="d-flex align-items-center text-primary fs-4 mt-2">
+            <div className="d-flex align-items-center fs-5 mt-3">
               <Icon path={mdiAccountMultipleOutline} size={1} />
               신청현황 :{" "}
               <span>
@@ -235,6 +233,10 @@ const StudentsListItems = (props) => {
               </span>
             </div>
           </Col>
+          <Col xl={6} lg={12} md={6} sm={12} className="mb-lg-0 mb-2 px-5 py-4">
+            <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} placeholder="Search Students" />
+          </Col>
+
           <Col xl={2} lg={12} md={3} sm={12} className="mb-lg-0 mb-2 px-3 py-4 ">
             {program_status === 0 ? (
               <Form.Select onChange={handleChangeSelect}>

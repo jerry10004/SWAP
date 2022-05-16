@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useLayoutEffect } from "react";
 import { Card, Row, Form, Button, Col, InputGroup } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -13,6 +13,12 @@ const BasicInformation = (props) => {
   const [endDate, setEndDate] = useState();
   const [ApplystartDate, setApplyStartDate] = useState();
   const [ApplyendDate, setApplyEndDate] = useState();
+  const [today, setToday] = useState();
+
+  useLayoutEffect(() => {
+    var currDate = new Date();
+    setToday(currDate.setDate(currDate.getDate()));
+  }, []);
 
   return (
     <Form noValidate validated={validated} onSubmit={next}>
@@ -75,6 +81,8 @@ const BasicInformation = (props) => {
                     className="datePicker form-control"
                     placeholderText="시작 날짜를 선택해주세요."
                     selected={startDate}
+                    minDate={today}
+                    maxDate={endDate}
                     onChange={(date) => {
                       setStartDate(date);
                       props.setStart_date(date);
@@ -98,9 +106,14 @@ const BasicInformation = (props) => {
                   className="datePicker form-control"
                   placeholderText="종료 날짜를 선택해주세요."
                   selected={endDate}
+                  minDate={startDate}
                   onChange={(date) => {
-                    setEndDate(date);
-                    props.setEnd_date(date);
+                    if (startDate === undefined) {
+                      alert("프로그램 시작날짜를 먼저 선택하세요.");
+                    } else {
+                      setEndDate(date);
+                      props.setEnd_date(date);
+                    }
                   }}
                   showTimeSelect
                 />
@@ -121,6 +134,8 @@ const BasicInformation = (props) => {
                     className="datePicker form-control"
                     placeholderText="시작 날짜를 선택해주세요."
                     selected={ApplystartDate}
+                    minDate={today}
+                    maxDate={startDate}
                     onChange={(date) => {
                       setApplyStartDate(date);
                       props.setApplyStart_date(date);
@@ -144,9 +159,15 @@ const BasicInformation = (props) => {
                   className="datePicker form-control"
                   placeholderText="종료 날짜를 선택해주세요."
                   selected={ApplyendDate}
+                  minDate={ApplystartDate}
+                  maxDate={startDate}
                   onChange={(date) => {
-                    setApplyEndDate(date);
-                    props.setApplyEnd_date(date);
+                    if (ApplystartDate === undefined) {
+                      alert("신청 시작 날짜를 먼저 선택하세요.");
+                    } else {
+                      setApplyEndDate(date);
+                      props.setApplyEnd_date(date);
+                    }
                   }}
                   showTimeSelect
                 />
@@ -200,10 +221,10 @@ const BasicInformation = (props) => {
             </Col>
 
             {/* Project Cover Image */}
-            <Col xs={4} className="mb-4">
+            <Col xs={5} className="mb-4">
               <h5 className="mb-3">프로그램 이미지(포스터) </h5>
-              <div className="img_wrap dropzone py-2 border-dashed mb-3 d-flex justify-content-center">
-                {preview ? <img src={preview} alt="" width="250px" /> : <img src={PreviewDefault} alt="" width="250px" />}
+              <div className="img_wrap dropzone p-2 border-dashed mb-3 d-flex justify-content-center">
+                {preview ? <img src={preview} alt="" width="100%" /> : <img src={PreviewDefault} alt="" width="100%" />}
               </div>
               {/* <form className="upload_input">
                 <input type="file" id="image" accept="image/jpeg, image/png" onChange={onLoadPoster} />

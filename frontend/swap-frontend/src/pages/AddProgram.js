@@ -116,7 +116,6 @@ const AddNewCourse = () => {
     params.append("manager_name", formData.manager_name);
     params.append("manager_contact", formData.manager_contact);
     params.append("application_form", form);
-    console.log("!!!start: ", formattedStartDate);
     if (window.confirm("프로그램을 추가하시겠습니까?")) {
       const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "program/add", params).then((response) => {
         console.log("응답: " + response.data);
@@ -168,8 +167,6 @@ const AddNewCourse = () => {
             },
           });
         }
-
-        alert("파일 업로드 완료.");
       });
 
       alert(formData.program_title + " 프로그램이 추가 되었습니다.");

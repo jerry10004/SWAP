@@ -31,8 +31,12 @@ const ProgramInformation = (props) => {
   const [updatePoster, setUpdatePoster] = useState();
   const [preview, setPreview] = useState();
   const [updateFiles, setUpdateFiles] = useState();
+  const [today, setToday] = useState();
 
   useLayoutEffect(() => {
+    var currDate = new Date();
+    setToday(currDate.setDate(currDate.getDate()));
+
     readProgramInformation(props.param1.id);
   }, []);
 
@@ -165,6 +169,10 @@ const ProgramInformation = (props) => {
             },
           });
         }
+      } else {
+        var deletePosterParam = new URLSearchParams();
+        deletePosterParam.append("program_id", editInfo.id);
+        const responseFile = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "program/editFile/delete", deletePosterParam);
       }
 
       // 파일 업데이트
@@ -226,6 +234,21 @@ const ProgramInformation = (props) => {
     });
   };
 
+  const deletePoster = () => {
+    setPoster(null);
+    setUpdatePoster(null);
+  };
+
+  const to_date2 = (date_str) => {
+    var yyyyMMdd = String(date_str);
+    var sYear = yyyyMMdd.substring(0, 4);
+    var sMonth = yyyyMMdd.substring(5, 7);
+    var sDate = yyyyMMdd.substring(8, 10);
+    var HH = yyyyMMdd.substring(11, 13);
+    var mm = yyyyMMdd.substring(14, 16);
+    return new Date(Number(sYear), Number(sMonth) - 1, Number(sDate), Number(HH), Number(mm));
+  };
+
   return (
     <Form>
       {programInformationLoading === true ? (
@@ -269,7 +292,6 @@ const ProgramInformation = (props) => {
                               dateFormat="yyyy-MM-dd HH:mm"
                               className="datePicker"
                               placeholderText="시작 날짜를 선택해주세요."
-                              // selected={startDate}
                               showTimeSelect
                               disabled
                             />
@@ -492,6 +514,8 @@ const ProgramInformation = (props) => {
                               name="start_date"
                               placeholderText={programInformation[0].start_date}
                               selected={startDate}
+                              minDate={today}
+                              //maxDate={}
                               onChange={(date) => {
                                 setStartDate(date);
                                 seteditStart(true);
@@ -513,6 +537,7 @@ const ProgramInformation = (props) => {
                               placeholderText={programInformation[0].end_date}
                               name="end_date"
                               selected={endDate}
+                              minDate={today}
                               onChange={(date) => {
                                 setEndDate(date);
                                 seteditEnd(true);
@@ -622,6 +647,16 @@ const ProgramInformation = (props) => {
                       ) : (
                         <Image width="100%" object-fit="contain" src={DefaultImg} alt="" />
                       )}
+                      <button
+                        class="btn btn-primary btn-sm rounded-0 py-1 px-2 position-absolute end-0 me-3"
+                        type="button"
+                        data-toggle="포스터 삭제"
+                        data-placement="top"
+                        title="Delete"
+                        onClick={deletePoster}
+                      >
+                        <i class="fa fa-trash"></i>
+                      </button>
                     </Col>
                     <Col>
                       <Form className="upload_input">

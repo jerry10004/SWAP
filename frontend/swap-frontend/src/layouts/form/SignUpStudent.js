@@ -208,7 +208,7 @@ const SignUpStudent = (props) => {
             <Form.Check type="checkbox" id="check-api-checkbox">
               <Form.Check.Input type="checkbox" required />
               <Form.Check.Label>
-                <Link to="/pages/terms-and-conditions">서비스 이용약관 </Link> 및 <Link to="/pages/terms-and-conditions">개인정보취급방침</Link>
+                <Link to="/terms-and-conditions">서비스 이용약관 </Link> 및 <Link to="/personal-information">개인정보취급방침</Link>
                 동의
               </Form.Check.Label>
             </Form.Check>

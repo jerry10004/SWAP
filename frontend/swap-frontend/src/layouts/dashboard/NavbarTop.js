@@ -42,8 +42,7 @@ const NavbarTop = (props) => {
             <Link id="nav-toggle" to="#" onClick={() => props.data.SidebarToggleMenu(!props.data.showMenu)}>
               <Menu size="18px" />
             </Link>
-            <div className="ms-lg-3 d-none d-md-none d-lg-block">
-              {/* <!-- Form --> */}
+            {/* <div className="ms-lg-3 d-none d-md-none d-lg-block">
               <Form className=" d-flex align-items-center">
                 <InputGroup className="input-group-merge search-bar" bsPrefix="group-of-input">
                   <InputGroup.Text className="ps-2 pe-1 mx-2 my-1 h-40 position-absolute search-icon border-0">
@@ -52,7 +51,7 @@ const NavbarTop = (props) => {
                   <Form.Control type="search" className="form-control form-control-sm ps-6" placeholder="전체 검색하기" />
                 </InputGroup>
               </Form>
-            </div>
+            </div>*/}
           </div>
 
           <Nav className="navbar-nav navbar-right-wrap ms-auto d-flex align-items-center nav-top-wrap">

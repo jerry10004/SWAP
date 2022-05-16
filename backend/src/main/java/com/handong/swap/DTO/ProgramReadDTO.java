@@ -13,7 +13,11 @@ public class ProgramReadDTO {
 	String program_name;
 	int status;
 	int apply_status;
+<<<<<<< HEAD
 	String application_form;
+=======
+	int quota;
+>>>>>>> refs/remotes/origin/main
 	String status_name;
 	String start_date;
 	String end_date;
@@ -24,8 +28,13 @@ public class ProgramReadDTO {
     int applicants_num;
     String file_name;
     int file_type;
-    
 	
+    public int getQuota() {
+		return quota;
+	}
+	public void setQuota(int quota) {
+		this.quota = quota;
+	}
 	public String getFile_name() {
 		return file_name;
 	}

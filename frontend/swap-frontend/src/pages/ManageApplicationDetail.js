@@ -67,6 +67,7 @@ const ManageApplicationDetail = () => {
   const readProgramName = async () => {
     // programNameLoading = false;
     setProgramNameLoading(false);
+
     if (applicationLoading) {
       var params = new URLSearchParams();
       if (id["id"] != null) {

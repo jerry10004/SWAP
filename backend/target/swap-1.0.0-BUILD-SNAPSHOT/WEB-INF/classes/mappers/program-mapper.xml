@@ -5,7 +5,7 @@
 
    	
    	<select id="readProgram" resultType="ProgramRead">
-	   select P.id, A.name as name, C.category_name as category_name, P.program_name, P.status, P.quota,
+	   select P.id, A.name as name, C.category_name as category_name, P.program_name, P.status, 
 	   P.apply_status, P.start_date, P.end_date , P.Applystart_date, P.Applyend_date , P.manager_name, 
 	   P.manager_contact, P.applicants_num,P.apply_status, PF.file_name,
 	   		case
@@ -62,12 +62,6 @@
 	
    	</select>
    	
-   	<select id="readApplicationByProgram" parameterType="Integer" resultType="ProgramRead">
-   	select P.application_form, P.status, P.applicants_num 
-   	from Program as P
-   	where P.id = #{program_id}
-   	</select>
-   	
    		<select id="selectConfirmOngoing" parameterType="Integer" resultType="Integer">
 	   select case when(P.status = 1) then 1
 		else 0
@@ -87,7 +81,7 @@
    	
    	<select id="readProgramInformationByProgramId" parameterType="Integer" resultType="ProgramReadById">
 	   select P.id, P.program_name,P.category_id, C.category_name as category_name, P.quota, P.information, 
-	   P.start_date, P.end_date, P.Applystart_date, P.Applyend_date, P.manager_name, P.manager_contact, P.application_form, 
+	   P.start_date, P.end_date, P.Applystart_date, P.Applyend_date, P.manager_name, P.manager_contact, 
 	   P.applicants_num, P.status, PF.file_name, PF.file_type
 		FROM Program AS P
 		LEFT JOIN Category as C  
@@ -112,7 +106,7 @@
    	
    	<insert id = "insertProgram" parameterType="Program">	
    		INSERT INTO Program (admin_id, category_id, application_form, program_name, information, start_date, end_date, quota, Applystart_date, Applyend_date, manager_name, manager_contact)
-		VALUES (56, #{category_id}, #{application_form}, #{program_name}, #{information}, #{start_date}, #{end_date},#{quota}, #{Applystart_date}, #{Applyend_date},#{manager_name}, #{manager_contact})
+		VALUES (#{admin_id}, #{category_id}, #{application_form}, #{program_name}, #{information}, #{start_date}, #{end_date},#{quota}, #{Applystart_date}, #{Applyend_date},#{manager_name}, #{manager_contact})
    	</insert>
    	
    	<insert id = "insertPoster" parameterType="ProgramFile">	
@@ -128,11 +122,6 @@
    	<update id="updateDelDate" parameterType="Integer">
    		UPDATE Program SET deldate=now(), status = -1
 		WHERE id = #{id}
-   	</update>
-   	
-   	<update id="updateApplicationByProgram" parameterType="hashmap">
-   	 	UPDATE Program SET application_form =#{application_form}, edit_date=now()
-   	 	WHERE id = #{program_id}
    	</update>
    	
 

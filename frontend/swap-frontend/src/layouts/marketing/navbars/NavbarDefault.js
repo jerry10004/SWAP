@@ -152,12 +152,12 @@ const NavbarDefault = ({ headerstyle }, { props }) => {
 
           <Navbar.Collapse id="basic-navbar-nav">
             {/* Search Form */}
-            <Form className="mt-3 mt-lg-0 ms-lg-3 d-flex align-items-center">
+            {/* <Form className="mt-3 mt-lg-0 ms-lg-3 d-flex align-items-center">
               <span className="position-absolute ps-3 search-icon">
                 <i className="fe fe-search"></i>
               </span>
               <Form.Control type="Search" id="formSearch" className="ps-6" placeholder="Search Courses" />
-            </Form>
+            </Form> */}
 
             <Nav className="navbar-nav navbar-right-wrap ms-auto d-flex nav-top-wrap">
               {window.sessionStorage.getItem("token") !== null && window.sessionStorage.getItem("expires_at") >= today.getTime() ? (

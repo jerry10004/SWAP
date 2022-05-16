@@ -190,7 +190,6 @@ public class ProgramController {
 					program_status =  jsonObj.get("program_Status").toString();
 					programId = jsonObj.get("program_id").toString();
 					applicant_status = jsonObj.get("status").toString();
-
 					 
 			             if(currentDate.compareTo(startDate)>0 && currentDate.compareTo(endDate)<0) {//진행
 			           
@@ -396,12 +395,19 @@ public class ProgramController {
 		}
 	}
 	
+	@RequestMapping(value = "/editFile/delete", method = RequestMethod.POST, produces = "application/json; charset=utf8")
+	@ResponseBody
+	public void editProgramDeleteFile(HttpServletRequest httpServletRequest) {
+
+		programService.deleteFiles(Integer.parseInt(httpServletRequest.getParameter("program_id")));
+	}
+	
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, produces = "application/json; charset=utf8")
 	@ResponseBody
 	public void editProgram(HttpServletRequest httpServletRequest) throws ParseException {
 		ProgramDTO program = new ProgramDTO();
 		
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		SimpleDateFormat formatter = new SimpleDateFormat("YY-MM-dd HH:mm");
 		Date start_date = (Date) formatter.parse(httpServletRequest.getParameter("start_date"));
 		Date end_date = (Date) formatter.parse(httpServletRequest.getParameter("end_date"));
 		Date Applystart_date = (Date) formatter.parse(httpServletRequest.getParameter("Applystart_date"));
@@ -429,7 +435,6 @@ public class ProgramController {
 //		else category_id=6;
 //		
 		program.setCategory_id(Integer.parseInt(httpServletRequest.getParameter("category_id")));
-	
 
 		programService.edit(program);
 		

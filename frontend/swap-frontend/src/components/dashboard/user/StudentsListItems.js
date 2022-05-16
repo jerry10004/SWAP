@@ -172,7 +172,7 @@ const StudentsListItems = () => {
       <div className=" overflow-hidden">
         <Row>
           <Col xl={8} lg={12} md={12} sm={12} className="mb-lg-0 mb-2 px-5 py-4">
-            <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} placeholder="Search Students" />
+            <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} placeholder="학생을 검색하세요" />
           </Col>
         </Row>
       </div>
