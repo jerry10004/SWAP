@@ -43,6 +43,10 @@ public class LoginController {
 		
 		RestTemplate restTemplate = new RestTemplate();
 		String requestUrl;
+
+		if(!email.contains("handong.ac.kr") && !email.contains("handong.edu")) {
+			return "notHandong";
+		}
 		
 		try{
 			requestUrl = UriComponentsBuilder.fromHttpUrl("https://oauth2.googleapis.com/tokeninfo")
