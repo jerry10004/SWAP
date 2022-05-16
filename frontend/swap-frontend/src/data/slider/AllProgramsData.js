@@ -178,6 +178,7 @@ const AllProgramsData = (props) => {
             ) : (
               props.category_data
                 .filter((project) => Object.values(project).join(" ").toLowerCase().includes(term.toLowerCase()))
+                .filter((project) => Object.values(project).join(" ").toLowerCase().includes(searchTerm.toLowerCase()))
                 .map((item, index) => {
                   var address = "/program/" + item.id.toString();
                   return (
