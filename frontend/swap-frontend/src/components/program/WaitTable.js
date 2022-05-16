@@ -21,7 +21,7 @@ const CoursesTable = ({ program_data }) => {
   const [category, setCategory] = useState([]);
   const infinite = "무제한";
 
-  const filterOptions = [
+  const categoryOptions = [
     { value: "대회", label: "대회" },
     { value: "봉사", label: "봉사" },
     { value: "캠프", label: "캠프" },
@@ -33,9 +33,16 @@ const CoursesTable = ({ program_data }) => {
     { value: "기타", label: "기타" },
   ];
 
+  const filterOptions = [
+    { value: "최신등록순", label: "최신등록순" },
+    { value: "제목순", label: "제목순" },
+    { value: "신청인원순", label: "신청인원순" },
+    { value: "신청마감일자순", label: "신청마감일자순" },
+    { value: "프로그램 진행일자순", label: "프로그램 진행일자순" },
+  ];
+
   useLayoutEffect(() => {
     readProgram();
-    // readCategory();
   }, []);
 
   const columns = useMemo(
@@ -216,12 +223,47 @@ const CoursesTable = ({ program_data }) => {
     // programList.map((item) => {
     if (filterTerm !== "") {
       const newProjectsList = programList.filter((project) => {
-        console.log("project", project.category_name);
         if (project.category_name === filterTerm) return project;
       });
       setProgramInfo(newProjectsList);
     } else {
       setProgramInfo(programList);
+    }
+  };
+
+  const sortChange = (event) => {
+    let sortTerm = event.target.value;
+
+    if (sortTerm === "최신등록순") {
+      setProgramInfo(
+        [...programInfo].sort((a, b) => {
+          return b.regdate - a.regdate;
+        })
+      );
+    } else if (sortTerm === "제목순") {
+      setProgramInfo(
+        [...programInfo].sort((a, b) => {
+          return (b.program_name < a.program_name) - (b.program_name > a.program_name);
+        })
+      );
+    } else if (sortTerm === "신청인원순") {
+      setProgramInfo(
+        [...programInfo].sort((a, b) => {
+          return b.applicants_num - a.applicants_num;
+        })
+      );
+    } else if (sortTerm === "신청마감일자순") {
+      setProgramInfo(
+        [...programInfo].sort((a, b) => {
+          return (b.applyend_date < a.applyend_date) - (b.applyend_date > a.applyend_date);
+        })
+      );
+    } else if (sortTerm === "프로그램 진행일자순") {
+      setProgramInfo(
+        [...programInfo].sort((a, b) => {
+          return (b.start_date < a.start_date) - (b.start_date > a.start_date);
+        })
+      );
     }
   };
 
@@ -273,9 +315,9 @@ const CoursesTable = ({ program_data }) => {
         <Row className="justify-content-md-between m-3 mb-xl-0">
           <Col xxl={2} lg={2} md={6} xs={12}>
             {/* records filtering options */}
-            <Form.Control as={FormSelect} placeholder="카테고리" options={filterOptions} onChange={getFilterTerm} />
+            <Form.Control as={FormSelect} placeholder="카테고리" options={categoryOptions} onChange={getFilterTerm} />
           </Col>
-          <Col xl={8} lg={6} md={6} xs={12}>
+          <Col xl={5} lg={6} md={6} xs={12}>
             {/* search records */}
             <div className="mb-2 mb-lg-4">
               <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} placeholder="프로그램을 검색하세요" />
@@ -291,6 +333,9 @@ const CoursesTable = ({ program_data }) => {
             >
               삭제하기
             </Button>
+          </Col>
+          <Col>
+            <Form.Control as={FormSelect} placeholder="정렬" options={filterOptions} onChange={sortChange} />
           </Col>
         </Row>
       </div>

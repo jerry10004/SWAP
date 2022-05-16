@@ -24,8 +24,17 @@ public class ProgramReadDTO {
     int applicants_num;
     String file_name;
     int file_type;
+    Date regdate;
+    
+    
 	
-    public int getQuota() {
+    public Date getRegdate() {
+		return regdate;
+	}
+	public void setRegdate(Date regdate) {
+		this.regdate = regdate;
+	}
+	public int getQuota() {
 		return quota;
 	}
 	public void setQuota(int quota) {

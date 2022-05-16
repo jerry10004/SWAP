@@ -45,7 +45,7 @@ const AllProgramsData = (props) => {
     }
   };
 
-  const filterOptions = [
+  const categoryOptions = [
     { value: "진행", label: "신청 진행" },
     { value: "전체", label: "전체" },
     { value: "대기", label: "신청 대기" },
@@ -104,7 +104,7 @@ const AllProgramsData = (props) => {
       <Row>
         <Row className="justify-content-md-end  ms-2 mb-xl-0">
           <Col xxl={2} lg={2} md={6} xs={12}>
-            <Form.Control as={FormSelect} options={filterOptions} onChange={getFilterTerm} />
+            <Form.Control as={FormSelect} options={categoryOptions} onChange={getFilterTerm} />
           </Col>
         </Row>
         <Row className="mt-4 m-3">

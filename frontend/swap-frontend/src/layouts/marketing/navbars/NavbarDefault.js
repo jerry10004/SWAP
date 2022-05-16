@@ -10,8 +10,6 @@ import "../../../assets/scss/navbar.scss";
 
 // import media files
 import Logo from "assets/images/SWAPLogo.png";
-import Avatar1 from "assets/images/avatar/avatar-1.jpg";
-import NavbarTop from "layouts/dashboard/NavbarTop";
 import NavbarProfile from "./NavbarProfile";
 
 const NavbarDefault = ({ headerstyle }, { props }) => {
@@ -68,7 +66,10 @@ const NavbarDefault = ({ headerstyle }, { props }) => {
 
     const res = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "login", params);
 
-    if (res.data !== "fail" && res.data !== "newUser") {
+    if (res.data == "notHandong") {
+      alert("한동 메일로 로그인하여 주세요.");
+      navigate("/");
+    } else if (res.data !== "fail" && res.data !== "newUser") {
       window.sessionStorage.setItem("email", response.profileObj.email);
       window.sessionStorage.setItem("name", response.profileObj.name);
       window.sessionStorage.setItem("profileImg", response.profileObj.imageUrl);

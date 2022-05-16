@@ -1,6 +1,6 @@
 // import node module libraries
-import React, { Fragment, useMemo, useState, useLayoutEffect } from "react";
-import { useTable, useFilters, useGlobalFilter, usePagination, useRowSelect } from "react-table";
+import React, { Fragment, useMemo, useState, useLayoutEffect, useEffect } from "react";
+import { useTable, useFilters, useSortBy, useGlobalFilter, usePagination, useRowSelect } from "react-table";
 import { Link } from "react-router-dom";
 import { Col, Row, Button, Table, Form } from "react-bootstrap";
 import axios from "axios";
@@ -18,9 +18,9 @@ const CoursesTable = ({ program_data }) => {
   const [waitProgram, setWaitProgram] = useState([]);
   const [progressProgram, setProgressProgram] = useState([]);
   const [finishProgram, setFinishProgram] = useState([]);
-  const [category, setCategory] = useState([]);
+  const infinite = "무제한";
 
-  const filterOptions = [
+  const categoryOptions = [
     { value: "대회", label: "대회" },
     { value: "봉사", label: "봉사" },
     { value: "캠프", label: "캠프" },
@@ -30,6 +30,14 @@ const CoursesTable = ({ program_data }) => {
     { value: "인턴/현장실습", label: "인턴/현장실습" },
     { value: "특강", label: "특강" },
     { value: "기타", label: "기타" },
+  ];
+
+  const filterOptions = [
+    { value: "최신등록순", label: "최신등록순" },
+    { value: "제목순", label: "제목순" },
+    { value: "신청인원순", label: "신청인원순" },
+    { value: "신청마감일자순", label: "신청마감일자순" },
+    { value: "프로그램 진행일자순", label: "프로그램 진행일자순" },
   ];
 
   useLayoutEffect(() => {
@@ -90,6 +98,17 @@ const CoursesTable = ({ program_data }) => {
                 {moment(value).format("YY-MM-DD HH:mm")} ~ <br />
                 {moment(row.original.end_date).format("YY-MM-DD HH:mm")}
               </h5>
+            </div>
+          );
+        },
+      },
+      {
+        accessor: "applicants_num",
+        Header: "신청 현황",
+        Cell: ({ value, row }) => {
+          return (
+            <div>
+              {value + "명"} / {row.original.quota == null || row.original.quota === 0 || row.original.quota === "무제한" ? infinite : row.original.quota + "명"}
             </div>
           );
         },
@@ -159,6 +178,7 @@ const CoursesTable = ({ program_data }) => {
           else return false;
         }),
       },
+      useSortBy,
     },
     useFilters,
     useGlobalFilter,
@@ -197,6 +217,42 @@ const CoursesTable = ({ program_data }) => {
     }
   };
 
+  const sortChange = (event) => {
+    let sortTerm = event.target.value;
+
+    if (sortTerm === "최신등록순") {
+      setProgramInfo(
+        [...programInfo].sort((a, b) => {
+          return b.regdate - a.regdate;
+        })
+      );
+    } else if (sortTerm === "제목순") {
+      setProgramInfo(
+        [...programInfo].sort((a, b) => {
+          return (b.program_name < a.program_name) - (b.program_name > a.program_name);
+        })
+      );
+    } else if (sortTerm === "신청인원순") {
+      setProgramInfo(
+        [...programInfo].sort((a, b) => {
+          return b.applicants_num - a.applicants_num;
+        })
+      );
+    } else if (sortTerm === "신청마감일자순") {
+      setProgramInfo(
+        [...programInfo].sort((a, b) => {
+          return (b.applyend_date < a.applyend_date) - (b.applyend_date > a.applyend_date);
+        })
+      );
+    } else if (sortTerm === "프로그램 진행일자순") {
+      setProgramInfo(
+        [...programInfo].sort((a, b) => {
+          return (b.start_date < a.start_date) - (b.start_date > a.start_date);
+        })
+      );
+    }
+  };
+
   const { pageIndex, globalFilter } = state;
 
   const readProgram = async () => {
@@ -212,6 +268,7 @@ const CoursesTable = ({ program_data }) => {
         : ""
     );
 
+    console.log(response.data);
     if (program_data === 0) {
       setProgramInfo(waitProgram);
     } else if (program_data === 1) {
@@ -261,15 +318,14 @@ const CoursesTable = ({ program_data }) => {
       <div className=" overflow-hidden">
         <Row className="justify-content-md-between m-3 mb-xl-0">
           <Col xxl={2} lg={2} md={6} xs={12}>
-            {/* records filtering options */}
-            <Form.Control as={FormSelect} placeholder="카테고리" options={filterOptions} onChange={getFilterTerm} />
+            <Form.Control as={FormSelect} placeholder="카테고리" options={categoryOptions} onChange={getFilterTerm} />
           </Col>
-          <Col xl={8} lg={6} md={6} xs={12}>
-            {/* search records */}
+          <Col xl={5} lg={6} md={6} xs={12}>
             <div className="mb-2 mb-lg-4">
               <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} placeholder="프로그램을 검색하세요" />
             </div>
           </Col>
+
           <Col className="d-flex justify-content-end mb-2 mb-lg-4">
             <Button
               variant="secondary"
@@ -280,6 +336,9 @@ const CoursesTable = ({ program_data }) => {
             >
               삭제하기
             </Button>
+          </Col>
+          <Col>
+            <Form.Control as={FormSelect} placeholder="정렬" options={filterOptions} onChange={sortChange} />
           </Col>
         </Row>
       </div>

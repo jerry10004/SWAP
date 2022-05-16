@@ -43,9 +43,9 @@ public class LoginController {
 		
 		RestTemplate restTemplate = new RestTemplate();
 		String requestUrl;
-		System.out.println("token: "+token);
-		System.out.println("email: "+email);
-		System.out.println("name: "+name);
+		if(!email.contains("handong.ac.kr") && !email.contains("handong.edu")) {
+			return "notHandong";
+		}
 		
 		try{
 			requestUrl = UriComponentsBuilder.fromHttpUrl("https://oauth2.googleapis.com/tokeninfo")

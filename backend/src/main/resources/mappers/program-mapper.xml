@@ -5,7 +5,7 @@
 
    	
    	<select id="readProgram" resultType="ProgramRead">
-	   select P.id, A.name as name, C.category_name as category_name, P.program_name, P.status, P.quota,
+	   select P.id, A.name as name, C.category_name as category_name, P.program_name, P.status, P.quota, P.regdate,
 	   P.apply_status, P.start_date, P.end_date , P.Applystart_date, P.Applyend_date , P.manager_name, 
 	   P.manager_contact, P.applicants_num,P.apply_status, PF.file_name,
 	   		case

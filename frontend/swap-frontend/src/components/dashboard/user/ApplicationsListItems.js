@@ -15,7 +15,7 @@ const ApplicationsListItems = ({ application_data }) => {
   const [applicationInfo, setApplicationInfo] = useState([]);
   const [applicationList, setApplicationList] = useState([]);
 
-  const filterOptions = [
+  const categoryOptions = [
     { value: "대회", label: "대회" },
     { value: "봉사", label: "봉사" },
     { value: "캠프", label: "캠프" },
@@ -174,7 +174,7 @@ const ApplicationsListItems = ({ application_data }) => {
         <Row className="justify-content-md-between m-3 mb-xl-0">
           <Col xxl={2} lg={2} md={6} xs={12}>
             {/* records filtering options */}
-            <Form.Control as={FormSelect} placeholder="카테고리" options={filterOptions} onChange={getFilterTerm} />
+            <Form.Control as={FormSelect} placeholder="카테고리" options={categoryOptions} onChange={getFilterTerm} />
           </Col>
           <Col xl={8} lg={6} md={6} xs={12}>
             {/* search records */}
