@@ -187,7 +187,7 @@ const ApplicationFormView = (props) => {
               <Col xl={9} lg={12} md={12} sm={12} className="mb-4 mb-xl-0">
                 <Card>
                   <Card.Header>신청서</Card.Header>
-
+                  {/* <h1>190~~~~~`</h1> */}
                   <Card.Body>
                     {/*  Form */}
                     <Form className="row  " id="application">
@@ -234,7 +234,7 @@ const ApplicationFormView = (props) => {
                           <Form.Control type="text" placeholder="Handong123@handong.ac.kr" value={userInfo.email} readOnly />
                         </Form.Group>
                       </Col>
-                      {/* <form id="fb-render"></form> */}
+                      <form id="fb-render"></form>
                     </Form>
                   </Card.Body>
                 </Card>
@@ -243,17 +243,19 @@ const ApplicationFormView = (props) => {
           ) : (
             <>
               <Col xl={9} lg={12} md={12} sm={12} className="mb-4 mb-xl-0">
+                {/* <h1>246~~~~~~~~</h1> */}
                 <Form className="row" id="application">
                   <form id="fb-render2"></form>
                 </Form>
               </Col>
             </>
           )
-        ) : // 수정하고 난 다음 완료 버튼 눌렀을 때 뜨는 부분. 이때 formRender가 되지 않고, 해당 formRender에는 새롭게 수정된 Form 이 보여야한다.
+        ) : /* 수정하고 난 다음 완료 버튼 눌렀을 때 뜨는 부분. 이때 formRender가 되지 않고, 해당 formRender에는 새롭게 수정된 Form 이 보여야한다. */
         isEdit === false ? (
           <Col xl={9} lg={12} md={12} sm={12} className="mb-4 mb-xl-0">
             <Card>
               <Card.Header>신청서</Card.Header>
+              {/* <h1>259~~~~~~~~</h1> */}
               <Card.Body>
                 {/*  Form */}
                 <Form className="row  " id="application">
@@ -312,6 +314,7 @@ const ApplicationFormView = (props) => {
               <Card.Header>신청서</Card.Header>
               <Card.Body> */}
             <Row>
+              {/* <h1>317~~~~~~~~</h1> */}
               <Form>
                 {formContent.length > 1 ? (
                   <FormBuilder content={formContent} propFunction={highFunction} submit={submitButton} template="0" program="1" content={formContent} saveFunction={save} />
@@ -328,6 +331,7 @@ const ApplicationFormView = (props) => {
           {applicantInformationLoading === true ? (
             isEdit === false ? (
               <>
+                {/* <h1>334~~~~~~~~</h1> */}
                 <Card className="my-3">
                   <Fragment>
                     <Accordion defaultActiveKey="1">
@@ -373,14 +377,17 @@ const ApplicationFormView = (props) => {
                               </ListGroup.Item>
                             </>
                           ) : (
-                            <ListGroup.Item key="1" as="li">
-                              <ContextAwareToggle eventKey="1">신청한 학생들</ContextAwareToggle>
-                              <Accordion.Collapse eventKey="1">
-                                <ListGroup variant="flush">
-                                  <ListGroup.Item className="border-0 fs-5 px-0 py-4">신청한 학생이 없습니다</ListGroup.Item>
-                                </ListGroup>
-                              </Accordion.Collapse>
-                            </ListGroup.Item>
+                            <>
+                              {/* <h1>380~~~~~~~~</h1> */}
+                              <ListGroup.Item key="1" as="li">
+                                <ContextAwareToggle eventKey="1">신청한 학생들</ContextAwareToggle>
+                                <Accordion.Collapse eventKey="1">
+                                  <ListGroup variant="flush">
+                                    <ListGroup.Item className="border-0 fs-5 px-0 py-4">신청한 학생이 없습니다</ListGroup.Item>
+                                  </ListGroup>
+                                </Accordion.Collapse>
+                              </ListGroup.Item>
+                            </>
                           )}
                         </SimpleBar>
                       </ListGroup>
