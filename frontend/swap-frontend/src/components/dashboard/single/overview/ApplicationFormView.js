@@ -79,6 +79,7 @@ const ApplicationFormView = (props) => {
     var json_total = response.data[0].application_form;
     var json_sub = json_total.slice(1, json_total.length - 1);
     var arr = JSON.parse("[" + json_sub + "]");
+    console.log("@@@@@@@@@@@@@@@: ", response.data[0]);
     setProgramInformation(response.data[0]);
     setFormContent(arr);
     setReadyFormContent(true);
