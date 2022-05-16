@@ -1,40 +1,66 @@
 // import node module libraries
-import { Col, Card, Form, Button, Container, Row, Accordion, useAccordionButton, AccordionContext, ListGroup } from "react-bootstrap";
+import { Col, Card, Form, Button, Container, Row, Tab, Accordion, useAccordionButton, AccordionContext, ListGroup } from "react-bootstrap";
 import React, { Fragment, useState, useEffect, useLayoutEffect, useContext } from "react";
 import { Link } from "react-router-dom";
+
 // import custom components
 import axios from "axios";
 import $ from "jquery";
 import "pages/formBuilder.scss";
+import FormBuilder from "pages/FormBuilder";
 
 // import simple bar scrolling used for notification item scrolling
 import SimpleBar from "simplebar-react";
 import "simplebar/dist/simplebar.min.css";
-import { setDefaultLocale } from "react-datepicker";
+import jsonSkeleton from "json/jsonSkeleton.json";
 
 window.jQuery = $;
 window.$ = $;
 require("formBuilder/dist/form-render.min.js");
 
 const ApplicationFormView = (props) => {
+  const [showMenu, setShowMenu] = useState(true);
+  const [readyJson, setReadyJson] = useState(false);
+  const [formContent, setFormContent] = useState();
+  const [json, setJson] = useState(null);
+  const [programInformation, setProgramInformation] = useState();
+
   const [applicantInformation, setApplicantInformation] = useState(null);
   const [applicantInformationLoading, setApplicantInformationLoading] = useState(null);
   const [userInfo, setUserInfo] = useState();
-  const [applicationName, setApplicationName] = useState();
   const [originalFormData, setoriginalFormData] = useState([]);
   const [studentFormData, setstudentFormData] = useState([]);
   const [applicantClick, setApplicantClick] = useState(false);
   const [applicationNameLoading, setApplicationNameLoading] = useState(false);
-
+  const [isEdit, setIsEdit] = useState(false);
   const [applicantNum, setApplicantNum] = useState(0);
+  const [readyFormContent, setReadyFormContent] = useState(false);
+  const [updateFormData, setUpdateFormData] = useState();
+  const [updateLoading, setUpdateLoading] = useState(false);
 
+  const [formData, setFormData] = useState({
+    program_title: "Title",
+    program_category: "1",
+    program_description: "Hello, world!",
+    program_quota: "0",
+    program_img: "img",
+    start_date: "",
+    end_date: "",
+    Applystart_date: "",
+    Applyend_date: "",
+    manager_name: "",
+    manager_contact: "",
+    application_form: "",
+    poster: "",
+  });
   useLayoutEffect(() => {
-    //console.log(props.param2);
     readApplicantInformation(props.param2.id);
     readFormData(props.param2.id);
+    readProgramJson(props.param2.id);
   }, []);
 
   useEffect(() => {
+    setJson(jsonSkeleton);
     componentDidMount();
   }, [originalFormData, userInfo]);
 
@@ -46,27 +72,66 @@ const ApplicationFormView = (props) => {
     setApplicantInformationLoading(true);
   };
 
+  // 해당 Program Json 읽어오는 함수
+  const readProgramJson = async (id) => {
+    const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "program/read/application/" + id);
+
+    var json_total = response.data[0].application_form;
+    var json_sub = json_total.slice(1, json_total.length - 1);
+    var arr = JSON.parse("[" + json_sub + "]");
+    setProgramInformation(response.data[0]);
+    setFormContent(arr);
+    setReadyFormContent(true);
+    setReadyJson(true);
+  };
+
+  const ToggleMenu = () => {
+    return setShowMenu(!showMenu);
+  };
+  const handleChange = (event) => {
+    setFormData({
+      ...formData,
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  const submitButton = async (form) => {
+    setUpdateLoading(false);
+    setUpdateFormData(form);
+    setUpdateLoading(true);
+    var params = new URLSearchParams();
+    params.append("program_id", props.param2.id);
+    params.append("application_form", form);
+
+    if (window.confirm("신청서를 수정하시겠습니까?")) {
+      const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "program/update/application", params);
+
+      alert("신청서가 수정 되었습니다.");
+      window.location.reload();
+    }
+  };
+
+  const highFunction = (isSet) => {};
+
   const readFormData = async (id) => {
     setApplicationNameLoading(false);
-    console.log("id", id);
     const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "application/readApplicationForm/" + id);
-    console.log(response.data[0].content);
-    var json_total = response.data[0].content;
-    console.log("!!!!!!!!! ", response.data[0].name);
-    setApplicationName(response.data[0].name);
-    setApplicationNameLoading(true);
+    var json_total = response.data[0].application_form;
     setoriginalFormData(json_total);
-    console.log(originalFormData);
   };
 
   const getUserInfo = (user) => {
     setUserInfo(user);
-    console.log(user.id);
-    console.log(user.application_form);
     setstudentFormData(user.application_form);
-
-    console.log("클릭된 학생의 정보:", user);
     setApplicantClick(true);
+  };
+
+  const edit = () => {
+    setIsEdit(true);
+  };
+
+  const save = () => {
+    setIsEdit(false);
   };
 
   const componentDidMount = async () => {
@@ -74,6 +139,16 @@ const ApplicationFormView = (props) => {
     const formData = userInfo != null ? studentFormData : originalFormData;
 
     $(fbRender).formRender({ formData });
+
+    const fbRender2 = document.getElementById("fb-render2");
+    const formData2 = userInfo != null ? studentFormData : originalFormData;
+    $(fbRender2).formRender({ formData2 });
+
+    if (updateLoading) {
+      const fbRender3 = document.getElementById("fb-render3");
+      const formData3 = updateFormData;
+      $(fbRender3).formRender({ formData3 });
+    }
   };
 
   const ContextAwareToggle = ({ eventKey, callback }) => {
@@ -106,82 +181,78 @@ const ApplicationFormView = (props) => {
     <Container>
       <Row>
         {userInfo ? (
-          <>
-            <Col xl={9} lg={12} md={12} sm={12} className="mb-4 mb-xl-0">
-              <Card>
-                {applicationNameLoading ? (
-                  <Card.Header>
-                    <h4>{applicationName}</h4>
-                  </Card.Header>
-                ) : (
-                  ""
-                )}
+          isEdit === false ? (
+            <>
+              <Col xl={9} lg={12} md={12} sm={12} className="mb-4 mb-xl-0">
+                <Card>
+                  <Card.Header>신청서</Card.Header>
 
-                <Card.Body>
-                  {/*  Form */}
-                  <Form className="row  " id="application">
-                    {/*  Name */}
-                    <Col md={6} sm={12} className="mb-4">
-                      <Form.Group controlId="Name">
-                        <Form.Label>이름</Form.Label>
-                        <Form.Control type="text" placeholder="이름을 입력해 주세요" value={userInfo.name} readOnly />
-                      </Form.Group>
-                    </Col>
-                    {/*  Student Id */}
-                    <Col md={6} sm={12} className="mb-4">
-                      <Form.Group controlId="StudentID">
-                        <Form.Label>학번</Form.Label>
-                        <Form.Control type="text" placeholder="학번을 입력해 주세요" value={userInfo.student_id} readOnly />
-                      </Form.Group>
-                    </Col>
-                    {/*  Department */}
-                    <Col md={6} sm={12} className="mb-4">
-                      <Form.Group controlId="StudentID">
-                        <Form.Label>학부</Form.Label>
-                        <Form.Control type="text" placeholder="학부를 입력해 주세요" value={userInfo.department} readOnly />
-                      </Form.Group>
-                    </Col>
-                    {/*  Major1 */}
-                    <Col md={6} sm={12} className="mb-4">
-                      <Form.Group controlId="StudentID">
-                        <Form.Label>전공</Form.Label>
-                        <Form.Control type="text" placeholder="전공을 입력해 주세요" value={userInfo.major1} readOnly />
-                      </Form.Group>
-                    </Col>
-                    {/*  Phone number */}
-                    <Col md={6} sm={12} className="mb-4">
-                      <Form.Group controlId="Phone number">
-                        <Form.Label>전화번호</Form.Label>
-                        <Form.Control type="text" placeholder="Phone number (010-1234-5678)" value={userInfo.phone} readOnly />
-                      </Form.Group>
-                    </Col>
+                  <Card.Body>
+                    {/*  Form */}
+                    <Form className="row  " id="application">
+                      {/*  Name */}
+                      <Col md={6} sm={12} className="mb-4">
+                        <Form.Group controlId="Name">
+                          <Form.Label>이름</Form.Label>
+                          <Form.Control type="text" placeholder="이름을 입력해 주세요" value={userInfo.name} readOnly />
+                        </Form.Group>
+                      </Col>
+                      {/*  Student Id */}
+                      <Col md={6} sm={12} className="mb-4">
+                        <Form.Group controlId="StudentID">
+                          <Form.Label>학번</Form.Label>
+                          <Form.Control type="text" placeholder="학번을 입력해 주세요" value={userInfo.student_id} readOnly />
+                        </Form.Group>
+                      </Col>
+                      {/*  Department */}
+                      <Col md={6} sm={12} className="mb-4">
+                        <Form.Group controlId="StudentID">
+                          <Form.Label>학부</Form.Label>
+                          <Form.Control type="text" placeholder="학부를 입력해 주세요" value={userInfo.department} readOnly />
+                        </Form.Group>
+                      </Col>
+                      {/*  Major1 */}
+                      <Col md={6} sm={12} className="mb-4">
+                        <Form.Group controlId="StudentID">
+                          <Form.Label>전공</Form.Label>
+                          <Form.Control type="text" placeholder="전공을 입력해 주세요" value={userInfo.major1} readOnly />
+                        </Form.Group>
+                      </Col>
+                      {/*  Phone number */}
+                      <Col md={6} sm={12} className="mb-4">
+                        <Form.Group controlId="Phone number">
+                          <Form.Label>전화번호</Form.Label>
+                          <Form.Control type="text" placeholder="Phone number (010-1234-5678)" value={userInfo.phone} readOnly />
+                        </Form.Group>
+                      </Col>
 
-                    {/*  이메일 */}
-                    <Col md={6} sm={12} className="mb-4">
-                      <Form.Group controlId="Email">
-                        <Form.Label>이메일</Form.Label>
-                        <Form.Control type="text" placeholder="Handong123@handong.ac.kr" value={userInfo.email} readOnly />
-                      </Form.Group>
-                    </Col>
-                    <form id="fb-render"></form>
-                  </Form>
-                </Card.Body>
-              </Card>
-            </Col>
-          </>
-        ) : (
+                      {/*  이메일 */}
+                      <Col md={6} sm={12} className="mb-4">
+                        <Form.Group controlId="Email">
+                          <Form.Label>이메일</Form.Label>
+                          <Form.Control type="text" placeholder="Handong123@handong.ac.kr" value={userInfo.email} readOnly />
+                        </Form.Group>
+                      </Col>
+                      {/* <form id="fb-render"></form> */}
+                    </Form>
+                  </Card.Body>
+                </Card>
+              </Col>
+            </>
+          ) : (
+            <>
+              <Col xl={9} lg={12} md={12} sm={12} className="mb-4 mb-xl-0">
+                <Form className="row" id="application">
+                  <form id="fb-render2"></form>
+                </Form>
+              </Col>
+            </>
+          )
+        ) : // 수정하고 난 다음 완료 버튼 눌렀을 때 뜨는 부분. 이때 formRender가 되지 않고, 해당 formRender에는 새롭게 수정된 Form 이 보여야한다.
+        isEdit === false ? (
           <Col xl={9} lg={12} md={12} sm={12} className="mb-4 mb-xl-0">
             <Card>
-              {/* <Card.Header>
-                <h4>신청서 보기</h4>
-              </Card.Header> */}
-              {applicationNameLoading ? (
-                <Card.Header>
-                  <h4>{applicationName}</h4>
-                </Card.Header>
-              ) : (
-                ""
-              )}
+              <Card.Header>신청서</Card.Header>
               <Card.Body>
                 {/*  Form */}
                 <Form className="row  " id="application">
@@ -234,71 +305,100 @@ const ApplicationFormView = (props) => {
               </Card.Body>
             </Card>
           </Col>
+        ) : (
+          <Col xl={9} lg={12} md={12} sm={12} className="mb-4 mb-xl-0">
+            {/* <Card>
+              <Card.Header>신청서</Card.Header>
+              <Card.Body> */}
+            <Row>
+              <Form>
+                {formContent.length > 1 ? (
+                  <FormBuilder content={formContent} propFunction={highFunction} submit={submitButton} template="0" program="1" content={formContent} saveFunction={save} />
+                ) : (
+                  ""
+                )}
+              </Form>
+            </Row>
+            {/* </Card.Body>
+            </Card> */}
+          </Col>
         )}
         <Col xl={3} lg={12} md={12} sm={12}>
           {applicantInformationLoading === true ? (
-            <>
-              <Card className="my-3">
-                {/* <GKAccordionApplicant accordionItems={applicantInformation} /> */}
-                <Fragment>
-                  <Accordion defaultActiveKey="1">
-                    <ListGroup as="ul" variant="flush">
-                      <SimpleBar style={{ maxHeight: "700px" }}>
-                        {applicantInformation.length > 0 ? (
-                          <>
+            isEdit === false ? (
+              <>
+                <Card className="my-3">
+                  <Fragment>
+                    <Accordion defaultActiveKey="1">
+                      <ListGroup as="ul" variant="flush">
+                        <SimpleBar style={{ maxHeight: "700px" }}>
+                          {applicantInformation.length > 0 ? (
+                            <>
+                              <ListGroup.Item key="1" as="li">
+                                <ContextAwareToggle eventKey="1">신청한 학생들 </ContextAwareToggle>
+                                <Accordion.Collapse eventKey="1" className="test">
+                                  <ListGroup className="py-4" as="ul">
+                                    <div className="d-grid">
+                                      <Button
+                                        variant="transparent"
+                                        onClick={() => setUserInfo(null)}
+                                        className=" Applicant d-flex px-0 py-1 justify-content-between align-items-center text-inherit text-decoration-none border-bottom"
+                                      >
+                                        <div className="text-truncate">
+                                          <span className="fs-5">기본 신청폼 보기</span>
+                                        </div>
+                                      </Button>
+                                    </div>
+                                    {applicantInformation.map((subitem, subindex) => (
+                                      <ListGroup.Item key={subindex} as="li" className="px-0 py-1 border-0">
+                                        <div className="d-grid">
+                                          <Button
+                                            variant="transparent"
+                                            onClick={() => getUserInfo(subitem)}
+                                            className="Applicant d-flex px-0 py-1 justify-content-between align-items-center text-inherit text-decoration-none border-bottom"
+                                          >
+                                            <div className="text-truncate">
+                                              <span className="fs-5">{subitem.name}</span>
+                                            </div>
+                                            <div className="text-truncate">
+                                              <span>({subitem.student_id})</span>
+                                            </div>
+                                          </Button>
+                                        </div>
+                                      </ListGroup.Item>
+                                    ))}
+                                  </ListGroup>
+                                </Accordion.Collapse>
+                              </ListGroup.Item>
+                            </>
+                          ) : (
                             <ListGroup.Item key="1" as="li">
-                              <ContextAwareToggle eventKey="1">신청한 학생들 </ContextAwareToggle>
-                              <Accordion.Collapse eventKey="1" className="test">
-                                <ListGroup className="py-4" as="ul">
-                                  <div className="d-grid">
-                                    <Button
-                                      variant="transparent"
-                                      onClick={() => setUserInfo(null)}
-                                      className=" Applicant d-flex px-0 py-1 justify-content-between align-items-center text-inherit text-decoration-none border-bottom"
-                                    >
-                                      <div className="text-truncate">
-                                        <span className="fs-5">기본 신청폼 보기</span>
-                                      </div>
-                                    </Button>
-                                  </div>
-                                  {applicantInformation.map((subitem, subindex) => (
-                                    <ListGroup.Item key={subindex} as="li" className="px-0 py-1 border-0">
-                                      <div className="d-grid">
-                                        <Button
-                                          variant="transparent"
-                                          onClick={() => getUserInfo(subitem)}
-                                          className="Applicant d-flex px-0 py-1 justify-content-between align-items-center text-inherit text-decoration-none border-bottom"
-                                        >
-                                          <div className="text-truncate">
-                                            <span className="fs-5">{subitem.name}</span>
-                                          </div>
-                                          <div className="text-truncate">
-                                            <span>({subitem.student_id})</span>
-                                          </div>
-                                        </Button>
-                                      </div>
-                                    </ListGroup.Item>
-                                  ))}
+                              <ContextAwareToggle eventKey="1">신청한 학생들</ContextAwareToggle>
+                              <Accordion.Collapse eventKey="1">
+                                <ListGroup variant="flush">
+                                  <ListGroup.Item className="border-0 fs-5 px-0 py-4">신청한 학생이 없습니다</ListGroup.Item>
                                 </ListGroup>
                               </Accordion.Collapse>
                             </ListGroup.Item>
-                          </>
-                        ) : (
-                          <ListGroup.Item key="1" as="li">
-                            <ContextAwareToggle eventKey="1">신청한 학생들</ContextAwareToggle>
-                            <Accordion.Collapse eventKey="1">
-                              <ListGroup variant="flush">
-                                <ListGroup.Item className="border-0 fs-5 px-0 py-4">신청한 학생이 없습니다</ListGroup.Item>
-                              </ListGroup>
-                            </Accordion.Collapse>
-                          </ListGroup.Item>
-                        )}
-                      </SimpleBar>
-                    </ListGroup>
-                  </Accordion>
-                </Fragment>
-              </Card>
-            </>
+                          )}
+                        </SimpleBar>
+                      </ListGroup>
+                    </Accordion>
+                  </Fragment>
+                </Card>
+                {readyJson === true && programInformation.status === 0 && programInformation.applicants_num === 0 ? (
+                  <div className="d-flex justify-content-end ">
+                    <Button variant="primary" onClick={edit}>
+                      수정
+                    </Button>
+                  </div>
+                ) : (
+                  ""
+                )}
+              </>
+            ) : (
+              <></>
+            )
           ) : (
             ""
           )}

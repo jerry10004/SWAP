@@ -60,9 +60,10 @@ const FormRender = (props) => {
 
   const readFormData = async (id) => {
     const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "application/readApplicationForm/" + id);
-    var json_total = response.data[0].content;
+    var json_total = response.data[0].application_form;
     var json_sub = json_total.slice(1, json_total.length - 1);
     var arr = JSON.parse("[" + json_sub + "]");
+    console.log("readFormdat: ", response.data);
     setoriginalFormData(arr);
     setisFormRender(true);
     //componentDidMount();

@@ -12,6 +12,8 @@ import ManageProgram from "../pages/ManageProgram";
 import AdminProgramDetail from "../pages/AdminProgramDetail";
 import ApplicationFormView from "components/dashboard/single/overview/ApplicationFormView";
 import AdminMain from "../pages/ManageProgram";
+import AddTemplate from "../pages/AddTemplate";
+
 import MyPage from "../pages/MyPage";
 import Application from "../pages/Application";
 import ProgramDetail from "../pages/ProgramDetail";
@@ -21,6 +23,8 @@ function Admin() {
   return (
     <Routes>
       <Route path="/admin/addprogram" element={<AddProgram />} />
+      <Route path="/admin/addtemplate" element={<AddTemplate />} />
+
       <Route path="/admin" element={<AdminMain />} />
       <Route path="/admin/application" element={<ManageApplication />} />
       <Route path="/admin/application/detail/:id" element={<ManageApplicationDetail />} />

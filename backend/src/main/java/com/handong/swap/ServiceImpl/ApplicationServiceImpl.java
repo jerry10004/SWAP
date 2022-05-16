@@ -14,6 +14,7 @@ import com.handong.swap.DTO.AdminDTO;
 import com.handong.swap.DTO.ApplicationDTO;
 import com.handong.swap.DTO.ApplicationDeleteConfirmDTO;
 import com.handong.swap.DTO.ApplicationNameDTO;
+import com.handong.swap.DTO.ProgramDTO;
 import com.handong.swap.DTO.ProgramReadNameDTO;
 import com.handong.swap.Service.AdminService;
 import com.handong.swap.Service.ApplicationService;
@@ -77,9 +78,10 @@ public class ApplicationServiceImpl implements ApplicationService{
 		String jsonString = mapper.writeValueAsString(programDATA);
 		return jsonString;
 	}
-
-		public String readApplicationFormByProgramId(int id) throws JsonProcessingException{
-		List<ApplicationDTO> applicationDATA = applicationDAO.readApplicationFormByProgramId(id);
+	
+	@Override
+	public String readApplicationFormByProgramId(int id) throws JsonProcessingException{
+		List<ProgramDTO> applicationDATA = applicationDAO.readApplicationFormByProgramId(id);
 		ObjectMapper mapper = new ObjectMapper();
 		String jsonString = mapper.writeValueAsString(applicationDATA);
 		return jsonString;

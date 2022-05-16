@@ -1,5 +1,5 @@
 // import node module libraries
-import { Col, Row, Card, Form, Button } from "react-bootstrap";
+import { Col, Row, Card, Tab, Form, Button, Container } from "react-bootstrap";
 import { FormSelect } from "components/elements/form-select/FormSelect";
 import React, { Fragment, useState, useLayoutEffect } from "react";
 import axios from "axios";
@@ -7,9 +7,13 @@ import Element from "json/Element";
 import ElementCreate from "json/ElementCreate";
 import jsonSkeleton from "json/jsonSkeleton.json";
 import FormBuilder from "./FormBuilder";
+import { Link, useNavigate } from "react-router-dom";
+import NavbarVertical from "layouts/dashboard/NavbarVertical";
+import NavbarTop from "layouts/dashboard/NavbarTop";
+const AddTemplate = (props) => {
+  const [showMenu, setShowMenu] = useState(true);
+  const [applicationName, setApplicationName] = useState();
 
-const ApplicationFormPractice = (props) => {
-  const { handleChange } = props;
   const { submit, previous } = props;
   const [readyJson, setReadyJson] = useState(false);
   const [createJson, setCreateJson] = useState(false);
@@ -23,9 +27,35 @@ const ApplicationFormPractice = (props) => {
   const [formContent, setFormContent] = useState();
   const [readyFormContent, setReadyFormContent] = useState(false);
   const [readyElementOption, setReadyElementOption] = useState(false);
+  const [formData, setFormData] = useState({
+    program_title: "Title",
+    program_category: "1",
+    program_description: "Hello, world!",
+    program_quota: "0",
+    program_img: "img",
+    start_date: "",
+    end_date: "",
+    Applystart_date: "",
+    Applyend_date: "",
+    manager_name: "",
+    manager_contact: "",
+    application_form: "",
+    poster: "",
+  });
 
+  //   const { handleChange } = props;
+  const handleChange = (event) => {
+    setFormData({
+      ...formData,
+      [event.target.name]: event.target.value,
+    });
+  };
   const highFunction = (isSet) => {
     // console.log("isSet", isSet);
+  };
+
+  const ToggleMenu = () => {
+    return setShowMenu(!showMenu);
   };
 
   const submitButton = (form) => {
@@ -113,34 +143,57 @@ const ApplicationFormPractice = (props) => {
   };
 
   return (
-    <Form>
-      {readyJson && readyElementOption ? (
-        <div className="d-flex justify-content-end">
-          <Form.Group className="mb-3 w-26 ">
-            <FormSelect options={templateOptions} id="application_form" name="application_form" onChange={handleChange2} placeholder="신청서 템플릿 선택" />
-          </Form.Group>
+    <Fragment>
+      <div id="db-wrapper" className={`${showMenu ? "" : "toggled"}`}>
+        <div className="navbar-vertical navbar">
+          <NavbarVertical showMenu={showMenu} onClick={(value) => setShowMenu(value)} />
         </div>
-      ) : (
-        <div className="d-flex justify-content-end">
-          <Form.Group className="mb-3 w-26 ">
-            <FormSelect options={templateOptions} id="application_form" name="application_form" onChange={handleChange2} placeholder="신청서 템플릿 선택" />
-          </Form.Group>
-        </div>
-      )}
+        <div id="page-content">
+          <div className="header">
+            <NavbarTop
+              data={{
+                showMenu: showMenu,
+                SidebarToggleMenu: ToggleMenu,
+              }}
+            />
+          </div>
+          <div className="container-fluid p-4">
+            <Tab.Container defaultActiveKey="grid">
+              <Row>
+                <Form>
+                  {readyJson && readyElementOption ? (
+                    <div className="d-flex justify-content-end">
+                      <Form.Group className="mb-3 w-26 ">
+                        <FormSelect options={templateOptions} id="application_form" name="application_form" onChange={handleChange2} placeholder="신청서 템플릿 선택" />
+                      </Form.Group>
+                    </div>
+                  ) : (
+                    <div className="d-flex justify-content-end">
+                      <Form.Group className="mb-3 w-26 ">
+                        <FormSelect options={templateOptions} id="application_form" name="application_form" onChange={handleChange2} placeholder="신청서 템플릿 선택" />
+                      </Form.Group>
+                    </div>
+                  )}
 
-      {readyJson && formContent ? (
-        <FormBuilder content={formContent} propFunction={highFunction} submit={submitButton} template="0" />
-      ) : (
-        <Card className="mb-3  border-0">
-          <Card.Header className="border-bottom px-4 py-3">
-            <h4 className="mb-0">프로그램 신청서</h4>
-          </Card.Header>
-          <Card.Body>
-            <h4>신청서 템플릿을 선택해주세요 :)</h4>
-          </Card.Body>
-        </Card>
-      )}
-    </Form>
+                  {readyJson && formContent ? (
+                    <FormBuilder content={formContent} propFunction={highFunction} submit={submitButton} template="1" />
+                  ) : (
+                    <Card className="mb-3  border-0">
+                      <Card.Header className="border-bottom px-4 py-3">
+                        <h4 className="mb-0">프로그램 신청서</h4>
+                      </Card.Header>
+                      <Card.Body>
+                        <h4>신청서 템플릿을 선택해주세요 :)</h4>
+                      </Card.Body>
+                    </Card>
+                  )}
+                </Form>
+              </Row>
+            </Tab.Container>
+          </div>
+        </div>
+      </div>
+    </Fragment>
   );
 };
-export default ApplicationFormPractice;
+export default AddTemplate;

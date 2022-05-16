@@ -27,4 +27,6 @@ public interface ProgramDAO {
 	List<ProgramReadDTO> readLikedPrograms(int user_id);
 	public void deleteFiles(int program_id);
 	public void deleteOnlyFile(int program_id);
+	List<ProgramReadDTO> readApplicationByProgram(int program_id);
+	public void updateApplicationByProgram(int program_id, String application_form);
 }

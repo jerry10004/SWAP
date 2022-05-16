@@ -172,10 +172,9 @@ const ApplicationsListItems = ({ application_data }) => {
     <Fragment>
       <div className=" overflow-hidden">
         <Row className="justify-content-md-between m-3 mb-xl-0">
-          <Col xxl={2} lg={2} md={6} xs={12}>
-            {/* records filtering options */}
+          {/* <Col xxl={2} lg={2} md={6} xs={12}>
             <Form.Control as={FormSelect} placeholder="카테고리" options={filterOptions} onChange={getFilterTerm} />
-          </Col>
+          </Col> */}
           <Col xl={8} lg={6} md={6} xs={12}>
             {/* search records */}
             <div className="mb-2 mb-lg-4">

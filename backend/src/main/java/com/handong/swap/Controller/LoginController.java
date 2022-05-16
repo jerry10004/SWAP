@@ -43,9 +43,6 @@ public class LoginController {
 		
 		RestTemplate restTemplate = new RestTemplate();
 		String requestUrl;
-		System.out.println("token: "+token);
-		System.out.println("email: "+email);
-		System.out.println("name: "+name);
 		
 		try{
 			requestUrl = UriComponentsBuilder.fromHttpUrl("https://oauth2.googleapis.com/tokeninfo")
@@ -80,9 +77,6 @@ public class LoginController {
 		
 		RestTemplate restTemplate = new RestTemplate();
 		String requestUrl;
-		System.out.println("token: "+token);
-		System.out.println("email: "+email);
-		System.out.println("name: "+name);
 		
 
 		try{
@@ -113,7 +107,6 @@ public class LoginController {
 				user.setMajor2(httpServletRequest.getParameter("major2"));
 				user.setExpire_token(expire_token);
 				user.setStatus(status);
-				System.out.println("userInfo: "+ user.toString());
 			}
 			
 			if(status==0) {
@@ -122,7 +115,6 @@ public class LoginController {
 				user.setPhone(httpServletRequest.getParameter("phone"));
 				user.setExpire_token(expire_token);
 				user.setStatus(status);
-				System.out.println("userInfo: "+ user.toString());
 			}
 	
 			int result = loginService.insertUser(user);

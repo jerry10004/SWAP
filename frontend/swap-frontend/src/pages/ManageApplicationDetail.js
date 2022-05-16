@@ -67,16 +67,12 @@ const ManageApplicationDetail = () => {
   const readProgramName = async () => {
     // programNameLoading = false;
     setProgramNameLoading(false);
-    console.log("55555");
     if (applicationLoading) {
-      console.log("666666");
       var params = new URLSearchParams();
       if (id["id"] != null) {
-        console.log("777777");
         params.append("id", id["id"]);
         const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "application/readProgramName", params);
 
-        console.log("@@@@@@@@ ", response.data);
         setProgramName(response.data);
 
         setProgramNameLoading(true);

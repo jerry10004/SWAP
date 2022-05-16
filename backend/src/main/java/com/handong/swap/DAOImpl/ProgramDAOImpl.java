@@ -27,6 +27,9 @@ public class ProgramDAOImpl implements ProgramDAO {
 
 	public int add(ProgramDTO program) {
 		int result = sqlSession.insert("Program.insertProgram", program);
+		System.out.println("in daoimpl!!");
+		System.out.println(program.getApplystart_date());
+		System.out.println(program.getStart_date());
 		int program_id = sqlSession.selectOne("Program.readProgramLastId", program);
 		return program_id;
 	}
@@ -133,6 +136,19 @@ public class ProgramDAOImpl implements ProgramDAO {
 	@Override
 	public void deleteOnlyFile(int program_id) {
 		 sqlSession.delete("Program.deleteOnlyFile",program_id);
+	}
+
+	@Override
+	public List<ProgramReadDTO> readApplicationByProgram(int program_id) {
+		return sqlSession.selectList("Program.readApplicationByProgram",program_id);
+	}
+
+	@Override
+	public void updateApplicationByProgram(int program_id, String application_form) {
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("program_id", program_id);
+		param.put("application_form", application_form);
+		sqlSession.update("Program.updateApplicationByProgram", param);
 	}
 
 }
