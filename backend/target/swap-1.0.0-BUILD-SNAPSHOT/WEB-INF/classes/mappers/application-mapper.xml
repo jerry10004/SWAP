@@ -17,10 +17,20 @@
    	</select>
 
 	<insert id = "insertApplication" parameterType="Application">	
-   		INSERT INTO Application (name, content)
-		VALUES (#{name}, #{content})
+		INSERT INTO Application (name, content, admin_id)
+		VALUES (#{name}, #{content}, 
+		(select AD.id as admin_id
+		from Admin as AD
+		where AD.user_id = #{admin_id}))
    	</insert>
    	
+   	<select id="insertConfirmApplication" parameterType="Application" resultType="Integer">
+   	select case when COUNT(A.id)=0 then 0
+	else 1
+	end as result
+	from Application as A
+	where A.name=#{name};
+   	</select>
    	
    	<select id="readName" resultType="ApplicationName">
 	   select A.id as value, A.name as label
@@ -45,13 +55,19 @@
 		where A.id = #{id};
    	</select>
 
-   	<select id="readApplicationForm" resultType="Application">
+   	<select id="readApplicationForm" resultType="Program">
+	   select P.application_form
+		from  Program as P
+		where P.id = #{id}
+   	</select>
+<!--    	
+   	<select id="readApplicationTemplate" resultType="Application">
 	   select A.id, A.content,A.name
 		from Application AS A
 		LEFT JOIN Program as P
 		ON P.application_form = A.id
 		where P.id = #{id}
-   	</select>
+   	</select> -->
    	
    	
    	 <select id="readProgramName" parameterType="Integer" resultType="String">

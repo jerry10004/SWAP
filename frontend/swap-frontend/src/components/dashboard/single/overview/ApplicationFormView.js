@@ -315,13 +315,7 @@ const ApplicationFormView = (props) => {
               <Card.Body> */}
             <Row>
               {/* <h1>317~~~~~~~~</h1> */}
-              <Form>
-                {formContent.length > 1 ? (
-                  <FormBuilder content={formContent} propFunction={highFunction} submit={submitButton} template="0" program="1" content={formContent} saveFunction={save} />
-                ) : (
-                  ""
-                )}
-              </Form>
+              <Form>{formContent.length > 1 ? <FormBuilder content={formContent} propFunction={highFunction} submit={submitButton} template="0" program="1" saveFunction={save} /> : ""}</Form>
             </Row>
             {/* </Card.Body>
             </Card> */}

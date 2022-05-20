@@ -10,6 +10,7 @@ import ProfileCover from "components/marketing/common/headers/ProfileCover";
 import EditProfile from "../pages/EditProfile";
 import MyPage from "../pages/MyPage";
 import Bookmark from "../pages/Bookmark";
+import Portfolio from "../pages/Portfolio";
 // import media files
 import NavbarDefault from "layouts/marketing/navbars/NavbarDefault";
 import Footer from "layouts/marketing/Footer";
@@ -64,6 +65,12 @@ const MyPageLayout = () => {
                           <i className={`fe fe-user nav-icon`}></i> 프로필 정보
                         </Nav.Link>
                       </Nav.Item>
+                      <Nav.Item>
+                        <Nav.Link eventKey="portfolio" className="border-bottom">
+                          {" "}
+                          <i className={`fe fe-file nav-icon`}></i> 활동내역 한눈에 보기
+                        </Nav.Link>
+                      </Nav.Item>
                     </Nav>
                   </Col>
                   <Col lg={9} md={8} sm={12}>
@@ -76,6 +83,9 @@ const MyPageLayout = () => {
                       </Tab.Pane>
                       <Tab.Pane eventKey="profile">
                         <EditProfile userInfo={applicantInformation}></EditProfile>
+                      </Tab.Pane>
+                      <Tab.Pane eventKey="portfolio">
+                        <Portfolio></Portfolio>
                       </Tab.Pane>
                     </Tab.Content>
                   </Col>

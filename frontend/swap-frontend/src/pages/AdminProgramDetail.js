@@ -8,6 +8,7 @@ import { useParams, Link } from "react-router-dom";
 import ApplicationFormView from "components/dashboard/single/overview/ApplicationFormView";
 import ApplicantsListItems from "components/dashboard/user/ApplicantsListItems";
 import ProgramInformation from "components/marketing/pages/courses/add-new-course/steps/ProgramInformation";
+import ApplicationDataView from "../pages/ApplicationDataView";
 
 import axios from "axios";
 
@@ -87,6 +88,11 @@ const AdminProgramDetail = () => {
                               신청서
                             </Nav.Link>
                           </Nav.Item>
+                          <Nav.Item>
+                            <Nav.Link eventKey="applicationData" className="mb-sm-3 mb-md-0">
+                              신청응답
+                            </Nav.Link>
+                          </Nav.Item>
                           {/* <Nav.Item>
                             <Nav.Link eventKey="survey" className="mb-sm-3 mb-md-0">
                               설문지
@@ -106,6 +112,9 @@ const AdminProgramDetail = () => {
                           </Tab.Pane>
                           <Tab.Pane eventKey="application" className="pb-4">
                             <ApplicationFormView param2={id} />
+                          </Tab.Pane>
+                          <Tab.Pane eventKey="applicationData" className="pb-4">
+                            <ApplicationDataView param3={id} />
                           </Tab.Pane>
                           {/* <Tab.Pane eventKey="survey" className="pb-4">
                             <UpcomingDeadlines />
