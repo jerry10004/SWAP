@@ -76,6 +76,8 @@ public class LoginController {
 		String token = httpServletRequest.getParameter("token");
 		String email = httpServletRequest.getParameter("email");
 		String name = httpServletRequest.getParameter("name");
+		System.out.println("이름:::::::::::::::::::::::");
+		System.out.println(name);
 		int status = Integer.parseInt(httpServletRequest.getParameter("status"));
 		Date expire_token = new Date(Long.parseLong((httpServletRequest.getParameter("expire"))));
 		
@@ -113,7 +115,7 @@ public class LoginController {
 				user.setStatus(status);
 			}
 			
-			if(status==0) {
+			if(status==2) {
 				user.setName(httpServletRequest.getParameter("name"));
 				user.setEmail(httpServletRequest.getParameter("email"));
 				user.setPhone(httpServletRequest.getParameter("phone"));

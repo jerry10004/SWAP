@@ -9,6 +9,8 @@ import ApplicationFormView from "components/dashboard/single/overview/Applicatio
 import ApplicantsListItems from "components/dashboard/user/ApplicantsListItems";
 import ProgramInformation from "components/marketing/pages/courses/add-new-course/steps/ProgramInformation";
 import SurveyFormView from "components/dashboard/single/overview/SurveyFormView";
+import ApplicationDataView from "../pages/ApplicationDataView";
+
 import axios from "axios";
 
 // import sub components
@@ -88,6 +90,11 @@ const AdminProgramDetail = () => {
                             </Nav.Link>
                           </Nav.Item>
                           <Nav.Item>
+                            <Nav.Link eventKey="applicationData" className="mb-sm-3 mb-md-0">
+                              신청응답
+                            </Nav.Link>
+                          </Nav.Item>
+                          <Nav.Item>
                             <Nav.Link eventKey="survey" className="mb-sm-3 mb-md-0">
                               설문지
                             </Nav.Link>
@@ -110,6 +117,12 @@ const AdminProgramDetail = () => {
                           <Tab.Pane eventKey="survey" className="pb-4">
                             <SurveyFormView param3={id} />
                           </Tab.Pane>
+                          <Tab.Pane eventKey="applicationData" className="pb-4">
+                            <ApplicationDataView param3={id} />
+                          </Tab.Pane>
+                          {/* <Tab.Pane eventKey="survey" className="pb-4">
+                            <UpcomingDeadlines />
+                          </Tab.Pane> */}
                           <Tab.Pane eventKey="applicant" className="pb-4">
                             <ApplicantsListItems param4={id} />
                           </Tab.Pane>
