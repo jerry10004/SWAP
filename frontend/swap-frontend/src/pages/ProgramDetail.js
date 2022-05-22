@@ -4,6 +4,9 @@ import { Col, Row, Container, Card, OverlayTrigger, Tooltip, Button, Badge, Imag
 import { Link, useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import moment from "moment";
+import styled from 'styled-components'
+import PropTypes from 'prop-types'
+
 
 // import MDI icons
 import Icon from "@mdi/react";
@@ -16,6 +19,82 @@ import DefaultImg from "assets/images/Default_img.png";
 import NavbarDefault from "layouts/marketing/navbars/NavbarDefault";
 import "../assets/scss/programDetail.scss";
 import { Windows } from "react-bootstrap-icons";
+
+function Modal({
+  className,
+  onClose,
+  maskClosable,
+  closable,
+  visible,
+  children,
+}) {
+  const onMaskClick = (e) => {
+    if (e.target === e.currentTarget) {
+      onClose(e)
+    }
+  }
+
+  const close = (e) => {
+    if (onClose) {
+      onClose(e)
+    }
+  }
+  return (
+    <>
+      <ModalOverlay visible={visible} />
+      <ModalWrapper
+        className={className}
+        onClick={maskClosable ? onMaskClick : null}
+        tabIndex="-1"
+        visible={visible}
+      >
+        <ModalInner tabIndex="0" className="modal-inner">
+          {closable && <div className="modal-close" onClick={close} />}
+          {children}
+        </ModalInner>
+      </ModalWrapper>
+    </>
+  )
+}
+
+const ModalWrapper = styled.div`
+  box-sizing: border-box;
+  display: ${(props) => (props.visible ? 'block' : 'none')};
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1000;
+  overflow: auto;
+  outline: 0;
+`
+
+const ModalOverlay = styled.div`
+  box-sizing: border-box;
+  display: ${(props) => (props.visible ? 'block' : 'none')};
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 999;
+`
+
+const ModalInner = styled.div`
+  box-sizing: border-box;
+  position: relative;
+  box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.5);
+  background-color: #fff;
+  border-radius: 10px;
+  width: 520px;
+  max-width: 520px;
+  top: 50%;
+  transform: translateY(-50%);
+  margin: 0 auto;
+  padding:10px;
+`
 
 const Program = () => {
   const navigate = useNavigate();
@@ -165,6 +244,16 @@ const Program = () => {
     }
   };
 
+
+  const [modalVisible, setModalVisible] = useState(false)
+  const openModal = () => {
+    setModalVisible(true)
+  }
+  const closeModal = () => {
+    setModalVisible(false)
+  }
+
+
   return (
     <Fragment>
       <NavbarDefault login />
@@ -270,7 +359,16 @@ const Program = () => {
                 <Card className="mb-3">
                   <Card.Body>
                     {poster ? (
-                      <Image width="100%" object-fit="contain" src={process.env.REACT_APP_RESTAPI_HOST + "resources/upload/" + poster} alt="" />
+                      <>
+                      <Image width="100%" object-fit="contain" src={process.env.REACT_APP_RESTAPI_HOST + "resources/upload/" + poster} alt="" onClick={() => {openModal()}}/>
+                      {
+                        modalVisible && <Modal
+                          visible={modalVisible}
+                          closable={true}
+                          maskClosable={true}
+                          onClose={closeModal}><Image width="100%" object-fit="contain" src={process.env.REACT_APP_RESTAPI_HOST + "resources/upload/" + poster} alt=""/></Modal>
+                      }
+                      </>
                     ) : (
                       <Image width="100%" object-fit="contain" src={DefaultImg} alt="" />
                     )}
