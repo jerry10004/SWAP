@@ -1,7 +1,7 @@
 // import node module libraries
 import { Fragment, useLayoutEffect, useState } from "react";
 import { Menu, Search } from "react-feather";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import { Nav, Navbar, InputGroup, Dropdown, Form, ListGroup, Row, Col, OverlayTrigger, Tooltip, Image } from "react-bootstrap";
 import axios from "axios";
 
@@ -33,6 +33,30 @@ const NavbarTop = (props) => {
     setUserEmail(response.data[0].email);
     setUserInformationLoading(true);
   };
+  const navigate = useNavigate();
+
+  const logout = async () => {
+    // setIsLogin(true);
+    const params = new URLSearchParams();
+    params.append("email", window.sessionStorage.getItem("email"));
+    params.append("manageID", window.sessionStorage.getItem("id"));
+
+    const auth2 = window.gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+      window.sessionStorage.removeItem("email");
+      window.sessionStorage.removeItem("name");
+      window.sessionStorage.removeItem("token");
+      window.sessionStorage.removeItem("expires_at");
+      window.sessionStorage.removeItem("status");
+      window.sessionStorage.removeItem("id");
+      window.sessionStorage.removeItem("profileImg");
+
+      // setIsLogin(false);
+      console.log("로그아웃 성공!!!");
+      navigate("/main");
+    });
+  };
+
 
   return (
     <Fragment>
@@ -55,7 +79,7 @@ const NavbarTop = (props) => {
           </div>
 
           <Nav className="navbar-nav navbar-right-wrap ms-auto d-flex align-items-center nav-top-wrap">
-            <NavbarProfile />
+            <NavbarProfile logout={logout}/>
           </Nav>
         </div>
       </Navbar>
