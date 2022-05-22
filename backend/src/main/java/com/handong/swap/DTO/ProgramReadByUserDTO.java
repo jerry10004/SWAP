@@ -15,6 +15,14 @@ public class ProgramReadByUserDTO {
 	String end_date;
 	String status_name;
 	int status;
+	String category_name;
+
+	public String getCategory_name() {
+		return category_name;
+	}
+	public void setCategory_name(String category_name) {
+		this.category_name = category_name;
+	}
 	public int getApplicant_id() {
 		return applicant_id;
 	}
