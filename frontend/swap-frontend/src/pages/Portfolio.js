@@ -21,7 +21,9 @@ const Portfolio = (props) => {
   const handleDownloadPdf = async () => {
     const element = printRef.current;
     const canvas = await html2canvas(element, { allowTaint: true, useCORS: true });
-    const data = canvas.toDataURL("image/jpeg");
+    const data = canvas.toDataURL("image/PNG");
+
+    const pdf = new jsPDF("p", "mm", "a4");
 
     var imgWidth = 210; // 이미지 가로 길이(mm) A4 기준
     var pageHeight = imgWidth * 1.414; // 출력 페이지 세로 길이 계산 A4 기준
@@ -32,15 +34,15 @@ const Portfolio = (props) => {
     var doc = new jsPDF("p", "mm", "a4");
     var position = 0;
 
-    // 첫 페이지 출력
-    doc.addImage(data, "jpeg", margin, position, imgWidth, imgHeight);
+    // // 첫 페이지 출력
+    doc.addImage(data, "PNG", margin, position, imgWidth, imgHeight);
     heightLeft -= pageHeight;
 
     // 한 페이지 이상일 경우 루프 돌면서 출력
     while (heightLeft >= 20) {
       position = heightLeft - imgHeight;
-      doc.addPage();
-      doc.addImage(data, "jpeg", margin, position, imgWidth, imgHeight);
+      pdf.addPage();
+      pdf.addImage(data, "PNG", 0, position, imgWidth, imgHeight);
       heightLeft -= pageHeight;
     }
 
