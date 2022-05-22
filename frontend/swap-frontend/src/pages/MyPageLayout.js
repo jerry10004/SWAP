@@ -85,7 +85,7 @@ const MyPageLayout = () => {
                         <EditProfile userInfo={applicantInformation}></EditProfile>
                       </Tab.Pane>
                       <Tab.Pane eventKey="portfolio">
-                        <Portfolio></Portfolio>
+                        <Portfolio userInfo={applicantInformation}></Portfolio>
                       </Tab.Pane>
                     </Tab.Content>
                   </Col>
