@@ -24,11 +24,8 @@ const NavbarTop = (props) => {
   }, []);
 
   const readUserInformation = async (id) => {
-    console.log("####admin####");
     setUserInformationLoading(false);
-    console.log("****read사용자정보******");
     const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "user/loggedinUser/" + id);
-    console.log("#####admin result사용자정보####", response.data);
     setUserName(response.data[0].name);
     setUserEmail(response.data[0].email);
     setUserInformationLoading(true);

@@ -4,7 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class ApplicationReadDTO {
+public class SurveyReadDTO {
 	int id;
 	int category_id;
 	String name;

@@ -40,11 +40,11 @@ public class ApplicantController {
 	@RequestMapping(value = "/applicants/{id}", method = RequestMethod.GET, produces = "application/json; charset=utf8")
 	@ResponseBody
 	public String readApplicantInformationByProgramId(@PathVariable int id) throws IOException, ParseException {
-		System.out.println("프로그램 별 신청자 정보 읽기");
-		System.out.println(id);
+//		System.out.println("프로그램 별 신청자 정보 읽기");
+//		System.out.println(id);
 
 		String result = applicantService.readApplicantInformationByProgramId(id);
-		System.out.println("result is "+result);
+//		System.out.println("result is "+result);
 		return result;
 	}
 	
@@ -60,11 +60,13 @@ public class ApplicantController {
 		
 		for (int i = 0; i < ids.length; i++) {
 			applicantService.updateApplicantStatus(Integer.parseInt(ids[i]),Integer.parseInt(status[i]));
-			if(Integer.parseInt(status[i]) == 2) {
-				System.out.println("here! program id is "+program_id);
-				programService.decreaseApplicantNum(program_id);
-			}
+//			if(Integer.parseInt(status[i]) == 2) {
+//				System.out.println("here! program id is "+program_id);
+//				programService.decreaseApplicantNum(program_id);
+//			}
+			
 		}
+		programService.updateApplicantNum(program_id);
 		
 	}
 	
@@ -109,8 +111,9 @@ public class ApplicantController {
 		int program_id = Integer.parseInt(httpServletRequest.getParameter("program_id"));
 		int applicant_id = Integer.parseInt(httpServletRequest.getParameter("applicant_id"));	
 		
-		programService.decreaseApplicantNum(program_id);
 		applicantService.deleteApplicant(applicant_id);
+		programService.updateApplicantNum(program_id);
+
 		
 	}
 	

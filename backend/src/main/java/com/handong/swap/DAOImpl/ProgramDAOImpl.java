@@ -94,9 +94,8 @@ public class ProgramDAOImpl implements ProgramDAO {
 	
 	@Override
 	public void updateApplicantNum(int program_id) {
-		Map<String, Object> param = new HashMap<String, Object>();
-		param.put("program_id", program_id);
-	    sqlSession.update("Program.updateApplicantNum", param);
+		System.out.println("변경~~~");
+	    sqlSession.update("Program.updateApplicantNum", program_id);
 	}
 
 	@Override
@@ -119,10 +118,10 @@ public class ProgramDAOImpl implements ProgramDAO {
 	    return 1;
 	}
 	
-	@Override
-	public void decreaseApplicantNum(int program_id) {
-		 sqlSession.update("Program.decreaseApplicantNum",program_id);
-	}
+//	@Override
+//	public void decreaseApplicantNum(int program_id) {
+//		 sqlSession.update("Program.decreaseApplicantNum",program_id);
+//	}
 
 	public List<ProgramReadDTO> readLikedPrograms(int user_id){
 		return sqlSession.selectList("Program.readLikedPrograms", user_id);

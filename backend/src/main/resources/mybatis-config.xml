@@ -18,6 +18,10 @@
 			<typeAlias alias="ApplicationRead" type="com.handong.swap.DTO.ApplicationReadDTO"/>
 			<typeAlias alias="ApplicationName" type="com.handong.swap.DTO.ApplicationNameDTO"/>
 			<typeAlias alias="ApplicationDeleteConfirm" type="com.handong.swap.DTO.ApplicationDeleteConfirmDTO"/>
+			<typeAlias alias="Survey" type="com.handong.swap.DTO.SurveyDTO"/>
+			<typeAlias alias="SurveyRead" type="com.handong.swap.DTO.SurveyReadDTO"/>
+			<typeAlias alias="SurveyName" type="com.handong.swap.DTO.SurveyNameDTO"/>
+			<typeAlias alias="SurveyDeleteConfirm" type="com.handong.swap.DTO.SurveyDeleteConfirmDTO"/>
 			<typeAlias alias="Applicant" type="com.handong.swap.DTO.ApplicantDTO"/>
 		    <typeAlias alias="Category" type="com.handong.swap.DTO.CategoryDTO"/>
 		    <typeAlias alias="Like" type="com.handong.swap.DTO.LikeDTO"/>

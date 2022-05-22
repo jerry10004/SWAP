@@ -10,6 +10,7 @@ import GKStepper from "components/elements/stepper/GKStepper";
 import BasicInformation from "components/marketing/pages/courses/add-new-course/steps/BasicInformation";
 import CoursesMedia from "components/marketing/pages/courses/add-new-course/steps/ApplicationForm";
 import ApplicationFormPractice from "pages/ApplicationFormPractice";
+import SurveyForm from "pages/SurveyForm";
 
 import ApplicationForm from "components/marketing/pages/courses/add-new-course/steps/ApplicationForm";
 const AddNewCourse = () => {
@@ -198,17 +199,17 @@ const AddNewCourse = () => {
     },
     {
       id: 2,
-      title: "프로그램 신청서 Form 선택",
+      title: "프로그램 신청서 Form 제작",
       // content: <CoursesMedia data={formData} handleChange={handleChange} setStart_date={setStart_date} setEnd_date={setEnd_date} submit={addProgram} previous={previous} />,
-      content: <ApplicationFormPractice data={formData} handleChange={handleChange} setEnd_date={setEnd_date} previous={previous} submit={addProgram} />,
+      content: <ApplicationFormPractice data={formData} handleChange={handleChange} setEnd_date={setEnd_date} next={next} previous={previous} submit={addProgram} />,
       // content: <FormBuilder />,
       // content: <ApplicationForm data={formData} handleChange={handleChange} setStart_date={setStart_date} setEnd_date={setEnd_date} submit={addProgram} previous={previous} />,
     },
-    // {
-    //   id: 3,
-    //   title: "프로그램 설문지 Form 제작",
-    //   content: <Curriculum data={formData} handleChange={handleChange} next={next} previous={previous} />,
-    // },
+    {
+      id: 3,
+      title: "프로그램 설문지 Form 제작",
+      content: <SurveyForm data={formData} handleChange={handleChange} setEnd_date={setEnd_date} previous={previous} submit={addProgram} />,
+    },
   ];
 
   return (

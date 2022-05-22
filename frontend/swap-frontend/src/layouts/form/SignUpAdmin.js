@@ -4,7 +4,7 @@ import { Col, Row, Form, Button } from "react-bootstrap";
 import axios from "axios";
 
 const SignUpAdmin = (props) => {
-  const { name, email, tokenObj } = props;
+  const { name, email, department, tokenObj } = props;
   const [formData, setFormData] = useState({
     phone: "",
   });
@@ -23,6 +23,7 @@ const SignUpAdmin = (props) => {
 
     params.append("name", name);
     params.append("email", email);
+    params.append("department", department);
     params.append("phone", formData.phone);
     params.append("token", tokenObj.id_token);
     params.append("expire", tokenObj.expires_at);
@@ -50,6 +51,11 @@ const SignUpAdmin = (props) => {
           <Col lg={12} md={12} className="mb-3">
             <Form.Label>전화 </Form.Label>
             <Form.Control type="tel" id="email" placeholder="전화번호를 입력하세요 " name="phone" onChange={handleChange} required />
+          </Col>
+
+          <Col lg={12} md={12} className="mb-3">
+            <Form.Label>소속 </Form.Label>
+            <Form.Control type="text" id="department" placeholder="소속을 입력하세요 " value={department} required />
           </Col>
 
           <Col lg={12} md={12} className="mb-3 mt-13">

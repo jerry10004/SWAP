@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Survey">  
+
+	<select id="read" resultType="SurveyRead"> <!-- @@@@@@@@@@  -->
+		select S.id, S.name, A2.name as admin, S.regdate, S.category_id, C.category_name
+		from Survey AS S
+		join Admin A2 on A2.id = S.admin_id
+        join Category C on S.category_id = C.id
+		order by S.regdate desc;
+   	</select> 
+
+   	<select id="readJson" resultType="Survey">
+	   select S.id, S.content
+		from Survey AS S
+		where S.id = #{id}
+   	</select>
+
+	<insert id = "insertSurvey" parameterType="Survey">	 <!-- @@@@@@@@@@  -->
+		INSERT INTO Survey (name, content, admin_id, category_id)
+		VALUES (#{name}, #{content}, 
+		(select AD.id as admin_id
+		from Admin as AD
+		where AD.user_id = #{admin_id}), #{category_id})
+   	</insert>
+   	
+   	<select id="insertConfirmSurvey" parameterType="Survey" resultType="Integer">
+   	select case when COUNT(S.id)=0 then 0
+	else 1
+	end as result
+	from Survey as S
+	where S.name=#{name};
+   	</select>
+   	
+   	<select id="readName" resultType="SurveyName">
+	   select S.id as value, S.name as label
+		from Survey AS S
+		order by regdate;
+   	</select>
+   	
+   	<delete id="delete" parameterType="Integer">
+   		delete from Survey
+		WHERE id = #{id}
+   	</delete>
+   	
+   	<select id="deleteConfirm" parameterType="Integer" resultType="Integer">
+   		SELECT IF(COUNT(P.ID) > 0, 0, 1) AS result
+		from Survey AS S
+		JOIN Program P on S.id = P.survey_form
+		WHERE S.id = #{id};
+   	</select>
+   	
+   	<select id="readSurveyById" parameterType="Integer" resultType="Survey"> <!-- @@@@@@@@@@  -->
+	   select S.name, S.content, S.category_id, C.category_name
+		FROM Survey AS S
+		join Category C on S.category_id = C.id
+		where S.id = #{id};
+   	</select>
+
+   	<select id="readSurveyForm" resultType="Program">
+	   select P.survey_form
+		from  Program as P
+		where P.id = #{id}
+   	</select>
+<!--    	
+   	<select id="readApplicationTemplate" resultType="Application">
+	   select A.id, A.content,A.name
+		from Application AS A
+		LEFT JOIN Program as P
+		ON P.application_form = A.id
+		where P.id = #{id}
+   	</select> -->
+   	
+   	
+   	 <select id="readProgramName" parameterType="Integer" resultType="String">
+	   select P.program_name
+		FROM Program AS P
+		where P.id = #{id}
+   	</select>
+   	
+   	
+</mapper>

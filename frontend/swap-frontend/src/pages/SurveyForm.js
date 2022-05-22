@@ -8,8 +8,8 @@ import ElementCreate from "json/ElementCreate";
 import jsonSkeleton from "json/jsonSkeleton.json";
 import FormBuilder from "./FormBuilder";
 
-const ApplicationFormPractice = (props) => {
-  const { handleChange, next } = props;
+const SurveyForm = (props) => {
+  const { handleChange } = props;
   const { submit, previous } = props;
   const [readyJson, setReadyJson] = useState(false);
   const [createJson, setCreateJson] = useState(false);
@@ -33,20 +33,11 @@ const ApplicationFormPractice = (props) => {
   };
 
   useLayoutEffect(() => {
-    readApplication();
+    readSurvey();
     readJson();
     setJson(jsonSkeleton);
   }, []);
 
-  // const templateOptions = [
-  //   { value: "1", label: "대회" },
-  //   { value: "2", label: "봉사" },
-  //   { value: "3", label: "캠프" },
-  //   { value: "4", label: "동아리" },
-  //   { value: "5", label: "행사" },
-  //   { value: "6", label: "기타" },
-  //   { value: "7", label: "직접생성" },
-  // ];
   const [templateOptions, setTemplateOptions] = useState([]);
 
   const elementOptions = [
@@ -74,10 +65,10 @@ const ApplicationFormPractice = (props) => {
 
   const save = (event) => {};
 
-  //DB에서 Application 종류 읽어오는 함수
-  const readApplication = async () => {
+  //DB에서 Survey 종류 읽어오는 함수
+  const readSurvey = async () => {
     setReadyElementOption(false);
-    const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "application/name");
+    const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "survey/name");
 
     setTemplateOptions(response.data);
     setReadyElementOption(true);
@@ -94,7 +85,7 @@ const ApplicationFormPractice = (props) => {
 
     params.append("category_id", formOption);
 
-    const response = await axios.post("http://localhost:8080/swap/application/json", params);
+    const response = await axios.post("http://localhost:8080/swap/survey/json", params);
     var json_total = response.data[0].content;
     var json_sub = json_total.slice(1, json_total.length - 1);
 
@@ -113,34 +104,35 @@ const ApplicationFormPractice = (props) => {
   };
 
   return (
-    <Form onSubmit={next}>
+    <Form>
       {readyJson && readyElementOption ? (
         <div className="d-flex justify-content-end">
           <Form.Group className="mb-3 w-26 ">
-            <FormSelect options={templateOptions} id="application_form" name="application_form" onChange={handleChange2} placeholder="신청서 템플릿 선택" />
+            <FormSelect options={templateOptions} id="survey_form" name="survey_form" onChange={handleChange2} placeholder="설문지 템플릿 선택" />
           </Form.Group>
         </div>
       ) : (
         <div className="d-flex justify-content-end">
           <Form.Group className="mb-3 w-26 ">
-            <FormSelect options={templateOptions} id="application_form" name="application_form" onChange={handleChange2} placeholder="신청서 템플릿 선택" />
+            <FormSelect options={templateOptions} id="survey_form" name="survey_form" onChange={handleChange2} placeholder="설문지 템플릿 선택" />
           </Form.Group>
         </div>
       )}
 
       {readyJson && formContent ? (
-        <FormBuilder content={formContent} propFunction={highFunction} submit={submitButton} template="0" />
+        <FormBuilder content={formContent} propFunction={highFunction} submit={submitButton} template="2" />
       ) : (
         <Card className="mb-3  border-0">
           <Card.Header className="border-bottom px-4 py-3">
-            <h4 className="mb-0">프로그램 신청서</h4>
+            <h4 className="mb-0">프로그램 설문지</h4>
           </Card.Header>
           <Card.Body>
-            <h4>신청서 템플릿을 선택해주세요 :)</h4>
+            <h4>설문지 제작이 필요없는 경우 '필요없음' 을 선택해주세요 :)</h4>
+            <h4>(설문지는 추후 수정이 가능합니다)</h4>
           </Card.Body>
         </Card>
       )}
     </Form>
   );
 };
-export default ApplicationFormPractice;
+export default SurveyForm;

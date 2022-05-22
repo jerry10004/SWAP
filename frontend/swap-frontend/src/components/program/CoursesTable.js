@@ -268,7 +268,6 @@ const CoursesTable = ({ program_data }) => {
         : ""
     );
 
-    console.log(response.data);
     if (program_data === 0) {
       setProgramInfo(waitProgram);
     } else if (program_data === 1) {

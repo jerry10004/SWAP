@@ -156,9 +156,11 @@
 		WHERE program_id = #{program_id} AND file_type = 1
    	</update>
    	
-   	<update id="updateApplicantNum" parameterType="hashmap">
-   		UPDATE Program SET applicants_num= applicants_num + 1
-   		WHERE id = #{program_id}
+   	<update id="updateApplicantNum" parameterType="Integer">
+   		UPDATE Program SET applicants_num= (select COUNT(A.id) as c
+		from Applicant as A
+		where A.program_id=#{program_id} and A.status!=2)
+		WHERE id = #{program_id};
 	</update>
 	
 	  	<select id="readLikedPrograms" parameterType="Integer" resultType="ProgramReadById">
@@ -171,11 +173,6 @@
 		where B.user_id = #{user_id};
    	</select>
    	
-   	  <update id="decreaseApplicantNum"  parameterType="Integer">
-   		UPDATE Program
-		SET applicants_num = applicants_num -1
-		WHERE id=#{program_id}  
-   	</update>
    	
    	<delete id="deleteFiles"  parameterType="Integer">
    		DELETE FROM Program_File

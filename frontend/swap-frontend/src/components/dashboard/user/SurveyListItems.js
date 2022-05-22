@@ -11,9 +11,9 @@ import Pagination from "components/elements/advance-table/Pagination";
 import DotBadge from "components/elements/bootstrap/DotBadge";
 import { FormSelect } from "components/elements/form-select/FormSelect";
 
-const ApplicationsListItems = ({ application_data }) => {
-  const [applicationInfo, setApplicationInfo] = useState([]);
-  const [applicationList, setApplicationList] = useState([]);
+const SurveyListItems = ({ survey_data }) => {
+  const [surveyInfo, setSurveyInfo] = useState([]);
+  const [surveyList, setSurveyList] = useState([]);
 
   const categoryOptions = [
     { value: "대회", label: "대회" },
@@ -82,7 +82,7 @@ const ApplicationsListItems = ({ application_data }) => {
     []
   );
 
-  const data = useMemo(() => applicationInfo);
+  const data = useMemo(() => surveyInfo);
 
   const IndeterminateCheckbox = React.forwardRef(({ indeterminate, ...rest }, ref) => {
     const defaultRef = React.useRef();
@@ -138,45 +138,45 @@ const ApplicationsListItems = ({ application_data }) => {
   const getFilterTerm = (event) => {
     let filterTerm = event.target.value;
     if (filterTerm !== "") {
-      const newApplicationsList = applicationList.filter((project) => {
+      const newSurveyList = surveyList.filter((project) => {
         if (project.category_name === filterTerm) return project;
       });
-      setApplicationInfo(newApplicationsList);
+      setSurveyInfo(newSurveyList);
     } else {
-      setApplicationInfo(applicationList);
+      setSurveyInfo(surveyList);
     }
   };
 
   const { pageIndex, globalFilter } = state;
 
   useLayoutEffect(() => {
-    readApplication();
+    readSurvey();
   }, []);
 
-  const readApplication = async () => {
-    const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "application");
-    setApplicationInfo(response.data);
-    setApplicationList(response.data);
+  const readSurvey = async () => {
+    const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "survey");
+    setSurveyInfo(response.data);
+    setSurveyList(response.data);
   };
 
-  const removeApplication = async (e) => {
-    var removeApplicationId = [];
+  const removeSurvey = async (e) => {
+    var removeSurveyId = [];
 
-    e.map((d) => removeApplicationId.push(d.original.id));
+    e.map((d) => removeSurveyId.push(d.original.id));
 
     var params = new URLSearchParams();
-    params.append("id", removeApplicationId);
+    params.append("id", removeSurveyId);
 
     if (window.confirm("삭제 하시겠습니까?")) {
-      const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "application/deleteConfirm", params);
+      const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "survey/deleteConfirm", params);
       if (response.data === 0) {
         alert("사용중인 프로그램이 있어 삭제할 수 없습니다.");
       } else {
-        const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "application/delete", params);
+        const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "survey/delete", params);
         alert("삭제 되었습니다.");
       }
 
-      readApplication();
+      readSurvey();
       window.location.reload();
     }
   };
@@ -192,7 +192,7 @@ const ApplicationsListItems = ({ application_data }) => {
           <Col xl={8} lg={6} md={6} xs={12}>
             {/* search records */}
             <div className="mb-2 mb-lg-4">
-              <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} placeholder="신청서를 검색하세요" />
+              <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} placeholder="설문지를 검색하세요" />
             </div>
           </Col>
           <Col className="d-flex justify-content-end mb-2 mb-lg-4">
@@ -200,7 +200,7 @@ const ApplicationsListItems = ({ application_data }) => {
               variant="secondary"
               className="danger-button justify-content-end"
               onClick={() => {
-                removeApplication(selectedFlatRows);
+                removeSurvey(selectedFlatRows);
               }}
             >
               삭제하기
@@ -240,4 +240,4 @@ const ApplicationsListItems = ({ application_data }) => {
   );
 };
 
-export default ApplicationsListItems;
+export default SurveyListItems;

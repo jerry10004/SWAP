@@ -4,7 +4,6 @@ import ReactDOM from "react-dom";
 import { Col, Row, Card, Form, Button, InputGroup } from "react-bootstrap";
 import FormBuilderModal from "./FormBuilderModal";
 import Modal, { ModalProvider, BaseModalBackground } from "styled-react-modal";
-import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
 import "./formBuilder.css";
@@ -30,6 +29,7 @@ class FormBuilder extends Component {
       formResult: "",
       title: "",
       isSet: false,
+      category: "",
     };
   }
 
@@ -50,13 +50,12 @@ class FormBuilder extends Component {
       });
     }
 
-    if (this.props.template === "0") {
-      document.getElementById("submitData").addEventListener("click", () => {
-        const result = formBuilder.actions.save();
-        // this.setState({ formResult: result });
-        this.setState({ formResult: JSON.stringify(result, null, 2) });
-      });
-    }
+    // if (this.props.template === "0") {
+    //   document.getElementById("submitData").addEventListener("click", () => {
+    //     const result = formBuilder.actions.save();
+    //     this.setState({ formResult: JSON.stringify(result, null, 2) });
+    //   });
+    // }
 
     document.getElementById("clear-all-fields").onclick = function () {
       if (window.confirm("전부 지우고 새로 작성하시겠습니까?") == true) {
@@ -90,16 +89,40 @@ class FormBuilder extends Component {
   handleChange = (e) => {
     this.setState({ title: e.target.value });
   };
+  handleChange_category = (e) => {
+    this.setState({ category: e.target.value });
+  };
 
   createApplication = async () => {
     var params = new URLSearchParams();
     params.append("name", this.state.title);
     params.append("content", this.state.formResult);
+    params.append("category_id", this.state.category);
     params.append("admin_id", window.sessionStorage.getItem("id"));
 
     const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "application/add", params);
-    if (response.data === 1) alert("템플릿으로 저장 되었습니다.");
-    else if (response.data === -2) alert("동일한 이름의 템플릿이 존재합니다.");
+    if (response.data === 1) {
+      alert("템플릿으로 저장 되었습니다.");
+      window.location.reload();
+    } else if (response.data === -2) alert("동일한 이름의 템플릿이 존재합니다.");
+    this.setState({ opacity: 1, isOpen: false });
+    this.setState({ isSet: true });
+    if (response.data === 1 && this.props.template === "1") {
+    }
+  };
+
+  createSurvey = async () => {
+    var params = new URLSearchParams();
+    params.append("name", this.state.title);
+    params.append("content", this.state.formResult);
+    params.append("category_id", this.state.category);
+    params.append("admin_id", window.sessionStorage.getItem("id"));
+
+    const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "survey/add", params);
+    if (response.data === 1) {
+      alert("템플릿으로 저장 되었습니다.");
+      window.location.reload();
+    } else if (response.data === -2) alert("동일한 이름의 템플릿이 존재합니다.");
     this.setState({ opacity: 1, isOpen: false });
     this.setState({ isSet: true });
     if (response.data === 1 && this.props.template === "1") {
@@ -107,6 +130,7 @@ class FormBuilder extends Component {
   };
 
   clickSubmit = async () => {
+    console.log("hihi: ", this.state.formResult);
     this.props.submit(this.state.formResult);
     if (this.props.program === "1") this.props.saveFunction();
   };
@@ -115,9 +139,7 @@ class FormBuilder extends Component {
     return (
       <>
         <Card className="mb-3  border-0">
-          <Card.Header className="border-bottom px-4 py-3">
-            <h4 className="mb-0">프로그램 신청서</h4>
-          </Card.Header>
+          <Card.Header className="border-bottom px-4 py-3">{this.props.template === "2" ? <h4 className="mb-0">프로그램 설문지</h4> : <h4 className="mb-0">프로그램 신청서</h4>}</Card.Header>
           <Card.Body>
             <div id="fb-editor" ref={this.fb} />
             <div class="saveDataWrap" className="d-flex justify-content-end">
@@ -148,21 +170,83 @@ class FormBuilder extends Component {
                         <button type="button" class="btn-close" aria-label="Close" onClick={this.toggleModal}></button>
 
                         <Form className="mt-2">
-                          <Row>
-                            <Col xs={12} className="mt-6">
-                              <Form.Group controlId="formProjectTitle">
-                                <Form.Label>
-                                  저장할 신청서 템플릿 이름을 입력해주세요. <span className="text-danger">*</span>
-                                </Form.Label>
-                                <Form.Control type="text" placeholder="Enter application title" required onChange={this.handleChange} />
-                              </Form.Group>
-                            </Col>
-                            <Col xs={12} className="mt-6 d-flex justify-content-end">
-                              <Button variant="primary" type="button" className="ms-2" onClick={this.createApplication}>
-                                저장
-                              </Button>
-                            </Col>
-                          </Row>
+                          {this.props.template === "1" ? (
+                            <>
+                              <Row>
+                                <Col xs={12} className="mt-3">
+                                  <Form.Group controlId="program_category">
+                                    <Form.Label>
+                                      신청서 템플릿의 카테고리를 선택해주세요. <span className="text-danger">*</span>
+                                    </Form.Label>
+                                    <select class="form-select" id="program_category" name="program_category" onChange={this.handleChange_category} required>
+                                      <option selected value="">
+                                        카테고리
+                                      </option>
+                                      <option value="1">대회</option>
+                                      <option value="2">봉사</option>
+                                      <option value="3">캠프</option>
+                                      <option value="4">행사</option>
+                                      <option value="5">맥북</option>
+                                      <option value="6">프로젝트/스터디</option>
+                                      <option value="7">인턴/현장실습</option>
+                                      <option value="8">특강</option>
+                                      <option value="9">기타</option>
+                                    </select>
+                                    <Form.Control.Feedback type="invalid">카테고리를 선택해주세요.</Form.Control.Feedback>
+                                  </Form.Group>
+                                </Col>
+                              </Row>
+                              {this.props.survey === "1" ? (
+                                <Row>
+                                  <Col xs={12} className="mt-6">
+                                    <Form.Group controlId="formProjectTitle">
+                                      <Form.Label>
+                                        저장할 설문지 템플릿 이름을 입력해주세요. <span className="text-danger">*</span>
+                                      </Form.Label>
+                                      <Form.Control type="text" placeholder="Enter survey title" required onChange={this.handleChange} />
+                                    </Form.Group>
+                                  </Col>
+                                  <Col xs={12} className="mt-6 d-flex justify-content-end">
+                                    <Button variant="primary" type="button" className="ms-2" onClick={this.createSurvey}>
+                                      저장
+                                    </Button>
+                                  </Col>
+                                </Row>
+                              ) : (
+                                <Row>
+                                  <Col xs={12} className="mt-6">
+                                    <Form.Group controlId="formProjectTitle">
+                                      <Form.Label>
+                                        저장할 신청서 템플릿 이름을 입력해주세요. <span className="text-danger">*</span>
+                                      </Form.Label>
+                                      <Form.Control type="text" placeholder="Enter application title" required onChange={this.handleChange} />
+                                    </Form.Group>
+                                  </Col>
+                                  <Col xs={12} className="mt-6 d-flex justify-content-end">
+                                    <Button variant="primary" type="button" className="ms-2" onClick={this.createApplication}>
+                                      저장
+                                    </Button>
+                                  </Col>
+                                </Row>
+                              )}
+                            </>
+                          ) : (
+                            <Row>
+                              <Col xs={12} className="mt-6">
+                                <Form.Group controlId="formProjectTitle">
+                                  <Form.Label>
+                                    저장할 신청서 템플릿 이름을 입력해주세요. <span className="text-danger">*</span>
+                                  </Form.Label>
+                                  <Form.Control type="text" placeholder="Enter application title" required onChange={this.handleChange} />
+                                </Form.Group>
+                              </Col>
+                              <Col xs={12} className="mt-6 d-flex justify-content-end">
+                                <Button variant="primary" type="button" className="ms-2" onClick={this.createApplication}>
+                                  저장
+                                </Button>
+                              </Col>
+                            </Row>
+                          )}
                         </Form>
                       </div>
                     </StyledModal>
@@ -175,12 +259,19 @@ class FormBuilder extends Component {
           </Card.Body>
         </Card>
         {this.props.template === "0" ? (
-          // <div className="d-flex justify-content-between">
           <div className="d-flex justify-content-end">
-            {/* <Button variant="secondary">이전</Button> */}
-            {/* <Button id="submitData" className="btn btn-success" type="button" onClick={this.clickSubmit}>
-              제출
+            <Button variant="primary" type="submit">
+              다음
+            </Button>
+            {/* <Button id="submitData" className="btn btn-primary" type="button" onClick={this.clickSubmit}>
+              완료
             </Button> */}
+          </div>
+        ) : (
+          ""
+        )}
+        {this.props.template === "2" ? (
+          <div className="d-flex justify-content-end">
             <Button id="submitData" className="btn btn-primary" type="button" onClick={this.clickSubmit}>
               완료
             </Button>
@@ -197,7 +288,7 @@ export default FormBuilder;
 
 const StyledModal = Modal.styled`
   width: 22rem;
-  height: 18rem;
+  height: 23rem;
   padding : 20px;
   border-radius:20px;
   background-color: white;

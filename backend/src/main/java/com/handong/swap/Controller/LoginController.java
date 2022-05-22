@@ -117,6 +117,7 @@ public class LoginController {
 				user.setName(httpServletRequest.getParameter("name"));
 				user.setEmail(httpServletRequest.getParameter("email"));
 				user.setPhone(httpServletRequest.getParameter("phone"));
+				user.setDepartment(httpServletRequest.getParameter("department"));
 				user.setExpire_token(expire_token);
 				user.setStatus(status);
 			}

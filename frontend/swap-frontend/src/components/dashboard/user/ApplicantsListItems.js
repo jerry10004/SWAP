@@ -11,7 +11,7 @@ import DotBadge from "components/elements/bootstrap/DotBadge";
 import Icon from "@mdi/react";
 import { mdiAccountMultipleOutline } from "@mdi/js";
 
-const StudentsListItems = (props) => {
+const ApplicantsListItems = (props) => {
   const [userInfo, setUserInfo] = useState([]);
   const [applicantInformationLoading, setApplicantInformationLoading] = useState(null);
   const [program_id, setProgram_id] = useState();
@@ -305,4 +305,4 @@ const StudentsListItems = (props) => {
   );
 };
 
-export default StudentsListItems;
+export default ApplicantsListItems;

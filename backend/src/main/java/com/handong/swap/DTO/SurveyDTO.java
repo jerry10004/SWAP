@@ -2,7 +2,7 @@ package com.handong.swap.DTO;
 
 import java.util.Date;
 
-public class ApplicationDTO {
+public class SurveyDTO {
 	int id;
 	int admin_id;
 	int category_id;

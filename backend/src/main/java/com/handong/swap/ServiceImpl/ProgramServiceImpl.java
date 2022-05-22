@@ -132,10 +132,10 @@ public class ProgramServiceImpl implements ProgramService{
 		return jsonString;
 	}
 
-	@Override
-	public void decreaseApplicantNum(int program_id) {
-		programDAO.decreaseApplicantNum(program_id);
-	}
+//	@Override
+//	public void decreaseApplicantNum(int program_id) {
+//		programDAO.decreaseApplicantNum(program_id);
+//	}
 
 	@Override
 	public String readApplicationByProgram(int program_id) throws JsonProcessingException {

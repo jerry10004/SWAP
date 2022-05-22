@@ -22,7 +22,7 @@ const UsersListItems = () => {
         Cell: ({ value, row }) => {
           return (
             <div className="d-flex align-items-center">
-              <DotBadge bg={row.original.status === 0 ? "success" : row.original.status === 1 ? "warning" : "secondary"}></DotBadge>
+              <DotBadge bg={row.original.status === -2 ? "success" : row.original.status === 0 ? "success" : row.original.status === 1 ? "warning" : "secondary"}></DotBadge>
               <h5 className="mb-0">{value}</h5>
             </div>
           );
@@ -43,8 +43,26 @@ const UsersListItems = () => {
       { accessor: "email", Header: "이메일" },
       { accessor: "phone", Header: "연락처" },
       {
+        accessor: "",
+        Header: "소속",
+        Cell: ({ value, row }) => {
+          return (
+            <Fragment>
+              <Col>{row.original.status !== 1 ? row.original.department : ""}</Col>
+            </Fragment>
+          );
+        },
+      },
+      {
         accessor: "department",
         Header: "학부",
+        Cell: ({ value, row }) => {
+          return (
+            <Fragment>
+              <Col>{row.original.status === 1 ? value : ""}</Col>
+            </Fragment>
+          );
+        },
       },
       {
         accessor: "major1",
@@ -168,25 +186,6 @@ const UsersListItems = () => {
               <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} placeholder="사용자를 검색하세요" />
             </div>
           </Col>
-          {/* <Col xxl={3} lg={6} md={6} xs={12} className="justify-content-between mb-2 mb-lg-4">
-            <Button
-              className="mx-4"
-              onClick={() => {
-                createAdmin(selectedFlatRows);
-              }}
-            >
-              관리자 추가
-            </Button>
-            <Button
-              variant="secondary"
-              className="danger-button"
-              onClick={() => {
-                removeUser(selectedFlatRows);
-              }}
-            >
-              삭제하기
-            </Button>
-          </Col> */}
         </Row>
       </div>
 

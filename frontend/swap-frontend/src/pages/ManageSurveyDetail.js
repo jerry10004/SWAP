@@ -15,12 +15,12 @@ window.jQuery = $;
 window.$ = $;
 require("formBuilder/dist/form-render.min.js");
 
-const ManageApplicationDetail = () => {
+const ManageSurveyDetail = () => {
   const [showMenu, setShowMenu] = useState(true);
-  const [applicationName, setApplicationName] = useState();
+  const [surveyName, setSurveyName] = useState();
   const [programName, setProgramName] = useState();
 
-  var applicationLoading = false;
+  var surveyLoading = false;
   // var programNameLoading = false;
   var formData = "";
   const [formDataLoading, setFormDataLoading] = useState(false);
@@ -35,23 +35,23 @@ const ManageApplicationDetail = () => {
   const id = useParams();
 
   useLayoutEffect(() => {
-    readApplication();
+    readSurvey();
     componentDidMount();
     // readProgramName();
   }, []);
 
-  const readApplication = async () => {
-    applicationLoading = false;
+  const readSurvey = async () => {
+    surveyLoading = false;
     var params = new URLSearchParams();
     if (id["id"] != null) {
       params.append("id", id["id"]);
-      const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "application/readApplicationById", params);
-      setApplicationName(response.data[0].name);
+      const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "survey/readSurveyById", params);
+      setSurveyName(response.data[0].name);
       json_total = response.data[0].content;
       formData = response.data[0].content;
 
-      applicationLoading = true;
-      if (applicationLoading && formData !== "") {
+      surveyLoading = true;
+      if (surveyLoading && formData !== "") {
         componentDidMount();
         readProgramName();
       }
@@ -68,11 +68,11 @@ const ManageApplicationDetail = () => {
     // programNameLoading = false;
     setProgramNameLoading(false);
 
-    if (applicationLoading) {
+    if (surveyLoading) {
       var params = new URLSearchParams();
       if (id["id"] != null) {
         params.append("id", id["id"]);
-        const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "application/readProgramName", params);
+        const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "survey/readProgramName", params);
 
         setProgramName(response.data);
 
@@ -101,10 +101,10 @@ const ManageApplicationDetail = () => {
               <Row>
                 <Col lg={12} md={12} sm={12}>
                   <div className="border-bottom pb-4 mb-4 d-flex align-items-center justify-content-between">
-                    <div className="mb-3 mb-md-0">{formDataLoading ? <h1 className="mb-1 h2 fw-bold">{applicationName}</h1> : ""}</div>
+                    <div className="mb-3 mb-md-0">{formDataLoading ? <h1 className="mb-1 h2 fw-bold">{surveyName}</h1> : ""}</div>
                     <div>
-                      <Link to="../admin/application" className="btn btn-success ">
-                        신청서 목록 보기
+                      <Link to="../admin/survey" className="btn btn-success ">
+                        설문지 목록 보기
                       </Link>
                     </div>
                   </div>
@@ -113,13 +113,13 @@ const ManageApplicationDetail = () => {
 
               <Row>
                 <Col lg={12} md={12} sm={12}>
-                  <Tab.Container defaultActiveKey="application">
+                  <Tab.Container defaultActiveKey="survey">
                     <Card>
                       <Card.Header className="border-bottom-0 p-0 bg-white">
                         <Nav className="nav-lb-tab">
                           <Nav.Item>
-                            <Nav.Link eventKey="application" className="mb-sm-3 mb-md-0">
-                              신청서
+                            <Nav.Link eventKey="survey" className="mb-sm-3 mb-md-0">
+                              설문지
                             </Nav.Link>
                           </Nav.Item>
                           {/* <Nav.Item>
@@ -131,7 +131,7 @@ const ManageApplicationDetail = () => {
                       </Card.Header>
                       <Card.Body className="p-5">
                         <Tab.Content>
-                          <Tab.Pane eventKey="application" className="pb-4">
+                          <Tab.Pane eventKey="survey" className="pb-4">
                             {formDataLoading ? (
                               <div>
                                 <form id="fb-editor"></form>
@@ -171,4 +171,4 @@ const ManageApplicationDetail = () => {
   );
 };
 
-export default ManageApplicationDetail;
+export default ManageSurveyDetail;
