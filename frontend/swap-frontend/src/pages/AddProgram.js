@@ -228,7 +228,7 @@ const AddNewCourse = () => {
                   <h1 className="text-white mb-1">새 프로그램 추가</h1>
                 </div>
                 <div>
-                  <Link to="../admin/program" className="btn btn-white ">
+                  <Link to={process.env.REACT_APP_DEFAULT_URL+"admin/program"} className="btn btn-white ">
                     프로그램 목록 보기
                   </Link>{" "}
                   {/* 저장 기능 나중에 추가 */}
