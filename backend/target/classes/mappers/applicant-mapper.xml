@@ -12,6 +12,16 @@
 		order by U.name
    	</select>
    	
+   	
+   	<select id="readSubmitterInformationByProgramId" parameterType="Integer" resultType="ApplicantRead">
+	   SELECT A.id, A.user_id, A.program_id, A.application_form,A.survey_form, A.status, U.name, U.student_id, U.phone, U.email, U.department, U.major1, U.student_class, U.semester
+		FROM swap.Applicant as A
+		JOIN swap.User as U
+		ON A.user_id = U.id
+		where U.deldate is null and A.program_id  = #{id} and A.survey_form is not null
+		order by U.name
+   	</select>
+   	
    	<update id="updateApplicantStatus" parameterType="hashmap">
    		UPDATE Applicant
    		SET status =#{status}

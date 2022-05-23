@@ -10,6 +10,7 @@ import com.handong.swap.DTO.ProgramDTO;
 public interface ApplicantService {
 	
 	public String readApplicantInformationByProgramId(int id) throws JsonProcessingException;
+	public String readSubmitterInformationByProgramId(int id) throws JsonProcessingException;
 	public String updateApplicantStatus(int id,int status);
 	public int applyApplication(ApplicantDTO applicant);
 	public int applySurvey(ApplicantDTO survey);
