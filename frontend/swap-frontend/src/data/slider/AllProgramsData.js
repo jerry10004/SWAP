@@ -122,7 +122,7 @@ const AllProgramsData = (props) => {
               props.category_data
                 .filter((project) => Object.values(project).join(" ").toLowerCase().includes(searchTerm.toLowerCase()))
                 .map((item, index) => {
-                  var address = "/program/" + item.id.toString();
+                  var address = process.env.REACT_APP_DEFAULT_URL+"program/" + item.id.toString();
 
                   return (
                     <Col lg={3} md={6} sm={12} key={index}>
@@ -176,11 +176,11 @@ const AllProgramsData = (props) => {
                   );
                 })
             ) : (
-              props.category_data
+              Object.values(props.category_data)
                 .filter((project) => Object.values(project).join(" ").toLowerCase().includes(term.toLowerCase()))
                 .filter((project) => Object.values(project).join(" ").toLowerCase().includes(searchTerm.toLowerCase()))
                 .map((item, index) => {
-                  var address = "/program/" + item.id.toString();
+                  var address = process.env.REACT_APP_DEFAULT_URL+"program/" + item.id.toString();
                   return (
                     <Col lg={3} md={6} sm={12} key={index}>
                       <Card className={`mb-4 card-hover mx-2 main-program-card`}>
