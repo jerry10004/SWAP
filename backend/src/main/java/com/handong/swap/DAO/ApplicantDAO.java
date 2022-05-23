@@ -10,6 +10,7 @@ import com.handong.swap.DTO.ApplicantReadDTO;
 public interface ApplicantDAO {
 	
 	List<ApplicantReadDTO> readApplicantInformationByProgramId(int id);
+	List<ApplicantReadDTO> readSubmitterInformationByProgramId(int id);
 	String updateApplicantStatus(int id,int status);
 	public int applyApplication(ApplicantDTO applicant);
 	public int applySurvey(ApplicantDTO applicant);

@@ -109,18 +109,13 @@ const CompleteProgramTable = ({ table_data }) => {
           var link = "/program/" + a + "/survey";
           return (
             <div className="d-grid d-md-block">
-              {/* <Link to={link}> */}
-              <Button
-                variant="outline-primary"
-                className="me-1"
-                onClick={
-                  () => confirmSurvey(row.original.program_id, link)
-                  // navigate(link)
-                }
-              >
-                설문지 작성
-              </Button>
-              {/* </Link> */}
+              {row.original.survey_form === null ? (
+                ""
+              ) : (
+                <Button variant="outline-primary" className="me-1" onClick={() => confirmSurvey(row.original.program_id, link)}>
+                  설문지 작성
+                </Button>
+              )}
             </div>
           );
         },

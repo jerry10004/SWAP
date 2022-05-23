@@ -40,15 +40,19 @@ public class ApplicantController {
 	@RequestMapping(value = "/applicants/{id}", method = RequestMethod.GET, produces = "application/json; charset=utf8")
 	@ResponseBody
 	public String readApplicantInformationByProgramId(@PathVariable int id) throws IOException, ParseException {
-//		System.out.println("프로그램 별 신청자 정보 읽기");
-//		System.out.println(id);
-		
-		System.out.println("======");
-		System.out.println(id);
 		String result = applicantService.readApplicantInformationByProgramId(id);
 		System.out.println("result is "+result);
 		return result;
 	}
+	
+	@RequestMapping(value = "/applicants/survey/{id}", method = RequestMethod.GET, produces = "application/json; charset=utf8")
+	@ResponseBody
+	public String readSubmitterInformationByProgramId(@PathVariable int id) throws IOException, ParseException {
+		String result = applicantService.readSubmitterInformationByProgramId(id);
+		System.out.println("result is "+result);
+		return result;
+	}
+	
 	
 	@RequestMapping(value = "/applicants/{id}/update", method = RequestMethod.POST, produces = "application/json; charset=utf8")
 	@ResponseBody

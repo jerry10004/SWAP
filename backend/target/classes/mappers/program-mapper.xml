@@ -48,7 +48,7 @@
    	</select>
    	
    	 <select id="readByStatusByUser" parameterType="hashmap" resultType="ProgramReadByUser">
-   	  select  A.id as applicant_id, P.id as program_id, P.program_name,P.start_date, P.end_date, A.status,P.status as program_status, case
+   	  select  A.id as applicant_id, P.id as program_id, P.program_name,P.start_date,  P.survey_form, P.end_date, A.status,P.status as program_status, case
             when (A.status = 0) then '참여보류'
             when (A.status=1) then '참여승인'
             when (A.status=2) then '참여불가'

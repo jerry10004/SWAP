@@ -65,9 +65,17 @@ const SurveyFormView = (props) => {
     componentDidMount();
   }, [originalFormData, userInfo]);
 
+  // const readApplicantInformation = async (id) => {
+  //   setApplicantInformationLoading(false);
+  //   const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "applicant/applicants/" + id);
+  //   setApplicantInformation(response.data);
+  //   console.log("@@@@@@@ : ", response.data);
+  //   setApplicantNum(response.data.length);
+  //   setApplicantInformationLoading(true);
+  // };
   const readApplicantInformation = async (id) => {
     setApplicantInformationLoading(false);
-    const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "applicant/applicants/" + id);
+    const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "applicant/applicants/survey/" + id);
     setApplicantInformation(response.data);
     console.log("@@@@@@@ : ", response.data);
     setApplicantNum(response.data.length);
@@ -118,13 +126,13 @@ const SurveyFormView = (props) => {
   const readFormData = async (id) => {
     setSurveyNameLoading(false);
     const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "survey/readSurveyForm/" + id);
-    var json_total = response.data[0].survey_form;
+    if (response.data[0].survey_form === null) var json_total = "";
+    else var json_total = response.data[0].survey_form;
     setoriginalFormData(json_total);
   };
 
   const getUserInfo = (user) => {
     setUserInfo(user);
-    console.log("??????/: ", user.survey_form);
     setstudentFormData(user.survey_form);
     setApplicantClick(true);
   };
@@ -336,7 +344,7 @@ const SurveyFormView = (props) => {
                           {applicantInformation.length > 0 ? (
                             <>
                               <ListGroup.Item key="1" as="li">
-                                <ContextAwareToggle eventKey="1">신청한 학생들 </ContextAwareToggle>
+                                <ContextAwareToggle eventKey="1">작성한 학생들 </ContextAwareToggle>
                                 <Accordion.Collapse eventKey="1" className="test">
                                   <ListGroup className="py-4" as="ul">
                                     <div className="d-grid">

@@ -183,11 +183,19 @@ const FormRender = (props) => {
       {/* {isformRender ? ( */}
       <div>
         <form id="fb-render"></form>
-        <div className="d-flex justify-content-end">
-          <Button className="btn btn-success" id="get-user-data">
-            신청하기
-          </Button>
-        </div>
+        {props.survey === "1" ? (
+          <div className="d-flex justify-content-end">
+            <Button className="btn btn-success" id="get-user-data">
+              제출하기
+            </Button>
+          </div>
+        ) : (
+          <div className="d-flex justify-content-end">
+            <Button className="btn btn-success" id="get-user-data">
+              신청하기
+            </Button>
+          </div>
+        )}
       </div>
       {/*
       ) : (

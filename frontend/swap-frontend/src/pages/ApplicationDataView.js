@@ -18,6 +18,7 @@ const ApplicationDataView = (props) => {
     readProgramName(props.param3.id);
   }, []);
 
+  // 해당 프로그램의 원래 신청서 - 헤딩을 알기 위해서
   const readFormData = async (id) => {
     const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "application/readApplicationForm/" + id);
     var json_total = JSON.parse(response.data[0].application_form);
