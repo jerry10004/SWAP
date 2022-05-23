@@ -105,9 +105,11 @@ const Portfolio = (props) => {
     params.append("user_id", user_id);
     params.append("status", 2);
     const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "program/read/status", params);
+    response.data.map((item) => {
+      item.start_date = moment(item.start_date).format("YY-MM-DD");
+      item.end_date = moment(item.end_date).format("YY-MM-DD");
+    });
 
-    response.data[0].start_date = moment(response.data[0].start_date).format("YY-MM-DD");
-    response.data[0].end_date = moment(response.data[0].end_date).format("YY-MM-DD");
     setCompleteProgram(response.data);
 
     response.data.map((item) => {

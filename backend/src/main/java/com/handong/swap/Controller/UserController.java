@@ -107,10 +107,11 @@ public class UserController {
 			
 		}
 		
-		if(status==0) {
+		if(status==0 || status ==-2) {
 			user.setName(httpServletRequest.getParameter("name"));
 			user.setEmail(httpServletRequest.getParameter("email"));
 			user.setPhone(httpServletRequest.getParameter("phone"));
+			user.setDepartment(httpServletRequest.getParameter("department"));
 			admin.setName(httpServletRequest.getParameter("name"));
 			admin.setEmail(httpServletRequest.getParameter("email"));
 			admin.setPhone(httpServletRequest.getParameter("phone"));
