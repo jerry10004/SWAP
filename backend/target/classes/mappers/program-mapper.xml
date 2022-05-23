@@ -48,7 +48,7 @@
    	</select>
    	
    	 <select id="readByStatusByUser" parameterType="hashmap" resultType="ProgramReadByUser">
-   	  select  A.id as applicant_id, P.id as program_id, P.program_name,P.start_date,  P.survey_form, P.end_date, A.status,P.status as program_status, case
+   	  select  A.id as applicant_id, P.id as program_id, P.program_name,P.start_date,  P.survey_form, P.end_date, A.status,P.status as program_status,C.category_name, case
             when (A.status = 0) then '참여보류'
             when (A.status=1) then '참여승인'
             when (A.status=2) then '참여불가'
@@ -57,6 +57,7 @@
 	end as status_name
 	FROM Applicant AS A
 	LEFT JOIN Program P on P.id = A.program_id
+	LEFT JOIN Category C ON P.category_id = C.id
 	where P.deldate is null AND P.status = #{status} AND A.user_id=#{user_id}
 	order by A.regdate desc;
 	
