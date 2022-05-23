@@ -12,6 +12,7 @@ public class ProgramDTO {
 	int applicants_num;
 	int recruitment_type;
 	String application_form;
+	String survey_form;
 	String program_name;
 	String information;
 	Date start_date;
@@ -139,6 +140,12 @@ public class ProgramDTO {
 	}
 	public void setApplication_form(String application_form) {
 		this.application_form = application_form;
+	}
+	public String getSurvey_form() {
+		return survey_form;
+	}
+	public void setSurvey_form(String survey_form) {
+		this.survey_form = survey_form;
 	}
 	public Date getDeldate() {
 		return deldate;

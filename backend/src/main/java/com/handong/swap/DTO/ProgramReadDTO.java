@@ -14,6 +14,7 @@ public class ProgramReadDTO {
 	int status;
 	int apply_status;
 	String application_form;
+	String survey_form;
 	int quota;
 	String status_name;
 	String start_date;
@@ -52,6 +53,12 @@ public class ProgramReadDTO {
 	}
 	public void setApplication_form(String application_form) {
 		this.application_form = application_form;
+	}
+	public String getSurvey_form() {
+		return survey_form;
+	}
+	public void setSurvey_form(String survey_form) {
+		this.survey_form = survey_form;
 	}
 	public int getFile_type() {
 		return file_type;

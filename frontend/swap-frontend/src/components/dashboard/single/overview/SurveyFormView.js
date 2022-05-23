@@ -69,6 +69,7 @@ const SurveyFormView = (props) => {
     setApplicantInformationLoading(false);
     const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "applicant/applicants/" + id);
     setApplicantInformation(response.data);
+    console.log("@@@@@@@ : ", response.data);
     setApplicantNum(response.data.length);
     setApplicantInformationLoading(true);
   };
@@ -79,7 +80,7 @@ const SurveyFormView = (props) => {
     var json_total = response.data[0].survey_form;
     var json_sub = json_total.slice(1, json_total.length - 1);
     var arr = JSON.parse("[" + json_sub + "]");
-    console.log("@@@@@@@@@@@@@@@: ", response.data[0]);
+    console.log("###########: ", response.data[0]);
     setProgramInformation(response.data[0]);
     setFormContent(arr);
     setReadyFormContent(true);
@@ -123,6 +124,7 @@ const SurveyFormView = (props) => {
 
   const getUserInfo = (user) => {
     setUserInfo(user);
+    console.log("??????/: ", user.survey_form);
     setstudentFormData(user.survey_form);
     setApplicantClick(true);
   };
@@ -136,17 +138,17 @@ const SurveyFormView = (props) => {
   };
 
   const componentDidMount = async () => {
-    const fbRender = document.getElementById("fb-render");
+    const fbRender = document.getElementById("fb-render4");
     const formData = userInfo != null ? studentFormData : originalFormData;
 
     $(fbRender).formRender({ formData });
 
-    const fbRender2 = document.getElementById("fb-render2");
+    const fbRender2 = document.getElementById("fb-render5");
     const formData2 = userInfo != null ? studentFormData : originalFormData;
     $(fbRender2).formRender({ formData2 });
 
     if (updateLoading) {
-      const fbRender3 = document.getElementById("fb-render3");
+      const fbRender3 = document.getElementById("fb-render6");
       const formData3 = updateFormData;
       $(fbRender3).formRender({ formData3 });
     }
@@ -234,7 +236,7 @@ const SurveyFormView = (props) => {
                           <Form.Control type="text" placeholder="Handong123@handong.ac.kr" value={userInfo.email} readOnly />
                         </Form.Group>
                       </Col>
-                      <form id="fb-render"></form>
+                      <form id="fb-render4"></form>
                     </Form>
                   </Card.Body>
                 </Card>
@@ -245,7 +247,7 @@ const SurveyFormView = (props) => {
               <Col xl={9} lg={12} md={12} sm={12} className="mb-4 mb-xl-0">
                 {/* <h1>246~~~~~~~~</h1> */}
                 <Form className="row" id="survey">
-                  <form id="fb-render2"></form>
+                  <form id="fb-render5"></form>
                 </Form>
               </Col>
             </>
@@ -258,7 +260,7 @@ const SurveyFormView = (props) => {
               {/* <h1>259~~~~~~~~</h1> */}
               <Card.Body>
                 {/*  Form */}
-                <Form className="row  " id="survey">
+                <Form className="row" id="survey">
                   {/*  Name */}
                   <Col md={6} sm={12} className="mb-4">
                     <Form.Group controlId="Name">
@@ -303,7 +305,7 @@ const SurveyFormView = (props) => {
                     </Form.Group>
                   </Col>
 
-                  <form id="fb-render"></form>
+                  <form id="fb-render4"></form>
                 </Form>
               </Card.Body>
             </Card>
@@ -315,13 +317,7 @@ const SurveyFormView = (props) => {
               <Card.Body> */}
             <Row>
               {/* <h1>317~~~~~~~~</h1> */}
-              <Form>
-                {formContent.length > 1 ? (
-                  <FormBuilder content={formContent} propFunction={highFunction} submit={submitButton} template="0" program="1" content={formContent} saveFunction={save} />
-                ) : (
-                  ""
-                )}
-              </Form>
+              <Form>{formContent.length > 1 ? <FormBuilder content={formContent} propFunction={highFunction} submit={submitButton} template="0" program="1" saveFunction={save} /> : ""}</Form>
             </Row>
             {/* </Card.Body>
             </Card> */}
@@ -394,7 +390,7 @@ const SurveyFormView = (props) => {
                     </Accordion>
                   </Fragment>
                 </Card>
-                {readyJson === true && programInformation.status === 0 && programInformation.applicants_num === 0 ? (
+                {readyJson === true && programInformation.status !== 2 && programInformation.applicants_num === 0 ? (
                   <div className="d-flex justify-content-end ">
                     <Button variant="primary" onClick={edit}>
                       수정

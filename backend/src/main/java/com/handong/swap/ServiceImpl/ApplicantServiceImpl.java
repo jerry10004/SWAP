@@ -55,6 +55,16 @@ public class ApplicantServiceImpl implements ApplicantService{
 	public void deleteApplicant(int id) {
 		applicantDAO.deleteApplicant(id);
 	}
+
+	@Override
+	public int applySurvey(ApplicantDTO applicant) {
+		return applicantDAO.applySurvey(applicant);
+	}
+
+	@Override
+	public int confirmSurvey(ApplicantDTO applicant) {
+		return applicantDAO.confirmSurvey(applicant);
+	}
 	
 
 	

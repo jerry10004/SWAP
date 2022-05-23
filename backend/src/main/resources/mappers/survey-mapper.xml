@@ -8,6 +8,7 @@
 		from Survey AS S
 		join Admin A2 on A2.id = S.admin_id
         join Category C on S.category_id = C.id
+        where S.id != 1
 		order by S.regdate desc;
    	</select> 
 

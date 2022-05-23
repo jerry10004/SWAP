@@ -48,6 +48,8 @@ public interface ProgramService {
 	public String readLikedPrograms(int user_id) throws JsonProcessingException;
 	
 	public String readApplicationByProgram(int program_id) throws JsonProcessingException;
+
+	public String readSurveyByProgram(int program_id) throws JsonProcessingException;
 	
 	public void updateApplicationByProgram(int program_id, String application_form);
 

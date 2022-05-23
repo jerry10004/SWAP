@@ -190,7 +190,7 @@ const ApplicationFormView = (props) => {
                   {/* <h1>190~~~~~`</h1> */}
                   <Card.Body>
                     {/*  Form */}
-                    <Form className="row  " id="application">
+                    <Form className="row" id="application">
                       {/*  Name */}
                       <Col md={6} sm={12} className="mb-4">
                         <Form.Group controlId="Name">
