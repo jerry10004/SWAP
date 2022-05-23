@@ -14,12 +14,20 @@ public class ApplicantReadDTO {
 	int semester;
 	int status;
 	String application_form;
+	String survey_form;
 	
 	public String getApplication_form() {
 		return application_form;
 	}
 	public void setApplication_form(String application_form) {
 		this.application_form = application_form;
+	}
+	
+	public String getSurvey_form() {
+		return survey_form;
+	}
+	public void setSurvey_form(String survey_form) {
+		this.survey_form = survey_form;
 	}
 
 	public int getId() {

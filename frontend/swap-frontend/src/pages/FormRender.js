@@ -31,7 +31,8 @@ const FormRender = (props) => {
   var Componentvar = 0;
 
   useLayoutEffect(() => {
-    readFormData(programID);
+    if (props.survey === "1") readSurveyData(programID);
+    else readFormData(programID);
     readApplicantData(programID, userID);
     readApplicantInformation(userID);
   }, []);
@@ -56,6 +57,18 @@ const FormRender = (props) => {
       },
       false
     );
+  };
+
+  const readSurveyData = async (id) => {
+    console.log("hihihihL survey~~~");
+    const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "survey/readSurveyForm/" + id);
+    var json_total = response.data[0].survey_form;
+    var json_sub = json_total.slice(1, json_total.length - 1);
+    var arr = JSON.parse("[" + json_sub + "]");
+    console.log("readFormdat: ", response.data);
+    setoriginalFormData(arr);
+    setisFormRender(true);
+    //componentDidMount();
   };
 
   const readFormData = async (id) => {
@@ -88,7 +101,7 @@ const FormRender = (props) => {
     alert(message);
   };
 
-  const addFormData = async () => {
+  const saveApplicationData = async () => {
     var isFilled = true;
     var params = new URLSearchParams();
     params.append("program_id", programID);
@@ -126,6 +139,43 @@ const FormRender = (props) => {
         // }
       }
     }
+  };
+  const saveSurveyData = async () => {
+    var isFilled = true;
+    var params = new URLSearchParams();
+    params.append("program_id", programID);
+    params.append("user_id", userID);
+    params.append("content", JSON.stringify(formInformation));
+
+    if (props.param.count === 0) {
+      // if (canApply === false && props.param.count === 0) {
+      //   displayAlert("이미 신청된 프로그램입니다.");
+      //   navigate("/main");
+      //   props.param.count++;
+      // } else {
+      for (var i = 0; i < formInformation.length; i++) {
+        if (formInformation[i].userData[0] === "" && formInformation[i].required === true && props.param.count === 0) {
+          isFilled = false;
+          displayAlert("필수 항목을 입력하세요! : " + formInformation[i].label);
+          break;
+        }
+      }
+
+      if (isFilled && props.param.count === 0) {
+        if (formInformation.length > 0 && props.param.count === 0) {
+          const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "applicant/survey", params);
+
+          displayAlert("설문지가 제출 되었습니다.");
+          navigate("/mypage");
+          // props.param.count = props.param.count + 1;
+        }
+      }
+    }
+  };
+
+  const addFormData = async () => {
+    if (props.survey === "1") saveSurveyData();
+    else saveApplicationData();
   };
 
   return (

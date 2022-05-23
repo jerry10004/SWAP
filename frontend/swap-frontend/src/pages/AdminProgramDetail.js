@@ -94,14 +94,15 @@ const AdminProgramDetail = () => {
                               신청응답
                             </Nav.Link>
                           </Nav.Item>
-                          <Nav.Item>
-                            <Nav.Link eventKey="survey" className="mb-sm-3 mb-md-0">
-                              설문지
-                            </Nav.Link>
-                          </Nav.Item>
+
                           <Nav.Item>
                             <Nav.Link eventKey="applicant" className="mb-sm-3 mb-md-0">
                               신청현황
+                            </Nav.Link>
+                          </Nav.Item>
+                          <Nav.Item>
+                            <Nav.Link eventKey="survey" className="mb-sm-3 mb-md-0">
+                              설문지
                             </Nav.Link>
                           </Nav.Item>
                         </Nav>
@@ -114,17 +115,15 @@ const AdminProgramDetail = () => {
                           <Tab.Pane eventKey="application" className="pb-4">
                             <ApplicationFormView param2={id} />
                           </Tab.Pane>
-                          <Tab.Pane eventKey="survey" className="pb-4">
-                            <SurveyFormView param3={id} />
-                          </Tab.Pane>
+
                           <Tab.Pane eventKey="applicationData" className="pb-4">
                             <ApplicationDataView param3={id} />
                           </Tab.Pane>
-                          {/* <Tab.Pane eventKey="survey" className="pb-4">
-                            <UpcomingDeadlines />
-                          </Tab.Pane> */}
                           <Tab.Pane eventKey="applicant" className="pb-4">
                             <ApplicantsListItems param4={id} />
+                          </Tab.Pane>
+                          <Tab.Pane eventKey="survey" className="pb-4">
+                            <SurveyFormView param3={id} />
                           </Tab.Pane>
                         </Tab.Content>
                       </Card.Body>

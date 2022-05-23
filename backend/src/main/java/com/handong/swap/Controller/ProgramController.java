@@ -147,6 +147,13 @@ public class ProgramController {
 	    return result;
 	}
 	
+	@RequestMapping(value = "/read/survey/{id}", method = RequestMethod.GET, produces = "application/json; charset=utf8")
+	@ResponseBody
+	public String readSurveyByProgram(@PathVariable int id) throws IOException, ParseException {
+		String result = programService.readSurveyByProgram(id);	
+	    return result;
+	}
+	
 	@RequestMapping(value = "/update/application", method = RequestMethod.POST, produces = "application/json; charset=utf8")
 	@ResponseBody
 	public void updateApplicationByProgram(HttpServletRequest httpServletRequest) throws IOException, ParseException {
@@ -245,6 +252,7 @@ public class ProgramController {
 		program.setCategory_id(Integer.parseInt(httpServletRequest.getParameter("category_id")));
 //		program.setApplication_form(Integer.parseInt(httpServletRequest.getParameter("application_form")));
 		program.setApplication_form(httpServletRequest.getParameter("application_form"));
+		program.setSurvey_form(httpServletRequest.getParameter("survey_form"));
 		program.setQuota(Integer.parseInt(httpServletRequest.getParameter("program_quota")));
 		program.setProgram_name(httpServletRequest.getParameter("program_name"));
 		program.setInformation(httpServletRequest.getParameter("information"));

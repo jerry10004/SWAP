@@ -63,6 +63,15 @@ public class ApplicantDAOImpl implements ApplicantDAO {
 		sqlSession.delete("Applicant.deleteApplicant", id);
 	}
 
+	@Override
+	public int applySurvey(ApplicantDTO applicant) {
+		return sqlSession.update("Applicant.applySurvey", applicant);
+	}
+
+	@Override
+	public int confirmSurvey(ApplicantDTO applicant) {
+		return sqlSession.selectOne("Applicant.confirmSurvey", applicant);
+	}
 	
 	
 

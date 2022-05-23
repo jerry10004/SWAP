@@ -1,7 +1,7 @@
 // import node module libraries
 import React, { Fragment, useMemo, useLayoutEffect } from "react";
 import { useTable, useFilters, useGlobalFilter, usePagination, useRowSelect } from "react-table";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Col, Row, Table, Button } from "react-bootstrap";
 
 // Import required custom components
@@ -10,9 +10,25 @@ import Pagination from "components/elements/advance-table/Pagination";
 // import Checkbox from "components/elements/advance-table/Checkbox";
 import DotBadge from "components/elements/bootstrap/DotBadge";
 import moment from "moment";
+import axios from "axios";
 
 const CompleteProgramTable = ({ table_data }) => {
   var index;
+  const navigate = useNavigate();
+  const hi = (link) => {
+    console.log("hihihihihi");
+    console.log(link);
+  };
+
+  const confirmSurvey = async (program_id, link) => {
+    var user_id = parseInt(window.sessionStorage.getItem("id"));
+    var params = new URLSearchParams();
+    params.append("user_id", user_id);
+    params.append("program_id", program_id);
+    const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "applicant/confirm/survey", params);
+    if (response.data === -1) alert("이미 작성한 설문지 입니다.");
+    else navigate(link);
+  };
 
   const columns = useMemo(
     () => [
@@ -80,6 +96,32 @@ const CompleteProgramTable = ({ table_data }) => {
               <DotBadge bg={value === "미수료" ? "secondary" : value === "수료" ? "primary" : ""}></DotBadge>
               {value.charAt(0).toUpperCase() + value.slice(1)}
             </Fragment>
+          );
+        },
+      },
+      {
+        accessor: "a",
+        Header: "비고",
+        Cell: ({ value, row }) => {
+          var a = String(row.original.program_id);
+          console.log(typeof a);
+
+          var link = "/program/" + a + "/survey";
+          return (
+            <div className="d-grid d-md-block">
+              {/* <Link to={link}> */}
+              <Button
+                variant="outline-primary"
+                className="me-1"
+                onClick={
+                  () => confirmSurvey(row.original.program_id, link)
+                  // navigate(link)
+                }
+              >
+                설문지 작성
+              </Button>
+              {/* </Link> */}
+            </div>
           );
         },
       },

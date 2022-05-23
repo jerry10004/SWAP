@@ -42,9 +42,11 @@ public class ApplicantController {
 	public String readApplicantInformationByProgramId(@PathVariable int id) throws IOException, ParseException {
 //		System.out.println("프로그램 별 신청자 정보 읽기");
 //		System.out.println(id);
-
+		
+		System.out.println("======");
+		System.out.println(id);
 		String result = applicantService.readApplicantInformationByProgramId(id);
-//		System.out.println("result is "+result);
+		System.out.println("result is "+result);
 		return result;
 	}
 	
@@ -90,6 +92,34 @@ public class ApplicantController {
 			programService.updateApplicantNum(Integer.parseInt(httpServletRequest.getParameter("program_id")));
 			System.out.println("신청서 추가 성공");
 		}
+		
+	}
+	
+	@RequestMapping(value = "/survey", method = RequestMethod.POST, produces = "application/json; charset=utf8")
+	@ResponseBody
+	public void applySurvey(HttpServletRequest httpServletRequest) throws ParseException {
+		ApplicantDTO applicant = new ApplicantDTO();
+		
+		applicant.setProgram_id(Integer.parseInt(httpServletRequest.getParameter("program_id")));
+		applicant.setUser_id(Integer.parseInt(httpServletRequest.getParameter("user_id")));	
+		applicant.setSurvey_form(httpServletRequest.getParameter("content"));
+		
+		
+		int result = applicantService.applySurvey(applicant);
+	
+		
+	}
+	
+	@RequestMapping(value = "/confirm/survey", method = RequestMethod.POST, produces = "application/json; charset=utf8")
+	@ResponseBody
+	public int confirmSurvey(HttpServletRequest httpServletRequest) throws ParseException {
+		ApplicantDTO applicant = new ApplicantDTO();
+		
+		applicant.setProgram_id(Integer.parseInt(httpServletRequest.getParameter("program_id")));
+		applicant.setUser_id(Integer.parseInt(httpServletRequest.getParameter("user_id")));			
+		
+		int result = applicantService.confirmSurvey(applicant);
+		return result;
 		
 	}
 	

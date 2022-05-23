@@ -68,6 +68,12 @@
    	where P.id = #{program_id}
    	</select>
    	
+   	<select id="readSurveyByProgram" parameterType="Integer" resultType="ProgramRead">
+   	select P.survey_form, P.status, P.applicants_num 
+   	from Program as P
+   	where P.id = #{program_id}
+   	</select>
+   	
    		<select id="selectConfirmOngoing" parameterType="Integer" resultType="Integer">
 	   select case when(P.status = 1) then 1
 		else 0
@@ -111,8 +117,10 @@
    	</select>
    	
    	<insert id = "insertProgram" parameterType="Program">	
-   		INSERT INTO Program (admin_id, category_id, application_form, program_name, information, start_date, end_date, quota, Applystart_date, Applyend_date, manager_name, manager_contact)
-		VALUES (56, #{category_id}, #{application_form}, #{program_name}, #{information}, #{start_date}, #{end_date},#{quota}, #{Applystart_date}, #{Applyend_date},#{manager_name}, #{manager_contact})
+   		INSERT INTO Program (admin_id, category_id, application_form, survey_form, program_name, information, start_date, end_date, quota, Applystart_date, Applyend_date, manager_name, manager_contact)
+		VALUES ((select AD.id as admin_id
+		from Admin as AD
+		where AD.user_id = #{admin_id}), #{category_id}, #{application_form}, #{survey_form},#{program_name}, #{information}, #{start_date}, #{end_date},#{quota}, #{Applystart_date}, #{Applyend_date},#{manager_name}, #{manager_contact})
    	</insert>
    	
    	<insert id = "insertPoster" parameterType="ProgramFile">	

@@ -43,6 +43,13 @@ class FormBuilder extends Component {
 
     var formBuilder = $(this.fb.current).formBuilder({ formData });
 
+    if (this.props.template === "0") {
+      document.getElementById("saveApplication").addEventListener("click", () => {
+        const result = formBuilder.actions.save();
+        this.setState({ formResult: JSON.stringify(result, null, 2) });
+      });
+    }
+
     if (this.props.template === "1") {
       document.getElementById("saveData").addEventListener("click", () => {
         const result = formBuilder.actions.save();
@@ -50,12 +57,12 @@ class FormBuilder extends Component {
       });
     }
 
-    // if (this.props.template === "0") {
-    //   document.getElementById("submitData").addEventListener("click", () => {
-    //     const result = formBuilder.actions.save();
-    //     this.setState({ formResult: JSON.stringify(result, null, 2) });
-    //   });
-    // }
+    if (this.props.template === "2") {
+      document.getElementById("submitData").addEventListener("click", () => {
+        const result = formBuilder.actions.save();
+        this.setState({ formResult: JSON.stringify(result, null, 2) });
+      });
+    }
 
     document.getElementById("clear-all-fields").onclick = function () {
       if (window.confirm("전부 지우고 새로 작성하시겠습니까?") == true) {
@@ -129,8 +136,11 @@ class FormBuilder extends Component {
     }
   };
 
+  saveApplication = async () => {
+    this.props.saveApplication(this.state.formResult);
+  };
+
   clickSubmit = async () => {
-    console.log("hihi: ", this.state.formResult);
     this.props.submit(this.state.formResult);
     if (this.props.program === "1") this.props.saveFunction();
   };
@@ -139,7 +149,7 @@ class FormBuilder extends Component {
     return (
       <>
         <Card className="mb-3  border-0">
-          <Card.Header className="border-bottom px-4 py-3">{this.props.template === "2" ? <h4 className="mb-0">프로그램 설문지</h4> : <h4 className="mb-0">프로그램 신청서</h4>}</Card.Header>
+          <Card.Header className="border-bottom px-4 py-3">{this.props.survey === "1" ? <h4 className="mb-0">프로그램 설문지</h4> : <h4 className="mb-0">프로그램 신청서</h4>}</Card.Header>
           <Card.Body>
             <div id="fb-editor" ref={this.fb} />
             <div class="saveDataWrap" className="d-flex justify-content-end">
@@ -175,9 +185,16 @@ class FormBuilder extends Component {
                               <Row>
                                 <Col xs={12} className="mt-3">
                                   <Form.Group controlId="program_category">
-                                    <Form.Label>
-                                      신청서 템플릿의 카테고리를 선택해주세요. <span className="text-danger">*</span>
-                                    </Form.Label>
+                                    {this.props.survey === "1" ? (
+                                      <Form.Label>
+                                        설문지 템플릿의 카테고리를 선택해주세요. <span className="text-danger">*</span>
+                                      </Form.Label>
+                                    ) : (
+                                      <Form.Label>
+                                        신청서 템플릿의 카테고리를 선택해주세요. <span className="text-danger">*</span>
+                                      </Form.Label>
+                                    )}
+
                                     <select class="form-select" id="program_category" name="program_category" onChange={this.handleChange_category} required>
                                       <option selected value="">
                                         카테고리
@@ -260,7 +277,7 @@ class FormBuilder extends Component {
         </Card>
         {this.props.template === "0" ? (
           <div className="d-flex justify-content-end">
-            <Button variant="primary" type="submit">
+            <Button id="saveApplication" variant="primary" type="submit" onClick={this.saveApplication}>
               다음
             </Button>
             {/* <Button id="submitData" className="btn btn-primary" type="button" onClick={this.clickSubmit}>

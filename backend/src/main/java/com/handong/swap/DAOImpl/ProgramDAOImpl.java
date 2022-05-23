@@ -141,6 +141,11 @@ public class ProgramDAOImpl implements ProgramDAO {
 	public List<ProgramReadDTO> readApplicationByProgram(int program_id) {
 		return sqlSession.selectList("Program.readApplicationByProgram",program_id);
 	}
+	
+	@Override
+	public List<ProgramReadDTO> readSurveyByProgram(int program_id) {
+		return sqlSession.selectList("Program.readSurveyByProgram",program_id);
+	}
 
 	@Override
 	public void updateApplicationByProgram(int program_id, String application_form) {

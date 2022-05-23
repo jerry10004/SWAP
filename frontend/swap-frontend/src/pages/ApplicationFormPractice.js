@@ -9,7 +9,7 @@ import jsonSkeleton from "json/jsonSkeleton.json";
 import FormBuilder from "./FormBuilder";
 
 const ApplicationFormPractice = (props) => {
-  const { handleChange, next } = props;
+  const { handleChange, next, saveApplication } = props;
   const { submit, previous } = props;
   const [readyJson, setReadyJson] = useState(false);
   const [createJson, setCreateJson] = useState(false);
@@ -74,6 +74,10 @@ const ApplicationFormPractice = (props) => {
 
   const save = (event) => {};
 
+  // const saveApplication = (form) => {
+  //   props.saveApplication(form);
+  // };
+
   //DB에서 Application 종류 읽어오는 함수
   const readApplication = async () => {
     setReadyElementOption(false);
@@ -129,7 +133,7 @@ const ApplicationFormPractice = (props) => {
       )}
 
       {readyJson && formContent ? (
-        <FormBuilder content={formContent} propFunction={highFunction} submit={submitButton} template="0" />
+        <FormBuilder content={formContent} propFunction={highFunction} submit={submitButton} saveApplication={saveApplication} template="0" />
       ) : (
         <Card className="mb-3  border-0">
           <Card.Header className="border-bottom px-4 py-3">
