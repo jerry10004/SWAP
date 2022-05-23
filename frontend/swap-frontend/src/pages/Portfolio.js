@@ -1,9 +1,12 @@
 import { Fragment, useLayoutEffect, useState, useRef } from "react";
-import { Card, Button, Row, Col, Image, Table } from "react-bootstrap";
+import { Card, Button, Row, Col, Image, Table, Form } from "react-bootstrap";
+import Modal, { ModalProvider, BaseModalBackground } from "styled-react-modal";
+import styled from "styled-components";
 import ProfileBackground from "assets/images/background/profile-bg.jpg";
 import axios from "axios";
 import html2canvas from "html2canvas";
 import { jsPDF } from "jspdf";
+import moment from "moment";
 
 const Portfolio = (props) => {
   const printRef = useRef();
@@ -12,11 +15,58 @@ const Portfolio = (props) => {
   const user_id = window.sessionStorage.getItem("id");
   const [category, setCategory] = useState(["대회", "봉사", "캠프", "행사", "맥북", "특강", "기타", "프로젝트/스터디", "인턴/현장실습"]);
   const [countCategory, setCountCategory] = useState([]);
+  const [isOpen, setIsOpen] = useState(false);
+  const [opacity, setOpacity] = useState(0);
+  const [usertitle, setUserTitle] = useState();
+  const [userCategory, setUserCategory] = useState();
 
   useLayoutEffect(() => {
     setUserInfo(props.userInfo[0]);
     readCompleteProgram();
   }, []);
+
+  const modalState = () => {
+    isOpen ? setIsOpen(false) : setIsOpen(true);
+  };
+
+  const afterOpen = () => {
+    setTimeout(() => {
+      setOpacity(1);
+    }, 100);
+  };
+
+  const beforeClose = () => {
+    return new Promise((resolve) => {
+      setOpacity(1);
+      setTimeout(resolve, 300);
+    });
+  };
+
+  const toggleModal = (e) => {
+    setOpacity(1);
+    setIsOpen(false);
+  };
+
+  const handleChange = (e) => {
+    setUserTitle(e.tartget.value);
+  };
+  const handleChange_category = (e) => {
+    setUserCategory(e.tartget.value);
+  };
+
+  const createApplication = async () => {
+    var params = new URLSearchParams();
+    params.append("name", usertitle);
+    params.append("category_id", userCategory);
+
+    const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "application/add", params);
+    if (response.data === 1) {
+      alert("활동내역이 저장 되었습니다.");
+      window.location.reload();
+    } else if (response.data === -2) alert("활동내역 추가를 실패했습니다.");
+    setOpacity(1);
+    setIsOpen(false);
+  };
 
   const handleDownloadPdf = async () => {
     const element = printRef.current;
@@ -55,6 +105,9 @@ const Portfolio = (props) => {
     params.append("user_id", user_id);
     params.append("status", 2);
     const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "program/read/status", params);
+
+    response.data[0].start_date = moment(response.data[0].start_date).format("YY-MM-DD");
+    response.data[0].end_date = moment(response.data[0].end_date).format("YY-MM-DD");
     setCompleteProgram(response.data);
 
     response.data.map((item) => {
@@ -133,7 +186,8 @@ const Portfolio = (props) => {
                                 <tr>
                                   <th>번호</th>
                                   <th>프로그램</th>
-                                  <th>날짜</th>
+                                  <th>시작일자</th>
+                                  <th>종료일자</th>
                                 </tr>
                               </thead>
                               <tbody>
@@ -144,10 +198,8 @@ const Portfolio = (props) => {
                                       <tr>
                                         <td>{index}</td>
                                         <td>{_program.program_name}</td>
-                                        <td>
-                                          {_program.start_date} ~ <br></br>
-                                          {_program.end_date}
-                                        </td>
+                                        <td>{_program.start_date}</td>
+                                        <td> {_program.end_date}</td>
                                       </tr>
                                     );
                                   }
@@ -161,7 +213,67 @@ const Portfolio = (props) => {
                 </Card>
               </div>
             </div>
+            {isOpen ? (
+              <ModalProvider backgroundComponent={FadingBackground}>
+                <StyledModal isOpen={isOpen} afterOpen={afterOpen} beforeClose={beforeClose} onBackgroundClick={toggleModal} onEscapeKeydown={toggleModal} opacity={opacity} backgroundProps={opacity}>
+                  <div>
+                    <button type="button" class="btn-close" aria-label="Close" onClick={toggleModal}></button>
+
+                    <Form className="mt-2">
+                      <Row>
+                        <Col xs={12} className="mt-3">
+                          <Form.Group controlId="program_category">
+                            <Form.Label>
+                              추가 할 활동내역의 카테고리를 선택해주세요. <span className="text-danger">*</span>
+                            </Form.Label>
+                            <select class="form-select" id="program_category" name="program_category" onChange={handleChange_category} required>
+                              <option selected value="">
+                                카테고리
+                              </option>
+                              <option value="1">대회</option>
+                              <option value="2">봉사</option>
+                              <option value="3">캠프</option>
+                              <option value="4">행사</option>
+                              <option value="5">맥북</option>
+                              <option value="6">프로젝트/스터디</option>
+                              <option value="7">인턴/현장실습</option>
+                              <option value="8">특강</option>
+                              <option value="9">기타</option>
+                            </select>
+                            <Form.Control.Feedback type="invalid">카테고리를 선택해주세요.</Form.Control.Feedback>
+                          </Form.Group>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col xs={12} className="mt-6">
+                          <Form.Group controlId="formProjectTitle">
+                            <Form.Label>
+                              프로그램 이름을 입력해주세요. <span className="text-danger">*</span>
+                            </Form.Label>
+                            <Form.Control type="text" placeholder="Enter application title" required onChange={handleChange} />
+                          </Form.Group>
+                        </Col>
+                        <Col xs={12} className="mt-6 d-flex justify-content-end">
+                          <Button variant="primary" type="button" className="ms-2" onClick={createApplication}>
+                            저장
+                          </Button>
+                        </Col>
+                      </Row>
+                    </Form>
+                  </div>
+                </StyledModal>
+              </ModalProvider>
+            ) : (
+              <></>
+            )}
           </Card.Body>
+          <Card.Footer>
+            <div className="d-flex justify-content-end">
+              <Button className="bg-primary border-0" onClick={modalState}>
+                추가하기
+              </Button>
+            </div>
+          </Card.Footer>
         </Card>
       ) : (
         <></>
@@ -171,3 +283,17 @@ const Portfolio = (props) => {
 };
 
 export default Portfolio;
+
+const StyledModal = Modal.styled`
+  width: 50rem;
+  height: auto;
+  padding : 20px;
+  border-radius:20px;
+  background-color: white;
+  opacity: ${(props) => props.opacity};
+  transition : all 0.3s ease-in-out;`;
+
+const FadingBackground = styled(BaseModalBackground)`
+  opacity: ${(props) => props.opacity};
+  transition: all 0.3s ease-in-out;
+`;
