@@ -68,7 +68,18 @@ const Bookmark = () => {
                 <Col lg={4} md={12} sm={12} key={index}>
                   <Card className={`mb-4 card-hover mx-2 main-program-card`}>
                     <Link to={address}>
-                      <Image src={programImage} alt="" className="card-img-top rounded-top-md programImage" width="100px" height="170px" />
+                      {/* <Image src={programImage} alt="" className="card-img-top rounded-top-md programImage" width="100px" height="170px" /> */}
+                      {item.file_name ? (
+                            <Image
+                              src={process.env.REACT_APP_RESTAPI_HOST + "resources/upload/" + item.file_name}
+                              alt=""
+                              className="card-img-top rounded-top-md programImage"
+                              width="100px"
+                              height="170px"
+                            />
+                          ) : (
+                            <Image src={programImage} alt="" className="card-img-top rounded-top-md programImage" width="100px" height="170px" />
+                          )}
                     </Link>
                     <Card.Body style={{ height: "6rem" }}>
                       <span className="text-dark fw-bold">

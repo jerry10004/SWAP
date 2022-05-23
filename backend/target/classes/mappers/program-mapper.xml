@@ -173,12 +173,15 @@
 	</update>
 	
 	  	<select id="readLikedPrograms" parameterType="Integer" resultType="ProgramReadById">
-	   select P.id, P.program_name,P.category_id, C.category_name as category_name, P.quota, P.information, P.start_date, P.end_date, P.Applystart_date, P.Applyend_date, P.manager_name, P.manager_contact, P.applicants_num
+	   select P.id, P.program_name,P.category_id, C.category_name as category_name, P.quota, P.information, 
+	   P.start_date, P.end_date, P.Applystart_date, P.Applyend_date, P.manager_name, P.manager_contact, P.applicants_num,PF.file_name
 		FROM Program AS P
 		LEFT JOIN Category as C  
 		ON P.category_id = C.id
 		LEFT JOIN Bookmark as B  
 		ON P.id = B.program_id
+		LEFT JOIN swap.Program_File as PF
+        ON P.id = PF.program_id AND PF.file_type != 0 OR PF.file_type IS NULL
 		where B.user_id = #{user_id};
    	</select>
    	
