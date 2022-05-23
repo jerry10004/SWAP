@@ -11,6 +11,7 @@ public class ProgramReadByUserDTO {
 	int program_id;
 	int program_status;
 	String program_name;
+	String survey_form;
 	String start_date;
 	String end_date;
 	String status_name;
@@ -40,6 +41,12 @@ public class ProgramReadByUserDTO {
 	}
 	public void setStatus(int status) {
 		this.status = status;
+	}
+	public String getSurvey_form() {
+		return survey_form;
+	}
+	public void setSurvey_form(String survey_form) {
+		this.survey_form = survey_form;
 	}
 	public int getProgram_Status() {
 		return program_status;

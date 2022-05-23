@@ -25,6 +25,11 @@ public class ApplicantDAOImpl implements ApplicantDAO {
 	}
 	
 	@Override
+	public List<ApplicantReadDTO> readSubmitterInformationByProgramId(int id) {
+		return sqlSession.selectList("Applicant.readSubmitterInformationByProgramId",id);
+	}
+	
+	@Override
 	public String updateApplicantStatus(int id,int status) {
 		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("id", id);

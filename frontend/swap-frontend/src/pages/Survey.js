@@ -163,10 +163,8 @@ const Survey = () => {
                     </Card.Body>
                   </Card>
                 </Col>
-                <Col lg={4} md={12} sm={12}>
-                  {/*  Card */}
+                {/* <Col lg={4} md={12} sm={12}>
                   <Card className="border-0 mb-3">
-                    {/*  Card body */}
                     <div className="p-3 text-center">
                       {poster ? (
                         <Image width="100%" object-fit="contain" src={process.env.REACT_APP_RESTAPI_HOST + "resources/upload/" + poster} alt="" />
@@ -176,18 +174,7 @@ const Survey = () => {
                     </div>
                     <hr className="m-0" />
                     <div className="p-5">
-                      {/*  List */}
                       <ListGroup as="ul" className="mb-0" bsPrefix="list-unstyled">
-                        {/* <ListGroup.Item as="li" className="mb-1" bsPrefix=" ">
-                          <span className="text-success me-1">
-                            <i className="fe fe-user"></i>
-                          </span>
-                          <span className="fw-bold text-dark"> 모집인원 - </span>
-                          <span>
-                            {" "}
-                            {programInfo.applicants_num + "명"} / {programInfo.quota == null || programInfo.quota === 0 ? infinite : programInfo.quota + "명"}{" "}
-                          </span>
-                        </ListGroup.Item> */}
                         <ListGroup.Item as="li" className="mb-1" bsPrefix=" ">
                           <span className="text-success me-1">
                             <i className="fe fe-calendar"></i>
@@ -240,7 +227,7 @@ const Survey = () => {
                       </Link>
                     </div>
                   </Card>
-                </Col>
+                </Col> */}
               </Row>
             </Container>
           </div>
