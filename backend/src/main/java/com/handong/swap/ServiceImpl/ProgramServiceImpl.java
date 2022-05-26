@@ -171,6 +171,14 @@ public class ProgramServiceImpl implements ProgramService{
 		
 	}
 
+	@Override
+	public String readByStatusCompleteByUser(int status, int user_id) throws JsonProcessingException {
+		List<ProgramReadDTO> programDATA = programDAO.readByStatusCompleteByUser(status, user_id);
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonString = mapper.writeValueAsString(programDATA);
+		return jsonString;
+	}
+
 	
 
 }

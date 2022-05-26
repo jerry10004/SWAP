@@ -189,8 +189,11 @@ public class ProgramController {
 		
 		//프로그램이 진행이고 applicant 상태가 3이 아니면 바꿔라.
 		
+		String applicant_result;
 		
-		String applicant_result = programService.readByStatusByUser(status, user_id);		
+	
+		applicant_result = programService.readByStatusByUser(status, user_id);		
+		
 		
 		LocalDateTime now = LocalDateTime.now();
 		String currentDate = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss",Locale.KOREA));
@@ -228,7 +231,14 @@ public class ProgramController {
 		
 		
 		
-		String result = programService.readByStatusByUser(status, user_id);		
+		String result;	
+		
+		if(status == 2) {
+			result = programService.readByStatusCompleteByUser(status, user_id);		
+		}
+		else {
+			result = programService.readByStatusByUser(status, user_id);		
+		}
 	    return result;
 	}
 	

@@ -7,7 +7,7 @@ import Pagination from "components/elements/advance-table/Pagination";
 import DotBadge from "components/elements/bootstrap/DotBadge";
 import moment from "moment";
 
-const CompleteProgramTable = ({ table_data, confirm_data }) => {
+const CompleteProgramTable = ({ table_data }) => {
   var index;
   const navigate = useNavigate();
 
@@ -90,13 +90,13 @@ const CompleteProgramTable = ({ table_data, confirm_data }) => {
           var link = "/swap/program/" + a + "/survey";
           return (
             <div className="d-grid d-md-block">
-              {confirm_data[index].confirm_survey === 1 ? (
+              {row.original.confirm_survey === 1 ? (
                 <Link to={link}>
                   <Button variant="outline-primary" className="me-1">
                     설문지 작성
                   </Button>
                 </Link>
-              ) : confirm_data[index].confirm_survey === -1 ? (
+              ) : row.original.confirm_survey === -1 ? (
                 <Button variant="outline-secondary" disabled className="me-1">
                   작성 완료
                 </Button>

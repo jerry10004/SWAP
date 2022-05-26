@@ -8,6 +8,7 @@ import com.google.protobuf.TextFormat.ParseException;
 
 public class ProgramReadDTO {
 	int id;
+	int confirm_survey;
 	String name;
 	String category_name;
 	String program_name;
@@ -65,6 +66,12 @@ public class ProgramReadDTO {
 	}
 	public void setFile_type(int file_type) {
 		this.file_type = file_type;
+	}
+	public int getConfirm_survey() {
+		return confirm_survey;
+	}
+	public void setConfirm_survey(int confirm_survey) {
+		this.confirm_survey = confirm_survey;
 	}
 	public int getApplicants_num() {
 		return applicants_num;

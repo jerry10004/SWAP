@@ -18,6 +18,8 @@ public class ProgramReadByUserDTO {
 	String status_name;
 	int status;
 	String category_name;
+	int confirm_survey;
+	
 
 	public String getCategory_name() {
 		return category_name;
@@ -30,6 +32,12 @@ public class ProgramReadByUserDTO {
 	}
 	public void setApplicant_id(int applicant_id) {
 		this.applicant_id = applicant_id;
+	}
+	public int getConfirm_survey() {
+		return confirm_survey;
+	}
+	public void setConfirm_survey(int confirm_survey) {
+		this.confirm_survey = confirm_survey;
 	}
 	public int getProgram_id() {
 		return program_id;

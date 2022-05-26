@@ -72,7 +72,7 @@ const FormBuilderModal = (props) => {
   const [isLogin, setIsLogin] = useState(false);
 
   const onSuccess = async (response) => {
-    console.log(response);
+    console.log("hihih", response);
 
     const params = new URLSearchParams();
     params.append("token", response.tokenObj.id_token);
@@ -84,6 +84,8 @@ const FormBuilderModal = (props) => {
     const res = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "login", params);
     if (res.data !== "fail") {
       window.sessionStorage.setItem("email", response.profileObj.email);
+      // window.sessionStorage.setItem("myname", response.profileObj.email);
+
       window.sessionStorage.setItem("name", response.profileObj.name);
       window.sessionStorage.setItem("token", response.tokenObj.id_token);
       window.sessionStorage.setItem("expires_at", response.tokenObj.expires_at);

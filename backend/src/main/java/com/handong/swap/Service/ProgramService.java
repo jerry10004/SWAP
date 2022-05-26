@@ -22,6 +22,8 @@ public interface ProgramService {
 	
 	public String readByStatusByUser(int status, int user_id) throws JsonProcessingException;
 	
+	public String readByStatusCompleteByUser(int status, int user_id) throws JsonProcessingException;
+	
 	public String readProgramInformationByProgramId(int id) throws JsonProcessingException;
 		
 	public String readProgramName(int id) throws JsonProcessingException;

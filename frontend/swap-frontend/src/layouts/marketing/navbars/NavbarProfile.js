@@ -20,6 +20,11 @@ const NavbarProfile = ({ logout }) => {
     readUserInformation(ID);
   }, []);
 
+  // const readInformation = () => {
+  //   if (window.sessionStorage.getItem("status") === -2) setMenu(DashboardSuperMenu);
+  //   else setMenu(DashboardMenu);
+  // };
+
   const readUserInformation = async (id) => {
     setUserInformationLoading(false);
     const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "user/loggedinUser/" + id);

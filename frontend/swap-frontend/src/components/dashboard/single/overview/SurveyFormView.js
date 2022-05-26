@@ -244,7 +244,7 @@ const SurveyFormView = (props) => {
           )
         ) : /* 수정하고 난 다음 완료 버튼 눌렀을 때 뜨는 부분. 이때 formRender가 되지 않고, 해당 formRender에는 새롭게 수정된 Form 이 보여야한다. */
         isEdit === false ? (
-          <Col xl={9} lg={12} md={12} sm={12} className="mb-4 mb-xl-0">
+          <Col xl={9} lg={12} md={12} sm={12} className="mb-4 mb-xl-0 d-flex flex-column justify-content-between">
             <Card>
               <Card.Header>설문지</Card.Header>
               {/* <h1>259~~~~~~~~</h1> */}
@@ -384,7 +384,7 @@ const SurveyFormView = (props) => {
                   </Fragment>
                 </Card>
                 {readyJson === true && programInformation.status !== 2 && programInformation.applicants_num === 0 ? (
-                  <div className="d-flex justify-content-end ">
+                  <div className="d-flex justify-content-end align-items-end">
                     <Button variant="primary" onClick={edit}>
                       수정
                     </Button>

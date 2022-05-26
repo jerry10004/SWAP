@@ -33,5 +33,6 @@ public interface ProgramDAO {
 	public void updateApplicationByProgram(int program_id, String application_form);
 	public void updateSurveyByProgram(int program_id, String survey_form);
 	public int confirmSurvey(ProgramReadByUserDTO program);
+	List<ProgramReadDTO> readByStatusCompleteByUser(int status, int user_id);
 
 }

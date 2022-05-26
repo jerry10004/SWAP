@@ -18,8 +18,8 @@ const TableChart = ({ heading, data, count }) => {
               <Table className="mb-0 text-nowrap">
                 <tbody>
                   {/* <h3>{num}</h3>*/}
-                  {/* <h1>{heading}</h1>
-                  <h3>{data}</h3> */}
+                  {/* <h1>{heading}</h1> */}
+                  {/* <h3>{data}</h3> */}
                   {/* <h3>{data[num]}</h3> */}
                   {data !== null
                     ? data.map((item, index) => {

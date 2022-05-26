@@ -67,8 +67,14 @@ const NavbarVertical = (props) => {
   var ID = parseInt(window.sessionStorage.getItem("id"));
 
   useLayoutEffect(() => {
-    readApplicantInformation(ID);
+    readInformation();
+    // readApplicantInformation(ID);
   }, []);
+
+  const readInformation = () => {
+    if (window.sessionStorage.getItem("status") === -2) setMenu(DashboardSuperMenu);
+    else setMenu(DashboardMenu);
+  };
 
   const location = useLocation();
 

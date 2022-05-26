@@ -1,16 +1,14 @@
 import { Fragment, useLayoutEffect, useState } from "react";
 import { Menu } from "react-feather";
-import { Link,useNavigate } from "react-router-dom";
-import { Nav, Navbar} from "react-bootstrap";
+import { Link, useNavigate } from "react-router-dom";
+import { Nav, Navbar } from "react-bootstrap";
 import axios from "axios";
 import NavbarProfile from "layouts/marketing/navbars/NavbarProfile";
 
 const NavbarTop = (props) => {
-
-
   useLayoutEffect(() => {
-    var ID = readUserInformation(window.sessionStorage.getItem("id"));
-    readUserInformation(ID);
+    // var ID = readUserInformation(window.sessionStorage.getItem("id"));
+    // readUserInformation(ID);
   }, []);
 
   const readUserInformation = async (id) => {
@@ -40,7 +38,6 @@ const NavbarTop = (props) => {
     });
   };
 
-
   return (
     <Fragment>
       <Navbar expanded="lg" className="navbar-default">
@@ -62,7 +59,7 @@ const NavbarTop = (props) => {
           </div>
 
           <Nav className="navbar-nav navbar-right-wrap ms-auto d-flex align-items-center nav-top-wrap">
-            <NavbarProfile logout={logout}/>
+            <NavbarProfile logout={logout} />
           </Nav>
         </div>
       </Navbar>

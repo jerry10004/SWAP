@@ -169,4 +169,12 @@ public class ProgramDAOImpl implements ProgramDAO {
 		sqlSession.update("Program.updateSurveyByProgram", param);
 	}
 
+	@Override
+	public List<ProgramReadDTO> readByStatusCompleteByUser(int status, int user_id) {
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("user_id", user_id);
+		param.put("status", status);
+		return sqlSession.selectList("Program.readByStatusCompleteByUser",param);
+	}
+
 }

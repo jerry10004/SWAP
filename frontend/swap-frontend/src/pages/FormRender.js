@@ -154,10 +154,12 @@ const FormRender = (props) => {
       //   props.param.count++;
       // } else {
       for (var i = 0; i < formInformation.length; i++) {
-        if (formInformation[i].userData[0] === "" && formInformation[i].required === true && props.param.count === 0) {
-          isFilled = false;
-          displayAlert("필수 항목을 입력하세요! : " + formInformation[i].label);
-          break;
+        if (formInformation[i].type === "textarea" || formInformation[i].type === "text") {
+          if (formInformation[i].userData[0] === "" && formInformation[i].required === true && props.param.count === 0) {
+            isFilled = false;
+            displayAlert("필수 항목을 입력하세요! : " + formInformation[i].label);
+            break;
+          }
         }
       }
 

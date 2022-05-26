@@ -95,9 +95,9 @@ const SurveyDataView = (props) => {
         <Card.Body className="p">
           {headingLoading && dataLoading && submitterInformation.length > 0
             ? surveyType.map((type, count) => {
-                if (type === "radio-group") {
+                if (type === "radio-group" || type === "select" || type === "checkbox-group") {
                   return <PieChart heading={surveyHeading[count]} data={surveyData[0][count]} count={count} />;
-                } else {
+                } else if (type === "textarea" || type === "text" || type === "date-field") {
                   return <TableChart heading={surveyHeading[count]} data={surveyData[0][count]} count={count} />;
                 }
               })
