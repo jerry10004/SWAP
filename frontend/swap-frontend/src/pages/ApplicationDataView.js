@@ -45,38 +45,71 @@ const ApplicationDataView = (props) => {
     );
   });
 
-  const DisplayData = () => {
-    if (applicantInformation.length > 0) {
-      applicantInformation.map((info, count) => {
-        var application_data = JSON.parse(info.application_form);
-        return (
-          <tr>
-            <td>{count + 1}</td>
-            <td>{info.name}</td>
-            <td>{info.student_id}</td>
-            <td>{info.phone}</td>
-            <td>{info.email}</td>
-            <td>{info.department}</td>
-            <td>{info.student_class}</td>
+  // const DisplayData = () => {
+  //   if (applicantInformation.length > 0) {
+  //     applicantInformation.map((info, count) => {
+  //       var application_data = JSON.parse(info.application_form);
+  //       return (
+  //         <tr>
+  //           <td>{count + 1}</td>
+  //           <td>{info.name}</td>
+  //           <td>{info.student_id}</td>
+  //           <td>{info.phone}</td>
+  //           <td>{info.email}</td>
+  //           <td>{info.department}</td>
+  //           <td>{info.student_class}</td>
 
-            {/* {Object.values(application_data).map((item) => {
-              return (
-                <td>
-                  {item.userData.map((sub, index) => {
-                    if (index === item.userData.length - 1) {
-                      return sub;
-                    } else {
-                      return sub + ", ";
-                    }
-                  })}
-                </td>
-              );
-            })} */}
-          </tr>
-        );
-      });
-    }
-  };
+  //           {application_data.map((item) => {
+  //             return (
+  //               <td>
+  //                 {item.userData.map((sub, index) => {
+  //                   console.log("hihihihi: ", sub);
+
+  //                   if (index === item.userData.length - 1) {
+  //                     return sub;
+  //                   } else {
+  //                     return sub + ", ";
+  //                   }
+  //                 })}
+  //               </td>
+  //             );
+  //           })}
+  //         </tr>
+  //       );
+  //     });
+  //   }
+  // };
+
+  const DisplayData = applicantInformation.map((info, count) => {
+    var application_data = JSON.parse(info.application_form);
+    return (
+      <tr>
+        <td>{count + 1}</td>
+        <td>{info.name}</td>
+        <td>{info.student_id}</td>
+        <td>{info.phone}</td>
+        <td>{info.email}</td>
+        <td>{info.department}</td>
+        <td>{info.student_class}</td>
+
+        {application_data.map((item) => {
+          return (
+            <td>
+              {item.userData.map((sub, index) => {
+                console.log("hihihihi: ", sub);
+
+                if (index === item.userData.length - 1) {
+                  return sub;
+                } else {
+                  return sub + ", ";
+                }
+              })}
+            </td>
+          );
+        })}
+      </tr>
+    );
+  });
 
   const exportTableToExcel = () => {
     var downloadLink;
