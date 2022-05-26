@@ -6,11 +6,6 @@ import { Nav, Navbar, InputGroup, Dropdown, Form, ListGroup, Row, Col, OverlayTr
 import axios from "axios";
 import { GoogleLogin, GoogleLogout } from "react-google-login";
 
-// import custom components
-
-// import media files
-import Avatar1 from "assets/images/avatar/avatar-1.jpg";
-
 // import data files
 
 const NavbarProfile = ({ logout }) => {
@@ -65,7 +60,7 @@ const NavbarProfile = ({ logout }) => {
                   <i className="fe fe-user me-2"></i> 프로필
                 </Dropdown.Item> */}
           <Dropdown.Item>
-            <i className="fe fe-settings me-2"></i> <Link to="/mypage">설정</Link>
+            <i className="fe fe-settings me-2"></i> <Link to="/swap/mypage">설정</Link>
           </Dropdown.Item>
           <Dropdown.Divider />
           <Dropdown.Item className="mb-3">

@@ -1,11 +1,12 @@
-import { Col, Card, Form, Button, Container, Row, Tab, Accordion, useAccordionButton, AccordionContext, ListGroup } from "react-bootstrap";
+// import node module libraries
+import { Col, Card, Form, Button, Container, Row, Accordion, useAccordionButton, AccordionContext, ListGroup } from "react-bootstrap";
 import React, { Fragment, useState, useEffect, useLayoutEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import DotBadge from "components/elements/bootstrap/DotBadge";
 
 import axios from "axios";
 import $ from "jquery";
-import "pages/formBuilder.scss";
+import "assets/scss/formBuilder.scss";
 import FormBuilder from "pages/FormBuilder";
 
 import SimpleBar from "simplebar-react";
@@ -29,10 +30,8 @@ const ApplicationFormView = (props) => {
   const [originalFormData, setoriginalFormData] = useState([]);
   const [studentFormData, setstudentFormData] = useState([]);
   const [applicantClick, setApplicantClick] = useState(false);
-  const [applicationNameLoading, setApplicationNameLoading] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [applicantNum, setApplicantNum] = useState(0);
-  const [readyFormContent, setReadyFormContent] = useState(false);
   const [updateFormData, setUpdateFormData] = useState();
   const [updateLoading, setUpdateLoading] = useState(false);
   const [program_status, setProgram_status] = useState();
@@ -95,18 +94,7 @@ const ApplicationFormView = (props) => {
     console.log("@@@@@@@@@@@@@@@: ", response.data[0]);
     setProgramInformation(response.data[0]);
     setFormContent(arr);
-    setReadyFormContent(true);
     setReadyJson(true);
-  };
-
-  const ToggleMenu = () => {
-    return setShowMenu(!showMenu);
-  };
-  const handleChange = (event) => {
-    setFormData({
-      ...formData,
-      [event.target.name]: event.target.value,
-    });
   };
 
   const submitButton = async (form) => {
@@ -121,14 +109,13 @@ const ApplicationFormView = (props) => {
       const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "program/update/application", params);
 
       alert("신청서가 수정 되었습니다.");
-      // window.location.reload();
+      window.location.reload();
     }
   };
 
   const highFunction = (isSet) => {};
 
   const readFormData = async (id) => {
-    setApplicationNameLoading(false);
     const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "application/readApplicationForm/" + id);
     var json_total = response.data[0].application_form;
     setoriginalFormData(json_total);

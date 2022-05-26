@@ -23,7 +23,7 @@ const SignUp = () => {
           <Card>
             <Card.Body className="p-6">
               <div className="mb-3 ">
-                <Link to="/">
+                <Link to="/swap/">
                   <Image src={Logo} width="50px" className="mb-4" alt="" />
                 </Link>
                 <h1 className="fw-bold">Sign Up</h1>

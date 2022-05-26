@@ -14,7 +14,7 @@ const HeroHeader = () => {
     if (window.sessionStorage.getItem("id") === null) {
       alert("로그인이 필요한 항목입니다. 로그인을 진행해 주세요.");
     } else {
-      navigate("/mypage");
+      navigate("/swap/mypage");
     }
   };
 

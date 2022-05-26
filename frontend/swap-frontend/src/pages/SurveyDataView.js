@@ -7,7 +7,6 @@ import { CardHeader } from "reactstrap";
 
 import PieChart from "pages/PieChart";
 import TableChart from "pages/TableChart";
-import CourseIndexData from "data/marketing/CourseIndexData";
 
 const SurveyDataView = (props) => {
   const [originalForm, setOriginalForm] = useState([]);

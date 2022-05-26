@@ -85,7 +85,7 @@ const SurveyForm = (props) => {
 
     params.append("category_id", formOption);
 
-    const response = await axios.post("http://localhost:8080/swap/survey/json", params);
+    const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "survey/json", params);
     var json_total = response.data[0].content;
     var json_sub = json_total.slice(1, json_total.length - 1);
 

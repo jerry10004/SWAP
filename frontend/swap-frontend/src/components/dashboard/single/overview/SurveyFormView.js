@@ -1,18 +1,17 @@
 // import node module libraries
-import { Col, Card, Form, Button, Container, Row, Tab, Accordion, useAccordionButton, AccordionContext, ListGroup } from "react-bootstrap";
+import { Col, Card, Form, Button, Container, Row, Accordion, useAccordionButton, AccordionContext, ListGroup } from "react-bootstrap";
 import React, { Fragment, useState, useEffect, useLayoutEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 
 // import custom components
 import axios from "axios";
 import $ from "jquery";
-import "pages/formBuilder.scss";
+import "assets/scss/formBuilder.scss";
 import FormBuilder from "pages/FormBuilder";
 
 // import simple bar scrolling used for notification item scrolling
 import SimpleBar from "simplebar-react";
 import "simplebar/dist/simplebar.min.css";
-import jsonSkeleton from "json/jsonSkeleton.json";
 
 window.jQuery = $;
 window.$ = $;
@@ -22,7 +21,7 @@ const SurveyFormView = (props) => {
   const [showMenu, setShowMenu] = useState(true);
   const [readyJson, setReadyJson] = useState(false);
   const [formContent, setFormContent] = useState();
-  const [json, setJson] = useState(null);
+  // const [json, setJson] = useState(null);
   const [programInformation, setProgramInformation] = useState();
 
   const [applicantInformation, setApplicantInformation] = useState(null);
@@ -30,11 +29,8 @@ const SurveyFormView = (props) => {
   const [userInfo, setUserInfo] = useState();
   const [originalFormData, setoriginalFormData] = useState([]);
   const [studentFormData, setstudentFormData] = useState([]);
-  const [applicantClick, setApplicantClick] = useState(false);
-  const [surveyNameLoading, setSurveyNameLoading] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [applicantNum, setApplicantNum] = useState(0);
-  const [readyFormContent, setReadyFormContent] = useState(false);
   const [updateFormData, setUpdateFormData] = useState();
   const [updateLoading, setUpdateLoading] = useState(false);
 
@@ -61,20 +57,10 @@ const SurveyFormView = (props) => {
   }, []);
 
   useEffect(() => {
-    setJson(jsonSkeleton);
+    // setJson(jsonSkeleton);
     componentDidMount();
   }, [originalFormData, userInfo]);
 
-  // const readApplicantInformation = async (id) => {
-  //   setApplicantInformationLoading(false);
-  //   const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "applicant/applicants/" + id);
-  //   setApplicantInformation(response.data);
-  //   console.log("@@@@@@@ : ", response.data);
-  //   setApplicantNum(response.data.length);
-  //   setApplicantInformationLoading(true);
-  // };
-
-  //각 사람의 Survey 폼 응답 읽어오는 것.
   const readApplicantInformation = async (id) => {
     setApplicantInformationLoading(false);
     const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "applicant/applicants/survey/" + id);
@@ -90,7 +76,6 @@ const SurveyFormView = (props) => {
     var arr = JSON.parse("[" + json_sub + "]");
     setProgramInformation(response.data[0]);
     setFormContent(arr);
-    setReadyFormContent(true);
     setReadyJson(true);
   };
 
@@ -116,24 +101,22 @@ const SurveyFormView = (props) => {
       const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "program/update/survey", params);
 
       alert("설문지가 수정 되었습니다.");
-      // window.location.reload();
+      window.location.reload();
     }
   };
 
   const highFunction = (isSet) => {};
 
   const readFormData = async (id) => {
-    setSurveyNameLoading(false);
     const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "survey/readSurveyForm/" + id);
-    if (response.data[0].survey_form === null) var json_total = "";
-    else var json_total = response.data[0].survey_form;
-    setoriginalFormData(json_total);
+    if (response.data[0].survey_form === null) var json_total_survey = "";
+    else var json_total_survey = response.data[0].survey_form;
+    setoriginalFormData(json_total_survey);
   };
 
   const getUserInfo = (user) => {
     setUserInfo(user);
     setstudentFormData(user.survey_form);
-    setApplicantClick(true);
   };
 
   const edit = () => {
@@ -196,7 +179,7 @@ const SurveyFormView = (props) => {
               <Col xl={9} lg={12} md={12} sm={12} className="mb-4 mb-xl-0">
                 <Card>
                   <Card.Header>설문지</Card.Header>
-                  {/* <h1>190~~~~~`</h1> */}
+
                   <Card.Body>
                     {/*  Form */}
                     <Form className="row" id="survey">

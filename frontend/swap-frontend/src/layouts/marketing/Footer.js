@@ -21,10 +21,10 @@ const Footer = ({ bgColor }) => {
                 <Link className="nav-link active ps-0" to="#">
                   About
                 </Link>
-                <Link className="nav-link" to="/terms-and-conditions">
+                <Link className="nav-link" to="/swap/terms-and-conditions">
                   서비스 이용약관{" "}
                 </Link>
-                <Link className="nav-link" to="/personal-information">
+                <Link className="nav-link" to="/swap/personal-information">
                   개인정보처리방침
                 </Link>
               </nav>

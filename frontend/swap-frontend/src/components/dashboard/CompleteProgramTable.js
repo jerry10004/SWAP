@@ -1,25 +1,15 @@
-// import node module libraries
-import React, { Fragment, useMemo, useLayoutEffect, useState } from "react";
+import React, { Fragment, useMemo } from "react";
 import { useTable, useFilters, useGlobalFilter, usePagination, useRowSelect } from "react-table";
 import { Link, useNavigate } from "react-router-dom";
 import { Col, Row, Table, Button } from "react-bootstrap";
-
-// Import required custom components
 import GlobalFilter from "components/elements/advance-table/GlobalFilter";
 import Pagination from "components/elements/advance-table/Pagination";
-// import Checkbox from "components/elements/advance-table/Checkbox";
 import DotBadge from "components/elements/bootstrap/DotBadge";
 import moment from "moment";
-import axios from "axios";
-import { faBedPulse } from "@fortawesome/free-solid-svg-icons";
 
 const CompleteProgramTable = ({ table_data, confirm_data }) => {
   var index;
   const navigate = useNavigate();
-  const hi = (link) => {
-    console.log("hihihihihi");
-    console.log(link);
-  };
 
   const columns = useMemo(
     () => [
@@ -42,10 +32,10 @@ const CompleteProgramTable = ({ table_data, confirm_data }) => {
         accessor: "program_name",
         Header: "프로그램명",
         Cell: ({ value, row }) => {
-          const id = "/program/" + row.original.program_id.toString();
+          const id = "/swap/program/" + row.original.program_id.toString();
           return (
             <h5 className="mb-0">
-              <Link to="#" className="text-inherit" to={id}>
+              <Link className="text-inherit" to={id}>
                 {value}
               </Link>
             </h5>
@@ -95,8 +85,9 @@ const CompleteProgramTable = ({ table_data, confirm_data }) => {
         Header: "설문지 작성",
         Cell: ({ value, row }) => {
           var a = String(row.original.program_id);
-          var link = "/program/" + a + "/survey";
-          var index = Number(row.id);
+          console.log(typeof a);
+
+          var link = "/swap/program/" + a + "/survey";
           return (
             <div className="d-grid d-md-block">
               {confirm_data[index].confirm_survey === 1 ? (

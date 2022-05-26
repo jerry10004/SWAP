@@ -8,11 +8,9 @@ import GKStepper from "components/elements/stepper/GKStepper";
 
 // import sub components ( Steps )
 import BasicInformation from "components/marketing/pages/courses/add-new-course/steps/BasicInformation";
-import CoursesMedia from "components/marketing/pages/courses/add-new-course/steps/ApplicationForm";
 import ApplicationFormPractice from "pages/ApplicationFormPractice";
 import SurveyForm from "pages/SurveyForm";
 
-import ApplicationForm from "components/marketing/pages/courses/add-new-course/steps/ApplicationForm";
 const AddNewCourse = () => {
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
@@ -177,7 +175,7 @@ const AddNewCourse = () => {
 
       alert(formData.program_title + " 프로그램이 추가 되었습니다.");
 
-      navigate("/admin/program");
+      navigate("/swap/admin/program");
     }
   };
 

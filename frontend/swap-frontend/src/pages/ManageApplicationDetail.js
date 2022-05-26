@@ -103,7 +103,7 @@ const ManageApplicationDetail = () => {
                   <div className="border-bottom pb-4 mb-4 d-flex align-items-center justify-content-between">
                     <div className="mb-3 mb-md-0">{formDataLoading ? <h1 className="mb-1 h2 fw-bold">{applicationName}</h1> : ""}</div>
                     <div>
-                      <Link to="../admin/application" className="btn btn-success ">
+                      <Link to="/swap/admin/application" className="btn btn-success ">
                         신청서 목록 보기
                       </Link>
                     </div>

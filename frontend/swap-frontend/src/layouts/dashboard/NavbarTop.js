@@ -1,22 +1,12 @@
-// import node module libraries
 import { Fragment, useLayoutEffect, useState } from "react";
-import { Menu, Search } from "react-feather";
+import { Menu } from "react-feather";
 import { Link,useNavigate } from "react-router-dom";
-import { Nav, Navbar, InputGroup, Dropdown, Form, ListGroup, Row, Col, OverlayTrigger, Tooltip, Image } from "react-bootstrap";
+import { Nav, Navbar} from "react-bootstrap";
 import axios from "axios";
-
-// import custom components
-
-// import media files
-import Avatar1 from "assets/images/avatar/avatar-1.jpg";
 import NavbarProfile from "layouts/marketing/navbars/NavbarProfile";
 
-// import data files
-
 const NavbarTop = (props) => {
-  const [userEmail, setUserEmail] = useState();
-  const [userName, setUserName] = useState();
-  const [userInformationLoading, setUserInformationLoading] = useState(false);
+
 
   useLayoutEffect(() => {
     var ID = readUserInformation(window.sessionStorage.getItem("id"));
@@ -24,11 +14,7 @@ const NavbarTop = (props) => {
   }, []);
 
   const readUserInformation = async (id) => {
-    setUserInformationLoading(false);
     const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "user/loggedinUser/" + id);
-    setUserName(response.data[0].name);
-    setUserEmail(response.data[0].email);
-    setUserInformationLoading(true);
   };
   const navigate = useNavigate();
 
@@ -50,7 +36,7 @@ const NavbarTop = (props) => {
 
       // setIsLogin(false);
       console.log("로그아웃 성공!!!");
-      navigate("/main");
+      navigate("/swap/main");
     });
   };
 

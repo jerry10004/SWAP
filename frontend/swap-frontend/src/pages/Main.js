@@ -3,9 +3,6 @@ import React, { useLayoutEffect, useState } from "react";
 import { Fragment } from "react";
 import { Col, Row, Container, Nav, Tab, Form } from "react-bootstrap";
 
-// import custom components
-import CourseSlider from "components/marketing/pages/courses/CourseSlider";
-
 // import sub components
 import HeroHeader from "components/marketing/pages/courses/course-index/HeroHeader";
 

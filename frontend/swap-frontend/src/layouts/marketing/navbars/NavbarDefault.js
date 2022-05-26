@@ -34,16 +34,16 @@ const NavbarDefault = ({ headerstyle }, { props }) => {
       <Fragment>
         {window.sessionStorage.getItem("status") === "0" || window.sessionStorage.getItem("status") === "-2" ? (
           <Nav>
-            <Nav.Link className="h4" href="admin/program">
+            <Nav.Link className="h4" href="/swap/admin/program">
               관리자 페이지
             </Nav.Link>
-            <Nav.Link className="h4" href="mypage">
+            <Nav.Link className="h4" href="/swap/mypage">
               마이페이지
             </Nav.Link>
           </Nav>
         ) : (
           <Nav>
-            <Nav.Link className="h4" href="mypage">
+            <Nav.Link className="h4" href="/swap/mypage">
               마이페이지
             </Nav.Link>
           </Nav>
@@ -68,7 +68,7 @@ const NavbarDefault = ({ headerstyle }, { props }) => {
 
     if (res.data == "notHandong") {
       alert("한동 메일로 로그인하여 주세요.");
-      navigate("/");
+      navigate("/swap/");
     } else if (res.data !== "fail" && res.data !== "newUser") {
       window.sessionStorage.setItem("email", response.profileObj.email);
       window.sessionStorage.setItem("name", response.profileObj.name);
@@ -84,7 +84,7 @@ const NavbarDefault = ({ headerstyle }, { props }) => {
     } else if (res.data === "newUser") {
       console.log("user 등록 페이지로 가기!!");
 
-      navigate("/sign-up", { state: { data: response.profileObj, tokenObj: response.tokenObj } });
+      navigate("/swap/sign-up", { state: { data: response.profileObj, tokenObj: response.tokenObj } });
     } else {
       alert("로그인 할 수 없습니다. 관리자에게 문의해주세요.");
       setIsLogin(false);
@@ -112,7 +112,7 @@ const NavbarDefault = ({ headerstyle }, { props }) => {
 
       setIsLogin(false);
       console.log("로그아웃 성공!!!");
-      navigate("/main");
+      navigate("/swap/main");
     });
   };
 
@@ -137,7 +137,7 @@ const NavbarDefault = ({ headerstyle }, { props }) => {
         className={`${isLogin ? "bg-white" : ""} navbar p-2 ${headerstyle === "dark" ? "navbar-dark bg-dark" : "navbar-default py-2"}`}
       >
         <Container fluid className="px-0 ps-2">
-          <Navbar.Brand as={Link} to="/">
+          <Navbar.Brand as={Link} to="/swap/">
             <Image src={Logo} alt="" width="120px" />
           </Navbar.Brand>
 

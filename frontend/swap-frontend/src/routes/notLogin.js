@@ -5,7 +5,6 @@ import SignIn from "../pages/SignIn";
 import SignUp from "../pages/SignUp";
 import Application from "../pages/Application";
 import ProgramDetail from "../pages/ProgramDetail";
-import ProgramPractice from "../pages/ProgramPractice";
 import Terms from "../pages/terms";
 import PersonalInfo from "../pages/PersonalInfo";
 
@@ -13,17 +12,16 @@ function Admin() {
   return (
     <>
       <Routes>
-        <Route path="" element={<Main />} />
-        <Route path="main" element={<Main />} />
-        <Route path="sign-in" element={<SignIn />} />
-        <Route path="sign-up" element={<SignUp />} />
-        <Route path="admin/*" element={<Navigate replace to="/" />} />
-        <Route path="mypage" element={<Navigate replace to="/" />} />
-        <Route path="program/:id/application" element={<Application />} />
-        <Route path="program/:id" element={<ProgramDetail />} />
-        <Route path="programPractice" element={<ProgramPractice />} />
-        <Route path="terms-and-conditions" element={<Terms />} />
-        <Route path="personal-information" element={<PersonalInfo />} />
+        <Route path={process.env.REACT_APP_DEFAULT_URL} element={<Main />} />
+        <Route path={process.env.REACT_APP_DEFAULT_URL + "main"} element={<Main />} />
+        <Route path={process.env.REACT_APP_DEFAULT_URL + "sign-in"} element={<SignIn />} />
+        <Route path={process.env.REACT_APP_DEFAULT_URL + "sign-up"} element={<SignUp />} />
+        <Route path={process.env.REACT_APP_DEFAULT_URL + "admin/*"} element={<Navigate replace to="/swap/" />} />
+        <Route path={process.env.REACT_APP_DEFAULT_URL + "mypage"} element={<Navigate replace to="/swap/" />} />
+        <Route path={process.env.REACT_APP_DEFAULT_URL + "program/:id/application"} element={<Application />} />
+        <Route path={process.env.REACT_APP_DEFAULT_URL + "program/:id"} element={<ProgramDetail />} />
+        <Route path={process.env.REACT_APP_DEFAULT_URL + "terms-and-conditions"} element={<Terms />} />
+        <Route path={process.env.REACT_APP_DEFAULT_URL + "personal-information"} element={<PersonalInfo />} />
       </Routes>
     </>
   );

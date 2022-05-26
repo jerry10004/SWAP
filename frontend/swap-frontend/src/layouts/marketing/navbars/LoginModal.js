@@ -111,7 +111,7 @@ const FormBuilderModal = (props) => {
               <button type="button" class="btn-close" aria-label="Close" onClick={close}></button>
             </div>
             <div className="mb-4 d-flex flex-column align-items-center">
-              <Link to="/" className="m-0">
+              <Link to="/swap/" className="m-0">
                 <Image src={Logo} width="50px" className="mb-4" alt="" />
               </Link>
               <h1 className="mb-1 fw-bold">Sign in</h1>

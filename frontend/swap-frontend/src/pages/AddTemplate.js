@@ -124,7 +124,7 @@ const AddTemplate = (props) => {
 
     params.append("category_id", formOption);
 
-    const response = await axios.post("http://localhost:8080/swap/application/json", params);
+    const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST +"application/json", params);
     var json_total = response.data[0].content;
     var json_sub = json_total.slice(1, json_total.length - 1);
 

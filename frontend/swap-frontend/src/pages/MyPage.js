@@ -8,12 +8,6 @@ import ReadyProgramTable from "components/dashboard/ReadyProgramTable";
 import OngoingProgramTable from "components/dashboard/OngoingProgramTable";
 import CompleteProgramTable from "components/dashboard/CompleteProgramTable";
 
-// import data files
-import { allposts, allPublishedPosts, allScheduledPosts } from "data/courses/AllPostsData";
-
-// import layouts
-import NavbarDefault from "layouts/marketing/navbars/NavbarDefault";
-import Footer from "layouts/marketing/Footer";
 
 const MyPage = () => {
   const [readyProgram, setReadyProgram] = useState([]);

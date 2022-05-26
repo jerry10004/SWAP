@@ -1,9 +1,6 @@
 // import node module libraries
 import { Col, Row, Card, Table, Image } from "react-bootstrap";
 
-// import sub components
-import BrowsersStatistics from "data/dashboard/BrowsersStatistics";
-
 // Import required data files
 import {} from "data/charts/ChartData";
 
