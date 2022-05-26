@@ -183,9 +183,11 @@ const ProgramInformation = (props) => {
           });
         }
       } else {
-        var deletePosterParam = new URLSearchParams();
-        deletePosterParam.append("program_id", editInfo.id);
-        const responseFile = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "program/editFile/delete", deletePosterParam);
+        if(poster == null){
+          var deletePosterParam = new URLSearchParams();
+          deletePosterParam.append("program_id", editInfo.id);
+          const responseFile = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "program/editFile/delete", deletePosterParam);
+        }
       }
 
       // 파일 업데이트
