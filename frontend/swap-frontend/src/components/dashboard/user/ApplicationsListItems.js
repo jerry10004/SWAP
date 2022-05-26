@@ -8,7 +8,6 @@ import axios from "axios";
 // import custom components
 import GlobalFilter from "components/elements/advance-table/GlobalFilter";
 import Pagination from "components/elements/advance-table/Pagination";
-import DotBadge from "components/elements/bootstrap/DotBadge";
 import { FormSelect } from "components/elements/form-select/FormSelect";
 
 const ApplicationsListItems = ({ application_data }) => {
@@ -34,7 +33,7 @@ const ApplicationsListItems = ({ application_data }) => {
         accessor: "name",
         Header: "제목",
         Cell: ({ value, row }) => {
-          const id = "detail/" + row.original.id.toString();
+          const id = "/swap/admin/application/detail/" + row.original.id.toString();
           return (
             <Link className="text-inherit" to={id}>
               <div className="d-flex align-items-center">

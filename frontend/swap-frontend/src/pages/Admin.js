@@ -3,8 +3,6 @@ import React, { useState } from "react";
 
 // import sub components
 import NavbarVertical from "layouts/dashboard/NavbarVertical";
-import NavbarTop from "layouts/dashboard/NavbarTop";
-import NavbarDefault from "layouts/marketing/navbars/NavbarDefault";
 
 const DashboardIndex = (props) => {
   const [showMenu, setShowMenu] = useState(true);

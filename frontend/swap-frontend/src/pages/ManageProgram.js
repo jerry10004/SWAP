@@ -40,7 +40,7 @@ const ManageProgram = () => {
                     <h1 className="mb-1 h2 fw-bold">프로그램 </h1>
                   </div>
                   <div>
-                    <Link to="/admin/addprogram" className="btn btn-primary">
+                    <Link to="/swap/admin/addprogram" className="btn btn-primary">
                       프로그램 추가
                     </Link>
                   </div>

@@ -38,7 +38,7 @@ const ManageSurvey = () => {
                     <h1 className="mb-1 h2 fw-bold">설문지 템플릿</h1>
                   </div>
                   <div>
-                    <Link to="/admin/addsurvey" className="btn btn-primary">
+                    <Link to="/swap/admin/addsurvey" className="btn btn-primary">
                       설문지 템플릿 추가
                     </Link>
                   </div>

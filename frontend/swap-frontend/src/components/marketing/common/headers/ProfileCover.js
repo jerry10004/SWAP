@@ -1,12 +1,5 @@
-// import node module libraries
 import { Row, Col, Image } from "react-bootstrap";
-import { Link } from "react-router-dom";
-
-// import custom components
 import LevelIconWithTooltip from "components/marketing/common/miscellaneous/LevelIconWithTooltip";
-
-// import media files
-import CheckedMark from "assets/images/svg/checked-mark.svg";
 import ProfileBackground from "assets/images/background/profile-bg.jpg";
 
 const ProfileCover = (props) => {

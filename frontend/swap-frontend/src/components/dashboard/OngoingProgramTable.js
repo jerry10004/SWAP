@@ -1,14 +1,12 @@
 // import node module libraries
-import React, { Fragment, useMemo, useLayoutEffect } from "react";
+import React, { Fragment, useMemo } from "react";
 import { useTable, useFilters, useGlobalFilter, usePagination, useRowSelect } from "react-table";
 import { Link } from "react-router-dom";
-import { Col, Row, Table, Button } from "react-bootstrap";
+import { Col, Row, Table } from "react-bootstrap";
 
 // Import required custom components
 import GlobalFilter from "components/elements/advance-table/GlobalFilter";
 import Pagination from "components/elements/advance-table/Pagination";
-// import Checkbox from "components/elements/advance-table/Checkbox";
-import DotBadge from "components/elements/bootstrap/DotBadge";
 import moment from "moment";
 
 const OngoingProgramTable = ({ table_data }) => {
@@ -35,10 +33,10 @@ const OngoingProgramTable = ({ table_data }) => {
         accessor: "program_name",
         Header: "프로그램명",
         Cell: ({ value, row }) => {
-          const id = "/program/" + row.original.program_id.toString();
+          const id = "/swap/program/" + row.original.program_id.toString();
           return (
             <h5 className="mb-0">
-              <Link to="#" className="text-inherit" to={id}>
+              <Link className="text-inherit" to={id}>
                 {value}
               </Link>
             </h5>

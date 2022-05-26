@@ -193,7 +193,7 @@ const Program = () => {
       } else if (applicantData.length > 0) {
         alert("이미 신청된 프로그램입니다.");
       } else {
-        navigate("/program/" + programInfo.id.toString() + "/application");
+        navigate("/swap/program/" + programInfo.id.toString() + "/application");
       }
     }
   };
@@ -262,7 +262,7 @@ const Program = () => {
           <Container>
             <div className="d-flex justify-content-start mb-3">
               <div>
-                <Link to="/main" className="btn btn-outline-primary">
+                <Link to="/swap/main" className="btn btn-outline-primary">
                   프로그램 목록보기
                 </Link>
               </div>

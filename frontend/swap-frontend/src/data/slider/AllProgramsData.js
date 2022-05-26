@@ -1,10 +1,9 @@
 // import node module libraries
-import React, { Fragment, useMemo, useLayoutEffect, useState } from "react";
-import { useTable, useFilters, useGlobalFilter, usePagination, useRowSelect } from "react-table";
+import React, { Fragment, useLayoutEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Row, Col, Table, Button, FormText } from "react-bootstrap";
+import { Row, Col, Button } from "react-bootstrap";
 import axios from "axios";
-import { Image, Card, ProgressBar, ListGroup, Badge, Form } from "react-bootstrap";
+import { Image, Card, Badge, Form } from "react-bootstrap";
 import Tippy from "@tippyjs/react";
 import moment from "moment";
 
@@ -17,7 +16,6 @@ const AllProgramsData = (props) => {
   const [term, setTerm] = useState("진행");
   const [searchTerm, setSearchTerm] = useState("");
   const [termLoading, setTermLoading] = useState(true);
-  const [toggleBookmark, setToggleBookmark] = useState(false);
   const [alllikeData, setAllLikeData] = useState([]);
   const [userInfo, setUserInfo] = useState();
 

@@ -1,5 +1,5 @@
 // import node module libraries
-import React, { Fragment, useMemo, useLayoutEffect } from "react";
+import React, { Fragment, useMemo } from "react";
 import { useTable, useFilters, useGlobalFilter, usePagination, useRowSelect } from "react-table";
 import { Link, useNavigate } from "react-router-dom";
 import { Col, Row, Table, Button } from "react-bootstrap";
@@ -15,10 +15,6 @@ import axios from "axios";
 const CompleteProgramTable = ({ table_data }) => {
   var index;
   const navigate = useNavigate();
-  const hi = (link) => {
-    console.log("hihihihihi");
-    console.log(link);
-  };
 
   const confirmSurvey = async (program_id, link) => {
     var user_id = parseInt(window.sessionStorage.getItem("id"));
@@ -51,10 +47,10 @@ const CompleteProgramTable = ({ table_data }) => {
         accessor: "program_name",
         Header: "프로그램명",
         Cell: ({ value, row }) => {
-          const id = "/program/" + row.original.program_id.toString();
+          const id = "/swap/program/" + row.original.program_id.toString();
           return (
             <h5 className="mb-0">
-              <Link to="#" className="text-inherit" to={id}>
+              <Link className="text-inherit" to={id}>
                 {value}
               </Link>
             </h5>
@@ -106,7 +102,7 @@ const CompleteProgramTable = ({ table_data }) => {
           var a = String(row.original.program_id);
           console.log(typeof a);
 
-          var link = "/program/" + a + "/survey";
+          var link = "/swap/program/" + a + "/survey";
           return (
             <div className="d-grid d-md-block">
               {row.original.survey_form === null ? (

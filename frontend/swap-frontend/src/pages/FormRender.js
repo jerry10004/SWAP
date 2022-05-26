@@ -6,7 +6,7 @@ import ReactDOM from "react-dom";
 import { Save } from "react-feather";
 // import custom components
 import axios from "axios";
-import "./formBuilder.scss";
+import "assets/scss/formBuilder.scss";
 
 window.jQuery = $;
 window.$ = $;
@@ -112,7 +112,7 @@ const FormRender = (props) => {
       if (status === 0) {
         props.param.count = props.param.count + 1;
         displayAlert("관리자는 프로그램을 신청하실 수 없습니다.");
-        navigate("/main");
+        navigate("/swap/main");
       } else {
         // if (canApply === false && props.param.count === 0) {
         //   displayAlert("이미 신청된 프로그램입니다.");
@@ -132,7 +132,7 @@ const FormRender = (props) => {
             const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "applicant/apply", params);
 
             displayAlert(" 프로그램이 신청 되었습니다.");
-            navigate("/mypage");
+            navigate("/swap/mypage");
             props.param.count = props.param.count + 1;
           }
         }
@@ -166,7 +166,7 @@ const FormRender = (props) => {
           const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "applicant/survey", params);
 
           displayAlert("설문지가 제출 되었습니다.");
-          navigate("/mypage");
+          navigate("/swap/mypage");
           // props.param.count = props.param.count + 1;
         }
       }

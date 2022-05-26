@@ -18,7 +18,6 @@ const CoursesTable = ({ program_data }) => {
   const [waitProgram, setWaitProgram] = useState([]);
   const [progressProgram, setProgressProgram] = useState([]);
   const [finishProgram, setFinishProgram] = useState([]);
-  const [category, setCategory] = useState([]);
   const infinite = "무제한";
 
   const categoryOptions = [
@@ -52,7 +51,7 @@ const CoursesTable = ({ program_data }) => {
         accessor: "program_name",
         Header: "제목",
         Cell: ({ value, row }) => {
-          const id = "detail/" + row.original.id.toString();
+          const id = "/swap/admin/program/detail/" + row.original.id.toString();
           return (
             <Link className="text-inherit" to={id}>
               <div className="d-flex align-items-center">

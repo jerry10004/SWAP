@@ -38,7 +38,7 @@ const ManageApplication = () => {
                     <h1 className="mb-1 h2 fw-bold">신청서 템플릿</h1>
                   </div>
                   <div>
-                    <Link to="/admin/addtemplate" className="btn btn-primary">
+                    <Link to="/swap/admin/addtemplate" className="btn btn-primary">
                       신청서 템플릿 추가
                     </Link>
                   </div>

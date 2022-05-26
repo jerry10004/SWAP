@@ -50,7 +50,7 @@ const ApplicationFormPractice = (props) => {
 
     params.append("category_id", formOption);
 
-    const response = await axios.post("http://localhost:8080/swap/application", params);
+    const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST +"application", params);
     setObj(JSON.parse(response.data[0].content));
 
     setReadyJson(true);

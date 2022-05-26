@@ -1,11 +1,8 @@
-// import node module libraries
-import React, { Fragment, useMemo, useState, useLayoutEffect, useEffect } from "react";
+import React, { Fragment, useMemo, useState, useLayoutEffect } from "react";
 import { useTable, useFilters, useSortBy, useGlobalFilter, usePagination, useRowSelect } from "react-table";
 import { Link } from "react-router-dom";
 import { Col, Row, Button, Table, Form } from "react-bootstrap";
 import axios from "axios";
-
-// import custom components
 import GlobalFilter from "components/elements/advance-table/GlobalFilter";
 import Pagination from "components/elements/advance-table/Pagination";
 import DotBadge from "components/elements/bootstrap/DotBadge";
@@ -51,7 +48,7 @@ const CoursesTable = ({ program_data }) => {
         accessor: "program_name",
         Header: "제목",
         Cell: ({ value, row }) => {
-          const id = "detail/" + row.original.id.toString();
+          const id = "/swap/admin/program/detail/" + row.original.id.toString();
           return (
             <Link className="text-inherit" to={id}>
               <div className="d-flex align-items-center">

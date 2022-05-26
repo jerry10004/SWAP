@@ -6,7 +6,7 @@ import FormBuilderModal from "./FormBuilderModal";
 import Modal, { ModalProvider, BaseModalBackground } from "styled-react-modal";
 import styled from "styled-components";
 import axios from "axios";
-import "./formBuilder.css";
+import "assets/scss/formBuilder.css";
 
 window.jQuery = $;
 window.$ = $;

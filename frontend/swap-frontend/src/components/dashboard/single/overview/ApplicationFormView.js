@@ -1,12 +1,12 @@
 // import node module libraries
-import { Col, Card, Form, Button, Container, Row, Tab, Accordion, useAccordionButton, AccordionContext, ListGroup } from "react-bootstrap";
+import { Col, Card, Form, Button, Container, Row, Accordion, useAccordionButton, AccordionContext, ListGroup } from "react-bootstrap";
 import React, { Fragment, useState, useEffect, useLayoutEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 
 // import custom components
 import axios from "axios";
 import $ from "jquery";
-import "pages/formBuilder.scss";
+import "assets/scss/formBuilder.scss";
 import FormBuilder from "pages/FormBuilder";
 
 // import simple bar scrolling used for notification item scrolling
@@ -31,10 +31,8 @@ const ApplicationFormView = (props) => {
   const [originalFormData, setoriginalFormData] = useState([]);
   const [studentFormData, setstudentFormData] = useState([]);
   const [applicantClick, setApplicantClick] = useState(false);
-  const [applicationNameLoading, setApplicationNameLoading] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [applicantNum, setApplicantNum] = useState(0);
-  const [readyFormContent, setReadyFormContent] = useState(false);
   const [updateFormData, setUpdateFormData] = useState();
   const [updateLoading, setUpdateLoading] = useState(false);
 
@@ -82,19 +80,11 @@ const ApplicationFormView = (props) => {
     console.log("@@@@@@@@@@@@@@@: ", response.data[0]);
     setProgramInformation(response.data[0]);
     setFormContent(arr);
-    setReadyFormContent(true);
     setReadyJson(true);
   };
 
-  const ToggleMenu = () => {
-    return setShowMenu(!showMenu);
-  };
-  const handleChange = (event) => {
-    setFormData({
-      ...formData,
-      [event.target.name]: event.target.value,
-    });
-  };
+ 
+
 
   const submitButton = async (form) => {
     setUpdateLoading(false);
@@ -115,7 +105,6 @@ const ApplicationFormView = (props) => {
   const highFunction = (isSet) => {};
 
   const readFormData = async (id) => {
-    setApplicationNameLoading(false);
     const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "application/readApplicationForm/" + id);
     var json_total = response.data[0].application_form;
     setoriginalFormData(json_total);

@@ -117,7 +117,7 @@ const FormRender = (props) => {
 
     console.log(JSON.stringify(formRenderInstance.userData));
     alert(" 프로그램이 신청 되었습니다.");
-    navigate("/mypage");
+    navigate("/swap/mypage");
   };
 
   return (

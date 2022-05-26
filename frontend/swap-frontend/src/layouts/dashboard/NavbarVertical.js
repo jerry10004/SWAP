@@ -19,19 +19,19 @@ export const DashboardMenu = [
     id: uuid(),
     title: "프로그램",
     icon: "clipboard",
-    link: "/admin/program",
+    link: "/swap/admin/program",
   },
   {
     id: uuid(),
     title: "신청서 템플릿",
     icon: "book",
-    link: "/admin/application",
+    link: "/swap/admin/application",
   },
   {
     id: uuid(),
     title: "설문지 템플릿",
     icon: "book",
-    link: "/admin/survey",
+    link: "/swap/admin/survey",
   },
 ];
 
@@ -40,25 +40,25 @@ export const DashboardSuperMenu = [
     id: uuid(),
     title: "프로그램",
     icon: "clipboard",
-    link: "/admin/program",
+    link: "/swap/admin/program",
   },
   {
     id: uuid(),
     title: "신청서 템플릿",
     icon: "book",
-    link: "/admin/application",
+    link: "/swap/admin/application",
   },
   {
     id: uuid(),
     title: "설문지 템플릿",
     icon: "book",
-    link: "/admin/survey",
+    link: "/swap/admin/survey",
   },
   {
     id: uuid(),
     title: "사용자",
     icon: "user",
-    link: "/admin/user",
+    link: "/swap/admin/user",
   },
 ];
 
@@ -146,7 +146,7 @@ const NavbarVertical = (props) => {
     <Fragment>
       <SimpleBar style={{ maxHeight: "100vh" }}>
         <div className="nav-scroller ">
-          <Link className="navbar-brand" to="/">
+          <Link className="navbar-brand" to="/swap/">
             <Image src={InverseLogo} alt="" />
           </Link>
         </div>
