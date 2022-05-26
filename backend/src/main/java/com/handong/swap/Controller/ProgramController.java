@@ -428,11 +428,12 @@ public class ProgramController {
 	public void editProgram(HttpServletRequest httpServletRequest) throws ParseException {
 		ProgramDTO program = new ProgramDTO();
 		
-		SimpleDateFormat formatter = new SimpleDateFormat("YY-MM-dd HH:mm");
+		SimpleDateFormat formatter = new SimpleDateFormat("yy-MM-dd HH:mm");
 		Date start_date = (Date) formatter.parse(httpServletRequest.getParameter("start_date"));
 		Date end_date = (Date) formatter.parse(httpServletRequest.getParameter("end_date"));
 		Date Applystart_date = (Date) formatter.parse(httpServletRequest.getParameter("Applystart_date"));
 		Date Applyend_date = (Date) formatter.parse(httpServletRequest.getParameter("Applyend_date"));
+	
 		
 		program.setId(Integer.parseInt(httpServletRequest.getParameter("id")));
 		program.setProgram_name(httpServletRequest.getParameter("program_name"));

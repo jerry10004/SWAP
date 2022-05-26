@@ -83,6 +83,13 @@ const ProgramInformation = (props) => {
     response.data[0].applystart_date = moment(response.data[0].applystart_date).format("YY-MM-DD HH:mm");
     response.data[0].applyend_date = moment(response.data[0].applyend_date).format("YY-MM-DD HH:mm");
 
+    console.log("^^^^^^");
+    console.log(response.data[0].start_date );
+    console.log(response.data[0].end_date );
+    console.log(response.data[0].applystart_date );
+    console.log(response.data[0].applyend_date );
+
+
     setFilePath(filePathList);
     seteditInfo(response.data[0]);
     setStart_date(response.data[0].start_date);
@@ -108,6 +115,12 @@ const ProgramInformation = (props) => {
     if (editEnd) editInfo.end_date = getFormatDate(endDate);
     if (editApplyStart) editInfo.applystart_date = getFormatDate(ApplystartDate);
     if (editApplyEnd) editInfo.applyend_date = getFormatDate(ApplyendDate);
+
+    console.log("&&&&&&&&&&&&&&&&&");
+    console.log(editInfo.start_date );
+    console.log( editInfo.end_date);
+    console.log(editInfo.applystart_date);
+    console.log(editInfo.applyend_date);
 
     // 포스터 업데이트
     const imgFormData = new FormData();
@@ -209,6 +222,8 @@ const ProgramInformation = (props) => {
       seteditApplyStart(false);
       seteditApplyEnd(false);
       readProgramInformation(props.param1.id);
+
+
       window.location.reload();
     }
   };
