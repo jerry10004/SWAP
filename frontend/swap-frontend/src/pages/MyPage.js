@@ -8,7 +8,6 @@ import ReadyProgramTable from "components/dashboard/ReadyProgramTable";
 import OngoingProgramTable from "components/dashboard/OngoingProgramTable";
 import CompleteProgramTable from "components/dashboard/CompleteProgramTable";
 
-
 const MyPage = () => {
   const [readyProgram, setReadyProgram] = useState([]);
   const [ongoingProgram, setOngoingProgram] = useState([]);
@@ -18,11 +17,12 @@ const MyPage = () => {
   const user_id = window.sessionStorage.getItem("id");
 
   useLayoutEffect(() => {
+    setProgramLoading(false);
+
     readReadyProgram();
     readOnGoingProgram();
     readCompleteProgram();
     confirmSurvey();
-    setProgramLoading(true);
   }, []);
 
   const readReadyProgram = async () => {
@@ -59,6 +59,7 @@ const MyPage = () => {
     const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "applicant/confirm/survey", params);
     console.log("이거봐!!!, ", response.data);
     setSurveyConfirm(response.data);
+    setProgramLoading(true);
   };
 
   return (

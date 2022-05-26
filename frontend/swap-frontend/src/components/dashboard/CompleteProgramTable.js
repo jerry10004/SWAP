@@ -85,7 +85,7 @@ const CompleteProgramTable = ({ table_data, confirm_data }) => {
         Header: "설문지 작성",
         Cell: ({ value, row }) => {
           var a = String(row.original.program_id);
-          console.log(typeof a);
+          var index = Number(row.id);
 
           var link = "/swap/program/" + a + "/survey";
           return (
