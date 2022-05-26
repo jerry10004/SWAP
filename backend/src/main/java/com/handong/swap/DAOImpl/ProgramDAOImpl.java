@@ -12,6 +12,7 @@ import com.handong.swap.DTO.ProgramReadNameDTO;
 import com.handong.swap.DTO.ProgramReadDTO;
 import com.handong.swap.DTO.ProgramDTO;
 import com.handong.swap.DTO.ProgramFileDTO;
+import com.handong.swap.DTO.ProgramReadByUserDTO;
 
 @Repository
 public class ProgramDAOImpl implements ProgramDAO {
@@ -153,6 +154,19 @@ public class ProgramDAOImpl implements ProgramDAO {
 		param.put("program_id", program_id);
 		param.put("application_form", application_form);
 		sqlSession.update("Program.updateApplicationByProgram", param);
+	}
+
+	@Override
+	public int confirmSurvey(ProgramReadByUserDTO program) {
+		return sqlSession.selectOne("Program.confirmSurvey",program);
+	}
+
+	@Override
+	public void updateSurveyByProgram(int program_id, String survey_form) {
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("program_id", program_id);
+		param.put("survey_form", survey_form);
+		sqlSession.update("Program.updateSurveyByProgram", param);
 	}
 
 }

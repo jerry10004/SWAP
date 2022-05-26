@@ -4,9 +4,8 @@ import { Col, Row, Container, Card, OverlayTrigger, Tooltip, Button, Badge, Imag
 import { Link, useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import moment from "moment";
-import styled from 'styled-components'
-import PropTypes from 'prop-types'
-
+import styled from "styled-components";
+import PropTypes from "prop-types";
 
 // import MDI icons
 import Icon from "@mdi/react";
@@ -20,46 +19,34 @@ import NavbarDefault from "layouts/marketing/navbars/NavbarDefault";
 import "../assets/scss/programDetail.scss";
 import { Windows } from "react-bootstrap-icons";
 
-function Modal({
-  className,
-  onClose,
-  maskClosable,
-  closable,
-  visible,
-  children,
-}) {
+function Modal({ className, onClose, maskClosable, closable, visible, children }) {
   const onMaskClick = (e) => {
     if (e.target === e.currentTarget) {
-      onClose(e)
+      onClose(e);
     }
-  }
+  };
 
   const close = (e) => {
     if (onClose) {
-      onClose(e)
+      onClose(e);
     }
-  }
+  };
   return (
     <>
       <ModalOverlay visible={visible} />
-      <ModalWrapper
-        className={className}
-        onClick={maskClosable ? onMaskClick : null}
-        tabIndex="-1"
-        visible={visible}
-      >
+      <ModalWrapper className={className} onClick={maskClosable ? onMaskClick : null} tabIndex="-1" visible={visible}>
         <ModalInner tabIndex="0" className="modal-inner">
           {closable && <div className="modal-close" onClick={close} />}
           {children}
         </ModalInner>
       </ModalWrapper>
     </>
-  )
+  );
 }
 
 const ModalWrapper = styled.div`
   box-sizing: border-box;
-  display: ${(props) => (props.visible ? 'block' : 'none')};
+  display: ${(props) => (props.visible ? "block" : "none")};
   position: fixed;
   top: 0;
   right: 0;
@@ -68,11 +55,11 @@ const ModalWrapper = styled.div`
   z-index: 1000;
   overflow: auto;
   outline: 0;
-`
+`;
 
 const ModalOverlay = styled.div`
   box-sizing: border-box;
-  display: ${(props) => (props.visible ? 'block' : 'none')};
+  display: ${(props) => (props.visible ? "block" : "none")};
   position: fixed;
   top: 0;
   left: 0;
@@ -80,7 +67,7 @@ const ModalOverlay = styled.div`
   right: 0;
   background-color: rgba(0, 0, 0, 0.6);
   z-index: 999;
-`
+`;
 
 const ModalInner = styled.div`
   box-sizing: border-box;
@@ -93,8 +80,8 @@ const ModalInner = styled.div`
   top: 50%;
   transform: translateY(-50%);
   margin: 0 auto;
-  padding:10px;
-`
+  padding: 10px;
+`;
 
 const Program = () => {
   const navigate = useNavigate();
@@ -110,6 +97,8 @@ const Program = () => {
   const [userInfo, setUserInfo] = useState();
   const [filePath, setFilePath] = useState([]);
   const [poster, setPoster] = useState();
+  const [applyConfirm, setApplyConfirm] = useState();
+  const [confirmLoading, setConfirmLoading] = useState(false);
 
   const id = useParams();
 
@@ -123,6 +112,7 @@ const Program = () => {
     readApplicantData(programID, ID);
     readLike(ID, programID);
     readApplicantInformation(ID);
+    confirmApply(ID, programID);
   }, []);
 
   const readProgramInformation = async () => {
@@ -162,6 +152,16 @@ const Program = () => {
     }
   };
 
+  const confirmApply = async (ID, program_id) => {
+    var params = new URLSearchParams();
+    params.append("user_id", ID);
+    params.append("program_id", program_id);
+    const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "program/confirm/apply", params);
+    console.log("이거봐~~~~, ", response.data);
+    setApplyConfirm(response.data);
+    setConfirmLoading(true);
+  };
+
   const Dday = async (Applyenddate) => {
     var date1 = moment(Applyenddate);
     var date2 = moment();
@@ -190,9 +190,11 @@ const Program = () => {
         alert("신청기간이 마감되어서 신청 하실 수 없습니다.");
       } else if (quotaLeft == false) {
         alert("신청인원이 꽉 차서 신청 하실 수 없습니다.");
-      } else if (applicantData.length > 0) {
-        alert("이미 신청된 프로그램입니다.");
-      } else {
+      }
+      // else if (applicantData.length > 0) {
+      //   alert("이미 신청된 프로그램입니다.");
+      // }
+      else {
         navigate("/program/" + programInfo.id.toString() + "/application");
       }
     }
@@ -244,20 +246,18 @@ const Program = () => {
     }
   };
 
-
-  const [modalVisible, setModalVisible] = useState(false)
+  const [modalVisible, setModalVisible] = useState(false);
   const openModal = () => {
-    setModalVisible(true)
-  }
+    setModalVisible(true);
+  };
   const closeModal = () => {
-    setModalVisible(false)
-  }
-
+    setModalVisible(false);
+  };
 
   return (
     <Fragment>
       <NavbarDefault login />
-      {programInfoLoading ? (
+      {programInfoLoading && confirmLoading ? (
         <div className="py-lg-3 py-3">
           <Container>
             <div className="d-flex justify-content-start mb-3">
@@ -313,9 +313,15 @@ const Program = () => {
                           {/* <Link to={"/program/" + programInfo.id.toString() + "/application"} className="btn btn-success">
                             신청하기
                           </Link> */}
-                          <Button className="btn btn-success" onClick={checkApply}>
-                            신청하기
-                          </Button>
+                          {applyConfirm === 1 ? (
+                            <Button className="btn btn-success" onClick={checkApply}>
+                              신청하기
+                            </Button>
+                          ) : (
+                            <Button className="btn btn-secondary " disabled>
+                              신청완료
+                            </Button>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -340,7 +346,7 @@ const Program = () => {
 
                             return (
                               <>
-                                <a href={process.env.REACT_APP_RESTAPI_HOST + "resources/upload/" + item} download target="_blank">
+                                <a href={process.env.REACT_APP_RESTAPI_HOST + "resources/upload/" + item} download target="_blank" rel="noreferrer">
                                   {name[2]}
                                 </a>
                                 <br />
@@ -360,14 +366,20 @@ const Program = () => {
                   <Card.Body>
                     {poster ? (
                       <>
-                      <Image width="100%" object-fit="contain" src={process.env.REACT_APP_RESTAPI_HOST + "resources/upload/" + poster} alt="" onClick={() => {openModal()}}/>
-                      {
-                        modalVisible && <Modal
-                          visible={modalVisible}
-                          closable={true}
-                          maskClosable={true}
-                          onClose={closeModal}><Image width="100%" object-fit="contain" src={process.env.REACT_APP_RESTAPI_HOST + "resources/upload/" + poster} alt=""/></Modal>
-                      }
+                        <Image
+                          width="100%"
+                          object-fit="contain"
+                          src={process.env.REACT_APP_RESTAPI_HOST + "resources/upload/" + poster}
+                          alt=""
+                          onClick={() => {
+                            openModal();
+                          }}
+                        />
+                        {modalVisible && (
+                          <Modal visible={modalVisible} closable={true} maskClosable={true} onClose={closeModal}>
+                            <Image width="100%" object-fit="contain" src={process.env.REACT_APP_RESTAPI_HOST + "resources/upload/" + poster} alt="" />
+                          </Modal>
+                        )}
                       </>
                     ) : (
                       <Image width="100%" object-fit="contain" src={DefaultImg} alt="" />

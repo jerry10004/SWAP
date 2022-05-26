@@ -251,7 +251,7 @@ export const ActiveUserChartOptions = {
 
 export const TrafficChannelChartSeries = [60, 55, 12, 17];
 export const TrafficChannelChartOptions = {
-  labels: ["Organic Search", "Direct", "Refferrals", "Social Media"],
+  labels: ["1", "2", "Refferrals", "Social Media"],
   colors: ["#754FFE", "#19cb98", "#e53f3c", "#ffaa46"],
   chart: { type: "donut" },
   legend: { show: !1 },
@@ -259,12 +259,12 @@ export const TrafficChannelChartOptions = {
   plotOptions: { pie: { donut: { size: "50%" } } },
   stroke: { width: 2 },
   responsive: [
-    { breakpoint: 480, options: { chart: { height: 300 } } },
-    { breakpoint: 1441, options: { chart: { height: 200 } } },
-    { breakpoint: 1980, options: { chart: { height: 300 } } },
-    { breakpoint: 2000, options: { chart: { height: 270 } } },
-    { breakpoint: 2500, options: { chart: { height: 350 } } },
-    { breakpoint: 3000, options: { chart: { height: 500 } } },
+    { breakpoint: 1, options: { chart: { height: 300 } } },
+    { breakpoint: 1, options: { chart: { height: 200 } } },
+    // { breakpoint: 1980, options: { chart: { height: 300 } } },
+    // { breakpoint: 2000, options: { chart: { height: 270 } } },
+    // { breakpoint: 2500, options: { chart: { height: 350 } } },
+    // { breakpoint: 3000, options: { chart: { height: 500 } } },
     // { breakpoint: 3500,options: {chart: {height: 580}} },
     // { breakpoint: 4000,options: {chart: {height: 650}} },
     // { breakpoint: 5000,options: {chart: {height: 680}} },

@@ -10,6 +10,7 @@ import ApplicantsListItems from "components/dashboard/user/ApplicantsListItems";
 import ProgramInformation from "components/marketing/pages/courses/add-new-course/steps/ProgramInformation";
 import SurveyFormView from "components/dashboard/single/overview/SurveyFormView";
 import ApplicationDataView from "../pages/ApplicationDataView";
+import SurveyDataView from "../pages/SurveyDataView";
 
 import axios from "axios";
 
@@ -105,6 +106,11 @@ const AdminProgramDetail = () => {
                               설문지
                             </Nav.Link>
                           </Nav.Item>
+                          <Nav.Item>
+                            <Nav.Link eventKey="surveyData" className="mb-sm-3 mb-md-0">
+                              설문응답
+                            </Nav.Link>
+                          </Nav.Item>
                         </Nav>
                       </Card.Header>
                       <Card.Body className="p-0">
@@ -124,6 +130,9 @@ const AdminProgramDetail = () => {
                           </Tab.Pane>
                           <Tab.Pane eventKey="survey" className="pb-4">
                             <SurveyFormView param3={id} />
+                          </Tab.Pane>
+                          <Tab.Pane eventKey="surveyData" className="pb-4">
+                            <SurveyDataView param3={id} />
                           </Tab.Pane>
                         </Tab.Content>
                       </Card.Body>

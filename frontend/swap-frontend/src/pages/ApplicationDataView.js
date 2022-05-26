@@ -23,12 +23,10 @@ const ApplicationDataView = (props) => {
     const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "application/readApplicationForm/" + id);
     var json_total = JSON.parse(response.data[0].application_form);
     setOriginalForm(json_total);
-    console.log("Original Form: ", json_total);
   };
 
   const readApplicantInformation = async (id) => {
     const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "applicant/applicants/" + id);
-    console.log(response.data);
     setApplicantInformation(response.data);
   };
 
@@ -37,7 +35,6 @@ const ApplicationDataView = (props) => {
     params.append("id", id);
     const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "program/name", params);
     setProgramName(response.data[0].program_name);
-    console.log("ProgramName:", response.data[0].program_name);
   };
 
   const DisplayHeading = originalForm.map((info) => {
@@ -50,7 +47,6 @@ const ApplicationDataView = (props) => {
 
   const DisplayData = applicantInformation.map((info, count) => {
     var application_data = JSON.parse(info.application_form);
-    console.log("Application data:", application_data);
     return (
       <tr>
         <td>{count + 1}</td>

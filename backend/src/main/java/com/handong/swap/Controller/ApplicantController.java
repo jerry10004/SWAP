@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.reflect.TypeToken;
@@ -24,7 +25,9 @@ import com.handong.swap.DTO.ApplicationDTO;
 import com.handong.swap.Service.ApplicantService;
 import com.handong.swap.Service.ProgramService;
 
-import net.sf.json.JSONArray;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 
 @RequestMapping("/applicant")
@@ -41,7 +44,6 @@ public class ApplicantController {
 	@ResponseBody
 	public String readApplicantInformationByProgramId(@PathVariable int id) throws IOException, ParseException {
 		String result = applicantService.readApplicantInformationByProgramId(id);
-		System.out.println("result is "+result);
 		return result;
 	}
 	
@@ -51,6 +53,48 @@ public class ApplicantController {
 		String result = applicantService.readSubmitterInformationByProgramId(id);
 		System.out.println("result is "+result);
 		return result;
+	}
+	
+	@RequestMapping(value = "/applicants/survey/data/{id}", method = RequestMethod.GET, produces = "application/json; charset=utf8")
+	@ResponseBody
+	public ArrayList<ArrayList<String>> readSubmitterDataByProgramId(@PathVariable int id) throws IOException, ParseException, org.json.simple.parser.ParseException {
+		ArrayList<String> response = applicantService.readSubmitterDataByProgramId(id);
+		String result = "";
+		ArrayList<ArrayList<String>> datas = new ArrayList<ArrayList<String>>();
+		
+		for(int i = 0; i < response.size(); i++) {
+			
+		
+			JSONParser jsonParse = new JSONParser();
+			JSONObject jsonObj = (JSONObject) jsonParse.parse(response.get(i));
+			
+			String survey_form = (String)jsonObj.get("survey_form"); // 각 사람의 survey_form
+			JSONParser jsonParse_sub = new JSONParser();
+			Object obj_sub= jsonParse_sub.parse(survey_form);
+			JSONArray jsonArr = (JSONArray)obj_sub;
+			
+			if (jsonArr.size() > 0){
+				if(i == 0) {
+		    		for(int a = 0; a < jsonArr.size(); a++) {
+		    			datas.add(new ArrayList<String>());
+		    		}
+		    	}
+			
+			    for(int j = 0; j < jsonArr.size(); j++){
+			        JSONObject jsonObj_sub = (JSONObject)jsonArr.get(j); //한 사람의 각 문제.
+			        JSONArray jsonAnswer = (JSONArray)jsonObj_sub.get("userData");  // 한 사람의 각 문제의 응답한 내용
+			        String answer="";
+			        for(int k = 0; k < jsonAnswer.size(); k++) {
+			        	if(k == jsonAnswer.size()-1)
+			        		answer = answer + (String) jsonAnswer.get(k);
+			        	else answer = answer +  (String) jsonAnswer.get(k)+",";
+			        }
+			        datas.get(j).add(answer);
+			    }
+			}		
+		}
+	
+		return datas;
 	}
 	
 	
@@ -116,13 +160,12 @@ public class ApplicantController {
 	
 	@RequestMapping(value = "/confirm/survey", method = RequestMethod.POST, produces = "application/json; charset=utf8")
 	@ResponseBody
-	public int confirmSurvey(HttpServletRequest httpServletRequest) throws ParseException {
+	public String confirmSurvey(HttpServletRequest httpServletRequest) throws ParseException, JsonProcessingException {
 		ApplicantDTO applicant = new ApplicantDTO();
 		
-		applicant.setProgram_id(Integer.parseInt(httpServletRequest.getParameter("program_id")));
 		applicant.setUser_id(Integer.parseInt(httpServletRequest.getParameter("user_id")));			
 		
-		int result = applicantService.confirmSurvey(applicant);
+		String result = applicantService.confirmSurvey(applicant);
 		return result;
 		
 	}

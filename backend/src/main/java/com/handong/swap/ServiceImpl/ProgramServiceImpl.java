@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.handong.swap.DAO.ProgramDAO;
 import com.handong.swap.DTO.ProgramDTO;
 import com.handong.swap.DTO.ProgramFileDTO;
+import com.handong.swap.DTO.ProgramReadByUserDTO;
 import com.handong.swap.DTO.ProgramReadDTO;
 import com.handong.swap.DTO.ProgramReadNameDTO;
 import com.handong.swap.Service.ProgramService;
@@ -156,6 +157,18 @@ public class ProgramServiceImpl implements ProgramService{
 		ObjectMapper mapper = new ObjectMapper();
 		String jsonString = mapper.writeValueAsString(programDATA);
 		return jsonString;
+	}
+
+	@Override
+	public int confirmApply(ProgramReadByUserDTO program) {
+		int result = programDAO.confirmSurvey(program);
+		return result;
+	}
+
+	@Override
+	public void updateSurveyByProgram(int program_id, String survey_form) {
+		programDAO.updateSurveyByProgram(program_id,survey_form);
+		
 	}
 
 	

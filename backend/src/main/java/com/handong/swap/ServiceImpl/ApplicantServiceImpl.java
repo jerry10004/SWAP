@@ -1,5 +1,6 @@
 package com.handong.swap.ServiceImpl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,19 @@ public class ApplicantServiceImpl implements ApplicantService{
 		ObjectMapper mapper = new ObjectMapper();
 		String jsonString = mapper.writeValueAsString(applicantDATA);
 		return jsonString;
+	}
+	
+	@Override
+	public ArrayList<String> readSubmitterDataByProgramId(int id) throws JsonProcessingException{
+		List<ApplicantReadDTO> applicantDATA = applicantDAO.readSubmitterInformationByProgramId(id);
+		ArrayList<String> response = new ArrayList<String>();
+		ObjectMapper mapper = new ObjectMapper();
+		
+		for(int i = 0; i < applicantDATA.size(); i++) {
+			response.add(mapper.writeValueAsString(applicantDATA.get(i)));
+		}
+
+		return response;
 	}
 	
 	@Override
@@ -70,8 +84,11 @@ public class ApplicantServiceImpl implements ApplicantService{
 	}
 
 	@Override
-	public int confirmSurvey(ApplicantDTO applicant) {
-		return applicantDAO.confirmSurvey(applicant);
+	public String confirmSurvey(ApplicantDTO applicant) throws JsonProcessingException{	
+		List<ApplicantReadDTO> applicantDATA = applicantDAO.confirmSurvey(applicant);
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonString = mapper.writeValueAsString(applicantDATA);
+		return jsonString;
 	}
 	
 

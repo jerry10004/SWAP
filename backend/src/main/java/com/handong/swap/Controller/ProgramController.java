@@ -34,6 +34,7 @@ import com.mysql.cj.xdevapi.JsonArray;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.handong.swap.DTO.ProgramDTO;
 import com.handong.swap.DTO.ProgramFileDTO;
+import com.handong.swap.DTO.ProgramReadByUserDTO;
 import com.handong.swap.DTO.ProgramReadNameDTO;
 
 @Controller
@@ -163,6 +164,18 @@ public class ProgramController {
 		
 		programService.updateApplicationByProgram(program_id, application_form);	
 	}
+	
+	@RequestMapping(value = "/update/survey", method = RequestMethod.POST, produces = "application/json; charset=utf8")
+	@ResponseBody
+	public void updateSurveyByProgram(HttpServletRequest httpServletRequest) throws IOException, ParseException {
+		
+		Integer program_id = Integer.parseInt(httpServletRequest.getParameter("program_id"));
+		String survey_form = httpServletRequest.getParameter("survey_form");
+		
+		programService.updateSurveyByProgram(program_id, survey_form);	
+	}
+	
+	
 	
  
  
@@ -542,6 +555,20 @@ public class ProgramController {
 	public String readLikedPrograms(HttpServletRequest httpServletRequest) throws IOException, ParseException {
 		Integer user_id = Integer.parseInt(httpServletRequest.getParameter("user_id"));
 		String result = programService.readLikedPrograms(user_id);	
+	    return result;
+	}
+	
+	@RequestMapping(value = "/confirm/apply", method = RequestMethod.POST, produces = "application/json; charset=utf8")
+	@ResponseBody
+	public int confirmApply(HttpServletRequest httpServletRequest) throws IOException, ParseException {
+		ProgramReadByUserDTO programDTO = new ProgramReadByUserDTO();		
+
+		Integer user_id = Integer.parseInt(httpServletRequest.getParameter("user_id"));
+		Integer program_id = Integer.parseInt(httpServletRequest.getParameter("program_id"));
+		programDTO.setUser_id(user_id);
+		programDTO.setProgram_id(program_id);
+		
+		int result = programService.confirmApply(programDTO);	
 	    return result;
 	}
 }

@@ -73,22 +73,21 @@ const SurveyFormView = (props) => {
   //   setApplicantNum(response.data.length);
   //   setApplicantInformationLoading(true);
   // };
+
+  //각 사람의 Survey 폼 응답 읽어오는 것.
   const readApplicantInformation = async (id) => {
     setApplicantInformationLoading(false);
     const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "applicant/applicants/survey/" + id);
     setApplicantInformation(response.data);
-    console.log("@@@@@@@ : ", response.data);
     setApplicantNum(response.data.length);
     setApplicantInformationLoading(true);
   };
 
-  // 해당 Program Json 읽어오는 함수
   const readProgramJson = async (id) => {
     const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "program/read/survey/" + id);
     var json_total = response.data[0].survey_form;
     var json_sub = json_total.slice(1, json_total.length - 1);
     var arr = JSON.parse("[" + json_sub + "]");
-    console.log("###########: ", response.data[0]);
     setProgramInformation(response.data[0]);
     setFormContent(arr);
     setReadyFormContent(true);
@@ -110,14 +109,14 @@ const SurveyFormView = (props) => {
     setUpdateFormData(form);
     setUpdateLoading(true);
     var params = new URLSearchParams();
-    params.append("program_id", props.param2.id);
+    params.append("program_id", props.param3.id);
     params.append("survey_form", form);
 
     if (window.confirm("설문지를 수정하시겠습니까?")) {
       const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "program/update/survey", params);
 
       alert("설문지가 수정 되었습니다.");
-      window.location.reload();
+      // window.location.reload();
     }
   };
 
@@ -179,7 +178,7 @@ const SurveyFormView = (props) => {
           data-bs-toggle="collapse"
           aria-controls="courseTwo"
         >
-          <div className="me-auto">신청한 학생들 ({applicantNum})</div>
+          <div className="me-auto">작성한 학생들 ({applicantNum})</div>
           <span className="chevron-arrow ms-4">
             <i className="fe fe-chevron-down fs-4"></i>
           </span>
@@ -325,7 +324,10 @@ const SurveyFormView = (props) => {
               <Card.Body> */}
             <Row>
               {/* <h1>317~~~~~~~~</h1> */}
-              <Form>{formContent.length > 1 ? <FormBuilder content={formContent} propFunction={highFunction} submit={submitButton} template="0" program="1" saveFunction={save} /> : ""}</Form>
+              <Form>
+                {/* {formContent.length > 0 ? <FormBuilder content={formContent} propFunction={highFunction} submit={submitButton} template="0" program="1" saveFunction={save} /> : ""} */}
+                <FormBuilder content={formContent} propFunction={highFunction} submit={submitButton} edit="1" saveFunction={save} />
+              </Form>
             </Row>
             {/* </Card.Body>
             </Card> */}

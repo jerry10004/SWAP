@@ -15,6 +15,7 @@ public class ApplicantReadDTO {
 	int status;
 	String application_form;
 	String survey_form;
+	int confirm_survey;
 	
 	public String getApplication_form() {
 		return application_form;
@@ -35,6 +36,12 @@ public class ApplicantReadDTO {
 	}
 	public void setId(int id) {
 		this.id = id;
+	}
+	public int getConfirm_survey() {
+		return confirm_survey;
+	}
+	public void setConfirm_survey(int confirm_survey) {
+		this.confirm_survey = confirm_survey;
 	}
 	
 	public String getEmail() {

@@ -1,0 +1,86 @@
+[
+  {
+    "type": "radio-group",
+    "required": true,
+    "label": "캠프의 난이도는 적절하였는가?",
+    "inline": false,
+    "name": "radio-group-1653230448430-0",
+    "access": false,
+    "other": false,
+    "values": [
+      { "label": "매우 그렇다", "value": "매우 그렇다", "selected": false },
+      { "label": "그렇다", "value": "그렇다", "selected": false },
+      { "label": "보통이다", "value": "보통이다", "selected": false },
+      { "label": "아니다", "value": "아니다", "selected": false },
+      { "label": "매우 아니다", "value": "매우 아니다", "selected": false }
+    ],
+    "userData": ["그렇다"]
+  },
+  {
+    "type": "radio-group",
+    "required": true,
+    "label": "강사의 준비는 적절하였는가?",
+    "inline": false,
+    "name": "radio-group-1653230490142",
+    "access": false,
+    "other": false,
+    "values": [
+      { "label": "매우 그렇다", "value": "매우 그렇다", "selected": false },
+      { "label": "그렇다", "value": "그렇다", "selected": false },
+      { "label": "보통이다", "value": "보통이다", "selected": false },
+      { "label": "아니다", "value": "아니다", "selected": false },
+      { "label": "매우 아니다", "value": "매우 아니다", "selected": false }
+    ],
+    "userData": ["보통이다"]
+  },
+  {
+    "type": "radio-group",
+    "required": false,
+    "label": "캠프 조교가 있을 경우, 조교의 가르침은 도움이 되었는가?",
+    "inline": false,
+    "name": "radio-group-1653230504299",
+    "access": false,
+    "other": false,
+    "values": [
+      { "label": "매우 그렇다", "value": "매우 그렇다", "selected": false },
+      { "label": "그렇다", "value": "그렇다", "selected": false },
+      { "label": "보통이다", "value": "보통이다", "selected": false },
+      { "label": "아니다", "value": "아니다", "selected": false },
+      { "label": "매우 아니다", "value": "매우 아니다", "selected": false }
+    ],
+    "userData": ["매우 그렇다"]
+  },
+  {
+    "type": "textarea",
+    "required": true,
+    "label": "좋았던 점",
+    "placeholder": "캠프를 진행하며 좋았던 점을 입력하세요",
+    "className": "form-control",
+    "name": "textarea-1653230547395-0",
+    "access": false,
+    "subtype": "textarea",
+    "userData": ["dd"]
+  },
+  {
+    "type": "textarea",
+    "required": true,
+    "label": "아쉬웠던 점",
+    "placeholder": "캠프를 진행하며 아쉬웠던 점을 입력하세요",
+    "className": "form-control",
+    "name": "textarea-1653230603637",
+    "access": false,
+    "subtype": "textarea",
+    "userData": ["dd"]
+  },
+  {
+    "type": "text",
+    "required": false,
+    "label": "문의사항",
+    "placeholder": "기타 문의사항",
+    "className": "form-control",
+    "name": "text-1649670558265-0",
+    "access": false,
+    "subtype": "text",
+    "userData": [""]
+  }
+]

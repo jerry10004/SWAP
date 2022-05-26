@@ -17,6 +17,6 @@ public interface ApplicantDAO {
 	List<ApplicantReadDTO> readApplicantByUserId(int programID, int userID);
 	public void updateOngoingStatus(int program_id, int status);
 	public void deleteApplicant(int id);
-	public int confirmSurvey(ApplicantDTO applicant);
+	List<ApplicantReadDTO> confirmSurvey(ApplicantDTO applicant);
 
 }

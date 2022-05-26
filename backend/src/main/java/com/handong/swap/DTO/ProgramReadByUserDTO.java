@@ -10,6 +10,7 @@ public class ProgramReadByUserDTO {
 	int applicant_id;
 	int program_id;
 	int program_status;
+	int user_id;
 	String program_name;
 	String survey_form;
 	String start_date;
@@ -35,6 +36,12 @@ public class ProgramReadByUserDTO {
 	}
 	public void setProgram_id(int program_id) {
 		this.program_id = program_id;
+	}
+	public int getUser_id() {
+		return user_id;
+	}
+	public void setUser_id(int user_id) {
+		this.user_id = user_id;
 	}
 	public int getStatus() {
 		return status;

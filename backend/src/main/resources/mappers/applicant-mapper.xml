@@ -57,13 +57,15 @@
    	 	WHERE program_id = #{program_id} and user_id = #{user_id}
    	</update>
    	
-   	<select id="confirmSurvey" parameterType="Applicant" resultType="Integer">
-	   select case
-            when (A.survey_form is null) then 1
-        else -1
-	end as confirm_survey
-	FROM Applicant AS A
-	where A.user_id=#{user_id} and A.program_id=#{program_id};
+   	<select id="confirmSurvey" parameterType="Applicant" resultType="ApplicantRead">
+	  select P.id, case
+                    when (P.survey_form is null) then -2
+                     when (A.survey_form is null) then 1
+            else -1
+            end as confirm_survey
+		from Program as P
+		join Applicant A on P.id = A.program_id
+		where A.user_id=#{user_id} and P.status=2
    	</select>
    	
    	

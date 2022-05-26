@@ -64,6 +64,13 @@ class FormBuilder extends Component {
       });
     }
 
+    if (this.props.edit === "1") {
+      document.getElementById("submitData").addEventListener("click", () => {
+        const result = formBuilder.actions.save();
+        this.setState({ formResult: JSON.stringify(result, null, 2) });
+      });
+    }
+
     document.getElementById("clear-all-fields").onclick = function () {
       if (window.confirm("전부 지우고 새로 작성하시겠습니까?") == true) {
         formBuilder.actions.clearFields();
@@ -275,19 +282,19 @@ class FormBuilder extends Component {
             </div>
           </Card.Body>
         </Card>
-        {this.props.template === "0" ? (
+        {this.props.edit === "1" ? (
+          <div className="d-flex justify-content-end">
+            <Button id="submitData" className="btn btn-primary" type="button" onClick={this.clickSubmit}>
+              완료
+            </Button>
+          </div>
+        ) : this.props.template === "0" ? (
           <div className="d-flex justify-content-end">
             <Button id="saveApplication" variant="primary" type="submit" onClick={this.saveApplication}>
               다음
             </Button>
-            {/* <Button id="submitData" className="btn btn-primary" type="button" onClick={this.clickSubmit}>
-              완료
-            </Button> */}
           </div>
-        ) : (
-          ""
-        )}
-        {this.props.template === "2" ? (
+        ) : this.props.template === "2" ? (
           <div className="d-flex justify-content-end">
             <Button id="submitData" className="btn btn-primary" type="button" onClick={this.clickSubmit}>
               완료
@@ -296,6 +303,25 @@ class FormBuilder extends Component {
         ) : (
           ""
         )}
+        {/* {this.props.template === "0" ? (
+          <div className="d-flex justify-content-end">
+            <Button id="saveApplication" variant="primary" type="submit" onClick={this.saveApplication}>
+              다음
+            </Button>
+           
+          </div>
+        ) : (
+          ""
+        )} */}
+        {/* {this.props.template === "2" ? (
+          <div className="d-flex justify-content-end">
+            <Button id="submitData" className="btn btn-primary" type="button" onClick={this.clickSubmit}>
+              완료
+            </Button>
+          </div>
+        ) : (
+          ""
+        )} */}
       </>
     );
   }

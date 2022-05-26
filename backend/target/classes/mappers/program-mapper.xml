@@ -144,6 +144,12 @@
    	 	WHERE id = #{program_id}
    	</update>
    	
+   	  <update id="updateSurveyByProgram" parameterType="hashmap">
+   	 	UPDATE Program SET survey_form =#{survey_form}, edit_date=now()
+   	 	WHERE id = #{program_id}
+   	</update>
+   	
+   	
 
    	<update id="updateStatus" parameterType="hashmap">
    		UPDATE Program SET status=#{status}
@@ -195,6 +201,14 @@
    		DELETE FROM Program_File
    		WHERE program_id = #{program_id} AND file_type = 0
    	</delete>
+   	
+   	<select id="confirmSurvey" parameterType="ProgramReadByUser" resultType="Integer">
+   		select case when (COUNT(*) > 0 ) then -1
+		        else 1
+		        end as status
+		from Applicant as A
+		where A.program_id=#{program_id} and A.user_id=#{user_id}
+   	</select>
    	
 </mapper>
 

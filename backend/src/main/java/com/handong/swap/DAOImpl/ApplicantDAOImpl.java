@@ -74,8 +74,8 @@ public class ApplicantDAOImpl implements ApplicantDAO {
 	}
 
 	@Override
-	public int confirmSurvey(ApplicantDTO applicant) {
-		return sqlSession.selectOne("Applicant.confirmSurvey", applicant);
+	public List<ApplicantReadDTO> confirmSurvey(ApplicantDTO applicant) {
+		return sqlSession.selectList("Applicant.confirmSurvey", applicant);
 	}
 	
 	

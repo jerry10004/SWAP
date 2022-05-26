@@ -1,15 +1,13 @@
-// import node module libraries
 import { Col, Card, Form, Button, Container, Row, Tab, Accordion, useAccordionButton, AccordionContext, ListGroup } from "react-bootstrap";
 import React, { Fragment, useState, useEffect, useLayoutEffect, useContext } from "react";
 import { Link } from "react-router-dom";
+import DotBadge from "components/elements/bootstrap/DotBadge";
 
-// import custom components
 import axios from "axios";
 import $ from "jquery";
 import "pages/formBuilder.scss";
 import FormBuilder from "pages/FormBuilder";
 
-// import simple bar scrolling used for notification item scrolling
 import SimpleBar from "simplebar-react";
 import "simplebar/dist/simplebar.min.css";
 import jsonSkeleton from "json/jsonSkeleton.json";
@@ -37,6 +35,9 @@ const ApplicationFormView = (props) => {
   const [readyFormContent, setReadyFormContent] = useState(false);
   const [updateFormData, setUpdateFormData] = useState();
   const [updateLoading, setUpdateLoading] = useState(false);
+  const [program_status, setProgram_status] = useState();
+  const [applicant_status, setApplicant_status] = useState("0");
+  const [program_id, setProgram_id] = useState();
 
   const [formData, setFormData] = useState({
     program_title: "Title",
@@ -57,7 +58,14 @@ const ApplicationFormView = (props) => {
     readApplicantInformation(props.param2.id);
     readFormData(props.param2.id);
     readProgramJson(props.param2.id);
+    readProgramStatus(props.param2.id);
+    setProgram_id(props.param2.id);
   }, []);
+
+  const readProgramStatus = async (id) => {
+    const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "program/information/" + id);
+    setProgram_status(response.data[0].status);
+  };
 
   useEffect(() => {
     setJson(jsonSkeleton);
@@ -67,9 +75,14 @@ const ApplicationFormView = (props) => {
   const readApplicantInformation = async (id) => {
     setApplicantInformationLoading(false);
     const response = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "applicant/applicants/" + id);
+    // console.log("@@@@@@@@@@@@: ", response.data);
     setApplicantInformation(response.data);
     setApplicantNum(response.data.length);
     setApplicantInformationLoading(true);
+  };
+
+  const handleChangeSelect = (e) => {
+    setApplicant_status(e.target.value);
   };
 
   // 해당 Program Json 읽어오는 함수
@@ -108,7 +121,7 @@ const ApplicationFormView = (props) => {
       const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "program/update/application", params);
 
       alert("신청서가 수정 되었습니다.");
-      window.location.reload();
+      // window.location.reload();
     }
   };
 
@@ -123,8 +136,32 @@ const ApplicationFormView = (props) => {
 
   const getUserInfo = (user) => {
     setUserInfo(user);
+    console.log("##########: ", user);
     setstudentFormData(user.application_form);
     setApplicantClick(true);
+  };
+
+  const update = async (e) => {
+    var updateApplicantId = [];
+    var updateApplicantStatus = [];
+    var params = new URLSearchParams();
+
+    updateApplicantId.push(e);
+    updateApplicantStatus.push(applicant_status);
+
+    params.append("id", updateApplicantId);
+    params.append("status", updateApplicantStatus);
+    params.append("program_id", program_id);
+
+    if (updateApplicantId != "") {
+      if (window.confirm("사용자 상태를 수정하시겠습니까?")) {
+        console.log("status~~~: ", updateApplicantStatus);
+        const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "applicant/applicants/" + program_id + "/update", params);
+        readApplicantInformation(props.param2.id);
+        alert("사용자 상태가 수정되었습니다.");
+        // window.location.reload();
+      }
+    }
   };
 
   const edit = () => {
@@ -187,7 +224,6 @@ const ApplicationFormView = (props) => {
               <Col xl={9} lg={12} md={12} sm={12} className="mb-4 mb-xl-0">
                 <Card>
                   <Card.Header>신청서</Card.Header>
-                  {/* <h1>190~~~~~`</h1> */}
                   <Card.Body>
                     {/*  Form */}
                     <Form className="row" id="application">
@@ -243,7 +279,6 @@ const ApplicationFormView = (props) => {
           ) : (
             <>
               <Col xl={9} lg={12} md={12} sm={12} className="mb-4 mb-xl-0">
-                {/* <h1>246~~~~~~~~</h1> */}
                 <Form className="row" id="application">
                   <form id="fb-render2"></form>
                 </Form>
@@ -255,7 +290,6 @@ const ApplicationFormView = (props) => {
           <Col xl={9} lg={12} md={12} sm={12} className="mb-4 mb-xl-0">
             <Card>
               <Card.Header>신청서</Card.Header>
-              {/* <h1>259~~~~~~~~</h1> */}
               <Card.Body>
                 {/*  Form */}
                 <Form className="row  " id="application">
@@ -314,20 +348,54 @@ const ApplicationFormView = (props) => {
               <Card.Header>신청서</Card.Header>
               <Card.Body> */}
             <Row>
-              {/* <h1>317~~~~~~~~</h1> */}
-              <Form>{formContent.length > 1 ? <FormBuilder content={formContent} propFunction={highFunction} submit={submitButton} template="0" program="1" saveFunction={save} /> : ""}</Form>
+              {/* <Form>{formContent.length > 0 ? <FormBuilder content={formContent} propFunction={highFunction} submit={submitButton} template="0" program="1" edit="1" saveFunction={save} /> : ""}</Form> */}
+              <Form>{formContent.length > 0 ? <FormBuilder content={formContent} propFunction={highFunction} submit={submitButton} edit="1" saveFunction={save} /> : ""}</Form>
             </Row>
             {/* </Card.Body>
             </Card> */}
           </Col>
         )}
-        <Col xl={3} lg={12} md={12} sm={12}>
+
+        <Col xl={3} lg={12} md={12} sm={12} className="d-flex flex-column justify-content-between">
           {applicantInformationLoading === true ? (
             isEdit === false ? (
               <>
-                {/* <h1>334~~~~~~~~</h1> */}
                 <Card className="my-3">
                   <Fragment>
+                    <Row className="mb-4">
+                      {" "}
+                      <Col xl={8} lg={8} md={8} sm={8}>
+                        {program_status === 0 ? (
+                          <Form.Select onChange={handleChangeSelect}>
+                            <option value="0">참여보류</option>
+                            <option value="1">참여승인</option>
+                            <option value="2">참여불가</option>
+                          </Form.Select>
+                        ) : program_status === 2 ? (
+                          <Form.Select onChange={handleChangeSelect}>
+                            <option value="3">미수료</option>
+                            <option value="4">수료</option>
+                          </Form.Select>
+                        ) : (
+                          ""
+                        )}
+                      </Col>
+                      <Col xl={4} lg={4} md={4} sm={4}>
+                        {program_status !== 1 ? (
+                          <Button
+                            variant="primary"
+                            onClick={() => {
+                              // update(selectedFlatRows);
+                              update(userInfo.id);
+                            }}
+                          >
+                            저장
+                          </Button>
+                        ) : (
+                          ""
+                        )}
+                      </Col>
+                    </Row>
                     <Accordion defaultActiveKey="1">
                       <ListGroup as="ul" variant="flush">
                         <SimpleBar style={{ maxHeight: "700px" }}>
@@ -349,20 +417,50 @@ const ApplicationFormView = (props) => {
                                       </Button>
                                     </div>
                                     {applicantInformation.map((subitem, subindex) => (
-                                      <ListGroup.Item key={subindex} as="li" className="px-0 py-1 border-0">
-                                        <div className="d-grid">
-                                          <Button
-                                            variant="transparent"
-                                            onClick={() => getUserInfo(subitem)}
-                                            className="Applicant d-flex px-0 py-1 justify-content-between align-items-center text-inherit text-decoration-none border-bottom"
-                                          >
-                                            <div className="text-truncate">
-                                              <span className="fs-5">{subitem.name}</span>
-                                            </div>
-                                            <div className="text-truncate">
-                                              <span>({subitem.student_id})</span>
-                                            </div>
-                                          </Button>
+                                      <ListGroup.Item key={subindex} as="li" className="px-0 py-1 border-0 ">
+                                        <div className="d-flex justify-content-between border-bottom">
+                                          <div className="d-flex align-items-center">
+                                            <DotBadge
+                                              bg={
+                                                subitem.status === 0
+                                                  ? "warning"
+                                                  : subitem.status === 1
+                                                  ? "success"
+                                                  : subitem.status === 2
+                                                  ? "danger"
+                                                  : subitem.status === 3
+                                                  ? "secondary"
+                                                  : subitem.status === 4
+                                                  ? "primary"
+                                                  : ""
+                                              }
+                                            ></DotBadge>
+                                            {subitem.status === 0
+                                              ? "보류 "
+                                              : subitem.status === 1
+                                              ? "승인 "
+                                              : subitem.status === 2
+                                              ? "불가 "
+                                              : subitem.status === 3
+                                              ? "미수료 "
+                                              : subitem.status === 4
+                                              ? "수료 "
+                                              : ""}
+                                          </div>
+                                          <div className="d-flex flex-row justify-content-end">
+                                            <Button
+                                              variant="transparent"
+                                              onClick={() => getUserInfo(subitem)}
+                                              className="Applicant w-100 d-flex px-0 py-1 justify-content-end align-items-center text-inherit text-decoration-none "
+                                            >
+                                              <div className="text-truncate">
+                                                <span className="fs-5">{subitem.name}</span>
+                                              </div>
+                                              <div className="text-truncate">
+                                                <span>({subitem.student_id})</span>
+                                              </div>
+                                            </Button>
+                                          </div>
                                         </div>
                                       </ListGroup.Item>
                                     ))}
@@ -372,7 +470,6 @@ const ApplicationFormView = (props) => {
                             </>
                           ) : (
                             <>
-                              {/* <h1>380~~~~~~~~</h1> */}
                               <ListGroup.Item key="1" as="li">
                                 <ContextAwareToggle eventKey="1">신청한 학생들</ContextAwareToggle>
                                 <Accordion.Collapse eventKey="1">
@@ -389,7 +486,7 @@ const ApplicationFormView = (props) => {
                   </Fragment>
                 </Card>
                 {readyJson === true && programInformation.status === 0 && programInformation.applicants_num === 0 ? (
-                  <div className="d-flex justify-content-end ">
+                  <div className="d-flex justify-content-end align-items-end">
                     <Button variant="primary" onClick={edit}>
                       수정
                     </Button>

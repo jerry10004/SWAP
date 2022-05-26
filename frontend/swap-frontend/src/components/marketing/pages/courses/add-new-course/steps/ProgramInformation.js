@@ -370,9 +370,12 @@ const ProgramInformation = (props) => {
                               <option value="1">대회</option>
                               <option value="2">봉사</option>
                               <option value="3">캠프</option>
-                              <option value="4">동아리</option>
-                              <option value="5">행사</option>
-                              <option value="6">기타</option>
+                              <option value="4">행사</option>
+                              <option value="5">맥북</option>
+                              <option value="6">프로젝트/스터디</option>
+                              <option value="7">인턴/현장실습</option>
+                              <option value="8">특강</option>
+                              <option value="9">기타</option>
                             </select>
                             <Form.Control.Feedback type="invalid">카테고리를 선택해주세요.</Form.Control.Feedback>
                           </Form.Group>
@@ -607,9 +610,12 @@ const ProgramInformation = (props) => {
                               <option value="1">대회</option>
                               <option value="2">봉사</option>
                               <option value="3">캠프</option>
-                              <option value="4">동아리</option>
-                              <option value="5">행사</option>
-                              <option value="6">기타</option>
+                              <option value="4">행사</option>
+                              <option value="5">맥북</option>
+                              <option value="6">프로젝트/스터디</option>
+                              <option value="7">인턴/현장실습</option>
+                              <option value="8">특강</option>
+                              <option value="9">기타</option>
                             </select>
                             <Form.Control.Feedback type="invalid">카테고리를 선택해주세요.</Form.Control.Feedback>
                           </Form.Group>

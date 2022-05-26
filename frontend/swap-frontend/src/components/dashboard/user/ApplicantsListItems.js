@@ -40,6 +40,10 @@ const ApplicantsListItems = (props) => {
       {
         accessor: "student_id",
         Header: "학번",
+        Cell: ({ value }) => {
+          if (value === 0) return "";
+          else return value;
+        },
       },
       { accessor: "email", Header: "이메일" },
       {
@@ -54,7 +58,8 @@ const ApplicantsListItems = (props) => {
         accessor: "student_class",
         Header: "학년",
         Cell: ({ value }) => {
-          return value + " 학년";
+          if (value === 0) return "";
+          else return value + " 학년";
         },
       },
       {

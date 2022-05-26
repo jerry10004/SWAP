@@ -19,6 +19,7 @@ const MyPage = () => {
   const [readyProgram, setReadyProgram] = useState([]);
   const [ongoingProgram, setOngoingProgram] = useState([]);
   const [completeProgram, setCompleteProgram] = useState([]);
+  const [surveyConfirm, setSurveyConfirm] = useState([]);
   const [programLoading, setProgramLoading] = useState(false);
   const user_id = window.sessionStorage.getItem("id");
 
@@ -26,6 +27,7 @@ const MyPage = () => {
     readReadyProgram();
     readOnGoingProgram();
     readCompleteProgram();
+    confirmSurvey();
     setProgramLoading(true);
   }, []);
 
@@ -54,7 +56,15 @@ const MyPage = () => {
     params.append("status", 2);
     const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "program/read/status", params);
     setCompleteProgram(response.data);
+  };
+
+  const confirmSurvey = async () => {
+    var user_id = parseInt(window.sessionStorage.getItem("id"));
+    var params = new URLSearchParams();
+    params.append("user_id", user_id);
+    const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "applicant/confirm/survey", params);
     console.log("이거봐!!!, ", response.data);
+    setSurveyConfirm(response.data);
   };
 
   return (
@@ -105,7 +115,7 @@ const MyPage = () => {
                         <OngoingProgramTable table_data={ongoingProgram} />
                       </Tab.Pane>
                       <Tab.Pane eventKey="scheduled" className="pb-4">
-                        <CompleteProgramTable table_data={completeProgram} />
+                        <CompleteProgramTable table_data={completeProgram} confirm_data={surveyConfirm} />
                       </Tab.Pane>
                     </Tab.Content>
                   </Card.Body>

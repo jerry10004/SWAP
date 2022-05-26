@@ -5,6 +5,7 @@ package com.handong.swap.Service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.handong.swap.DTO.ProgramDTO;
 import com.handong.swap.DTO.ProgramFileDTO;
+import com.handong.swap.DTO.ProgramReadByUserDTO;
 
 public interface ProgramService {
 	
@@ -52,6 +53,11 @@ public interface ProgramService {
 	public String readSurveyByProgram(int program_id) throws JsonProcessingException;
 	
 	public void updateApplicationByProgram(int program_id, String application_form);
+
+	public void updateSurveyByProgram(int program_id, String survey_form);
+	
+	public int confirmApply(ProgramReadByUserDTO program);
+
 
 
 }
