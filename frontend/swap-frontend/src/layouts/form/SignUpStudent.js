@@ -125,7 +125,7 @@ const SignUpStudent = (props) => {
     if (window.confirm("학생으로 등록하시겠습니까?")) {
       const response = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "login/signUp", params);
       alert("학생 회원가입이 완료되었습니다! 다시 로그인 해주시기 바랍니다.");
-      navigate("/main");
+      navigate("/swap/main");
     }
   };
 
@@ -208,7 +208,7 @@ const SignUpStudent = (props) => {
             <Form.Check type="checkbox" id="check-api-checkbox">
               <Form.Check.Input type="checkbox" required />
               <Form.Check.Label>
-                <Link to="/terms-and-conditions">서비스 이용약관 </Link> 및 <Link to="/personal-information">개인정보취급방침</Link>
+                <Link to="/swap/terms-and-conditions">서비스 이용약관 </Link> 및 <Link to="/swap/personal-information">개인정보취급방침</Link>
                 동의
               </Form.Check.Label>
             </Form.Check>
