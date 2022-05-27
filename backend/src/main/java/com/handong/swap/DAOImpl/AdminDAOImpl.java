@@ -50,4 +50,12 @@ public class AdminDAOImpl implements AdminDAO {
 		 sqlSession.update("Admin.updateAdmin", admin);
 	}
 
+	@Override
+	public void updateStatus(int user_id, int status) {
+		Map<String, Object> param = new HashMap<String, Object>();
+	    param.put("user_id", user_id);
+	    param.put("status", status);
+		 sqlSession.update("Admin.updateStatus", param);
+	}
+
 }

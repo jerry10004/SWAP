@@ -78,17 +78,12 @@ const ProgramInformation = (props) => {
         setPoster(response.data[i].file_name);
       }
     }
+
+    console.log("yaho~~~~~~: ", response.data);
     response.data[0].start_date = moment(response.data[0].start_date).format("YY-MM-DD HH:mm");
     response.data[0].end_date = moment(response.data[0].end_date).format("YY-MM-DD HH:mm");
     response.data[0].applystart_date = moment(response.data[0].applystart_date).format("YY-MM-DD HH:mm");
     response.data[0].applyend_date = moment(response.data[0].applyend_date).format("YY-MM-DD HH:mm");
-
-    console.log("^^^^^^");
-    console.log(response.data[0].start_date );
-    console.log(response.data[0].end_date );
-    console.log(response.data[0].applystart_date );
-    console.log(response.data[0].applyend_date );
-
 
     setFilePath(filePathList);
     seteditInfo(response.data[0]);
@@ -115,12 +110,6 @@ const ProgramInformation = (props) => {
     if (editEnd) editInfo.end_date = getFormatDate(endDate);
     if (editApplyStart) editInfo.applystart_date = getFormatDate(ApplystartDate);
     if (editApplyEnd) editInfo.applyend_date = getFormatDate(ApplyendDate);
-
-    console.log("&&&&&&&&&&&&&&&&&");
-    console.log(editInfo.start_date );
-    console.log( editInfo.end_date);
-    console.log(editInfo.applystart_date);
-    console.log(editInfo.applyend_date);
 
     // 포스터 업데이트
     const imgFormData = new FormData();
@@ -183,7 +172,7 @@ const ProgramInformation = (props) => {
           });
         }
       } else {
-        if(poster == null){
+        if (poster == null) {
           var deletePosterParam = new URLSearchParams();
           deletePosterParam.append("program_id", editInfo.id);
           const responseFile = await axios.post(process.env.REACT_APP_RESTAPI_HOST + "program/editFile/delete", deletePosterParam);
@@ -224,7 +213,6 @@ const ProgramInformation = (props) => {
       seteditApplyStart(false);
       seteditApplyEnd(false);
       readProgramInformation(props.param1.id);
-
 
       window.location.reload();
     }
