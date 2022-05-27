@@ -72,7 +72,7 @@ const NavbarVertical = (props) => {
   }, []);
 
   const readInformation = () => {
-    if (window.sessionStorage.getItem("status") === -2) setMenu(DashboardSuperMenu);
+    if (window.sessionStorage.getItem("status") === "-2") setMenu(DashboardSuperMenu);
     else setMenu(DashboardMenu);
   };
 

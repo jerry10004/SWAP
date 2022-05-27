@@ -55,4 +55,10 @@ public class AdminServiceImpl implements AdminService{
 		adminDAO.updateAdmin(admin);
 	}
 
+	@Override
+	public void updateStatus(int user_id, int status) {
+		adminDAO.updateStatus(user_id, status);
+		
+	}
+
 }

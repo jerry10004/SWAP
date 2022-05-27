@@ -12,4 +12,5 @@ public interface AdminDAO {
 	AdminDTO readAdminByUserId(int user_id);
 	List<AdminDTO> readWaitAdmin();
 	public void updateAdmin(AdminDTO admin);
+	public void updateStatus(int user_id, int status);
 }

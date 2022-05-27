@@ -70,6 +70,7 @@ const NavbarDefault = ({ headerstyle }, { props }) => {
       alert("한동 메일로 로그인하여 주세요.");
       navigate("/swap/");
     } else if (res.data !== "fail" && res.data !== "newUser") {
+      const r = await axios.get(process.env.REACT_APP_RESTAPI_HOST + "user/loggedinUser/" + res.data.id);
       window.sessionStorage.setItem("email", response.profileObj.email);
       window.sessionStorage.setItem("name", response.profileObj.name);
       window.sessionStorage.setItem("profileImg", response.profileObj.imageUrl);
@@ -77,6 +78,10 @@ const NavbarDefault = ({ headerstyle }, { props }) => {
       window.sessionStorage.setItem("expires_at", response.tokenObj.expires_at);
       window.sessionStorage.setItem("status", res.data.status);
       window.sessionStorage.setItem("id", res.data.id);
+      window.sessionStorage.setItem("myname", r.data[0].name);
+      window.sessionStorage.setItem("myemail", r.data[0].email);
+      // window.sessionStorage.setItem("myname", res.data.status);
+
       setIsLogin(true);
       login = 1;
 
@@ -109,6 +114,8 @@ const NavbarDefault = ({ headerstyle }, { props }) => {
       window.sessionStorage.removeItem("status");
       window.sessionStorage.removeItem("id");
       window.sessionStorage.removeItem("profileImg");
+      window.sessionStorage.removeItem("myname");
+      window.sessionStorage.removeItem("myemail");
 
       setIsLogin(false);
       console.log("로그아웃 성공!!!");

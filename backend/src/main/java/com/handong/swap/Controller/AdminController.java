@@ -55,6 +55,7 @@ public class AdminController{
 		
 		for (int i = 0; i < ids.length; i++) {
 			adminService.add(Integer.parseInt(ids[i]));
+			adminService.updateStatus(Integer.parseInt(ids[i]),0);
 		}
 	}
 	

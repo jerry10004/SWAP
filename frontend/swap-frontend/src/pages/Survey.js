@@ -115,17 +115,17 @@ const Survey = () => {
                   <div>
                     <h1 className="text-white display-4 fw-semi-bold">{programInfo.program_name}</h1>
                     <div className="d-flex flex-row align-middle">
-                      <Badge bg="warning" className="me-3">
+                      {/* <Badge bg="warning" className="me-3">
                         마감기한
-                      </Badge>
-                      <span className="text-white me-1">
+                      </Badge> */}
+                      {/* <span className="text-white me-1">
                         <i className="fe fe-users"></i>
                       </span>
                       <span className="fw-bold text-white"> 신청기간 - </span>
                       <span className="text-white">
                         {" "}
                         {Applystartdate} ~ {Applyenddate}
-                      </span>
+                      </span> */}
                     </div>
                   </div>
                 </Col>

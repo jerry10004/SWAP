@@ -31,5 +31,11 @@
 		set name = #{name}, email=#{email}, phone=#{phone}, edit_date=now()
 		where user_id = #{id};
 	</update>
+	
+	<update id="updateStatus" parameterType="hashmap">
+		Update User
+		set status = #{status}, edit_date=now()
+		where id = #{user_id};
+	</update>
 
 </mapper>

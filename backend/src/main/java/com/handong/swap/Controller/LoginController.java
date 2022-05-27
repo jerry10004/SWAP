@@ -100,6 +100,8 @@ public class LoginController {
 		System.out.println(userInfo.toString());
 		LoginDTO user = new LoginDTO();
 		
+		System.out.println("회원가입~~~~~");
+		
 		if(email.equals(userInfo.get("email"))) {
 			if(status==1) {
 				user.setName(httpServletRequest.getParameter("name"));
@@ -116,6 +118,8 @@ public class LoginController {
 			}
 			
 			if(status==2) {
+				System.out.println("관리자로 회원가입!!!!: "+expire_token);
+
 				user.setName(httpServletRequest.getParameter("name"));
 				user.setEmail(httpServletRequest.getParameter("email"));
 				user.setPhone(httpServletRequest.getParameter("phone"));

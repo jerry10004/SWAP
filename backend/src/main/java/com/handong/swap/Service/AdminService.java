@@ -11,4 +11,6 @@ public interface AdminService {
 	public String readWaitAdmin() throws JsonProcessingException;
 	public void delete(int id);
 	public void update(AdminDTO admin);
+	public void updateStatus(int user_id, int status);
+
 }

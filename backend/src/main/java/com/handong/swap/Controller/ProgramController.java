@@ -244,8 +244,10 @@ public class ProgramController {
 	
 	@RequestMapping(value = "/information/{id}", method = RequestMethod.GET, produces = "application/json; charset=utf8")
 	@ResponseBody
-	public String readProgramInformationByProgramId(@PathVariable int id) throws IOException, ParseException {
-		String result = programService.readProgramInformationByProgramId(id);
+	public String readProgramInformationByProgramId(@PathVariable String id) throws IOException, ParseException {
+		System.out.println("hhhh: "+id);
+		int ID = Integer.parseInt(id);
+		String result = programService.readProgramInformationByProgramId(ID);
 		return result;
 	}
 	
