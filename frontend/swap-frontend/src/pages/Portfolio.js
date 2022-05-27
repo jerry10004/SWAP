@@ -269,13 +269,13 @@ const Portfolio = (props) => {
               <></>
             )}
           </Card.Body>
-          <Card.Footer>
+          {/* <Card.Footer>
             <div className="d-flex justify-content-end">
               <Button className="bg-primary border-0" onClick={modalState}>
                 추가하기
               </Button>
             </div>
-          </Card.Footer>
+          </Card.Footer> */}
         </Card>
       ) : (
         <></>
