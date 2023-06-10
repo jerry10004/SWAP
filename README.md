@@ -1,5 +1,14 @@
 # SWAP
-SWAP(Software Activites and Programs) 은 프로그램 신청과 관리를 도와주는 똑똑한 서비스 입니다.
+SWAP(Software Activites and Programs) - 프로그램 신청과 관리를 도와주는 똑똑한 서비스
+
+
+**기능**
+
+- 학생은 카테고리 별 프로그램들을 쉽게 신청
+- 학생은 본인이 참여한 프로그램 내역을 한눈에 확인
+- 관리자는 프로그램의 템플릿을 활용해 간편히 신청 폼 제작 
+- 관리자는 프로그램 별 신청한 학생들을 쉽게 관리
+
 
 
 <img width="700" src="https://user-images.githubusercontent.com/48082589/244878142-5c6c77aa-8819-4e79-98a0-5ffa5728c1e1.png">
